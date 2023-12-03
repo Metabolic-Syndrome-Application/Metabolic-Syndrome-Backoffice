@@ -27,9 +27,9 @@ export default function HomePage() {
         <title>Hi</title>
       </Head>
       <section className='bg-white'>
-        <div className='layout relative flex min-h-screen flex-col items-center justify-center py-12 text-center'>
+        <div className='w-full'>
           {/* <Logo className='w-16' /> */}
-          <h1 className='mt-4'>
+          <h1 className='text-dark-blue mt-4'>
             {' '}
             ยินดีต้อนรับเข้าสู่เว็บปรับเปลี่ยนพฤติกรรมเมตาบอลิกซินโดรม
           </h1>

@@ -1,14 +1,26 @@
+import { IBM_Plex_Sans_Thai } from '@next/font/google';
 import { Metadata } from 'next';
 import * as React from 'react';
 
 import '@/styles/globals.css';
-// !STARTERCONF This is for demo purposes, remove @/styles/colors.css import immediately
 import '@/styles/colors.css';
+
+import Header from '@/components/navbar/header';
+import HeaderMobile from '@/components/navbar/header-mobile';
+import MarginWidthWrapper from '@/components/navbar/margin-width-wrapper';
+import PageWrapper from '@/components/navbar/page.wrapper';
+import SideNav from '@/components/navbar/side-nav';
 
 import { siteConfig } from '@/constant/config';
 
-// !STARTERCONF Change these default meta
-// !STARTERCONF Look at @/constant/config to change them
+//👇 Configure our local font object
+
+const IBMPlexSansThai = IBM_Plex_Sans_Thai({
+  weight: ['100', '400', '500', '700'],
+  subsets: ['thai'],
+  variable: '--font-ibm',
+});
+
 export const metadata: Metadata = {
   title: {
     default: siteConfig.title,
@@ -54,8 +66,19 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html>
-      <body>{children}</body>
+    <html lang='en' className={`${IBMPlexSansThai.variable}  `}>
+      <body className='bg-[#FAFCFB]'>
+        <div className='flex'>
+          <SideNav />
+          <main className='flex-1'>
+            <MarginWidthWrapper>
+              <Header />
+              <HeaderMobile />
+              <PageWrapper>{children}</PageWrapper>
+            </MarginWidthWrapper>
+          </main>
+        </div>
+      </body>
     </html>
   );
 }
