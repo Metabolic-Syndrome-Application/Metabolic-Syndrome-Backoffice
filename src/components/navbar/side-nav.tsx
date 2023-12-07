@@ -6,7 +6,7 @@ import { usePathname } from 'next/navigation';
 import React, { useState } from 'react';
 
 import { SIDENAV_ITEMS } from '@/components/navbar/constants';
-import { SideNavItem } from '@/components/navbar/types';
+import { SideNavItem } from '@/components/types/navbar';
 
 const SideNav = () => {
   return (

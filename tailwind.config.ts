@@ -13,6 +13,7 @@ export default {
         'dark-blue': '#1438F3',
         'light-blue': '#C9E1FD',
         'default-gray': '#7B7B7B',
+        'light-gray': '#E3E3E3',
       },
       boxShadow: {
         'default-shadow': '0px 16px 40px 0px rgba(112, 144, 182, 0.20)',

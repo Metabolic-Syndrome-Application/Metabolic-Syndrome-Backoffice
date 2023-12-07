@@ -5,8 +5,8 @@ import * as React from 'react';
 import '@/styles/globals.css';
 import '@/styles/colors.css';
 
-import Header from '@/components/navbar/header';
 import HeaderMobile from '@/components/navbar/header-mobile';
+import HeaderNav from '@/components/navbar/header-nav';
 import MarginWidthWrapper from '@/components/navbar/margin-width-wrapper';
 import PageWrapper from '@/components/navbar/page.wrapper';
 import SideNav from '@/components/navbar/side-nav';
@@ -66,13 +66,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang='en' className={`${IBMPlexSansThai.variable}  `}>
+    <html
+      lang='en'
+      className={`${IBMPlexSansThai.variable}`}
+      //suppressHydrationWarning={true}
+    >
       <body className='bg-[#FAFCFB]'>
         <div className='flex'>
           <SideNav />
           <main className='flex-1'>
             <MarginWidthWrapper>
-              <Header />
+              <HeaderNav />
               <HeaderMobile />
               <PageWrapper>{children}</PageWrapper>
             </MarginWidthWrapper>
