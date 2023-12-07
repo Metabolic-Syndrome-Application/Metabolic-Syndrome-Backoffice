@@ -7,7 +7,7 @@ import { usePathname } from 'next/navigation';
 import React, { ReactNode, useEffect, useRef, useState } from 'react';
 
 import { SIDENAV_ITEMS } from '@/components/navbar/constants';
-import { MenuItemWithSubMenuProps } from '@/components/navbar/types';
+import { MenuItemWithSubMenuProps } from '@/components/types/navbar';
 
 const sidebar = {
   open: (height = 1000) => ({
