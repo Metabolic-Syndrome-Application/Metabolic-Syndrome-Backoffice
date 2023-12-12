@@ -1,3 +1,5 @@
+import { generateBirthYear } from '@/components/helpers/date';
+
 const personalInfoQuestions = {
   question1: {
     id: 1,
@@ -78,9 +80,12 @@ const dataOptions = {
   ],
 };
 
+const yearOptions = generateBirthYear();
+
 export {
   dataOptions,
   medicalDepartment,
   medicalSpecialize,
   personalInfoQuestions,
+  yearOptions,
 };
