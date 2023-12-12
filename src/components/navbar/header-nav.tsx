@@ -32,9 +32,13 @@ const HeaderNav = () => {
           </Link>
         </div>
 
-        <div className='hidden md:block'>
+        <div className='hidden items-center gap-4 md:flex'>
+          <div>
+            <span className='text-black'>Admin</span>
+            <p className='text-default-gray text-sm'>โรงพยาบาล xxx</p>
+          </div>
           <div className='flex h-8 w-8 items-center justify-center rounded-full bg-zinc-300 text-center'>
-            <span className='text-sm font-semibold'>HQ</span>
+            HQ
           </div>
         </div>
       </div>
