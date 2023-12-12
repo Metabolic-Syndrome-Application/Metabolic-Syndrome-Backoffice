@@ -1,7 +1,6 @@
 import { Icon } from '@iconify/react';
 
 import { SideNavItem } from '@/components/types/navbar';
-import Link from 'next/link';
 
 export const SIDENAV_ITEMS: SideNavItem[] = [
   {
