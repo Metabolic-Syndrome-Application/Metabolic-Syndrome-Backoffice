@@ -54,10 +54,7 @@ const TestCreatePatient = () => {
           {/* Apply bg-slate-500 to the entire column */}
           <div className='flex w-2/5'>
             <div className='flex h-full w-full flex-col space-y-4 rounded-lg border p-2'>
-              <FormHeaderText
-                title='สร้างบัญชีผู้ใช้'
-                useBigestHeader={false}
-              />
+              <FormHeaderText title='สร้างบัญชีผู้ใช้' />
 
               <div className=''>
                 <RadioSelectStage
