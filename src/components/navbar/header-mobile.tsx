@@ -39,7 +39,7 @@ const HeaderMobile = () => {
       initial={false}
       animate={isOpen ? 'open' : 'closed'}
       custom={height}
-      className={`fixed inset-0 z-50 w-full md:hidden ${
+      className={`fixed inset-0 z-10 w-full md:hidden ${
         isOpen ? '' : 'pointer-events-none'
       }`}
       ref={containerRef}
@@ -90,7 +90,7 @@ export default HeaderMobile;
 const MenuToggle = ({ toggle }: { toggle: any }) => (
   <button
     onClick={toggle}
-    className='pointer-events-auto absolute right-4 top-[14px] z-30'
+    className='pointer-events-auto absolute right-4 top-[14px] z-10'
   >
     <svg width='23' height='23' viewBox='0 0 23 23'>
       <Path
@@ -227,7 +227,6 @@ const useDimensions = (ref: any) => {
       dimensions.current.width = ref.current.offsetWidth;
       dimensions.current.height = ref.current.offsetHeight;
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ref]);
 
   return dimensions.current;

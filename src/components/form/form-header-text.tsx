@@ -5,13 +5,13 @@ import { cn } from '@/lib/utils';
 type FormHeaderTextProps = {
   icon?: IconType;
   title: string;
-  useBigestHeader: boolean;
+  useBigestHeader?: boolean;
 };
 
 const FormHeaderText = ({
   icon: Icon,
   title,
-  useBigestHeader = true,
+  useBigestHeader = false,
 }: FormHeaderTextProps) => {
   const HeaderSize = useBigestHeader ? 'h3' : 'h4';
 

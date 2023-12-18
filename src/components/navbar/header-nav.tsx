@@ -14,7 +14,7 @@ const HeaderNav = () => {
   return (
     <div
       className={cn(
-        `sticky inset-x-0 top-0 z-30 w-full border-b border-gray-200 transition-all`,
+        `sticky inset-x-0 top-0 w-full border-b border-gray-200 transition-all`,
         {
           'border-b border-gray-200 bg-white/75 backdrop-blur-lg': scrolled,
           'border-b border-gray-200 bg-white': selectedLayout,

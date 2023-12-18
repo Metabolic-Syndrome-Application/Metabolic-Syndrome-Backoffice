@@ -16,44 +16,16 @@ import {
   medicalDepartment,
   medicalSpecialize,
 } from '@/constant/question';
+import {
+  FormRegisterDoctorProps,
+  registerDoctorSchema,
+} from '@/components/form/validation/form-validation';
 
-type FormRegisterDoctorProps = {
-  role: string;
-  email: string;
-  password: string;
-  confirmPassword: string;
-  alias: string;
-  firstName: string;
-  lastName: string;
-  gender: string;
-  department: string;
-  specialize: string;
-  //age: string;
-};
 const Test = () => {
-  const registerDoctorSchema: ZodType<FormRegisterDoctorProps> = z
-    .object({
-      role: z.string(),
-      email: z.string().email(),
-      password: z.string().min(5).max(20),
-      confirmPassword: z.string().min(5).max(20),
-      alias: z.string().min(2).max(12),
-      firstName: z.string().min(2).max(30),
-      lastName: z.string().min(2).max(30),
-      gender: z.string(),
-      department: z.string(),
-      specialize: z.string(),
-      //age: z.number().min(16).max(100),
-    })
-    .refine((data) => data.password === data.confirmPassword, {
-      message: 'Passwords do not match',
-      path: ['confirmPassword'],
-    });
-
   const {
     control,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isValid },
   } = useForm<FormRegisterDoctorProps>({
     mode: 'onChange',
     resolver: zodResolver(registerDoctorSchema),
@@ -63,9 +35,11 @@ const Test = () => {
     console.log('it worked', data);
   };
 
+  console.log('isValid', isValid);
+
   return (
     <form onSubmit={handleSubmit(submitData)}>
-      <div className='shadow-default-shadow flex h-full w-full max-w-[1100px] flex-col items-center justify-center rounded-xl bg-white p-8 '>
+      <div className='shadow-default-shadow flex h-full w-full max-w-[1100px] flex-col items-center justify-center rounded-xl bg-blue-50 p-8 '>
         <FormHeaderText
           icon={FaUserDoctor}
           title='จัดการข้อมูลผู้ใช้ระบบ'
@@ -75,7 +49,7 @@ const Test = () => {
         <div className='grid w-full grid-cols-1 gap-4 md:grid-cols-5'>
           {/* section1 */}
           <div className='col-span-1 space-y-4 rounded-lg border p-2 md:col-span-2'>
-            <FormHeaderText title='สร้างบัญชีผู้ใช้' useBigestHeader={false} />
+            <FormHeaderText title='สร้างบัญชีผู้ใช้' />
 
             <RadioOption
               name='role'
@@ -86,17 +60,23 @@ const Test = () => {
 
             <InputText name='email' label='อีเมล' control={control} />
 
-            <InputText name='password' label='รหัสผ่าน' control={control} />
+            <InputText
+              name='password'
+              label='รหัสผ่าน'
+              control={control}
+              showPasswordToggle
+            />
             <InputText
               name='confirmPassword'
               label='ยืนยันรหัสผ่าน'
               control={control}
+              showPasswordToggle
             />
           </div>
 
           {/* section2 */}
           <div className='col-span-1 space-y-4 rounded-lg border p-2 md:col-span-3'>
-            <FormHeaderText title='ข้อมูลส่วนตัว' useBigestHeader={false} />
+            <FormHeaderText title='ข้อมูลส่วนตัว' />
 
             <InputText name='alias' label='คำนำหน้า' control={control} />
             <div className='flex space-x-4'>
