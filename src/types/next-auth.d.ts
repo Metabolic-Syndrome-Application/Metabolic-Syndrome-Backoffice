@@ -27,24 +27,26 @@ import { IUser } from '@/types/user';
 declare module 'next-auth' {
   interface Session {
     user: {
-      username: string;
-      role: string;
+      access_token: string;
+      status: string;
+      user: {
+        role: string;
+        username: string;
+      };
     };
-    accessToken: string;
-    refreshToken: string;
-    expiresIn: number;
   }
 }
 
 declare module 'next-auth/jwt' {
   interface JWT {
     user: {
-      username: string;
-      role: string;
+      access_token: string;
+      status: string;
+      user: {
+        role: string;
+        username: string;
+      };
     };
-    accessToken: string;
-    refreshToken: string;
-    expiresIn: number;
 
     // backendTokens: {
     //   accessToken: string;
