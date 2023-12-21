@@ -42,7 +42,7 @@
   }
 
   .cursor-newtab {
-    cursor: url('/images/new-tab.png') 10 10, pointer;
+    cursor: url('/assets/images/new-tab.png') 10 10, pointer;
   }
 
   /* #region  /**=========== Typography =========== */
