@@ -1,4 +1,9 @@
-import { z, ZodType } from 'zod';
+import { z } from 'zod';
+
+export type FormLoginProps = {
+  email: string;
+  password: string;
+};
 
 export type FormRegisterDoctorProps = {
   role: string;
@@ -31,6 +36,12 @@ const passwordValidator = baseStringValidator
 
 const validateMinMax = (min: number, max: number, message: string) =>
   baseStringValidator.min(min, { message }).max(max, { message });
+
+//Login Page
+export const loginSchema = z.object({
+  email: baseStringValidator.email('กรุณากรอกอีเมลให้ถูกต้อง').trim(),
+  password: passwordValidator,
+});
 
 // Register for Doctor/Staff
 export const registerDoctorSchema = z

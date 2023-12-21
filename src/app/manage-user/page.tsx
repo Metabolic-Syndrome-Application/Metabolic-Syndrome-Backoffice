@@ -2,9 +2,9 @@
 import React, { useState } from 'react';
 
 import { IconButton } from '@/components/buttons/icon-button';
-import Test from '@/components/form/test';
-import TestCreatePatient from '@/components/form/test-create-patient';
-import BaseModal from '@/components/modal/base-modal';
+import Test from '@/components/form/Test';
+import TestCreatePatient from '@/components/form/TestCreatePatient';
+import BaseModal from '@/components/modal/BaseModal';
 
 const ManageUserPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
