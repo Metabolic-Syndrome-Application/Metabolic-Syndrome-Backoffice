@@ -52,8 +52,8 @@ export const authOptions: NextAuthOptions = {
         // });
 
         const res = await axios.post('/api/auth/login', {
-          username: credentials?.username,
-          password: credentials?.password,
+          username,
+          password,
         });
 
         if (res.status == 401) {
@@ -67,6 +67,7 @@ export const authOptions: NextAuthOptions = {
         // return user;
         const user = res.data;
         if (user) {
+          console.log('user test', user);
           return user;
         } else {
           return null;
@@ -84,8 +85,9 @@ export const authOptions: NextAuthOptions = {
       return token;
     },
 
-    async session({ token, session }) {
-      session.user = token.user;
+    async session({ token, session, user }) {
+      session.user = token as any;
+      //session.user = token.user;
       // session.backendTokens = token.backendTokens;
 
       return session;
