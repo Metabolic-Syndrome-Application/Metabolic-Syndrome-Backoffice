@@ -1,4 +1,4 @@
-import { generateBirthYear } from '@/components/helpers/date';
+import { generateBirthYear } from '@/helpers/date';
 
 const personalInfoQuestions = {
   question1: {
@@ -47,7 +47,7 @@ const medicalDepartment = [
 //   { label: 'ศัลยกรรมตกแต่ง', value: 'ศัลยกรรมตกแต่ง' },
 // ];
 
-const medicalSpecialize = [
+const medicalSpecialist = [
   { label: 'แพทย์ทั่วไป', value: 'แพทย์ทั่วไป' },
   { label: 'อายุรกรรม', value: 'อายุรกรรม' },
   { label: 'กุมารเวชศาสตร์', value: 'กุมารเวชศาสตร์' },
@@ -85,7 +85,7 @@ const yearOptions = generateBirthYear();
 export {
   dataOptions,
   medicalDepartment,
-  medicalSpecialize,
+  medicalSpecialist,
   personalInfoQuestions,
   yearOptions,
 };

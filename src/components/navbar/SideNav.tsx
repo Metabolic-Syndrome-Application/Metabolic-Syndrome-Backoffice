@@ -5,25 +5,43 @@ import Link from 'next/link';
 import { usePathname, useSelectedLayoutSegment } from 'next/navigation';
 import React, { useState } from 'react';
 
-import { SIDENAV_ITEMS } from '@/components/navbar/ConstantsNav';
 import { SideNavItem } from '@/types/navbar';
+import { useSideNavbar } from '@/hooks/useSideNavbar';
+import { SIDENAV_ITEMS } from '@/components/navbar/ConstantsNav';
 
 const SideNav = () => {
+  const customRoleNav = useSideNavbar();
+  const lastItem = customRoleNav.find((item) => item.title === 'ออกจากระบบ');
+  const otherItems = customRoleNav.filter(
+    (item) => item.title !== 'ออกจากระบบ'
+  );
+
   return (
     <div className='fixed hidden h-screen flex-1 border-r border-zinc-200 bg-white md:flex md:w-72'>
       <div className='flex w-full flex-col space-y-6'>
         <Link
           href='/'
-          className='flex h-12 w-full flex-row items-center justify-center space-x-3 border-b border-zinc-200 md:justify-start md:px-6'
+          className='flex h-[60px] w-full flex-row items-center justify-center space-x-3 border-b border-zinc-200 md:justify-start md:px-6'
         >
           <span className='h-7 w-7 rounded-lg bg-zinc-300' />
           <span className='hidden text-xl font-bold md:flex'>Metaplan</span>
         </Link>
+        <div className='flex h-full flex-col justify-between md:px-6'>
+          {/* Render other items */}
+          <div className='space-y-4'>
+            {otherItems.map((item, idx) => (
+              <MenuItem key={idx} item={item} />
+            ))}
+          </div>
 
-        <div className='flex flex-col space-y-2  md:px-6 '>
-          {SIDENAV_ITEMS.map((item, idx) => {
-            return <MenuItem key={idx} item={item} />;
-          })}
+          {/* Render the last item at the end */}
+          <div className='py-20'>
+            {lastItem && (
+              <div className='flex flex-col '>
+                <MenuItem item={lastItem} />
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </div>
@@ -32,24 +50,12 @@ const SideNav = () => {
 
 export default SideNav;
 
-const MenuItem = (
-  { item }: { item: SideNavItem },
-  {
-    slug,
-    children,
-  }: {
-    slug: string;
-    children: React.ReactNode;
-  }
-) => {
+const MenuItem = ({ item }: { item: SideNavItem }) => {
   const pathname = usePathname();
   const [subMenuOpen, setSubMenuOpen] = useState(false);
   const toggleSubMenu = () => {
     setSubMenuOpen(!subMenuOpen);
   };
-
-  const segment = useSelectedLayoutSegment();
-  const isActive = slug === segment;
 
   return (
     <div className=''>
@@ -61,7 +67,7 @@ const MenuItem = (
               pathname.includes(item.path) ? 'bg-light-blue' : ''
             }`}
           >
-            <div className='flex flex-row items-center space-x-4'>
+            <div className='flex flex-row items-center justify-center space-x-4'>
               {item.icon}
               <span className='flex text-xl font-medium'>{item.title}</span>
             </div>

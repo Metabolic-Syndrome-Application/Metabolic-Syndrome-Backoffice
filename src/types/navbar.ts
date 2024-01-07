@@ -4,6 +4,7 @@ export type SideNavItem = {
   icon?: JSX.Element;
   submenu?: boolean;
   subMenuItems?: SideNavItem[];
+  role?: string | undefined;
 };
 
 export type MenuItemWithSubMenuProps = {

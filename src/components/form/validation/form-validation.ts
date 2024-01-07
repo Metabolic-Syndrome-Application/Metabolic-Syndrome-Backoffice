@@ -1,21 +1,21 @@
 import { z } from 'zod';
 
 export type FormLoginProps = {
-  email: string;
+  username: string;
   password: string;
 };
 
 export type FormRegisterDoctorProps = {
   role: string;
-  email: string;
+  username: string;
   password: string;
-  confirmPassword: string;
-  alias: string;
+  passwordConfirm: string;
+  prefix: string;
   firstName: string;
   lastName: string;
   gender: string;
   department: string;
-  specialize: string;
+  specialist: string;
   //doctor?: string | null;
 };
 
@@ -39,7 +39,7 @@ const validateMinMax = (min: number, max: number, message: string) =>
 
 //Login Page
 export const loginSchema = z.object({
-  email: baseStringValidator.email('กรุณากรอกอีเมลให้ถูกต้อง').trim(),
+  username: baseStringValidator.email('กรุณากรอกอีเมลให้ถูกต้อง').trim(),
   password: passwordValidator,
 });
 
@@ -47,10 +47,10 @@ export const loginSchema = z.object({
 export const registerDoctorSchema = z
   .object({
     role: baseStringValidator,
-    email: baseStringValidator.email('กรุณากรอกอีเมลให้ถูกต้อง').trim(),
+    username: baseStringValidator.email('กรุณากรอกอีเมลให้ถูกต้อง').trim(),
     password: passwordValidator,
-    confirmPassword: passwordValidator,
-    alias: validateMinMax(
+    passwordConfirm: passwordValidator,
+    prefix: validateMinMax(
       2,
       12,
       'กรุณากรอกอย่างน้อย 2 ตัวอักษร และไม่เกิน 12 ตัวอักษร'
@@ -69,9 +69,9 @@ export const registerDoctorSchema = z
     ),
     gender: baseStringValidator,
     department: baseStringValidator,
-    specialize: baseStringValidator,
+    specialist: baseStringValidator,
   })
-  .refine((data) => data.password === data.confirmPassword, {
+  .refine((data) => data.password === data.passwordConfirm, {
     message: 'รหัสผ่านของคุณไม่ตรงกัน',
     path: ['confirmPassword'],
   });

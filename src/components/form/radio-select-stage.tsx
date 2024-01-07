@@ -7,7 +7,7 @@ import {
 } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 
-import { FormRadioBtnPropsTest } from '@/components/types/form';
+import { FormRadioBtnPropsTest } from '@/types/form';
 
 const RadioSelectStage = ({
   groupLabel,
