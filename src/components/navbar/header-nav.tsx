@@ -14,7 +14,7 @@ const HeaderNav = () => {
   return (
     <div
       className={cn(
-        `sticky inset-x-0 top-0 z-30 w-full border-b border-gray-200 transition-all`,
+        `sticky inset-x-0 top-0 w-full border-b border-gray-200 transition-all`,
         {
           'border-b border-gray-200 bg-white/75 backdrop-blur-lg': scrolled,
           'border-b border-gray-200 bg-white': selectedLayout,
@@ -32,9 +32,13 @@ const HeaderNav = () => {
           </Link>
         </div>
 
-        <div className='hidden md:block'>
+        <div className='hidden items-center gap-4 md:flex'>
+          <div>
+            <span className='text-black'>Admin</span>
+            <p className='text-default-gray text-sm'>โรงพยาบาล xxx</p>
+          </div>
           <div className='flex h-8 w-8 items-center justify-center rounded-full bg-zinc-300 text-center'>
-            <span className='text-sm font-semibold'>HQ</span>
+            HQ
           </div>
         </div>
       </div>

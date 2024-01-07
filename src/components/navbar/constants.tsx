@@ -1,6 +1,6 @@
 import { Icon } from '@iconify/react';
 
-import { SideNavItem } from '@/components/navbar/types';
+import { SideNavItem } from '@/components/types/navbar';
 
 export const SIDENAV_ITEMS: SideNavItem[] = [
   {
@@ -10,17 +10,23 @@ export const SIDENAV_ITEMS: SideNavItem[] = [
   },
   {
     title: 'จัดการข้อมูลผู้ใช้',
-    path: '/manage-users',
+    path: '/manage-user',
     icon: <Icon icon='lucide:folder' width='24' height='24' />,
   },
   {
     title: 'ข้อมูลหมอ',
-    path: '/doctors',
+    path: '/doctor',
     icon: <Icon icon='lucide:mail' width='24' height='24' />,
   },
   {
     title: 'ข้อมูลคนไข้',
-    path: '/patients',
+    path: '/patient/[tab]?tab=1',
+    icon: <Icon icon='lucide:settings' width='24' height='24' />,
+  },
+
+  {
+    title: 'แผนสุขภาพ',
+    path: '/plan',
     icon: <Icon icon='lucide:settings' width='24' height='24' />,
     submenu: true,
     subMenuItems: [

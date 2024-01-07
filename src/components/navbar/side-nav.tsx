@@ -80,6 +80,8 @@ const MenuItem = ({ item }: { item: SideNavItem }) => {
       ) : (
         <Link
           href={item.path}
+          // href={item.submenu ? '#' : item.path}
+
           className={`hover:bg-light-blue flex flex-row items-center space-x-4 rounded-lg p-2  ${
             item.path === pathname ? 'bg-light-blue' : ''
           }`}

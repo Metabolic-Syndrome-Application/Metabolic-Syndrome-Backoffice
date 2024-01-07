@@ -1,16 +1,20 @@
 import { IBM_Plex_Sans_Thai } from '@next/font/google';
 import { Metadata } from 'next';
+import { getServerSession } from 'next-auth';
 import * as React from 'react';
 
 import '@/styles/globals.css';
 import '@/styles/colors.css';
 
-import HeaderMobile from '@/components/navbar/header-mobile';
-import HeaderNav from '@/components/navbar/header-nav';
-import MarginWidthWrapper from '@/components/navbar/margin-width-wrapper';
-import PageWrapper from '@/components/navbar/page.wrapper';
-import SideNav from '@/components/navbar/side-nav';
+import NextAuthProviders from '@/components/login/NextAuthProviders';
+import SignInButton from '@/components/login/SignInButton';
+import HeaderMobile from '@/components/navbar/HeaderMobile';
+import HeaderNav from '@/components/navbar/HeaderNav';
+import MarginWidthWrapper from '@/components/navbar/MarginWidthWrapper';
+import PageWrapper from '@/components/navbar/PageWrapper';
+import SideNav from '@/components/navbar/SideNav';
 
+import { authOptions } from '@/app/api/auth/[...nextauth]/authOptions';
 import { siteConfig } from '@/constant/config';
 
 //👇 Configure our local font object
@@ -31,9 +35,9 @@ export const metadata: Metadata = {
   // !STARTERCONF this is the default favicon, you can generate your own from https://realfavicongenerator.net/
   // ! copy to /favicon folder
   icons: {
-    icon: '/favicon/favicon.ico',
-    shortcut: '/favicon/favicon-16x16.png',
-    apple: '/favicon/apple-touch-icon.png',
+    icon: '/assets/icons/logo.svg',
+    shortcut: '/assets/icons/logo.svg',
+    apple: '/assets/icons/logo.svg',
   },
   manifest: `/favicon/site.webmanifest`,
   openGraph: {
@@ -60,11 +64,13 @@ export const metadata: Metadata = {
   // ],
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const session = await getServerSession(authOptions);
+
   return (
     <html
       lang='en'
@@ -72,15 +78,27 @@ export default function RootLayout({
       //suppressHydrationWarning={true}
     >
       <body className='bg-[#FAFCFB]'>
-        <div className='flex'>
-          <SideNav />
-          <main className='flex-1'>
-            <MarginWidthWrapper>
-              <HeaderNav />
-              <HeaderMobile />
-              <PageWrapper>{children}</PageWrapper>
-            </MarginWidthWrapper>
-          </main>
+        <div className=''>
+          <NextAuthProviders>
+            <SideNav />
+            {/* <TestNav2 /> */}
+            <main className='flex-1'>
+              <MarginWidthWrapper>
+                <HeaderNav />
+                <HeaderMobile />
+                <PageWrapper>
+                  {/* <SignInButton /> */}
+                  {children}
+                </PageWrapper>
+              </MarginWidthWrapper>
+            </main>
+
+            {/* <TestNav /> */}
+            {/* <div>
+              <SignInButton />
+              {children}
+            </div> */}
+          </NextAuthProviders>
         </div>
       </body>
     </html>
