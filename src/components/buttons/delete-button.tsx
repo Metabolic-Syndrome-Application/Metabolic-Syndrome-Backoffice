@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { Dialog } from '@mui/material';
+import React, {useState } from 'react';
 
 //use in file dataEdit
 const DeleteButton = () => {

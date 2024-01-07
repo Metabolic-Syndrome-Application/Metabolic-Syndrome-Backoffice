@@ -1,27 +1,31 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useSession } from 'next-auth/react';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { FaUserDoctor } from 'react-icons/fa6';
-import z, { ZodType } from 'zod';
 
-import FormHeaderText from '@/components/form/form-header-text';
-import { InputDropdown } from '@/components/form/input-dropdown';
-import { InputText } from '@/components/form/input-text';
-import { RadioOption } from '@/components/form/radio-option';
+import { axiosAuth } from '@/lib/axios';
 
-import {
-  dataOptions,
-  medicalDepartment,
-  medicalSpecialize,
-} from '@/constant/question';
+import FormHeaderText from '@/components/form/FormHeaderText';
+import { InputDropdown } from '@/components/form/InputDropdown';
+import { InputText } from '@/components/form/InputText';
+import { RadioOption } from '@/components/form/RadioOption';
 import {
   FormRegisterDoctorProps,
   registerDoctorSchema,
 } from '@/components/form/validation/form-validation';
 
+import {
+  dataOptions,
+  medicalDepartment,
+  medicalSpecialist,
+} from '@/constant/question';
+
 const Test = () => {
+  const { data: session } = useSession();
+
   const {
     control,
     handleSubmit,
@@ -31,15 +35,79 @@ const Test = () => {
     resolver: zodResolver(registerDoctorSchema),
   });
 
-  const submitData = (data: FormRegisterDoctorProps) => {
-    console.log('it worked', data);
+  // const submitData = (data: FormRegisterDoctorProps) => {
+  //   console.log('it worked', data);
+  // };
+
+  //console.log('isValid', isValid);
+
+  const onSubmit = async (data: FormRegisterDoctorProps) => {
+    const {
+      role,
+      username,
+      password,
+      passwordConfirm,
+      prefix,
+      firstName,
+      lastName,
+      gender,
+      department,
+      specialist,
+    } = data;
+    const userRole = session?.user?.role; // Extract the role from the session
+
+    console.log('User Role:', userRole);
+
+    try {
+      // Check if the user is logged in
+      if (!userRole) {
+        console.log('User is not logged in.');
+        // Handle the case where the user is not logged in
+        return;
+      }
+
+      // API call 1: Register
+      const registerResponse = await axiosAuth.post(
+        'http://localhost:8000/api/auth/register/other',
+        {
+          role,
+          username,
+          password,
+          passwordConfirm,
+        }
+      );
+      const { id: userId, role: otherRole } = registerResponse.data.data.user;
+
+      console.log('Register API Response:', registerResponse.data.data.user);
+      // Assuming only an admin can create a profile
+      if (userRole === 'admin') {
+        // API call 2: Create profile
+        const createProfileResponse = await axiosAuth.post(
+          `http://localhost:8000/api/user/profile/${otherRole}/${userId}`,
+          {
+            prefix,
+            firstName,
+            lastName,
+            gender,
+            department,
+            specialist,
+          }
+        );
+        console.log('Create Profile API Response:', createProfileResponse.data);
+
+        // Do something after the API call
+      } else {
+        // Handle the case where the user is not an admin
+        console.log('User is not authorized to create a profile.');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
   };
 
-  console.log('isValid', isValid);
-
   return (
-    <form onSubmit={handleSubmit(submitData)}>
-      <div className='shadow-default-shadow flex h-full w-full max-w-[1100px] flex-col items-center justify-center rounded-xl bg-blue-50 p-8 '>
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <div className='shadow-default-shadow flex h-full w-full max-w-[1100px] flex-col items-center justify-center rounded-xl bg-white p-8 '>
         <FormHeaderText
           icon={FaUserDoctor}
           title='จัดการข้อมูลผู้ใช้ระบบ'
@@ -58,7 +126,7 @@ const Test = () => {
               options={dataOptions.roleOptions}
             />
 
-            <InputText name='email' label='อีเมล' control={control} />
+            <InputText name='username' label='อีเมล' control={control} />
 
             <InputText
               name='password'
@@ -67,7 +135,7 @@ const Test = () => {
               showPasswordToggle
             />
             <InputText
-              name='confirmPassword'
+              name='passwordConfirm'
               label='ยืนยันรหัสผ่าน'
               control={control}
               showPasswordToggle
@@ -78,7 +146,7 @@ const Test = () => {
           <div className='col-span-1 space-y-4 rounded-lg border p-2 md:col-span-3'>
             <FormHeaderText title='ข้อมูลส่วนตัว' />
 
-            <InputText name='alias' label='คำนำหน้า' control={control} />
+            <InputText name='prefix' label='คำนำหน้า' control={control} />
             <div className='flex space-x-4'>
               <InputText name='firstName' label='ชื่อจริง' control={control} />
               <InputText name='lastName' label='นามสกุล' control={control} />
@@ -97,10 +165,10 @@ const Test = () => {
               options={medicalDepartment}
             />
             <InputDropdown
-              name='specialize'
+              name='specialist'
               control={control}
               label='ความเชี่ยวชาญ'
-              options={medicalSpecialize}
+              options={medicalSpecialist}
             />
           </div>
         </div>

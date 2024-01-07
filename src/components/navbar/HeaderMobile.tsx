@@ -6,7 +6,8 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import React, { ReactNode, useEffect, useRef, useState } from 'react';
 
-import { SIDENAV_ITEMS } from '@/components/navbar/ConstantsNav';
+import { useSideNavbar } from '@/hooks/useSideNavbar';
+
 import { MenuItemWithSubMenuProps } from '@/types/navbar';
 
 const sidebar = {
@@ -33,6 +34,7 @@ const HeaderMobile = () => {
   const containerRef = useRef(null);
   const { height } = useDimensions(containerRef);
   const [isOpen, toggleOpen] = useCycle(false, true);
+  const customRoleNav = useSideNavbar();
 
   return (
     <motion.nav
@@ -52,8 +54,8 @@ const HeaderMobile = () => {
         variants={variants}
         className='absolute grid w-full gap-3 px-10 py-16'
       >
-        {SIDENAV_ITEMS.map((item, idx) => {
-          const isLastItem = idx === SIDENAV_ITEMS.length - 1; // Check if it's the last item
+        {customRoleNav.map((item, idx) => {
+          const isLastItem = idx === customRoleNav.length - 1; // Check if it's the last item
 
           return (
             <div key={idx}>
@@ -74,7 +76,7 @@ const HeaderMobile = () => {
               )}
 
               {!isLastItem && (
-                <MenuItem className='my-3 h-px w-full bg-gray-300' />
+                <MenuItem className='my-3 flex h-px w-full justify-end bg-gray-300' />
               )}
             </div>
           );
@@ -167,7 +169,7 @@ const MenuItemWithSubMenu: React.FC<MenuItemWithSubMenuProps> = ({
           </div>
         </button>
       </MenuItem>
-      <div className='ml-2 mt-2 flex flex-col space-y-2'>
+      <div className='ml-2 mt-2 flex flex-col space-y-2 text-lg'>
         {subMenuOpen && (
           <>
             {item.subMenuItems?.map((subItem, subIdx) => {

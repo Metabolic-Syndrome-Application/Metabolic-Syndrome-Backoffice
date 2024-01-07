@@ -4,8 +4,6 @@ import Head from 'next/head';
 import * as React from 'react';
 
 import ArrowLink from '@/components/links/ArrowLink';
-import ButtonLink from '@/components/links/ButtonLink';
-import UnderlineLink from '@/components/links/UnderlineLink';
 import UnstyledLink from '@/components/links/UnstyledLink';
 
 /**
@@ -40,9 +38,9 @@ export default function HomePage() {
             </ArrowLink>
           </p>
 
-          <ButtonLink className='mt-6' href='/components' variant='light'>
+          {/* <ButtonLink className='mt-6' href='/components' variant='light'>
             See all components
-          </ButtonLink>
+          </ButtonLink> */}
 
           <UnstyledLink
             href='https://vercel.com/new/git/external?repository-url=https%3A%2F%2Fgithub.com%2Ftheodorusclarence%2Fts-nextjs-tailwind-starter'
@@ -57,12 +55,12 @@ export default function HomePage() {
             />
           </UnstyledLink>
 
-          <footer className='absolute bottom-2 text-gray-700'>
+          {/* <footer className='absolute bottom-2 text-gray-700'>
             © {new Date().getFullYear()} By{' '}
             <UnderlineLink href='https://theodorusclarence.com?ref=tsnextstarter'>
               Theodorus Clarence
             </UnderlineLink>
-          </footer>
+          </footer> */}
         </div>
       </section>
     </main>

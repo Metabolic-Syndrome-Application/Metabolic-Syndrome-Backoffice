@@ -1,10 +1,10 @@
 //User login
 export type IUser = {
+  access_token: string;
+  refresh_token: string;
+  status: string;
   user: {
-    username: string;
     role: string;
+    username: string;
   };
-  accessToken: string;
-  refreshToken: string;
-  expiresIn: number;
 };

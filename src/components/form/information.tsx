@@ -2,9 +2,9 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 
-import { InputDropdown } from '@/components/form/input-dropdown';
-import { InputText } from '@/components/form/input-text';
-import { RadioOption } from '@/components/form/radio-option';
+import { InputDropdown } from '@/components/form/InputDropdown';
+import { InputText } from '@/components/form/InputText';
+import { RadioOption } from '@/components/form/RadioOption';
 import {
   FormRegisterDoctorProps,
   registerDoctorSchema,
@@ -13,7 +13,7 @@ import {
 import {
   dataOptions,
   medicalDepartment,
-  medicalSpecialize,
+  medicalSpecialist,
   yearOptions,
 } from '@/constant/question';
 
@@ -62,7 +62,7 @@ const Information = () => {
         name='specialize'
         control={control}
         label='แพทย์ผู้รับผิดชอบรอง'
-        options={medicalSpecialize}
+        options={medicalSpecialist}
       />
     </div>
   );
