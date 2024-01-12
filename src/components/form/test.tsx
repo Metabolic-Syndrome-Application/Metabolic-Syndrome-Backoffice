@@ -6,8 +6,6 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { FaUserDoctor } from 'react-icons/fa6';
 
-import { axiosAuth } from '@/lib/axios';
-
 import FormHeaderText from '@/components/form/FormHeaderText';
 import { InputDropdown } from '@/components/form/InputDropdown';
 import { InputText } from '@/components/form/InputText';
@@ -22,9 +20,19 @@ import {
   medicalDepartment,
   medicalSpecialist,
 } from '@/constant/question';
-
+import { useSnackbar } from 'notistack';
+import useAxiosAuth from '@/hooks/useAxiosAuth';
+import useModal from '@/hooks/useModal';
+import { IconFlatButton } from '@/components/buttons/IconFlatButton';
+import DeleteButton from '@/components/buttons/delete-button';
+import { FiPlusCircle } from 'react-icons/fi';
+import { Bs1Square } from 'react-icons/bs';
 const Test = () => {
   const { data: session } = useSession();
+  const { enqueueSnackbar } = useSnackbar();
+  const axiosAuth = useAxiosAuth();
+
+  const { Modal, openModal, closeModal } = useModal();
 
   const {
     control,
@@ -68,7 +76,7 @@ const Test = () => {
 
       // API call 1: Register
       const registerResponse = await axiosAuth.post(
-        'http://localhost:8000/api/auth/register/other',
+        '/api/auth/register/other',
         {
           role,
           username,
@@ -82,7 +90,7 @@ const Test = () => {
       // Assuming only an admin can create a profile
       if (userRole === 'admin') {
         // API call 2: Create profile
-        const createProfileResponse = await axiosAuth.post(
+        const createProfileResponse = await axiosAuth.put(
           `http://localhost:8000/api/user/profile/${otherRole}/${userId}`,
           {
             prefix,
@@ -94,95 +102,123 @@ const Test = () => {
           }
         );
         console.log('Create Profile API Response:', createProfileResponse.data);
-
+        enqueueSnackbar('Register Success', { variant: 'success' });
         // Do something after the API call
       } else {
         // Handle the case where the user is not an admin
         console.log('User is not authorized to create a profile.');
       }
-    } catch (error) {
+    } catch (error: any) {
+      enqueueSnackbar(error.response?.data, { variant: 'error' });
       console.error('Error:', error);
     }
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <div className='shadow-default-shadow flex h-full w-full max-w-[1100px] flex-col items-center justify-center rounded-xl bg-white p-8 '>
-        <FormHeaderText
-          icon={FaUserDoctor}
-          title='จัดการข้อมูลผู้ใช้ระบบ'
-          useBigestHeader
+    <div className='w-full'>
+      <article className='flex items-center justify-between py-2	'>
+        <h1 className='text-balance'>จัดการข้อมูลผู้ใช้ทั้งหมด</h1>
+        <IconFlatButton
+          title='เพิ่มข้อมูลผู้ใช้'
+          //icon={Bs1Square}
+          onClick={openModal}
         />
-
-        <div className='grid w-full grid-cols-1 gap-4 md:grid-cols-5'>
-          {/* section1 */}
-          <div className='col-span-1 space-y-4 rounded-lg border p-2 md:col-span-2'>
-            <FormHeaderText title='สร้างบัญชีผู้ใช้' />
-
-            <RadioOption
-              name='role'
-              label='บทบาท'
-              control={control}
-              options={dataOptions.roleOptions}
+      </article>
+      <Modal>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <div className=''>
+            <FormHeaderText
+              icon={FaUserDoctor}
+              title='จัดการข้อมูลผู้ใช้ระบบ'
+              useBigestHeader
             />
 
-            <InputText name='username' label='อีเมล' control={control} />
+            <div className='grid w-full grid-cols-1 gap-4 md:grid-cols-5'>
+              {/* section1 */}
+              <div className='col-span-1 space-y-4 rounded-lg border p-2 md:col-span-2'>
+                <FormHeaderText title='สร้างบัญชีผู้ใช้' />
 
-            <InputText
-              name='password'
-              label='รหัสผ่าน'
-              control={control}
-              showPasswordToggle
-            />
-            <InputText
-              name='passwordConfirm'
-              label='ยืนยันรหัสผ่าน'
-              control={control}
-              showPasswordToggle
-            />
-          </div>
+                <RadioOption
+                  name='role'
+                  label='บทบาท'
+                  control={control}
+                  options={dataOptions.roleOptions}
+                />
 
-          {/* section2 */}
-          <div className='col-span-1 space-y-4 rounded-lg border p-2 md:col-span-3'>
-            <FormHeaderText title='ข้อมูลส่วนตัว' />
+                <InputText name='username' label='อีเมล' control={control} />
 
-            <InputText name='prefix' label='คำนำหน้า' control={control} />
-            <div className='flex space-x-4'>
-              <InputText name='firstName' label='ชื่อจริง' control={control} />
-              <InputText name='lastName' label='นามสกุล' control={control} />
+                <InputText
+                  name='password'
+                  label='รหัสผ่าน'
+                  control={control}
+                  showPasswordToggle
+                />
+                <InputText
+                  name='passwordConfirm'
+                  label='ยืนยันรหัสผ่าน'
+                  control={control}
+                  showPasswordToggle
+                />
+              </div>
+
+              {/* section2 */}
+              <div className='col-span-1 space-y-4 rounded-lg border p-2 md:col-span-3'>
+                <FormHeaderText title='ข้อมูลส่วนตัว' />
+
+                <InputText name='prefix' label='คำนำหน้า' control={control} />
+                <div className='flex space-x-4'>
+                  <InputText
+                    name='firstName'
+                    label='ชื่อจริง'
+                    control={control}
+                  />
+                  <InputText
+                    name='lastName'
+                    label='นามสกุล'
+                    control={control}
+                  />
+                </div>
+                <RadioOption
+                  name='gender'
+                  label='เพศ'
+                  control={control}
+                  options={dataOptions.genderOptions}
+                />
+
+                <InputDropdown
+                  name='department'
+                  control={control}
+                  label='แผนก'
+                  options={medicalDepartment}
+                />
+                <InputDropdown
+                  name='specialist'
+                  control={control}
+                  label='ความเชี่ยวชาญ'
+                  options={medicalSpecialist}
+                />
+              </div>
             </div>
-            <RadioOption
-              name='gender'
-              label='เพศ'
-              control={control}
-              options={dataOptions.genderOptions}
-            />
 
-            <InputDropdown
-              name='department'
-              control={control}
-              label='แผนก'
-              options={medicalDepartment}
-            />
-            <InputDropdown
-              name='specialist'
-              control={control}
-              label='ความเชี่ยวชาญ'
-              options={medicalSpecialist}
-            />
+            <div className='flex w-full justify-end space-x-3 p-4'>
+              <DeleteButton></DeleteButton>
+              <button
+                onClick={closeModal}
+                className='rounded-xl bg-gray-50 px-4 py-4'
+              >
+                cancel
+              </button>
+              <button
+                type='submit'
+                className='flex items-center rounded-xl bg-blue-400 px-4 py-2'
+              >
+                submit
+              </button>
+            </div>
           </div>
-        </div>
-
-        <div className='flex w-full justify-end p-4'>
-          <button
-            type='submit'
-            className='flex  rounded-xl bg-blue-400 px-4 py-2'
-          >
-            submit
-          </button>
-        </div>
-      </div>
-    </form>
+        </form>
+      </Modal>
+    </div>
   );
 };
 

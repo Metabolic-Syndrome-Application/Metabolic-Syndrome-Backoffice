@@ -1,3 +1,4 @@
+//BirthYear
 export const generateBirthYear = () => {
   const thaiBuddhistOffset = 543;
   const currentYear = new Date().getFullYear();

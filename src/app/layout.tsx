@@ -8,14 +8,16 @@ import '@/styles/colors.css';
 
 import NextAuthProviders from '@/components/login/NextAuthProviders';
 import SignInButton from '@/components/login/SignInButton';
-import HeaderMobile from '@/components/navbar/HeaderMobile';
-import HeaderNav from '@/components/navbar/HeaderNav';
-import MarginWidthWrapper from '@/components/navbar/MarginWidthWrapper';
-import PageWrapper from '@/components/navbar/PageWrapper';
-import SideNav from '@/components/navbar/SideNav';
-
+import HeaderMobile from '@/components/layout/navbar/HeaderMobile';
+import HeaderNav from '@/components/layout/navbar/HeaderNav';
+import MarginWidthWrapper from '@/components/layout/navbar/MarginWidthWrapper';
+import PageWrapper from '@/components/layout/navbar/PageWrapper';
+import SideNav from '@/components/layout/navbar/SideNav';
+import { SnackbarProvider } from 'notistack';
 import { authOptions } from '@/app/api/auth/[...nextauth]/authOptions';
 import { siteConfig } from '@/constant/config';
+
+import NavbarLayout from '@/components/layout/layout';
 
 //👇 Configure our local font object
 
@@ -35,9 +37,9 @@ export const metadata: Metadata = {
   // !STARTERCONF this is the default favicon, you can generate your own from https://realfavicongenerator.net/
   // ! copy to /favicon folder
   icons: {
-    icon: '/assets/icons/logo.svg',
-    shortcut: '/assets/icons/logo.svg',
-    apple: '/assets/icons/logo.svg',
+    icon: '/favicon/favicon.ico',
+    shortcut: '/favicon/favicon-16x16.png',
+    apple: '/favicon/apple-touch-icon.png',
   },
   manifest: `/favicon/site.webmanifest`,
   openGraph: {
@@ -45,7 +47,7 @@ export const metadata: Metadata = {
     title: siteConfig.title,
     description: siteConfig.description,
     siteName: siteConfig.title,
-    images: [`${siteConfig.url}/images/og.jpg`],
+    images: [`${siteConfig.url}/assets/icons/logo.svg`],
     type: 'website',
     locale: 'en_US',
   },
@@ -53,7 +55,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: siteConfig.title,
     description: siteConfig.description,
-    images: [`${siteConfig.url}/images/og.jpg`],
+    images: [`${siteConfig.url}/assets/icons/logo.svg`],
     // creator: '@th_clarence',
   },
   // authors: [
@@ -69,8 +71,6 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const session = await getServerSession(authOptions);
-
   return (
     <html
       lang='en'
@@ -79,23 +79,26 @@ export default async function RootLayout({
     >
       <body className='bg-[#FAFCFB]'>
         <div className=''>
+          {/* <SnackbarProvider
+            maxSnack={5}
+            anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
+          ></SnackbarProvider> */}
           <NextAuthProviders>
-            <SideNav />
+            {/* <SideNav /> */}
             {/* <TestNav2 /> */}
-            <main className='flex-1'>
-              <MarginWidthWrapper>
-                <HeaderNav />
-                <HeaderMobile />
-                <PageWrapper>
-                  {/* <SignInButton /> */}
-                  {children}
-                </PageWrapper>
-              </MarginWidthWrapper>
-            </main>
+            {/* <main className='flex-1'>
+              <HeaderNav />
+              <HeaderMobile />
+              <PageWrapper>{children}</PageWrapper>
+            </main> */}
 
+            <NavbarLayout>
+              <SignInButton />
+              {children}
+            </NavbarLayout>
             {/* <TestNav /> */}
             {/* <div>
-              <SignInButton />
+             
               {children}
             </div> */}
           </NextAuthProviders>

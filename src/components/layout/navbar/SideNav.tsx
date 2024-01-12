@@ -1,44 +1,76 @@
 'use client';
 
 import { Icon } from '@iconify/react';
+import Image from 'next/image';
 import Link from 'next/link';
-import { usePathname, useSelectedLayoutSegment } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import React, { useState } from 'react';
 
-import { SideNavItem } from '@/types/navbar';
 import { useSideNavbar } from '@/hooks/useSideNavbar';
-import { SIDENAV_ITEMS } from '@/components/navbar/ConstantsNav';
 
-const SideNav = () => {
+import { SideNavItem } from '@/types/navbar';
+import { FaAngleLeft } from 'react-icons/fa';
+
+type SideNavProps = {
+  open: boolean;
+  setOpen: (value: boolean) => void;
+};
+
+const SideNav = ({ open, setOpen }: SideNavProps) => {
   const customRoleNav = useSideNavbar();
   const lastItem = customRoleNav.find((item) => item.title === 'ออกจากระบบ');
   const otherItems = customRoleNav.filter(
     (item) => item.title !== 'ออกจากระบบ'
   );
+  // const [open, setOpen] = useState(true);
 
   return (
-    <div className='fixed hidden h-screen flex-1 border-r border-zinc-200 bg-white md:flex md:w-72'>
+    <div
+      className={`${
+        open ? 'md:flex md:w-72' : 'md:flex md:w-24'
+      } md: fixed hidden h-screen flex-1 border-r border-zinc-200 bg-white`}
+    >
+      <FaAngleLeft
+        className={`hover:bg-light-gray absolute -right-3 top-11  w-8
+           cursor-pointer rounded-full border-2 bg-white ${
+             !open && 'rotate-180'
+           }`}
+        onClick={() => setOpen(!open)}
+        aria-hidden='true'
+      />
+
       <div className='flex w-full flex-col space-y-6'>
+        {/* Render Logo and Title */}
         <Link
           href='/'
           className='flex h-[60px] w-full flex-row items-center justify-center space-x-3 border-b border-zinc-200 md:justify-start md:px-6'
         >
-          <span className='h-7 w-7 rounded-lg bg-zinc-300' />
-          <span className='hidden text-xl font-bold md:flex'>Metaplan</span>
+          <div className='flex h-7 w-7 rounded-lg'>
+            <Image
+              src='/assets/icons/logo.svg'
+              width={350}
+              height={350}
+              alt='Hero'
+              priority={true}
+            />
+          </div>
+          <span className={`${!open ? 'hidden' : 'text-xl font-bold md:flex'}`}>
+            Metaplan
+          </span>
         </Link>
+
+        {/* Render Menu Items */}
         <div className='flex h-full flex-col justify-between md:px-6'>
-          {/* Render other items */}
           <div className='space-y-4'>
             {otherItems.map((item, idx) => (
-              <MenuItem key={idx} item={item} />
+              <MenuItem key={idx} item={item} open={open} />
             ))}
           </div>
-
-          {/* Render the last item at the end */}
+          {/* logout  */}
           <div className='py-20'>
             {lastItem && (
               <div className='flex flex-col '>
-                <MenuItem item={lastItem} />
+                <MenuItem item={lastItem} open={open} />
               </div>
             )}
           </div>
@@ -50,7 +82,7 @@ const SideNav = () => {
 
 export default SideNav;
 
-const MenuItem = ({ item }: { item: SideNavItem }) => {
+const MenuItem = ({ item, open }: { item: SideNavItem; open: boolean }) => {
   const pathname = usePathname();
   const [subMenuOpen, setSubMenuOpen] = useState(false);
   const toggleSubMenu = () => {
@@ -59,7 +91,7 @@ const MenuItem = ({ item }: { item: SideNavItem }) => {
 
   return (
     <div className=''>
-      {item.submenu ? (
+      {item.submenu && open ? (
         <>
           <button
             onClick={toggleSubMenu}
@@ -98,14 +130,15 @@ const MenuItem = ({ item }: { item: SideNavItem }) => {
       ) : (
         <Link
           href={item.path}
-          // href={item.submenu ? '#' : item.path}
-
-          className={`hover:bg-light-blue flex flex-row items-center space-x-4 rounded-lg p-2  ${
+          className={`hover:bg-light-blue flex flex-row items-center space-x-4 rounded-lg p-2 ${
             item.path === pathname ? 'bg-light-blue text-default-blue' : ''
           }`}
         >
           {item.icon}
-          <span className='flex text-xl font-medium'>{item.title}</span>
+          {/* Show only icon when sidebar is collapsed */}
+          <span className={`${!open ? 'hidden' : 'flex'} text-xl font-medium`}>
+            {item.title}
+          </span>
         </Link>
       )}
     </div>

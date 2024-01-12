@@ -1,6 +1,16 @@
 /* eslint-disable unused-imports/no-unused-vars */
 //import { NextAuthOptions } from 'next-auth';
 import { parse } from 'cookie';
+import { cookies } from 'next/headers';
+import type { NextAuthOptions } from 'next-auth/index';
+import CredentialsProvider from 'next-auth/providers/credentials';
+import { signOut } from 'next-auth/react';
+
+import axios from '@/lib/axios';
+import { isRefreshTokenExpired } from '@/lib/jwt';
+
+import { API_PATH } from '@/config/api';
+
 // async function refreshToken(token: JWT): Promise<JWT> {
 //   const res = await fetch(BACKEND_URL + '/auth/refresh', {
 //     method: 'POST',
@@ -15,6 +25,7 @@ import { parse } from 'cookie';
 //     backendTokens: response,
 //   };
 // }
+
 // export const authOptions: NextAuthOptions = {
 //   providers: [
 //     CredentialsProvider({
@@ -59,11 +70,7 @@ import { parse } from 'cookie';
 //           });
 //           if (res.status === 200) {
 //             const user = res.data;
-//             setCookie({ res }, 'user', JSON.stringify(user), {
-//               maxAge: 2 * 24 * 60 * 60,
-//               path: '/',
-//               httpOnly: true,
-//             });
+
 //             console.log('user', res);
 //             return user; // Return the user object upon successful authentication
 //           } else {
@@ -99,23 +106,8 @@ import { parse } from 'cookie';
 //   },
 //   secret: process.env.NEXTAUTH_SECRET,
 // };
-// @/lib/authOptions.ts
-import { cookies } from 'next/headers';
-import type { NextAuthOptions } from 'next-auth/index';
-//import type { NextAuthOptions } from 'next-auth';
-import CredentialsProvider from 'next-auth/providers/credentials';
-import { signOut } from 'next-auth/react';
-
-import axios from '@/lib/axios';
-import { isRefreshTokenExpired } from '@/lib/jwt';
-
-import { API_PATH } from '@/config/api';
 
 export const authOptions: NextAuthOptions = {
-  // Secret for Next-auth, without this JWT encryption/decryption won't work
-  secret: process.env.NEXTAUTH_SECRET,
-
-  // Configure one or more authentication providers
   providers: [
     CredentialsProvider({
       name: 'Credentials',
@@ -124,48 +116,52 @@ export const authOptions: NextAuthOptions = {
         password: { label: 'Password', type: 'password' },
       },
       async authorize(credentials, req) {
+        if (!credentials?.username || !credentials?.password) return null;
+        const { username, password } = credentials;
         try {
-          const response = await axios.post(API_PATH.POST_LOGIN, {
-            username: credentials?.username,
-            password: credentials?.password,
+          const res = await axios.post(API_PATH.POST_LOGIN, {
+            username,
+            password,
           });
+          if (res.status === 200) {
+            const user = res.data;
+            // Retrieve and parse the set-cookie header to get refresh_token
+            const apiCookies = res.headers['set-cookie'];
+            //console.log('aaaaaa');
+            if (apiCookies && apiCookies.length > 0) {
+              apiCookies.forEach((cookie) => {
+                const parsedCookie = parse(cookie);
+                const refreshToken = parsedCookie['refresh_token']; // Replace with your actual cookie name
 
-          const user = response.data;
-          // Retrieve and parse the set-cookie header to get refresh_token
-          const apiCookies = response.headers['set-cookie'];
-          console.log('aaaaaa');
-          if (apiCookies && apiCookies.length > 0) {
-            apiCookies.forEach((cookie) => {
-              const parsedCookie = parse(cookie);
-              const refreshToken = parsedCookie['refresh_token']; // Replace with your actual cookie name
+                //console.log('yyyyyyyyyyyyy');
+                if (refreshToken) {
+                  // Update the token with the retrieved refresh_token
+                  user.refresh_token = refreshToken;
+                  cookies().set({
+                    name: 'refresh_token',
+                    value: refreshToken,
+                    httpOnly: true,
+                    maxAge: parseInt(parsedCookie['Max-Age']),
+                    path: parsedCookie.path,
+                    //sameSite: parsedCookie.samesite,
+                    expires: new Date(parsedCookie.expires),
+                    secure: true,
+                  });
+                }
+                //console.log('yyyyyyyyyyy');
+              });
+            }
 
-              console.log('yyyyyyyyyyyyy');
-              if (refreshToken) {
-                // Update the token with the retrieved refresh_token
-                user.refresh_token = refreshToken;
-                cookies().set({
-                  name: 'refresh_token',
-                  value: refreshToken,
-                  httpOnly: true,
-                  maxAge: parseInt(parsedCookie['Max-Age']),
-                  path: parsedCookie.path,
-                  //sameSite: parsedCookie.samesite,
-                  expires: new Date(parsedCookie.expires),
-                  secure: true,
-                });
-              }
-              console.log('yyyyyyyyyyy');
-            });
+            console.log('Set-Cookie header:', apiCookies);
+
+            return user;
+          } else {
+            return null; // Or handle the error in another way
           }
-          console.log('bbbbb');
+        } catch (error: any) {
+          //console.log(error);
 
-          console.log('Set-Cookie header:', apiCookies);
-
-          return user;
-        } catch (error) {
-          console.log(error);
-          // @ts-expect-error
-          throw Error(error.response);
+          return null; // Handle Axios error
         }
       },
     }),
@@ -200,4 +196,5 @@ export const authOptions: NextAuthOptions = {
   pages: {
     signIn: '/auth/signIn',
   },
+  secret: process.env.NEXTAUTH_SECRET,
 };

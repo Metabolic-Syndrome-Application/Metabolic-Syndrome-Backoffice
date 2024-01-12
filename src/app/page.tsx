@@ -5,6 +5,8 @@ import * as React from 'react';
 
 import ArrowLink from '@/components/links/ArrowLink';
 import UnstyledLink from '@/components/links/UnstyledLink';
+import HomeGallery from '@/components/home/HomeGallery';
+import HomeHero from '@/components/home/HomeHero';
 
 /**
  * SVGR Support
@@ -24,13 +26,12 @@ export default function HomePage() {
       <Head>
         <title>Hi</title>
       </Head>
-      <section className='bg-white'>
+      <section className=''>
         <div className='w-full'>
           {/* <Logo className='w-16' /> */}
-          <h1 className='text-dark-blue mt-4'>
-            {' '}
-            ยินดีต้อนรับเข้าสู่เว็บปรับเปลี่ยนพฤติกรรมเมตาบอลิกซินโดรม
-          </h1>
+
+          <HomeHero />
+          <HomeGallery />
 
           <p className='mt-2 text-sm text-gray-700'>
             <ArrowLink href='https://github.com/theodorusclarence/ts-nextjs-tailwind-starter'>

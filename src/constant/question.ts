@@ -1,4 +1,4 @@
-import { generateBirthYear } from '@/helpers/date';
+import { generateBirthYear } from '@/components/helpers/date';
 
 const personalInfoQuestions = {
   question1: {

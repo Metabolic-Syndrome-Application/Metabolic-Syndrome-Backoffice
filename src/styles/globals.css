@@ -47,22 +47,22 @@
 
   /* #region  /**=========== Typography =========== */
   .h0 {
-    @apply font-primary text-3xl font-bold md:text-5xl;
+    @apply font-primary text-3xl font-bold md:text-4xl lg:text-5xl;
   }
 
   h1,
   .h1 {
-    @apply font-primary text-2xl font-medium md:text-4xl;
+    @apply font-primary text-xl font-medium md:text-2xl xl:text-3xl 2xl:text-4xl;
   }
 
   h2,
   .h2 {
-    @apply font-primary text-xl font-medium md:text-3xl;
+    @apply font-primary text-xl font-medium md:text-2xl xl:text-3xl;
   }
 
   h3,
   .h3 {
-    @apply font-primary text-lg font-medium md:text-2xl;
+    @apply font-primary text-lg font-medium md:text-xl xl:text-2xl;
   }
 
   h4,

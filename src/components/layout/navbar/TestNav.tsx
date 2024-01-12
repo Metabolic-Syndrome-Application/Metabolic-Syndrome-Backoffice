@@ -2,8 +2,8 @@
 // HeaderNav.tsx (or your navigation component)
 import { useSession } from 'next-auth/react';
 
-import AdminNavbar from '@/components/navbar/AdminNavbar';
-import DefaultNavBar from '@/components/navbar/DefaultNavbar';
+import AdminNavbar from '@/components/layout/navbar/AdminNavbar';
+import DefaultNavBar from '@/components/layout/navbar/DefaultNavbar';
 
 const TestNav = () => {
   const { data: session } = useSession();
