@@ -1,11 +1,11 @@
 import { useSession } from 'next-auth/react';
 
-import { SIDENAV_ITEMS } from '@/components/navbar/ConstantsNav';
+import { SIDENAV_ITEMS } from '@/components/layout/navbar/ConstantsNav';
 
 export const useSideNavbar = () => {
   const { data: session, status } = useSession();
 
-  // Assuming user role is stored in session.user.role
+  // user role
   const userRole = session?.user?.role;
 
   const customRoleNav = SIDENAV_ITEMS.filter((item) => {

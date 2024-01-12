@@ -1,17 +1,17 @@
 import Link from 'next/link';
 import React from 'react';
-
-const AdminNavbar = () => {
+//not used
+const DefaultNavBar = () => {
   return (
     <>
-      <div className='sticky top-0 h-20 w-full bg-emerald-800'>
+      <div className='h-full w-full bg-pink-300'>
         <div className='container mx-auto h-full px-4'>
           <div className='flex h-full items-center justify-between'>
-            AdminNavBar
+            DefaultNavBar
             <ul className='hidden gap-x-6 text-white md:flex'>
               <li>
-                <Link href='/admin'>
-                  <p>Admin</p>
+                <Link href='/auth/signIn'>
+                  <p>login</p>
                 </Link>
               </li>
             </ul>
@@ -22,4 +22,4 @@ const AdminNavbar = () => {
   );
 };
 
-export default AdminNavbar;
+export default DefaultNavBar;

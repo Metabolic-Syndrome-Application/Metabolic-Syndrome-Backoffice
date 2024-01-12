@@ -6,9 +6,10 @@ import React, { useState } from 'react';
 import useAxiosAuth from '@/hooks/useAxiosAuth';
 
 import { API_PATH } from '@/config/api';
-
+import { useSnackbar } from 'notistack';
 const SignInButton = () => {
   const { data: session, status } = useSession();
+  const { enqueueSnackbar } = useSnackbar();
 
   const [users, setUsers] = useState();
   const axiosAuth = useAxiosAuth();

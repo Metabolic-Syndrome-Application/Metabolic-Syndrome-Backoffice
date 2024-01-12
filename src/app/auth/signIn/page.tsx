@@ -1,14 +1,14 @@
+import LoginSection from '@/components/login/LoginSection';
 import React from 'react';
 
-import Login from '@/components/login/Login';
-
 type Props = {
+  error: any;
   searchParams?: Record<'callbackUrl' | 'error', string>;
 };
 
 const SignInPage = (props: Props) => {
   return (
-    <Login
+    <LoginSection
       error={props.searchParams?.error}
       callbackUrl={props.searchParams?.callbackUrl}
     />

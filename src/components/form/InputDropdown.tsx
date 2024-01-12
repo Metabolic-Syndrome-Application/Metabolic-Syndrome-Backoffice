@@ -1,8 +1,25 @@
-import { Autocomplete, TextField } from '@mui/material';
+import {
+  Autocomplete,
+  FilterOptionsState,
+  Paper,
+  TextField,
+  createFilterOptions,
+} from '@mui/material';
 import React from 'react';
 import { Controller } from 'react-hook-form';
 
 import { FormDropdownProps } from '@/types/form';
+
+// Set display max height menulist dropdown show
+const CustomPaperComponent = React.forwardRef<HTMLDivElement, any>(
+  (props, ref) => {
+    const maxHeight = 195;
+
+    return (
+      <Paper {...props} ref={ref} style={{ maxHeight, overflowY: 'auto' }} />
+    );
+  }
+);
 
 export const InputDropdown: React.FC<FormDropdownProps> = ({
   name,
@@ -44,6 +61,7 @@ export const InputDropdown: React.FC<FormDropdownProps> = ({
               ],
             },
           }}
+          PaperComponent={CustomPaperComponent}
           renderInput={(params) => (
             <TextField
               {...params}

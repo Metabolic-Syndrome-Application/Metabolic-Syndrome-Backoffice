@@ -14,9 +14,16 @@ export default {
         'light-blue': '#C9E1FD',
         'default-gray': '#7B7B7B',
         'light-gray': '#E3E3E3',
+        'default-red': '#FB6262',
+        'light-red': '#FFBCBC',
+        'default-yellow': '#FFC556',
+        'light-yellow': '#FFE9C9',
+        'default-green': '#42884B',
+        'light-green': '#B7DBC0',
       },
       boxShadow: {
         'default-shadow': '0px 16px 40px 0px rgba(112, 144, 182, 0.20)',
+        'light-shadow': '0px 8px 24px 0px rgba(221, 216, 216, 0.15)',
       },
       keyframes: {
         flicker: {

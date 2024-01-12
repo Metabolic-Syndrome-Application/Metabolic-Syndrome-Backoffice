@@ -28,6 +28,7 @@ export const SIDENAV_ITEMS: SideNavItem[] = [
     path: '/patient/[tab]?tab=1',
     icon: <Icon icon='bxs:user' width='26' height='26' />,
     role: 'doctor,staff',
+    gap: true,
   },
 
   {

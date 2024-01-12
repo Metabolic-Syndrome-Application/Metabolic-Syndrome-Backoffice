@@ -19,7 +19,7 @@ const FormHeaderText = ({
     <div className='flex w-full items-center justify-center p-2'>
       <div
         className={cn('flex w-full border-b', {
-          'border-default-gray mb-2 p-2 ': useBigestHeader,
+          'mb-2 border-gray-300 p-2 md:mb-4 ': useBigestHeader,
           'border-light-gray ': !useBigestHeader,
         })}
       >
