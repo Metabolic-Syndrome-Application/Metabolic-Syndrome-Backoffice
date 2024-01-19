@@ -1,23 +1,16 @@
 import { IBM_Plex_Sans_Thai } from '@next/font/google';
 import { Metadata } from 'next';
-import { getServerSession } from 'next-auth';
 import * as React from 'react';
+import { Suspense } from 'react';
 
 import '@/styles/globals.css';
 import '@/styles/colors.css';
 
-import NextAuthProviders from '@/components/login/NextAuthProviders';
-import SignInButton from '@/components/login/SignInButton';
-import HeaderMobile from '@/components/layout/navbar/HeaderMobile';
-import HeaderNav from '@/components/layout/navbar/HeaderNav';
-import MarginWidthWrapper from '@/components/layout/navbar/MarginWidthWrapper';
-import PageWrapper from '@/components/layout/navbar/PageWrapper';
-import SideNav from '@/components/layout/navbar/SideNav';
-import { SnackbarProvider } from 'notistack';
-import { authOptions } from '@/app/api/auth/[...nextauth]/authOptions';
-import { siteConfig } from '@/constant/config';
-
 import NavbarLayout from '@/components/layout/layout';
+import NextAuthProviders from '@/components/login/NextAuthProviders';
+
+import Loading from '@/app/loading';
+import { siteConfig } from '@/constant/config';
 
 //👇 Configure our local font object
 
@@ -79,28 +72,13 @@ export default async function RootLayout({
     >
       <body className='bg-[#FAFCFB]'>
         <div className=''>
-          {/* <SnackbarProvider
-            maxSnack={5}
-            anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
-          ></SnackbarProvider> */}
           <NextAuthProviders>
-            {/* <SideNav /> */}
-            {/* <TestNav2 /> */}
-            {/* <main className='flex-1'>
-              <HeaderNav />
-              <HeaderMobile />
-              <PageWrapper>{children}</PageWrapper>
-            </main> */}
-
-            <NavbarLayout>
-              <SignInButton />
-              {children}
-            </NavbarLayout>
-            {/* <TestNav /> */}
-            {/* <div>
-             
-              {children}
-            </div> */}
+            <Suspense fallback={<Loading />}>
+              <NavbarLayout>
+                {/* <SignInButton /> */}
+                {children}
+              </NavbarLayout>
+            </Suspense>
           </NextAuthProviders>
         </div>
       </body>

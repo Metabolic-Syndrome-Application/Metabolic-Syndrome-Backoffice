@@ -14,7 +14,7 @@ const TextButton = React.forwardRef<HTMLButtonElement, TextButtonProps>(
       children,
       className,
       variant = 'primary',
-      disabled: buttonDisabled,
+      //disabled: buttonDisabled,
       ...rest
     },
     ref
@@ -23,14 +23,14 @@ const TextButton = React.forwardRef<HTMLButtonElement, TextButtonProps>(
       <button
         ref={ref}
         type='button'
-        disabled={buttonDisabled}
+        //disabled={buttonDisabled}
         className={cn(
           'button inline-flex items-center justify-center font-semibold',
-          'focus-visible:ring-primary-500 focus:outline-none focus-visible:ring',
+          'focus:outline-none focus-visible:ring focus-visible:ring-pink-500',
           'transition duration-100',
           //#region  //*=========== Variant ===========
           variant === 'primary' && [
-            'text-primary-500 hover:text-primary-600 active:text-primary-700',
+            'text-primary-500 active:text-primary-700 hover:text-pink-600',
             'disabled:text-primary-200',
           ],
           variant === 'basic' && [

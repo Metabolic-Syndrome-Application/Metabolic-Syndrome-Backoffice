@@ -19,6 +19,16 @@ export type FormRegisterDoctorProps = {
   //doctor?: string | null;
 };
 
+export type FormEditProps = {
+  prefix: string;
+  firstName: string;
+  lastName: string;
+  gender: string;
+  department: string;
+  specialist: string;
+  //doctor?: string | null;
+};
+
 //validator check
 const required_error = 'กรุณากรอกข้อมูล';
 const baseStringValidator = z.string({ required_error });
@@ -75,6 +85,30 @@ export const registerDoctorSchema = z
     message: 'รหัสผ่านของคุณไม่ตรงกัน',
     path: ['confirmPassword'],
   });
+
+// Register for Doctor/Staff
+export const editSchema = z.object({
+  prefix: validateMinMax(
+    2,
+    12,
+    'กรุณากรอกอย่างน้อย 2 ตัวอักษร และไม่เกิน 12 ตัวอักษร'
+  ).refine((val) => !/\d/.test(val), {
+    message: 'นามแฝงต้องไม่มีตัวเลข (0-9)',
+  }),
+  firstName: validateMinMax(
+    2,
+    30,
+    'กรุณากรอกอย่างน้อย 2 ตัวอักษร และไม่เกิน 30 ตัวอักษร'
+  ),
+  lastName: validateMinMax(
+    2,
+    30,
+    'กรุณากรอกอย่างน้อย 2 ตัวอักษร และไม่เกิน 30 ตัวอักษร'
+  ),
+  gender: baseStringValidator,
+  department: baseStringValidator,
+  specialist: baseStringValidator,
+});
 
 // import * as yup from 'yup';
 

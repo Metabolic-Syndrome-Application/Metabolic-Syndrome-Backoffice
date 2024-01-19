@@ -95,6 +95,13 @@ export default withAuth(
     }
 
     if (
+      request.nextUrl.pathname.startsWith('/staff') &&
+      request.nextauth.token?.role !== 'staff'
+    ) {
+      return NextResponse.rewrite(new URL('/denied', request.url));
+    }
+
+    if (
       request.nextUrl.pathname.startsWith('/patient') &&
       request.nextauth.token?.role !== 'doctor' &&
       request.nextauth.token?.role !== 'staff'
@@ -120,5 +127,12 @@ export default withAuth(
 // Applies next-auth only to matching routes - can be regex
 // Ref: https://nextjs.org/docs/app/building-your-application/routing/middleware#matcher
 export const config = {
-  matcher: ['/admin:path*', '/doctor:path*', '/patient:path*', '/client', '/'],
+  matcher: [
+    '/admin:path*',
+    '/doctor:path*',
+    '/staff:path*',
+    '/patient:path*',
+    '/client',
+    '/',
+  ],
 };

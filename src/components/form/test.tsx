@@ -2,10 +2,15 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useSession } from 'next-auth/react';
+import { useSnackbar } from 'notistack';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { FaUserDoctor } from 'react-icons/fa6';
 
+import useAxiosAuth from '@/hooks/useAxiosAuth';
+import useModal from '@/hooks/useModal';
+
+import { IconFlatButton } from '@/components/buttons/IconFlatButton';
 import FormHeaderText from '@/components/form/FormHeaderText';
 import { InputDropdown } from '@/components/form/InputDropdown';
 import { InputText } from '@/components/form/InputText';
@@ -20,13 +25,6 @@ import {
   medicalDepartment,
   medicalSpecialist,
 } from '@/constant/question';
-import { useSnackbar } from 'notistack';
-import useAxiosAuth from '@/hooks/useAxiosAuth';
-import useModal from '@/hooks/useModal';
-import { IconFlatButton } from '@/components/buttons/IconFlatButton';
-import DeleteButton from '@/components/buttons/delete-button';
-import { FiPlusCircle } from 'react-icons/fi';
-import { Bs1Square } from 'react-icons/bs';
 const Test = () => {
   const { data: session } = useSession();
   const { enqueueSnackbar } = useSnackbar();
@@ -101,7 +99,7 @@ const Test = () => {
             specialist,
           }
         );
-        console.log('Create Profile API Response:', createProfileResponse.data);
+        console.log('Create Profile API Response:', createProfileResponse);
         enqueueSnackbar('Register Success', { variant: 'success' });
         // Do something after the API call
       } else {
@@ -116,7 +114,7 @@ const Test = () => {
 
   return (
     <div className='w-full'>
-      <article className='flex items-center justify-between py-2	'>
+      <article className='flex w-full items-center justify-between px-4 py-2'>
         <h1 className='text-balance'>จัดการข้อมูลผู้ใช้ทั้งหมด</h1>
         <IconFlatButton
           title='เพิ่มข้อมูลผู้ใช้'
@@ -201,7 +199,6 @@ const Test = () => {
             </div>
 
             <div className='flex w-full justify-end space-x-3 p-4'>
-              <DeleteButton></DeleteButton>
               <button
                 onClick={closeModal}
                 className='rounded-xl bg-gray-50 px-4 py-4'
