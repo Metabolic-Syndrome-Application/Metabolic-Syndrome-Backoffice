@@ -43,7 +43,7 @@ const iconSize = { width: '48', height: '48' };
 
 const HomeCardItem = ({ icon, title, description }: HomeCardProps) => {
   return (
-    <div className='hover:bg-default-blue shadow-light-shadow group flex flex-col gap-6 rounded-2xl bg-white px-6 py-10 transition duration-100 ease-in-out hover:-translate-y-4 '>
+    <div className='hover:bg-default-blue shadow-light-shadow group flex w-full flex-col gap-6 rounded-2xl bg-white px-6 py-10 transition duration-100 ease-in-out hover:-translate-y-4 '>
       <div className='my-4 flex items-center justify-center group-hover:text-white'>
         <Icon icon={icon} {...iconSize} />
       </div>

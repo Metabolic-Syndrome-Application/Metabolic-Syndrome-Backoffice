@@ -98,11 +98,13 @@ const ManageUserTable = () => {
     },
     {
       field: 'gender',
-      width: 150,
+      width: 100,
       renderHeader: () => <h5 className='font-bold'>เพศ</h5>,
       headerClassName: 'super-app-theme--header',
-      valueGetter: (params: GridValueGetterParams) =>
-        `${capitalize(params.row.gender || '')}`,
+      renderCell: (params: GridCellParams) => {
+        const genderText = params.row.gender === 'male' ? 'ชาย' : 'หญิง';
+        return <div>{capitalize(genderText)}</div>;
+      },
     },
     {
       field: 'Action',
@@ -127,7 +129,10 @@ const ManageUserTable = () => {
   ];
 
   return (
-    <div className='w-full md:max-w-[1200px]'>
+    // <div className='flex w-full items-center justify-center bg-blue-400 md:max-w-[1100px] lg:max-w-full'>
+    //   <BaseTable rows={users} columns={columns} />
+    // </div>
+    <div>
       <BaseTable rows={users} columns={columns} />
     </div>
   );

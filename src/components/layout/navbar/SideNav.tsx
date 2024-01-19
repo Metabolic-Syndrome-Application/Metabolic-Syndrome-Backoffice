@@ -28,10 +28,10 @@ const SideNav = ({ open, setOpen }: SideNavProps) => {
     <div
       className={`${
         open ? 'md:flex md:w-72' : 'md:flex md:w-24'
-      } md: fixed hidden h-screen flex-1 border-r border-zinc-200 bg-white`}
+      } md: fixed z-30 hidden h-screen flex-1 border-r border-zinc-200 bg-white`}
     >
       <FaAngleLeft
-        className={`hover:bg-light-gray absolute -right-3 top-11  w-8
+        className={`hover:bg-light-gray absolute -right-3 top-11 w-8
            cursor-pointer rounded-full border-2 bg-white ${
              !open && 'rotate-180'
            }`}

@@ -11,6 +11,7 @@ export interface IUserData {
   specialist: string;
 }
 
+//All Users (doctor & staff)
 export interface IGetProfileAllApi {
   data: {
     users: IUserData[];
@@ -18,6 +19,7 @@ export interface IGetProfileAllApi {
   status: string;
 }
 
+//Only Profile me
 export interface IGetProfileMeApi {
   data: {
     user: IUserData[];
