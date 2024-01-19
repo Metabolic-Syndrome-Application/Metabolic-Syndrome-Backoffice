@@ -1,8 +1,9 @@
 'use client';
 
 import { SessionProvider } from 'next-auth/react';
-import { ReactNode, useState } from 'react';
 import { SnackbarProvider } from 'notistack';
+import { ReactNode } from 'react';
+
 import { StyledMaterialDesignContent } from '@/components/alert/SnackbarStyles';
 
 interface Props {
@@ -10,8 +11,6 @@ interface Props {
 }
 
 const NextAuthProviders = ({ children }: Props) => {
-  const [interval, setInterval] = useState(0);
-
   return (
     <SnackbarProvider
       maxSnack={3}

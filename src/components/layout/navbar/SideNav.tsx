@@ -5,11 +5,11 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import React, { useState } from 'react';
+import { FaAngleLeft } from 'react-icons/fa';
 
 import { useSideNavbar } from '@/hooks/useSideNavbar';
 
 import { SideNavItem } from '@/types/navbar';
-import { FaAngleLeft } from 'react-icons/fa';
 
 type SideNavProps = {
   open: boolean;
@@ -51,7 +51,8 @@ const SideNav = ({ open, setOpen }: SideNavProps) => {
               width={350}
               height={350}
               alt='Hero'
-              priority={true}
+              placeholder='blur'
+              blurDataURL={'/assets/icons/logo.svg'}
             />
           </div>
           <span className={`${!open ? 'hidden' : 'text-xl font-bold md:flex'}`}>

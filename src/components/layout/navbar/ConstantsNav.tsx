@@ -24,6 +24,12 @@ export const SIDENAV_ITEMS: SideNavItem[] = [
     role: 'doctor',
   },
   {
+    title: 'ข้อมูลพยาบาล',
+    path: '/staff',
+    icon: <Icon icon='fa-solid:user-nurse' width='26' height='26' />,
+    role: 'staff',
+  },
+  {
     title: 'ข้อมูลคนไข้',
     path: '/patient/[tab]?tab=1',
     icon: <Icon icon='bxs:user' width='26' height='26' />,

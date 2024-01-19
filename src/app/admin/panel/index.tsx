@@ -4,7 +4,7 @@ import { useState } from 'react';
 
 import { IUser } from '@/types/user';
 
-const page = () => {
+const Panel = () => {
   const { data: session } = useSession();
   const [userData, setUserData] = useState<IUser>();
 
@@ -39,4 +39,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Panel;

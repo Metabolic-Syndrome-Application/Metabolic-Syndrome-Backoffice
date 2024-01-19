@@ -25,6 +25,7 @@ export default {
         'default-shadow': '0px 16px 40px 0px rgba(112, 144, 182, 0.20)',
         'light-shadow': '0px 8px 24px 0px rgba(221, 216, 216, 0.15)',
       },
+
       keyframes: {
         flicker: {
           '0%, 19.999%, 22%, 62.999%, 64%, 64.999%, 70%, 100%': {

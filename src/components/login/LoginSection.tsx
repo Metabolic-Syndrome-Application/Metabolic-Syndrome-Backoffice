@@ -1,9 +1,11 @@
 'use client';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { AxiosError } from 'axios';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { signIn } from 'next-auth/react';
-import React, { useEffect } from 'react';
+import { useSnackbar } from 'notistack';
+import React from 'react';
 import { useForm } from 'react-hook-form';
 
 import { InputText } from '@/components/form/InputText';
@@ -11,9 +13,6 @@ import {
   FormLoginProps,
   loginSchema,
 } from '@/components/form/validation/form-validation';
-import { useSnackbar } from 'notistack';
-import { AxiosError } from 'axios';
-import useAxiosAuth from '@/hooks/useAxiosAuth';
 
 type LoginProps = {
   callbackUrl?: string;
@@ -32,7 +31,8 @@ const LoginSection = (props: LoginProps) => {
     resolver: zodResolver(loginSchema),
   });
 
-  const onSubmit = async (data: FormLoginProps) => {
+  const onSubmit = async (data: FormLoginProps, e: any) => {
+    //e.preventDefault();
     const { username, password } = data;
     //if redirect: true, enqueueSnackbar success isn't to show
     try {
@@ -40,7 +40,7 @@ const LoginSection = (props: LoginProps) => {
         username: username,
         password,
         redirect: false,
-        callbackUrl: props.callbackUrl ?? 'http://localhost:3000',
+        callbackUrl: props.callbackUrl,
       });
       // Check if login is successful
       if (res && res.ok) {

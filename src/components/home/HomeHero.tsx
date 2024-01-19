@@ -34,7 +34,8 @@ const HomeHero = () => {
           width={350}
           height={350}
           alt='Hero'
-          priority={true}
+          placeholder='blur'
+          blurDataURL={'/assets/images/doctor.svg'}
         />
       </div>
     </div>
