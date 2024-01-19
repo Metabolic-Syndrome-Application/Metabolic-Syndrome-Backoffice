@@ -104,6 +104,7 @@ const EditForm = ({ loadData, api }: IEditMemberFormProps) => {
       console.log('Edit successful');
 
       // Reload the data after successful edit
+      enqueueSnackbar('edit success', { variant: 'success' });
       loadData();
       closeModal(); // Close the modal if needed
     } catch (error) {

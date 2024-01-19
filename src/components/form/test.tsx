@@ -25,6 +25,7 @@ import {
   medicalDepartment,
   medicalSpecialist,
 } from '@/constant/question';
+
 const Test = () => {
   const { data: session } = useSession();
   const { enqueueSnackbar } = useSnackbar();
@@ -40,12 +41,6 @@ const Test = () => {
     mode: 'onChange',
     resolver: zodResolver(registerDoctorSchema),
   });
-
-  // const submitData = (data: FormRegisterDoctorProps) => {
-  //   console.log('it worked', data);
-  // };
-
-  //console.log('isValid', isValid);
 
   const onSubmit = async (data: FormRegisterDoctorProps) => {
     const {
@@ -101,6 +96,7 @@ const Test = () => {
         );
         console.log('Create Profile API Response:', createProfileResponse);
         enqueueSnackbar('Register Success', { variant: 'success' });
+
         // Do something after the API call
       } else {
         // Handle the case where the user is not an admin

@@ -24,19 +24,21 @@ const tableStyles = {
 
 const BaseTable = ({ rows, columns }: ITableProps) => {
   return (
-    <div className='mx-4 h-[600px] max-w-[450px] sm:max-w-[600px] md:max-w-[1180px]'>
-      <DataGrid
-        rows={rows}
-        columns={columns}
-        autoHeight={false}
-        rowHeight={56}
-        initialState={{
-          // ...data.initialState,
-          pagination: { paginationModel: { pageSize: 10 } },
-        }}
-        pageSizeOptions={[10, 25, 50]}
-        sx={tableStyles}
-      />
+    <div className='flex w-full items-center justify-center px-1 py-4 md:px-2 lg:max-w-[1180px] xl:max-w-full'>
+      <div className='h-[600px] max-w-[450px] sm:max-w-[600px] md:max-w-[900px] lg:max-w-[1100px] 2xl:min-w-fit'>
+        <DataGrid
+          rows={rows}
+          columns={columns}
+          autoHeight={false}
+          rowHeight={56}
+          initialState={{
+            // ...data.initialState,
+            pagination: { paginationModel: { pageSize: 10 } },
+          }}
+          pageSizeOptions={[10, 25, 50]}
+          sx={tableStyles}
+        />
+      </div>
     </div>
   );
 };
