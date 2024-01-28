@@ -4,7 +4,7 @@ import { SessionProvider } from 'next-auth/react';
 import { SnackbarProvider } from 'notistack';
 import { ReactNode } from 'react';
 
-import { StyledMaterialDesignContent } from '@/components/alert/SnackbarStyles';
+import { StyledMaterialDesignContent } from '@/components/common/alert/SnackbarStyles';
 
 interface Props {
   children: ReactNode;

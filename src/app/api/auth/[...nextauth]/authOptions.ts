@@ -4,7 +4,7 @@ import { parse } from 'cookie';
 import { cookies } from 'next/headers';
 import type { NextAuthOptions } from 'next-auth/index';
 import CredentialsProvider from 'next-auth/providers/credentials';
-import { signOut } from 'next-auth/react';
+import { signIn, signOut } from 'next-auth/react';
 
 import axios from '@/lib/axios';
 import { isRefreshTokenExpired } from '@/lib/jwt';
@@ -185,7 +185,7 @@ export const authOptions: NextAuthOptions = {
 
         // Check if refresh token is expired
         if (isRefreshTokenExpired(session.user.refresh_token)) {
-          await signOut();
+          await signIn();
         }
       }
 

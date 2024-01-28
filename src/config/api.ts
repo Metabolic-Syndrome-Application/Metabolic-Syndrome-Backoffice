@@ -4,6 +4,9 @@ export const API_PATH = {
   POST_LOGIN: '/api/auth/login',
   GET_PROFILE_ALL: '/api/user/profile/all',
   GET_PROFILE_ME: '/api/user/profile',
+  PUT_PROFILE_ME: '/api/user/profile',
+
+  //not use
   DELETE_LOGOUT: '/v1/session',
   POST_RENEW_APP_TOKEN: '/v1/session/refresh',
   POST_RENEW_TMN_TOKEN: '/v1/session/tmn/refresh',

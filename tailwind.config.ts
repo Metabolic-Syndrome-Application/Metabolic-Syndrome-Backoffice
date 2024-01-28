@@ -23,7 +23,8 @@ export default {
       },
       boxShadow: {
         'default-shadow': '0px 16px 40px 0px rgba(112, 144, 182, 0.20)',
-        'light-shadow': '0px 8px 24px 0px rgba(221, 216, 216, 0.15)',
+        'light-shadow':
+          'rgb(239, 240, 244) 0px -1px 0px inset, rgb(239, 240, 244) 0px 1px 0px inset',
       },
 
       keyframes: {

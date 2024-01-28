@@ -15,10 +15,8 @@ import { InputDropdown } from '@/components/form/InputDropdown';
 import { InputText } from '@/components/form/InputText';
 import { RadioOption } from '@/components/form/RadioOption';
 import {
-  FormEditProps,
-  FormRegisterDoctorProps,
-  editSchema,
-  registerDoctorSchema,
+  FormCreateProfileDoctorProps,
+  createProfileDoctorSchema,
 } from '@/components/form/validation/form-validation';
 
 import {
@@ -45,51 +43,12 @@ const EditForm = ({ loadData, api }: IEditMemberFormProps) => {
     control,
     handleSubmit,
     formState: { errors, isValid },
-  } = useForm<FormEditProps>({
+  } = useForm<FormCreateProfileDoctorProps>({
     mode: 'onChange',
-    resolver: zodResolver(editSchema),
+    resolver: zodResolver(createProfileDoctorSchema),
   });
 
-  const loadUsers = async () => {
-    try {
-      const {
-        data: { data },
-      } = await axiosAuth.get(API_PATH.GET_PROFILE_ALL);
-    } catch (error) {
-      console.log('error', error);
-    }
-  };
-
-  // const onSubmit = async (data: FormEditProps) => {
-  //   setWaiting(true);
-  //   const { prefix, firstName, lastName, gender, department, specialist } =
-  //     data;
-  //   console.log('Submitted data:', data);
-
-  //   try {
-  //     const editProfile = await axiosAuth.put(`${api}`, {
-  //       prefix,
-  //       firstName,
-  //       lastName,
-  //       gender,
-  //       department,
-  //       specialist,
-  //     });
-
-  //     console.log('Edit Profile API Response:', editProfile);
-
-  //     enqueueSnackbar('Edit Success', { variant: 'success' });
-
-  //     // Reload the data grid after successful edit
-  //     loadUsers();
-  //   } catch (error) {
-  //     setWaiting(false);
-  //     console.log('Error:', error);
-  //     enqueueSnackbar('Cannot edit', { variant: 'error' });
-  //   }
-  // };
-
-  const onSubmit = async (data: FormEditProps) => {
+  const onSubmit = async (data: FormCreateProfileDoctorProps) => {
     try {
       // Make the API call and handle success
       await axiosAuth.put(`${api}`, {

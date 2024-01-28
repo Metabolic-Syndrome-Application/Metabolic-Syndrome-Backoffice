@@ -8,8 +8,8 @@ export const metadata: Metadata = {
 
 export default function Loading() {
   return (
-    <div className='absolute right-0 top-0 flex h-screen w-screen flex-col  items-center justify-center bg-white'>
-      <div className='flex items-center'>
+    <div className='absolute inset-0 flex h-screen w-full flex-col items-center justify-center bg-white'>
+      <div className='flex items-center justify-center'>
         <Image
           src='/assets/images/loading.gif'
           alt='My GIF'

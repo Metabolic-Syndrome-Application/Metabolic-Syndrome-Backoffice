@@ -3,7 +3,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useSession } from 'next-auth/react';
 import { useSnackbar } from 'notistack';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { FaUserDoctor } from 'react-icons/fa6';
 
@@ -25,13 +25,17 @@ import {
   medicalDepartment,
   medicalSpecialist,
 } from '@/constant/question';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchUsers } from '@/redux/slices/usersSlice';
 
 const Test = () => {
   const { data: session } = useSession();
-  const { enqueueSnackbar } = useSnackbar();
   const axiosAuth = useAxiosAuth();
+  const { enqueueSnackbar } = useSnackbar();
 
   const { Modal, openModal, closeModal } = useModal();
+
+  const dispatch = useDispatch<any>();
 
   const {
     control,
@@ -63,7 +67,7 @@ const Test = () => {
       // Check if the user is logged in
       if (!userRole) {
         console.log('User is not logged in.');
-        // Handle the case where the user is not logged in
+
         return;
       }
 
@@ -94,10 +98,10 @@ const Test = () => {
             specialist,
           }
         );
+
         console.log('Create Profile API Response:', createProfileResponse);
         enqueueSnackbar('Register Success', { variant: 'success' });
-
-        // Do something after the API call
+        dispatch(fetchUsers());
       } else {
         // Handle the case where the user is not an admin
         console.log('User is not authorized to create a profile.');

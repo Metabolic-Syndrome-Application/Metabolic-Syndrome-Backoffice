@@ -1,3 +1,7 @@
+import { cn } from '@/lib/utils';
+import { Avatar } from '@mui/material';
+import React from 'react';
+
 function stringToColor(string: string) {
   let hash = 0;
   let i;
@@ -18,9 +22,22 @@ function stringToColor(string: string) {
   return color;
 }
 
-export function stringAvatar(name: string) {
+export function stringAvatar(
+  name: string,
+  size: 'small' | 'medium' | 'large' = 'small' //Default is 'small'
+) {
+  const sizeVariants = {
+    small: { width: 40, height: 40 },
+    medium: { width: 56, height: 56 },
+    large: { width: 96, height: 96 },
+  };
+
+  const { width, height } = sizeVariants[size];
+
   return {
     sx: {
+      width,
+      height,
       bgcolor: stringToColor(name),
     },
     children: name.charAt(0), // Display only the first character of the name

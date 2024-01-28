@@ -112,7 +112,7 @@ const DoctorTable = () => {
 
   return (
     <div className='w-full md:max-w-[1200px]'>
-      <BaseTable rows={users} columns={columns} />
+      <BaseTable rows={users} columns={columns} loading={undefined} />
     </div>
   );
 };

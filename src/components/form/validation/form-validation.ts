@@ -19,14 +19,14 @@ export type FormRegisterDoctorProps = {
   //doctor?: string | null;
 };
 
-export type FormEditProps = {
+export type FormCreateProfileDoctorProps = {
+  id: string;
   prefix: string;
   firstName: string;
   lastName: string;
   gender: string;
   department: string;
   specialist: string;
-  //doctor?: string | null;
 };
 
 //validator check
@@ -86,8 +86,8 @@ export const registerDoctorSchema = z
     path: ['confirmPassword'],
   });
 
-// Register for Doctor/Staff
-export const editSchema = z.object({
+// Profile for Doctor/Staff
+export const createProfileDoctorSchema = z.object({
   prefix: validateMinMax(
     2,
     12,
@@ -109,55 +109,3 @@ export const editSchema = z.object({
   department: baseStringValidator,
   specialist: baseStringValidator,
 });
-
-// import * as yup from 'yup';
-
-// export const createTeamSchema = yup.object({
-//   name: yup.string().required('Team name is required'),
-//   initials: yup.string().required('Team initials is required'),
-//   roleTemplate: yup.array().of(
-//     yup.object().shape({
-//       type: yup.string().required(),
-//       value: yup.string().required('Role is required'),
-//     })
-//   ),
-//   visions: yup.array().of(
-//     yup.object().shape({
-//       type: yup.string().required(),
-//       value: yup.string().required('Vision is required'),
-//     })
-//   ),
-// });
-
-// export const registerSchema = yup.object({
-//   firstName: yup.string().required(),
-//   lastName: yup.string().required(),
-//   phoneNumber: yup
-//     .string()
-//     .matches(/^[0-9]+$/, 'Must be only digits')
-//     .min(10, 'Phone number must be exactly 10 digits')
-//     .max(10, 'Phone number must be exactly 10 digits')
-//     .typeError('Phone must be only number')
-//     .required('Phone is required'),
-//   email: yup.string().email().required(),
-//   password: yup.string().required(),
-// });
-
-// export const loginSchema = yup.object({
-//   email: yup.string().email().required(),
-//   password: yup.string().required(),
-// });
-
-// export const transformTimeFormat = (date: Date) => {
-//   const hours = date.getHours().toString().padStart(2, '0');
-//   const minutes = date.getMinutes().toString().padStart(2, '0');
-
-//   return `${hours}:${minutes}`;
-// };
-
-// export const transformDateFormat = (date: Date) => {
-//   const year = date.getFullYear();
-//   const month = (date.getMonth() + 1).toString().padStart(2, '0');
-//   const day = date.getDate().toString().padStart(2, '0');
-//   return `${year}-${month}-${day}`;
-// };
