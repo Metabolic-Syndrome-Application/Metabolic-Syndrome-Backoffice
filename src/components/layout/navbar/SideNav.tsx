@@ -28,7 +28,7 @@ const SideNav = ({ open, setOpen }: SideNavProps) => {
     <div
       className={`${
         open ? 'md:flex md:w-72' : 'md:flex md:w-24'
-      } md: fixed z-30 hidden h-screen flex-1 border-r border-zinc-200 bg-white`}
+      } md: fixed z-20 hidden h-screen flex-1 border-r border-zinc-200 bg-white`}
     >
       <FaAngleLeft
         className={`hover:bg-light-gray absolute -right-3 top-11 w-8
@@ -52,7 +52,7 @@ const SideNav = ({ open, setOpen }: SideNavProps) => {
               height={350}
               alt='Hero'
               placeholder='blur'
-              blurDataURL={'/assets/icons/logo.svg'}
+              blurDataURL='/assets/icons/logo.svg'
             />
           </div>
           <span className={`${!open ? 'hidden' : 'text-xl font-bold md:flex'}`}>

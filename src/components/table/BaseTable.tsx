@@ -1,8 +1,10 @@
-import { DataGrid } from '@mui/x-data-grid';
+import { DataGrid, GridToolbar, useGridApiRef } from '@mui/x-data-grid';
+import React from 'react';
 
 interface ITableProps {
   rows: any[];
   columns: any[];
+  loading: any;
 }
 
 const tableStyles = {
@@ -23,14 +25,25 @@ const tableStyles = {
 };
 
 const BaseTable = ({ rows, columns }: ITableProps) => {
+  const apiRef = useGridApiRef();
+  const [loading, setLoading] = React.useState(false);
+
   return (
     <div className='flex w-full items-center justify-center px-1 py-4 md:px-2 lg:max-w-[1180px] xl:max-w-full'>
       <div className='h-[600px] max-w-[450px] sm:max-w-[600px] md:max-w-[900px] lg:max-w-[1100px] 2xl:min-w-fit'>
         <DataGrid
           rows={rows}
           columns={columns}
+          loading={loading}
           autoHeight={false}
           rowHeight={56}
+          apiRef={apiRef}
+          slots={{ toolbar: GridToolbar }}
+          slotProps={{
+            toolbar: {
+              showQuickFilter: true,
+            },
+          }}
           initialState={{
             // ...data.initialState,
             pagination: { paginationModel: { pageSize: 10 } },

@@ -22,7 +22,7 @@ export interface IGetProfileAllApi {
 //Only Profile me
 export interface IGetProfileMeApi {
   data: {
-    user: IUserData[];
+    user: IUserData;
   };
   status: string;
 }

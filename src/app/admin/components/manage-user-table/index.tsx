@@ -5,44 +5,50 @@ import {
   GridValueGetterParams,
 } from '@mui/x-data-grid';
 import { useSession } from 'next-auth/react';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 import useAxiosAuth from '@/hooks/useAxiosAuth';
 
 import DeleteButton from '@/components/buttons/delete-button';
-import { addIndex } from '@/components/helpers/number';
 import BaseTable from '@/components/table/BaseTable';
 
-import { API_PATH } from '@/config/api';
-
-import { IGetProfileAllApi, IUserData } from '@/types/profile';
 import EditForm from '@/app/admin/components/EditForm';
+import { fetchUsers, selectAllUsers } from '@/redux/slices/usersSlice';
 
 const ManageUserTable = () => {
   const { data: session } = useSession();
   const axiosAuth = useAxiosAuth();
 
-  const [users, setUsers] = useState<IUserData[]>([]);
+  //const [users, setUsers] = useState<IUserData[]>([]);
+  const users = useSelector(selectAllUsers);
 
-  const loadUsers = async () => {
-    try {
-      const {
-        data: { data },
-      } = await axiosAuth.get<IGetProfileAllApi>(API_PATH.GET_PROFILE_ALL);
-      //console.log('data', data);
-      const dataAddIndex = addIndex(data.users);
+  console.log('Users:', users);
 
-      setUsers(dataAddIndex);
-      //console.log('usersWithIndex', dataAddIndex);
-    } catch (error) {
-      console.log('error', error);
-    }
-  };
+  const dispatch = useDispatch<any>();
+
+  // const loadUsers = async () => {
+  //   try {
+  //     const {
+  //       data: { data },
+  //     } = await axiosAuth.get<IGetProfileAllApi>(API_PATH.GET_PROFILE_ALL);
+  //     //console.log('data', data);
+  //     const dataAddIndex = addIndex(data.users);
+
+  //     dispatch(getUsers(dataAddIndex));
+  //     //setUsers(dataAddIndex);
+
+  //     console.log('usersWithIndex', dataAddIndex);
+  //   } catch (error) {
+  //     console.log('error', error);
+  //   }
+  // };
 
   useEffect(() => {
     if (session && session.user) {
       // If session exists, load users
-      loadUsers();
+      //loadUsers();
+      dispatch(fetchUsers());
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [session]);
@@ -61,9 +67,9 @@ const ManageUserTable = () => {
       headerClassName: 'super-app-theme--header',
       renderCell: (params: GridCellParams) => (
         <div>
-          <div>{`${capitalize(params.row.firstName || '')} ${capitalize(
-            params.row.lastName || ''
-          )}`}</div>
+          <div>{`${capitalize(params.row.prefix || '')} ${capitalize(
+            params.row.firstName
+          )} ${capitalize(params.row.lastName || '')}`}</div>
           <div className='text-default-blue '>
             {capitalize(params.row.username || '')}
           </div>
@@ -115,11 +121,11 @@ const ManageUserTable = () => {
         return (
           <div className='flex flex-row items-center space-x-4'>
             <EditForm
-              loadData={loadUsers}
+              loadData={fetchUsers}
               api={`http://localhost:8000/api/user/profile/${params.row.role}/${params.row.id}`}
             />
             <DeleteButton
-              loadData={loadUsers}
+              loadData={fetchUsers}
               api={`/api/user/profile/${params.row.role}/${params.row.id}`}
             />
           </div>
@@ -129,11 +135,8 @@ const ManageUserTable = () => {
   ];
 
   return (
-    // <div className='flex w-full items-center justify-center bg-blue-400 md:max-w-[1100px] lg:max-w-full'>
-    //   <BaseTable rows={users} columns={columns} />
-    // </div>
     <div>
-      <BaseTable rows={users} columns={columns} />
+      <BaseTable rows={users} columns={columns} loading={!users.length} />
     </div>
   );
 };

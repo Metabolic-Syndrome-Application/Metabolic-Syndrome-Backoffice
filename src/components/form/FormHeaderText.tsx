@@ -16,10 +16,10 @@ const FormHeaderText = ({
   const HeaderSize = useBigestHeader ? 'h3' : 'h4';
 
   return (
-    <div className='flex w-full items-center justify-center p-2'>
+    <div className='flex w-full items-center justify-center py-2'>
       <div
         className={cn('flex w-full border-b', {
-          'mb-2 border-gray-300 p-2 md:mb-4 ': useBigestHeader,
+          'mb-2 border-gray-300 px-2 md:mb-4': useBigestHeader,
           'border-light-gray ': !useBigestHeader,
         })}
       >

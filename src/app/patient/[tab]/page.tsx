@@ -2,7 +2,7 @@
 
 import { Tab } from '@headlessui/react';
 import Link from 'next/link';
-import { useParams, usePathname, useRouter } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import { redirect } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import React from 'react';
@@ -21,6 +21,7 @@ const PatientPage = () => {
     return <h1 className='text-5xl'>Access Denied</h1>;
   }
 
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const router = useRouter();
 
   const tabs = ['information', 'healthRecord', 'note'];
@@ -29,6 +30,7 @@ const PatientPage = () => {
   // const pathname = usePathname();
   //console.log('path', pathname);
 
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const searchParams = useParams();
 
   //check click tab
@@ -55,6 +57,8 @@ const PatientPage = () => {
 
   return (
     <div className='p-4'>
+      <h1>ข้อมูลคนไข้</h1>
+
       <Tab.Group
         selectedIndex={selectedIndex}
         // onChange={(index) => {

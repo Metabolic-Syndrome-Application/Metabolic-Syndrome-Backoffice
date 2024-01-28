@@ -67,16 +67,16 @@ const medicalSpecialist = [
 //Radio Button Options
 const dataOptions = {
   roleOptions: [
-    { label: 'หมอ', value: 'doctor' },
-    { label: 'พยาบาล', value: 'staff' },
+    { label: 'หมอ', value: 'หมอ' },
+    { label: 'พยาบาล', value: 'พยาบาล' },
   ],
   accountOptions: [
-    { label: 'ยังไม่เคยบัญชี', value: 'noAccount' },
-    { label: 'มีบัญชีแล้ว', value: 'haveAccount' },
+    { label: 'ยังไม่เคยบัญชี', value: 'ยังไม่เคยบัญชี' },
+    { label: 'มีบัญชีแล้ว', value: 'มีบัญชีแล้ว' },
   ],
   genderOptions: [
-    { label: 'ชาย', value: 'male' },
-    { label: 'หญิง', value: 'female' },
+    { label: 'ชาย', value: 'ชาย' },
+    { label: 'หญิง', value: 'หญิง' },
   ],
 };
 

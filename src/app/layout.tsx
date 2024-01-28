@@ -11,6 +11,7 @@ import NextAuthProviders from '@/components/login/NextAuthProviders';
 
 import Loading from '@/app/loading';
 import { siteConfig } from '@/constant/config';
+import ReduxProvider from '@/redux/Provider';
 
 //👇 Configure our local font object
 
@@ -76,7 +77,7 @@ export default async function RootLayout({
             <Suspense fallback={<Loading />}>
               <NavbarLayout>
                 {/* <SignInButton /> */}
-                {children}
+                <ReduxProvider>{children}</ReduxProvider>
               </NavbarLayout>
             </Suspense>
           </NextAuthProviders>
