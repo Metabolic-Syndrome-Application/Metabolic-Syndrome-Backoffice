@@ -37,7 +37,7 @@ const BaseTable = ({ rows, columns }: ITableProps) => {
           loading={loading}
           autoHeight={false}
           rowHeight={56}
-          apiRef={apiRef}
+          //apiRef={apiRef}
           slots={{ toolbar: GridToolbar }}
           slotProps={{
             toolbar: {

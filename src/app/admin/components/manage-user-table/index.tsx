@@ -76,16 +76,20 @@ const ManageUserTable = () => {
           </span>
         </div>
       ),
+      valueGetter: (params: GridValueGetterParams) => {
+        const prefix = params.row.prefix || '';
+        const firstName = params.row.firstName || '';
+        const lastName = params.row.lastName || '';
+        return `${prefix} ${firstName} ${lastName}`.toLowerCase();
+      },
     },
     {
       field: 'role',
       width: 120,
       renderHeader: () => <h5 className='font-bold'>บทบาท</h5>,
       headerClassName: 'super-app-theme--header',
-      renderCell: (params: GridCellParams) => {
-        const roleText = params.row.role === 'doctor' ? 'หมอ' : 'พยาบาล';
-        return <div>{roleText}</div>;
-      },
+      valueGetter: (params: GridValueGetterParams) =>
+        params.row.role === 'doctor' ? 'หมอ' : 'พยาบาล',
     },
     {
       field: 'department',
@@ -108,10 +112,8 @@ const ManageUserTable = () => {
       width: 100,
       renderHeader: () => <h5 className='font-bold'>เพศ</h5>,
       headerClassName: 'super-app-theme--header',
-      renderCell: (params: GridCellParams) => {
-        const genderText = params.row.gender === 'male' ? 'ชาย' : 'หญิง';
-        return <div>{genderText}</div>;
-      },
+      valueGetter: (params: GridValueGetterParams) =>
+        params.row.gender === 'male' ? 'ชาย' : 'หญิง',
     },
     {
       field: 'Action',

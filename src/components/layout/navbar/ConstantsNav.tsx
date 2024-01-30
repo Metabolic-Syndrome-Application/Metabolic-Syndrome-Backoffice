@@ -39,7 +39,7 @@ export const SIDENAV_ITEMS: SideNavItem[] = [
     title: 'แผนสุขภาพ',
     path: '/plan',
     icon: <Icon icon='icon-park-solid:plan' width='26' height='26' />,
-    role: 'allRole',
+    role: 'doctor,staff',
   },
   {
     title: 'ภารกิจ',
@@ -51,7 +51,7 @@ export const SIDENAV_ITEMS: SideNavItem[] = [
       { title: 'Web Design', path: '/projects/web-design' },
       { title: 'Graphic Design', path: '/projects/graphic-design' },
     ],
-    role: 'allRole',
+    role: 'doctor,staff',
   },
   {
     title: 'client',
