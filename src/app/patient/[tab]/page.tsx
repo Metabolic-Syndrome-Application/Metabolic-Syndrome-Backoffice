@@ -3,24 +3,11 @@
 import { Tab } from '@headlessui/react';
 import Link from 'next/link';
 import { useParams, useRouter } from 'next/navigation';
-import { redirect } from 'next/navigation';
-import { useSession } from 'next-auth/react';
 import React from 'react';
 
 import { cn } from '@/lib/utils';
 
-const PatientPage = () => {
-  const { data: session } = useSession({
-    required: true,
-    onUnauthenticated() {
-      redirect('/api/auth/signin?callbackUrl=/client');
-    },
-  });
-
-  if (session?.user.role !== 'staff' && session?.user.role !== 'doctor') {
-    return <h1 className='text-5xl'>Access Denied</h1>;
-  }
-
+const TestPage = () => {
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const router = useRouter();
 
@@ -95,4 +82,4 @@ const PatientPage = () => {
     </div>
   );
 };
-export default PatientPage;
+export default TestPage;

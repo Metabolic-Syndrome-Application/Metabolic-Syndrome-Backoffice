@@ -1,10 +1,11 @@
 'use client';
+import { ReactNode, useState } from 'react';
+
 import HeaderMobile from '@/components/layout/navbar/HeaderMobile';
 import HeaderNav from '@/components/layout/navbar/HeaderNav';
 import MarginWidthWrapper from '@/components/layout/navbar/MarginWidthWrapper';
 import PageWrapper from '@/components/layout/navbar/PageWrapper';
 import SideNav from '@/components/layout/navbar/SideNav';
-import { ReactNode, useState } from 'react';
 
 const NavbarLayout = ({ children }: { children: ReactNode }) => {
   const [open, setOpen] = useState(true);

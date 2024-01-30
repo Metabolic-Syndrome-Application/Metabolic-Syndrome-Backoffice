@@ -6,15 +6,16 @@ import { useTabbed } from '@/hooks/useTabbed';
 
 import { TabbedListProps } from '@/types/tab';
 
-export const SubTabbedList = ({
+export const TabbedList = ({
   tabs,
   listClassName,
   panelClassName,
+  allPanelClassName,
 }: TabbedListProps) => {
   const { tab, handleChange } = useTabbed();
 
   return (
-    <div className={cn('w-full p-2', panelClassName)}>
+    <div className={cn('w-full p-2', allPanelClassName)}>
       <Tab.Group selectedIndex={tab} onChange={handleChange}>
         <Tab.List
           className={cn(
@@ -45,7 +46,10 @@ export const SubTabbedList = ({
 
         <Tab.Panels>
           {tabs.map((data, _index) => (
-            <Tab.Panel key={data.id} className={cn('flex rounded-xl')}>
+            <Tab.Panel
+              key={data.id}
+              className={(cn('flex rounded-xl'), panelClassName)}
+            >
               {data.component}
             </Tab.Panel>
           ))}

@@ -5,7 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import React, { useState } from 'react';
-import { FaAngleLeft } from 'react-icons/fa';
+import { RxDoubleArrowLeft } from 'react-icons/rx';
 
 import { useSideNavbar } from '@/hooks/useSideNavbar';
 
@@ -30,9 +30,9 @@ const SideNav = ({ open, setOpen }: SideNavProps) => {
         open ? 'md:flex md:w-72' : 'md:flex md:w-24'
       } md: fixed z-20 hidden h-screen flex-1 border-r border-zinc-200 bg-white`}
     >
-      <FaAngleLeft
-        className={`hover:bg-light-gray absolute -right-3 top-11 w-8
-           cursor-pointer rounded-full border-2 bg-white ${
+      <RxDoubleArrowLeft
+        className={`hover:bg-light-gray text-default-gray absolute -right-3 top-11
+           w-8 cursor-pointer rounded-full border-[1.5px] bg-white ${
              !open && 'rotate-180'
            }`}
         onClick={() => setOpen(!open)}

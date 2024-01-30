@@ -9,6 +9,7 @@ export interface TabbedListProps {
   tabs: TabConfig[];
   listClassName?: string;
   panelClassName?: string;
+  allPanelClassName?: string;
 }
 
 export interface TabPanelProps {

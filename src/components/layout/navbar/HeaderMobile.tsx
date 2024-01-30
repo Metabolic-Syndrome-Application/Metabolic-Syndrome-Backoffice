@@ -55,7 +55,8 @@ const HeaderMobile = () => {
         className='absolute grid w-full gap-3 px-10 py-16'
       >
         {customRoleNav.map((item, idx) => {
-          const isLastItem = idx === customRoleNav.length - 1; // Check if it's the last item
+          const isSecondLastItem = idx === customRoleNav.length - 2; // Check if it's the second to last item
+          const isLogoutItem = item.title === 'ออกจากระบบ';
 
           return (
             <div key={idx}>
@@ -68,15 +69,26 @@ const HeaderMobile = () => {
                     onClick={() => toggleOpen()}
                     className={`flex w-full text-2xl ${
                       item.path === pathname ? 'font-medium' : ''
-                    }`}
+                    } ${isLogoutItem ? 'hidden' : ''}`}
                   >
                     {item.title}
                   </Link>
                 </MenuItem>
               )}
 
-              {!isLastItem && (
+              {!isSecondLastItem && !isLogoutItem && (
                 <MenuItem className='my-3 flex h-px w-full justify-end bg-gray-300' />
+              )}
+              {/* Check if it's the title is "ออกจากระบบ" */}
+              {isLogoutItem && (
+                <MenuItem className='bg-light-gray mt-10 flex w-full items-center justify-center rounded-lg p-2 active:bg-gray-300'>
+                  <Link
+                    href={item.path}
+                    className='text-default-gray text-2xl focus:font-medium'
+                  >
+                    {item.title}
+                  </Link>
+                </MenuItem>
               )}
             </div>
           );

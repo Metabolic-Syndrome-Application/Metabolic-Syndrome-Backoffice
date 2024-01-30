@@ -1,5 +1,6 @@
-import LoginSection from '@/components/login/LoginSection';
 import React from 'react';
+
+import LoginSection from '@/components/login/LoginSection';
 
 type Props = {
   error: any;

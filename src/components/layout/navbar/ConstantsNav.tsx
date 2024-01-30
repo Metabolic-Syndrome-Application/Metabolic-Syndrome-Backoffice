@@ -34,20 +34,24 @@ export const SIDENAV_ITEMS: SideNavItem[] = [
     path: '/patient',
     icon: <Icon icon='bxs:user' width='26' height='26' />,
     role: 'doctor,staff',
-    gap: true,
   },
-
   {
     title: 'แผนสุขภาพ',
     path: '/plan',
-    icon: <Icon icon='icon-park-solid:plan' width='24' height='24' />,
+    icon: <Icon icon='icon-park-solid:plan' width='26' height='26' />,
+    role: 'allRole',
+  },
+  {
+    title: 'ภารกิจ',
+    path: '/challange',
+    icon: <Icon icon='octicon:goal-16' width='26' height='26' />,
     submenu: true,
     subMenuItems: [
       { title: 'All', path: '/manage-users' },
       { title: 'Web Design', path: '/projects/web-design' },
       { title: 'Graphic Design', path: '/projects/graphic-design' },
     ],
-    role: 'doctor',
+    role: 'allRole',
   },
   {
     title: 'client',

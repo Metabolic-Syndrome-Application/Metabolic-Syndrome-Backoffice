@@ -1,20 +1,17 @@
-import { Avatar, Input, TextField } from '@mui/material';
+import { Avatar } from '@mui/material';
 import { useSession } from 'next-auth/react';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 import useAxiosAuth from '@/hooks/useAxiosAuth';
 
 import FormHeaderText from '@/components/form/FormHeaderText';
+import { TextFieldInfo } from '@/components/form/TextFieldInfo';
 import { stringAvatar } from '@/components/layout/navbar/Avatar';
 
-import Loading from '@/app/loading';
-import { API_PATH } from '@/config/api';
-
-import { IGetProfileMeApi, IUserData } from '@/types/profile';
-import { TextFieldInfo } from '@/components/form/TextFieldInfo';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchUser, selectUser } from '@/redux/slices/profileSlice';
 import EditProfile from '@/app/doctor/components/EditProfile';
+import Loading from '@/app/loading';
+import { fetchUser, selectUser } from '@/redux/slices/profileSlice';
 
 const Profile = () => {
   const { data: session, status } = useSession();

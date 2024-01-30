@@ -3,7 +3,7 @@ import { LucideIcon } from 'lucide-react';
 import { ButtonHTMLAttributes } from 'react';
 import { IconType } from 'react-icons';
 
-//IconFlat Btn
+//IconFlat Button
 export interface IconFlatButtonProps
   extends ButtonHTMLAttributes<HTMLButtonElement> {
   title: string;
