@@ -81,6 +81,9 @@ const ManagePatientTable = () => {
           </ColorButton>
         );
       },
+      //valueGetter can search/filter : wait fix
+      valueGetter: (params: GridValueGetterParams) =>
+        `${params.row.status || 'pending'}`,
     },
 
     {
