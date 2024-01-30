@@ -24,6 +24,7 @@ export const useSideNavbar = () => {
           item.role === 'doctor' ||
           item.path.startsWith('/patient') ||
           item.path === '/plan' ||
+          item.path === '/challenge' ||
           item.role === 'allRole'
         );
       case 'staff':
@@ -33,6 +34,7 @@ export const useSideNavbar = () => {
           item.role === 'doctor,staff' ||
           // item.path.startsWith('/patient') ||
           item.path === '/plan' ||
+          item.path === '/challenge' ||
           item.role === 'allRole'
         );
       default:

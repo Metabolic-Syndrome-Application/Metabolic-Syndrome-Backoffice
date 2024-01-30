@@ -1,20 +1,10 @@
 'use client';
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 
 import useModal from '@/hooks/useModal';
 
-import Test from '@/app/admin/components/AddForm';
-
-import ManageUserTable from '@/app/admin/components/manage-user-table';
-import EditForm from '@/app/admin/components/EditForm';
-import { axiosAuth } from '@/lib/axios';
-import { IGetProfileAllApi } from '@/types/profile';
-import { addIndex } from '@/components/helpers/number';
-import { useDispatch, useSelector } from 'react-redux';
-
-import { API_PATH } from '@/config/api';
 import AddForm from '@/app/admin/components/AddForm';
-import { fetchUsers } from '@/redux/slices/usersSlice';
+import ManageUserTable from '@/app/admin/components/manage-user-table';
 
 const AdminPage = () => {
   const { Modal, openModal, closeModal } = useModal();

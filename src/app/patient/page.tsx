@@ -5,7 +5,6 @@ import { useSession } from 'next-auth/react';
 import React from 'react';
 
 import PatientTable from '@/app/patient/components/manage-patient-table/PatientTable';
-import { MainPatientTabs } from '@/app/patient/components/tabs';
 
 const PatientPage = () => {
   const { data: session } = useSession({
@@ -22,7 +21,6 @@ const PatientPage = () => {
   return (
     <div className='p-4'>
       <h1>ข้อมูลคนไข้</h1>
-      <MainPatientTabs></MainPatientTabs>
       <PatientTable />
     </div>
   );

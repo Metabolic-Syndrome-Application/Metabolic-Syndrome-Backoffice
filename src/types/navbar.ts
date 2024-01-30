@@ -5,7 +5,6 @@ export type SideNavItem = {
   submenu?: boolean;
   subMenuItems?: SideNavItem[];
   role?: string | undefined;
-  gap?: boolean;
 };
 
 export type MenuItemWithSubMenuProps = {

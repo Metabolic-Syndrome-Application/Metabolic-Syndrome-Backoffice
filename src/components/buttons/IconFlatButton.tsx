@@ -14,10 +14,17 @@ export const IconFlatButton: React.FC<IconFlatButtonProps> = ({
   return (
     <button
       type='button'
-      className='bg-default-blue hover:bg-dark-blue active:bg-bg-dark-blue flex max-w-[150px] cursor-pointer items-center justify-center gap-2 whitespace-nowrap rounded-xl px-2 py-2 text-sm font-medium text-white md:px-4 md:text-base'
+      className={cn(
+        'flex max-w-[150px] items-center justify-center gap-1.5 whitespace-nowrap rounded-xl',
+        'px-3 py-2 text-sm font-medium md:px-4 md:text-base',
+        'bg-default-blue text-white',
+        'hover:bg-dark-blue',
+        'active:ring-light-blue active:bg-dark-blue cursor-pointer focus:outline-none active:ring-2',
+        'disabled:opacity-36 disabled:bg-[#8998E6] disabled:text-white'
+      )}
       {...props}
     >
-      <Icon className={cn('h-4 w-4 md:h-5 md:w-5', iconClassName)} />
+      {Icon && <Icon className={cn('h-4 w-4 md:h-5 md:w-5', iconClassName)} />}
       {title}
     </button>
   );

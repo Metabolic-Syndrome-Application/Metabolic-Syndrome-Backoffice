@@ -1,4 +1,3 @@
-import { capitalize } from '@mui/material';
 import {
   GridCellParams,
   GridColDef,
@@ -67,12 +66,14 @@ const ManageUserTable = () => {
       headerClassName: 'super-app-theme--header',
       renderCell: (params: GridCellParams) => (
         <div>
-          <div>{`${capitalize(params.row.prefix || '')} ${capitalize(
-            params.row.firstName
-          )} ${capitalize(params.row.lastName || '')}`}</div>
-          <div className='text-default-blue '>
-            {capitalize(params.row.username || '')}
-          </div>
+          <span className='flex'>
+            {`${params.row.prefix || ''}${params.row.firstName || ''} ${
+              params.row.lastName || ''
+            }`}
+          </span>
+          <span className='text-default-blue '>
+            {params.row.username || ''}
+          </span>
         </div>
       ),
     },
@@ -83,7 +84,7 @@ const ManageUserTable = () => {
       headerClassName: 'super-app-theme--header',
       renderCell: (params: GridCellParams) => {
         const roleText = params.row.role === 'doctor' ? 'หมอ' : 'พยาบาล';
-        return <div>{capitalize(roleText)}</div>;
+        return <div>{roleText}</div>;
       },
     },
     {
@@ -92,7 +93,7 @@ const ManageUserTable = () => {
       renderHeader: () => <h5 className='font-bold'>แผนก</h5>,
       headerClassName: 'super-app-theme--header',
       valueGetter: (params: GridValueGetterParams) =>
-        `${capitalize(params.row.department || '')}`,
+        `${params.row.department || ''}`,
     },
     {
       field: 'specialist',
@@ -100,7 +101,7 @@ const ManageUserTable = () => {
       renderHeader: () => <h5 className='font-bold'>ความเชี่ยวชาญ</h5>,
       headerClassName: 'super-app-theme--header',
       valueGetter: (params: GridValueGetterParams) =>
-        `${capitalize(params.row.specialist || '')}`,
+        `${params.row.specialist || ''}`,
     },
     {
       field: 'gender',
@@ -109,7 +110,7 @@ const ManageUserTable = () => {
       headerClassName: 'super-app-theme--header',
       renderCell: (params: GridCellParams) => {
         const genderText = params.row.gender === 'male' ? 'ชาย' : 'หญิง';
-        return <div>{capitalize(genderText)}</div>;
+        return <div>{genderText}</div>;
       },
     },
     {

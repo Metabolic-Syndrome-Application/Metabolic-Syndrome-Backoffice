@@ -3,9 +3,10 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useSession } from 'next-auth/react';
 import { useSnackbar } from 'notistack';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useForm } from 'react-hook-form';
 import { FaUserDoctor } from 'react-icons/fa6';
+import { useDispatch } from 'react-redux';
 
 import useAxiosAuth from '@/hooks/useAxiosAuth';
 import useModal from '@/hooks/useModal';
@@ -25,7 +26,6 @@ import {
   medicalDepartment,
   medicalSpecialist,
 } from '@/constant/question';
-import { useDispatch, useSelector } from 'react-redux';
 import { fetchUsers } from '@/redux/slices/usersSlice';
 
 const Test = () => {

@@ -1,12 +1,12 @@
-import { Dialog } from '@mui/material';
 import { useSnackbar } from 'notistack';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { MdDelete } from 'react-icons/md';
+import { useDispatch } from 'react-redux';
 
 import { axiosAuth } from '@/lib/axios';
-import { useDispatch } from 'react-redux';
-import { fetchUsers } from '@/redux/slices/usersSlice';
 import useModal from '@/hooks/useModal';
+
+import ActionButton from '@/components/buttons/ActionButton';
 import FormHeaderText from '@/components/form/FormHeaderText';
 
 interface DeleteBtnProps {
@@ -48,7 +48,7 @@ const DeleteButton = ({ loadData, api, role, id }: DeleteBtnProps) => {
     <>
       <button type='button' onClick={handleClick(true)}>
         <MdDelete
-          className='hover:text-primary group cursor-pointer text-[#999999]'
+          className='hover:text-primary hover:text-default-red focus:text-default-red active:text-default-red  group cursor-pointer  text-[#999999] focus:outline-none'
           onClick={openModal}
         />
       </button>
@@ -68,20 +68,20 @@ const DeleteButton = ({ loadData, api, role, id }: DeleteBtnProps) => {
                 คุณแต้องการที่จะ ลบ หรือ ไม่ ?
               </h5>
               <div className='flex justify-end gap-4 py-2'>
-                <button
-                  type='button'
-                  onClick={handleDelete}
-                  className='bg-default-red cursor-pointer rounded-lg px-4 py-2 text-sm font-bold text-white hover:bg-[#F28204] md:text-base'
-                >
-                  Delete
-                </button>
-                <button
-                  type='button'
+                <ActionButton
+                  type='reset'
+                  variant='cancel'
                   onClick={closeModal}
-                  className='cursor-pointer rounded-lg bg-slate-100 px-4 py-2 text-sm font-bold text-[#999999] hover:bg-slate-200 md:text-base '
                 >
-                  Cancel
-                </button>
+                  ยกเลิก
+                </ActionButton>
+                <ActionButton
+                  type='submit'
+                  variant='delete'
+                  onClick={handleDelete}
+                >
+                  ลบ
+                </ActionButton>
               </div>
             </>
           )}

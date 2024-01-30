@@ -11,9 +11,9 @@ import {
 } from 'lucide-react';
 import React from 'react';
 
-import Button from '@/components/buttons/Button';
-import IconButton from '@/components/buttons/IconButton';
-import TextButton from '@/components/buttons/TextButton';
+import Button from '@/components/buttons/example/Button';
+import IconButton from '@/components/buttons/example/IconButton';
+import TextButton from '@/components/buttons/example/TextButton';
 import ArrowLink from '@/components/links/ArrowLink';
 import ButtonLink from '@/components/links/ButtonLink';
 import PrimaryLink from '@/components/links/PrimaryLink';

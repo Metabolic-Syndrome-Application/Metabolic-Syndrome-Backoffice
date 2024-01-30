@@ -6,9 +6,11 @@ import { useDispatch } from 'react-redux';
 
 import useAxiosAuth from '@/hooks/useAxiosAuth';
 
+import ColorButton from '@/components/buttons/ColorButton';
+import ViewButton from '@/components/buttons/ViewButton';
 import BaseTable from '@/components/table/BaseTable';
 
-import ViewData from '@/app/patient/components/manage-patient-table/ViewData';
+import { getStatusColor } from '@/helpers/status';
 
 const ManagePatientTable = () => {
   const { data: session } = useSession();
@@ -19,8 +21,9 @@ const ManagePatientTable = () => {
   // console.log('Users:', users);
 
   const dispatch = useDispatch<any>();
+  const [selectedUserId, setSelectedUserId] = useState(null);
 
-  const loadUsers = async () => {
+  const fetchUsers = async () => {
     try {
       const response = await axios.get(
         'https://jsonplaceholder.typicode.com/posts'
@@ -36,7 +39,7 @@ const ManagePatientTable = () => {
   useEffect(() => {
     if (session && session.user) {
       // If session exists, load users
-      loadUsers();
+      fetchUsers();
       //dispatch(fetchUsers());
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -59,11 +62,25 @@ const ManagePatientTable = () => {
 
     {
       field: 'title',
-      width: 200,
+      width: 400,
       renderHeader: () => <h5 className='font-bold'>แผนก</h5>,
       headerClassName: 'super-app-theme--header',
       valueGetter: (params: GridValueGetterParams) =>
         `${params.row.title || ''}`,
+    },
+    {
+      field: 'status',
+      width: 150,
+      renderHeader: () => <h5 className='font-bold'>status</h5>,
+      headerClassName: 'super-app-theme--header',
+      renderCell: (params) => {
+        const { color, text } = getStatusColor(params.row.status || 'pending'); //unknown
+        return (
+          <ColorButton variant={color} size='sm'>
+            {text}
+          </ColorButton>
+        );
+      },
     },
 
     {
@@ -74,15 +91,15 @@ const ManagePatientTable = () => {
       renderCell: (params) => {
         return (
           <div className='flex flex-row items-center space-x-4'>
-            <ViewData userId={params.row.id} />
+            <ViewButton href={`/patient/record/${params.row.id}`} />
             {/* <EditForm
-              loadData={fetchUsers}
-              api={`http://localhost:8000/api/user/profile/${params.row.role}/${params.row.id}`}
-            />
-            <DeleteButton
-              loadData={fetchUsers}
-              api={`/api/user/profile/${params.row.role}/${params.row.id}`}
-            /> */}
+                loadData={fetchUsers}
+                api={`http://localhost:8000/api/user/profile/${params.row.role}/${params.row.id}`}
+              />
+              <DeleteButton
+                loadData={fetchUsers}
+                api={`/api/user/profile/${params.row.role}/${params.row.id}`}
+              /> */}
           </div>
         );
       },
@@ -91,6 +108,7 @@ const ManagePatientTable = () => {
 
   return (
     <div>
+      {/* !user.lenght */}
       <BaseTable rows={users} columns={columns} loading={undefined} />
     </div>
   );

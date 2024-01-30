@@ -6,17 +6,19 @@ import { useSnackbar } from 'notistack';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { FaUserDoctor } from 'react-icons/fa6';
+import { MdEdit } from 'react-icons/md';
 
 import useAxiosAuth from '@/hooks/useAxiosAuth';
 import useModal from '@/hooks/useModal';
 
+import ActionButton from '@/components/buttons/ActionButton';
 import FormHeaderText from '@/components/form/FormHeaderText';
 import { InputDropdown } from '@/components/form/InputDropdown';
 import { InputText } from '@/components/form/InputText';
 import { RadioOption } from '@/components/form/RadioOption';
 import {
-  FormCreateProfileDoctorProps,
   createProfileDoctorSchema,
+  FormCreateProfileDoctorProps,
 } from '@/components/form/validation/form-validation';
 
 import {
@@ -24,8 +26,6 @@ import {
   medicalDepartment,
   medicalSpecialist,
 } from '@/constant/question';
-import { MdEdit } from 'react-icons/md';
-import { API_PATH } from '@/config/api';
 interface IEditMemberFormProps {
   loadData: () => void;
   api: string;
@@ -131,19 +131,15 @@ const EditForm = ({ loadData, api }: IEditMemberFormProps) => {
                 </div>
               </div>
 
-              <div className='flex w-full justify-end space-x-3 p-4'>
-                <button
+              <div className='flex h-full  justify-end space-x-3 p-4'>
+                <ActionButton
+                  type='reset'
+                  variant='cancel'
                   onClick={closeModal}
-                  className='rounded-xl bg-gray-50 px-4 py-4'
                 >
-                  cancel
-                </button>
-                <button
-                  type='submit'
-                  className='flex items-center rounded-xl bg-blue-400 px-4 py-2'
-                >
-                  submit
-                </button>
+                  ยกเลิก
+                </ActionButton>
+                <ActionButton type='submit'>ยืนยัน</ActionButton>
               </div>
             </div>
           )}

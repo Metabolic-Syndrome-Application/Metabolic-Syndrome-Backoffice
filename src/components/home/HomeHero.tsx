@@ -1,7 +1,7 @@
-import React from 'react';
-import Image from 'next/image';
 import { Icon } from '@iconify/react';
+import Image from 'next/image';
 import Link from 'next/link';
+import React from 'react';
 
 const HomeHero = () => {
   return (
@@ -35,7 +35,7 @@ const HomeHero = () => {
           height={350}
           alt='Hero'
           placeholder='blur'
-          blurDataURL={'/assets/images/doctor.svg'}
+          blurDataURL='/assets/images/doctor.svg'
         />
       </div>
     </div>
