@@ -36,7 +36,7 @@ interface IEditMemberFormProps {
   api: string;
 }
 
-const EditForm = ({ loadData, api, id }: IEditMemberFormProps) => {
+const AdminEditProfile = ({ loadData, api, id }: IEditMemberFormProps) => {
   const { data: session } = useSession();
   const axiosAuth = useAxiosAuth();
   const { enqueueSnackbar } = useSnackbar();
@@ -51,12 +51,12 @@ const EditForm = ({ loadData, api, id }: IEditMemberFormProps) => {
   // const user = users.filter((u) => u.id === id)[0];
   const currentUser = users.find((user) => user.id === id);
 
-  console.log('index', currentUser);
+  // console.log('currentUser index', currentUser);
 
   const {
     control,
     handleSubmit,
-    formState: { errors, isValid },
+    formState: { errors },
   } = useForm<FormCreateProfileDoctorProps>({
     mode: 'onChange',
     resolver: zodResolver(createProfileDoctorSchema),
@@ -82,8 +82,6 @@ const EditForm = ({ loadData, api, id }: IEditMemberFormProps) => {
         specialist: data.specialist,
       });
 
-      console.log('Edit successful');
-
       // Reload the data after successful edit
       enqueueSnackbar('edit success', { variant: 'success' });
       loadData();
@@ -91,15 +89,15 @@ const EditForm = ({ loadData, api, id }: IEditMemberFormProps) => {
 
       closeModal(); // Close the modal if needed
     } catch (error) {
-      console.log('Error:', error);
       enqueueSnackbar('Cannot edit', { variant: 'error' });
+      console.log('Error:', error);
     }
   };
 
   return (
     <div>
       <MdEdit
-        className='hover:text-primary group cursor-pointer text-[#999999]'
+        className='hover:text-default-blue focus:text-default-blue group cursor-pointer text-[#999999]'
         onClick={openModal}
       />
 
@@ -108,7 +106,7 @@ const EditForm = ({ loadData, api, id }: IEditMemberFormProps) => {
           {waiting ? (
             <>Loading</>
           ) : (
-            <div className=''>
+            <div>
               <FormHeaderText
                 icon={FaUserDoctor}
                 title='แก้ไขข้อมูลในระบบ'
@@ -116,8 +114,7 @@ const EditForm = ({ loadData, api, id }: IEditMemberFormProps) => {
               />
 
               <div className='flex flex-col gap-4'>
-                {/* section2 */}
-                <div className='space-y-4 rounded-lg border p-4 '>
+                <div className='space-y-5 rounded-lg border p-4'>
                   <FormHeaderText title='ข้อมูลส่วนตัว' />
 
                   <InputText name='prefix' label='คำนำหน้า' control={control} />
@@ -155,7 +152,7 @@ const EditForm = ({ loadData, api, id }: IEditMemberFormProps) => {
                 </div>
               </div>
 
-              <div className='flex h-full  justify-end space-x-3 p-4'>
+              <div className='flex h-full justify-end space-x-3 p-4'>
                 <ActionButton
                   type='reset'
                   variant='cancel'
@@ -163,7 +160,9 @@ const EditForm = ({ loadData, api, id }: IEditMemberFormProps) => {
                 >
                   ยกเลิก
                 </ActionButton>
-                <ActionButton type='submit'>ยืนยัน</ActionButton>
+                <ActionButton type='submit' variant='submit'>
+                  แก้ไขโปรไฟล์
+                </ActionButton>
               </div>
             </div>
           )}
@@ -173,4 +172,4 @@ const EditForm = ({ loadData, api, id }: IEditMemberFormProps) => {
   );
 };
 
-export default EditForm;
+export default AdminEditProfile;

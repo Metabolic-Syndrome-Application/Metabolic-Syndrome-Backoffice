@@ -62,10 +62,10 @@ const DeleteButton = ({ loadData, api, role, id }: DeleteBtnProps) => {
               <FormHeaderText
                 // icon={FaUserDoctor}
                 title='การยืนยัน'
-                useBigestHeader
+                useBigestHeader={true}
               />
               <h5 className='mb-8 indent-2 text-slate-600'>
-                คุณแต้องการที่จะ ลบ หรือ ไม่ ?
+                คุณต้องการที่จะ ลบข้อมูล หรือ ไม่ ?
               </h5>
               <div className='flex justify-end gap-4 py-2'>
                 <ActionButton

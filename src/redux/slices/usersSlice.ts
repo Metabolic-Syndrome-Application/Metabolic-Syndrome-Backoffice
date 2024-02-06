@@ -25,7 +25,7 @@ export const fetchUsers = createAsyncThunk('fetchUsers', async () => {
     const {
       data: { data },
     } = await axiosAuth.get<IGetProfileAllApi>(API_PATH.GET_PROFILE_ALL);
-    console.log('API Response:', data);
+    console.log('Admin Create Register:', data);
 
     // Assuming response.data.users is an array of IUserData
     //const usersWithIndex = addIndex(data.users);
@@ -57,7 +57,7 @@ const usersSlice = createSlice({
       .addCase(fetchUsers.fulfilled, (state, action) => {
         state.status = 'succeeded';
 
-        console.log('API Response2:', action.payload);
+        console.log('Admin Create Register2:', action.payload);
 
         state.users = action.payload || [];
 

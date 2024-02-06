@@ -1,4 +1,4 @@
-//view btn link
+//view button link
 import { LucideIcon } from 'lucide-react';
 import * as React from 'react';
 import { IconType } from 'react-icons';

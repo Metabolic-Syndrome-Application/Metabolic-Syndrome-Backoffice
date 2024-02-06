@@ -23,7 +23,7 @@ const FormHeaderText = ({
           'border-light-gray ': !useBigestHeader,
         })}
       >
-        <div className='flex items-center'>
+        <div className='flex items-center pb-1'>
           {Icon && <Icon className='h-4 w-4 md:h-5 md:w-5' />}
           {title && (
             <HeaderSize className={`${Icon ? 'ml-3' : ''} text-center `}>

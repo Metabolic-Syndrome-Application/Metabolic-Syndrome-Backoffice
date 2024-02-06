@@ -2,7 +2,7 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useSession } from 'next-auth/react';
-import { useSnackbar } from 'notistack';
+import { enqueueSnackbar } from 'notistack';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { FaUserDoctor } from 'react-icons/fa6';
@@ -28,11 +28,11 @@ import {
 } from '@/constant/user';
 import { fetchUsers } from '@/redux/slices/usersSlice';
 import { API_PATH } from '@/config/api';
+import ActionButton from '@/components/buttons/ActionButton';
 
-const Test = () => {
+const AdminCreateRegister = () => {
   const { data: session } = useSession();
   const axiosAuth = useAxiosAuth();
-  const { enqueueSnackbar } = useSnackbar();
 
   const { Modal, openModal, closeModal } = useModal();
 
@@ -41,7 +41,8 @@ const Test = () => {
   const {
     control,
     handleSubmit,
-    formState: { errors, isValid },
+    reset,
+    formState: { errors, isDirty, isValid },
   } = useForm<FormRegisterDoctorProps>({
     mode: 'onChange',
     resolver: zodResolver(registerDoctorSchema),
@@ -60,9 +61,8 @@ const Test = () => {
       department,
       specialist,
     } = data;
-    const userRole = session?.user?.role; // Extract the role from the session
 
-    console.log('User Role:', userRole);
+    const userRole = session?.user?.role;
 
     try {
       // Check if the user is logged in
@@ -83,11 +83,11 @@ const Test = () => {
         }
       );
       const { id: userId, role: otherRole } = registerResponse.data.data.user;
-
       console.log('Register API Response:', registerResponse.data.data.user);
-      // Assuming only an admin can create a profile
+
+      // Only an admin can create a profile
+      // API call 2: Create profile
       if (userRole === 'admin') {
-        // API call 2: Create profile
         const createProfileResponse = await axiosAuth.put(
           API_PATH.PUT_PROFILE_OTHER(otherRole, userId),
           {
@@ -100,12 +100,11 @@ const Test = () => {
           }
         );
 
-        console.log('Create Profile API Response:', createProfileResponse);
+        //console.log('Create Profile API Response:', createProfileResponse);
         enqueueSnackbar('Register Success', { variant: 'success' });
-        dispatch(fetchUsers());
-      } else {
-        // Handle the case where the user is not an admin
-        console.log('User is not authorized to create a profile.');
+        await dispatch(fetchUsers());
+        closeModal();
+        reset();
       }
     } catch (error: any) {
       enqueueSnackbar(error.response?.data, { variant: 'error' });
@@ -200,18 +199,16 @@ const Test = () => {
             </div>
 
             <div className='flex w-full justify-end space-x-3 p-4'>
-              <button
-                onClick={closeModal}
-                className='rounded-xl bg-gray-50 px-4 py-4'
-              >
-                cancel
-              </button>
-              <button
+              <ActionButton type='reset' variant='cancel' onClick={closeModal}>
+                ยกเลิก
+              </ActionButton>
+              <ActionButton
                 type='submit'
-                className='flex items-center rounded-xl bg-blue-400 px-4 py-2'
+                variant='submit'
+                disabled={!isDirty || Object.keys(errors).length > 0}
               >
-                submit
-              </button>
+                ยืนยันการสมัครบัญชี
+              </ActionButton>
             </div>
           </div>
         </form>
@@ -220,4 +217,4 @@ const Test = () => {
   );
 };
 
-export default Test;
+export default AdminCreateRegister;

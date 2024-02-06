@@ -10,13 +10,13 @@ export type FormCreatePlanProps = {
   name: string;
   type: string;
   description: string;
-  // photo?: string;
-  // detail?: DetailPlan[];
+  photo?: string;
+  detail?: DetailPlan[];
 };
 
 export type DetailPlan = {
   name: string[];
-  day: string[];
+  day?: string[];
 };
 
 // Create Plan
