@@ -29,7 +29,7 @@ export const InputText: React.FC<FormInputProps> = ({
         return (
           <TextField
             label={label}
-            value={value}
+            value={value || ''}
             onChange={onChange}
             ///type={type}
             type={inputType}

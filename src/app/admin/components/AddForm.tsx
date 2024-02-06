@@ -19,14 +19,15 @@ import { RadioOption } from '@/components/form/RadioOption';
 import {
   FormRegisterDoctorProps,
   registerDoctorSchema,
-} from '@/components/form/validation/form-validation';
+} from '@/components/form/validation/UserValidator';
 
 import {
   dataOptions,
   medicalDepartment,
   medicalSpecialist,
-} from '@/constant/question';
+} from '@/constant/user';
 import { fetchUsers } from '@/redux/slices/usersSlice';
+import { API_PATH } from '@/config/api';
 
 const Test = () => {
   const { data: session } = useSession();
@@ -73,7 +74,7 @@ const Test = () => {
 
       // API call 1: Register
       const registerResponse = await axiosAuth.post(
-        '/api/auth/register/other',
+        API_PATH.POST_REGISTER_OTHER,
         {
           role,
           username,
@@ -88,7 +89,7 @@ const Test = () => {
       if (userRole === 'admin') {
         // API call 2: Create profile
         const createProfileResponse = await axiosAuth.put(
-          `http://localhost:8000/api/user/profile/${otherRole}/${userId}`,
+          API_PATH.PUT_PROFILE_OTHER(otherRole, userId),
           {
             prefix,
             firstName,

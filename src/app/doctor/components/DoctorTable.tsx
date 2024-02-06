@@ -11,7 +11,7 @@ import BaseTable from '@/components/table/BaseTable';
 
 import { API_PATH } from '@/config/api';
 
-import { IGetProfileAllApi, IUserData } from '@/types/profile';
+import { IGetProfileAllApi, IUserData } from '@/types/user';
 
 const DoctorTable = () => {
   const { data: session } = useSession();

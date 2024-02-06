@@ -116,3 +116,116 @@
     background-size: 0 2px, 100% 2px;
   }
 }
+
+/* TitTap Editor Design */
+@layer components {
+  .ProseMirror {
+    @apply rounded-lg border-[1px] border-[#C6C6C6] bg-transparent p-2;
+  }
+
+  .ProseMirror:focus {
+    @apply border-none outline outline-[#186EC8];
+  }
+
+  .ProseMirror:error {
+    @apply bg-red-400;
+  }
+
+  .ProseMirror > * + * {
+    margin-top: 0.75em;
+  }
+
+  .ProseMirror ul,
+  .ProseMirror ol {
+    padding: 0 2rem;
+  }
+
+  .ProseMirror h1,
+  .ProseMirror h2,
+  .ProseMirror h3,
+  .ProseMirror h4,
+  .ProseMirror h5,
+  .ProseMirror h6 {
+    line-height: 1.1;
+  }
+
+  .ProseMirror h2 {
+    font-size: '18px';
+  }
+
+  .ProseMirror h3 {
+    font-size: '16px';
+  }
+
+  .ProseMirror code {
+    background-color: rgba(#616161, 0.1);
+    color: #616161;
+  }
+
+  .ProseMirror pre {
+    background: #0d0d0d;
+    color: #fff;
+    font-family: 'JetBrainsMono', monospace;
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+  }
+  .ProseMirror code {
+    color: inherit;
+    padding: 0;
+    background: none;
+    font-size: 0.8rem;
+  }
+
+  .ProseMirror img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  .ProseMirror blockquote {
+    padding-left: 1rem;
+    border-left: 2px solid #999999;
+  }
+
+  .ProseMirror hr {
+    @apply my-2 rounded-full border border-gray-400;
+  }
+
+  /* ............................ */
+  .textEditor {
+    border-radius: 15px;
+    /* border: 1px solid grey; */
+  }
+
+  .menuBar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  /* .menuBar button {
+    font-size: 18px;
+    outline: none;
+    border: none;
+    background: none;
+    color: rgb(70, 70, 70);
+    cursor: pointer;
+  }
+  .menuBar button:last-child {
+    margin-right: 7px;
+  } */
+
+  .menuBar button {
+    @apply cursor-pointer p-1 text-base;
+  }
+
+  .menuBar button.is_active {
+    @apply bg-light-blue rounded-lg p-1 font-bold;
+  }
+
+  .textEditor ul {
+    @apply list-disc;
+  }
+
+  .textEditor ol {
+    @apply list-decimal;
+  }
+}

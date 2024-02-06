@@ -69,7 +69,7 @@ export default async function RootLayout({
     <html
       lang='en'
       className={`${IBMPlexSansThai.variable}`}
-      //suppressHydrationWarning={true}
+      suppressHydrationWarning={true}
     >
       <body className='bg-[#FAFCFB]'>
         <div className=''>

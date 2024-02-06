@@ -1,9 +1,12 @@
-import { addIndex } from '@/components/helpers/number';
-import { API_PATH } from '@/config/api';
-import { axiosAuth } from '@/lib/axios';
-import { IGetProfileAllApi, IUserData } from '@/types/profile';
-
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+
+import { axiosAuth } from '@/lib/axios';
+
+import { addIndex } from '@/components/helpers/number';
+
+import { API_PATH } from '@/config/api';
+
+import { IGetProfileAllApi, IUserData } from '@/types/user';
 
 interface UserState {
   users: IUserData[]; // Explicitly define the type for users
@@ -25,7 +28,8 @@ export const fetchUsers = createAsyncThunk('fetchUsers', async () => {
     console.log('API Response:', data);
 
     // Assuming response.data.users is an array of IUserData
-    const usersWithIndex = addIndex(data.users);
+    //const usersWithIndex = addIndex(data.users);
+    const usersWithIndex = data.users ? addIndex(data.users) : [];
 
     return usersWithIndex;
   } catch (error) {
@@ -55,7 +59,7 @@ const usersSlice = createSlice({
 
         console.log('API Response2:', action.payload);
 
-        state.users = action.payload;
+        state.users = action.payload || [];
 
         console.log('usersWithIndex', action.payload);
       })

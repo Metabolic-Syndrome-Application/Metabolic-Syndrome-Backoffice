@@ -1,28 +1,36 @@
-//Button Color Status (ex. pending,success,rejected)
+//Outline Icon Button : show category/type (food,exercise,health)
 import React from 'react';
 import { ImSpinner2 } from 'react-icons/im';
 
 import { cn } from '@/lib/utils';
+import { IconType } from 'react-icons';
+import { LucideIcon } from 'lucide-react';
 
-const ButtonVariant = ['blue', 'gray', 'yellow', 'green', 'red'] as const;
+const ButtonVariant = ['blue', 'gray', 'yellow', 'green', 'orange'] as const;
 const ButtonSize = ['sm', 'base'] as const;
 
 type ButtonProps = {
   isLoading?: boolean;
   isDarkBg?: boolean;
-  variant?: (typeof ButtonVariant)[number];
+  variant?: (typeof ButtonVariant)[number] | string;
+  icon?: IconType | LucideIcon;
+  classNames?: {
+    icon?: string;
+  };
   size?: (typeof ButtonSize)[number];
 } & React.ComponentPropsWithRef<'button'>;
 
-const ColorButton = React.forwardRef<HTMLButtonElement, ButtonProps>(
+const OutlineButton = React.forwardRef<HTMLButtonElement, ButtonProps>(
   (
     {
       children,
       className,
       disabled: buttonDisabled,
       isLoading,
-      variant = 'primary',
-      size = 'base',
+      variant = 'blue',
+      icon: Icon,
+      classNames,
+      size = 'sm',
       ...rest
     },
     ref
@@ -35,7 +43,7 @@ const ColorButton = React.forwardRef<HTMLButtonElement, ButtonProps>(
         type='button'
         disabled={disabled}
         className={cn(
-          'inline-flex items-center rounded-2xl font-medium',
+          'font-sm inline-flex w-fit items-center rounded-2xl',
           'focus:outline-none focus-visible:ring',
           'shadow-sm',
           'transition-colors duration-75',
@@ -48,33 +56,33 @@ const ColorButton = React.forwardRef<HTMLButtonElement, ButtonProps>(
           //#region  //*=========== Variants ===========
           [
             variant === 'blue' && [
-              'bg-light-blue text-dark-blue',
-              'hover:bg-blue-300 ',
+              'border-light-blue border text-blue-500',
+              'hover:bg-light-blue ',
               'active:border-light-blue active:border',
-              'disabled:bg-[#C9E1FD] disabled:text-gray-900 disabled:opacity-30',
+              'disabled:border-light-gray disabled:text-stone-900 disabled:opacity-30',
             ],
             variant === 'gray' && [
-              'bg-light-gray text-default-gray',
-              'hover:bg-gray-300 ',
+              'border-light-gray text-default-gray border',
+              'hover:bg-light-gray ',
               'active:border-default-gray active:border',
             ],
             variant === 'yellow' && [
-              'bg-light-yellow text-dark-yellow',
-              'hover:bg-default-yellow',
+              'border-light-yellow text-default-yellow border',
+              'hover:bg-light-yellow',
               'active:border-light-yellow active:border',
-              'disabled:bg-dark-yellow disabled:text-stone-900 disabled:opacity-40',
+              'disabled:border-light-gray disabled:text-stone-900 disabled:opacity-40',
             ],
             variant === 'green' && [
-              'bg-light-green text-dark-green',
-              'hover:bg-default-green',
+              'border-light-green text-default-green border',
+              'hover:bg-light-green',
               'active:border-light-green active:border',
-              'disabled:bg-green-800 disabled:text-stone-800 disabled:opacity-40',
+              'disabled:border-light-gray disabled:text-stone-800 disabled:opacity-40',
             ],
-            variant === 'red' && [
-              'bg-light-red text-dark-red',
-              'hover:bg-default-red',
-              'active:border-light-red active:border',
-              'disabled:text-stone-00 disabled:bg-red-300 disabled:opacity-40',
+            variant === 'orange' && [
+              'text-default-orange border border-[#FFC6AD]',
+              'hover:bg-[#FFC6AD]',
+              'active:border active:border-[#FFB098]',
+              'disabled:border-light-gray disabled:text-stone-800 disabled:opacity-40',
             ],
           ],
           //#endregion  //*======== Variants ===========
@@ -97,11 +105,17 @@ const ColorButton = React.forwardRef<HTMLButtonElement, ButtonProps>(
             <ImSpinner2 className='animate-spin' />
           </div>
         )}
+        {Icon && (
+          <Icon
+            size='1em'
+            className={cn('h-4 w-4 md:h-[18px] md:w-[18px]', classNames?.icon)}
+          />
+        )}
 
-        {children}
+        <span className='px-1'>{children}</span>
       </button>
     );
   }
 );
 
-export default ColorButton;
+export default OutlineButton;

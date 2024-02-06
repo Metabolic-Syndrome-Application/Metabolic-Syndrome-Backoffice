@@ -12,7 +12,7 @@ import { InputText } from '@/components/form/InputText';
 import {
   FormLoginProps,
   loginSchema,
-} from '@/components/form/validation/form-validation';
+} from '@/components/form/validation/UserValidator';
 
 type LoginProps = {
   callbackUrl?: string;

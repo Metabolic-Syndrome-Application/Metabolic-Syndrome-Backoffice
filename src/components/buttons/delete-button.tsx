@@ -35,7 +35,7 @@ const DeleteButton = ({ loadData, api, role, id }: DeleteBtnProps) => {
 
       enqueueSnackbar('Delete Success', { variant: 'success' });
       loadData();
-      //dispatch(fetchUsers());
+      // dispatch(fetchUsers());
     } catch (error) {
       /* empty */
       enqueueSnackbar('Cannot Delete', { variant: 'error' });

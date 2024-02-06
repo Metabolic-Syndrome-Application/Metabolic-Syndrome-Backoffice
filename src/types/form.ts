@@ -1,3 +1,5 @@
+import { IconType } from 'react-icons';
+
 //Form Input Text
 export type FormInputProps = {
   name: string;

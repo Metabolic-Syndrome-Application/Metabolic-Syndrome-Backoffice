@@ -14,6 +14,7 @@ import BaseTable from '@/components/table/BaseTable';
 
 import EditForm from '@/app/admin/components/EditForm';
 import { fetchUsers, selectAllUsers } from '@/redux/slices/usersSlice';
+import { API_PATH } from '@/config/api';
 
 const ManageUserTable = () => {
   const { data: session } = useSession();
@@ -25,6 +26,15 @@ const ManageUserTable = () => {
   console.log('Users:', users);
 
   const dispatch = useDispatch<any>();
+
+  const loadUsers = async () => {
+    try {
+      dispatch(fetchUsers());
+      //setUsers(dataAddIndex);
+    } catch (error) {
+      console.log('error', error);
+    }
+  };
 
   // const loadUsers = async () => {
   //   try {
@@ -123,13 +133,19 @@ const ManageUserTable = () => {
       renderCell: (params) => {
         return (
           <div className='flex flex-row items-center space-x-4'>
-            <EditForm
-              loadData={fetchUsers}
+            {/* <EditForm
+              loadData={loadUsers}
               api={`http://localhost:8000/api/user/profile/${params.row.role}/${params.row.id}`}
+              id={params.row.id}
+            /> */}
+            <EditForm
+              loadData={loadUsers}
+              api={API_PATH.PUT_PROFILE_OTHER(params.row.role, params.row.id)}
+              id={params.row.id}
             />
             <DeleteButton
-              loadData={fetchUsers}
-              api={`/api/user/profile/${params.row.role}/${params.row.id}`}
+              loadData={loadUsers}
+              api={API_PATH.DELETE_USER(params.row.role, params.row.id)}
             />
           </div>
         );

@@ -10,6 +10,7 @@ import axios from '@/lib/axios';
 import { isRefreshTokenExpired } from '@/lib/jwt';
 
 import { API_PATH } from '@/config/api';
+import { useRouter } from 'next/navigation';
 
 // async function refreshToken(token: JWT): Promise<JWT> {
 //   const res = await fetch(BACKEND_URL + '/auth/refresh', {
@@ -185,7 +186,7 @@ export const authOptions: NextAuthOptions = {
 
         // Check if refresh token is expired
         if (isRefreshTokenExpired(session.user.refresh_token)) {
-          await signIn();
+          await signOut();
         }
       }
 

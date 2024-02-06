@@ -15,7 +15,7 @@ export const IconFlatButton: React.FC<IconFlatButtonProps> = ({
     <button
       type='button'
       className={cn(
-        'flex max-w-[150px] items-center justify-center gap-1.5 whitespace-nowrap rounded-xl',
+        'flex max-w-[160px] items-center justify-center gap-1.5 whitespace-nowrap rounded-xl',
         'px-3 py-2 text-sm font-medium md:px-4 md:text-base',
         'bg-default-blue text-white',
         'hover:bg-dark-blue',
@@ -24,7 +24,17 @@ export const IconFlatButton: React.FC<IconFlatButtonProps> = ({
       )}
       {...props}
     >
-      {Icon && <Icon className={cn('h-4 w-4 md:h-5 md:w-5', iconClassName)} />}
+      {Icon && (
+        <span
+          className={cn(
+            'flex h-4 w-4 items-center justify-center md:h-5 md:w-5',
+            iconClassName
+          )}
+        >
+          <Icon />
+        </span>
+      )}
+
       {title}
     </button>
   );

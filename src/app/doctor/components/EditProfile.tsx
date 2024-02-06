@@ -19,13 +19,13 @@ import { RadioOption } from '@/components/form/RadioOption';
 import {
   createProfileDoctorSchema,
   FormCreateProfileDoctorProps,
-} from '@/components/form/validation/form-validation';
+} from '@/components/form/validation/UserValidator';
 
 import {
   dataOptions,
   medicalDepartment,
   medicalSpecialist,
-} from '@/constant/question';
+} from '@/constant/user';
 import { fetchUser, selectUser, updateUser } from '@/redux/slices/profileSlice';
 interface IEditMemberFormProps {
   loadData?: () => void;
@@ -73,6 +73,7 @@ const EditProfile = ({ loadData, api }: IEditMemberFormProps) => {
       closeModal(); // Close the modal if needed
     } catch (error) {
       console.log('Error:', error);
+
       enqueueSnackbar('Cannot edit', { variant: 'error' });
     }
   };

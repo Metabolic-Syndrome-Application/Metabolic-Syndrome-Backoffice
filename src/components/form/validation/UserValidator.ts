@@ -1,5 +1,11 @@
 import { z } from 'zod';
 
+import {
+  baseStringValidator,
+  passwordValidator,
+  validateMinMax,
+} from '@/components/form/validation/ZodCheck';
+
 export type FormLoginProps = {
   username: string;
   password: string;
@@ -28,24 +34,6 @@ export type FormCreateProfileDoctorProps = {
   department: string;
   specialist: string;
 };
-
-//validator check
-const required_error = 'กรุณากรอกข้อมูล';
-const baseStringValidator = z.string({ required_error });
-
-const passwordValidator = baseStringValidator
-  .min(8, 'รหัสผ่านควรมีความยาวอย่างน้อย 8 ตัวอักษร')
-  .max(20, 'รหัสผ่านควรมีความยาวไม่เกิน 20 ตัวอักษร')
-  .regex(/[A-Z]/, 'รหัสผ่านควรมีตัวอักษรภาษาอังกฤษพิมพ์ใหญ่อย่างน้อย 1 ตัว')
-  .regex(/[a-z]/, 'รหัสผ่านควรมีตัวอักษรภาษาอังกฤษพิมพ์เล็กอย่างน้อย 1 ตัว')
-  .regex(/\d/, 'รหัสผ่านควรมีตัวเลขอย่างน้อย 1 ตัว')
-  .regex(
-    /[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]/,
-    'รหัสผ่านควรมีตัวอักษระพิเศษอย่างน้อย 1 ตัว'
-  );
-
-const validateMinMax = (min: number, max: number, message: string) =>
-  baseStringValidator.min(min, { message }).max(max, { message });
 
 //Login Page
 export const loginSchema = z.object({
@@ -86,7 +74,7 @@ export const registerDoctorSchema = z
     path: ['confirmPassword'],
   });
 
-// Profile for Doctor/Staff
+//Update Profile for Doctor/Staff
 export const createProfileDoctorSchema = z.object({
   prefix: validateMinMax(
     2,

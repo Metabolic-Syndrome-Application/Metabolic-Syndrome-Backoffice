@@ -4,13 +4,14 @@
 import { signIn, useSession } from 'next-auth/react';
 
 import axios from '@/lib/axios';
+import { API_PATH } from '@/config/api';
 
 export const useRefreshToken = () => {
   const { data: session } = useSession();
 
   const refreshToken = async () => {
     const res = await axios.post(
-      '/api/auth/refresh',
+      API_PATH.POST_REFRESH,
       {
         //refresh: session?.user.refresh_token,
       },
@@ -20,9 +21,9 @@ export const useRefreshToken = () => {
       }
     );
 
-    // console.log('refresh', res);
+    console.log('refresh', res);
 
-    // console.log({ newAccessToken: res.data.access_token });
+    console.log({ newAccessToken: res.data.access_token });
 
     if (session) session.user.access_token = res.data.access_token;
     else signIn();
