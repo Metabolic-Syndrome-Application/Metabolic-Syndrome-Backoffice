@@ -12,9 +12,9 @@ import useAxiosAuth from '@/hooks/useAxiosAuth';
 import DeleteButton from '@/components/buttons/delete-button';
 import BaseTable from '@/components/table/BaseTable';
 
-import EditForm from '@/app/admin/components/EditForm';
-import { fetchUsers, selectAllUsers } from '@/redux/slices/usersSlice';
+import AdminEditProfile from '@/app/admin/components/AdminEditProfile';
 import { API_PATH } from '@/config/api';
+import { fetchUsers, selectAllUsers } from '@/redux/slices/usersSlice';
 
 const ManageUserTable = () => {
   const { data: session } = useSession();
@@ -90,7 +90,7 @@ const ManageUserTable = () => {
         const prefix = params.row.prefix || '';
         const firstName = params.row.firstName || '';
         const lastName = params.row.lastName || '';
-        return `${prefix} ${firstName} ${lastName}`.toLowerCase();
+        return `${prefix}${firstName} ${lastName}`.toLowerCase();
       },
     },
     {
@@ -138,7 +138,7 @@ const ManageUserTable = () => {
               api={`http://localhost:8000/api/user/profile/${params.row.role}/${params.row.id}`}
               id={params.row.id}
             /> */}
-            <EditForm
+            <AdminEditProfile
               loadData={loadUsers}
               api={API_PATH.PUT_PROFILE_OTHER(params.row.role, params.row.id)}
               id={params.row.id}

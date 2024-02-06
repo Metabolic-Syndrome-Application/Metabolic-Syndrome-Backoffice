@@ -9,6 +9,8 @@ export interface IUserData {
   gender: string;
   department: string;
   specialist: string;
+  // created_at?: string;
+  // updated_at?: string;
 }
 
 //All Users (doctor & staff)

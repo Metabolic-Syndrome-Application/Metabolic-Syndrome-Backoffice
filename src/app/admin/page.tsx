@@ -1,13 +1,10 @@
 'use client';
 import React from 'react';
 
-import useModal from '@/hooks/useModal';
-
-import AddForm from '@/app/admin/components/AddForm';
 import ManageUserTable from '@/app/admin/components/manage-user-table/UserTable';
+import AdminCreateRegister from '@/app/admin/components/AdminCreateRegister';
 
 const AdminPage = () => {
-  const { Modal, openModal, closeModal } = useModal();
   // const users = useSelector(selectUsers);
 
   //const dispatch = useDispatch<any>();
@@ -36,7 +33,7 @@ const AdminPage = () => {
       {/* <TextButton>hey</TextButton>
       <Button leftIcon={FiPlusCircle}>hh</Button> */}
       {/* <button onClick={() => setIsOpen(true)}>Open Modal</button> */}
-      <AddForm />
+      <AdminCreateRegister />
 
       <ManageUserTable />
       {/* <TestCreatePatient /> */}
