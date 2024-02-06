@@ -4,7 +4,7 @@ import React from 'react';
 import useModal from '@/hooks/useModal';
 
 import AddForm from '@/app/admin/components/AddForm';
-import ManageUserTable from '@/app/admin/components/manage-user-table';
+import ManageUserTable from '@/app/admin/components/manage-user-table/UserTable';
 
 const AdminPage = () => {
   const { Modal, openModal, closeModal } = useModal();

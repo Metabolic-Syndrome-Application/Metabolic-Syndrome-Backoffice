@@ -7,10 +7,12 @@ import { persistReducer, persistStore } from 'redux-persist';
 
 import profileSlice from '@/redux/slices/profileSlice';
 import usersSlice from '@/redux/slices/usersSlice';
+import plansSlice from '@/redux/slices/plansSlice';
 
 const rootReducer = combineReducers({
   users: usersSlice,
   user: profileSlice,
+  plan: plansSlice,
 });
 
 const persistConfig = {

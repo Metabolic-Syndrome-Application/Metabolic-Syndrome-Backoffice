@@ -1,9 +1,11 @@
-import { FormCreateProfileDoctorProps } from '@/components/form/validation/form-validation';
-import { API_PATH } from '@/config/api';
-import { axiosAuth } from '@/lib/axios';
-import { IGetProfileMeApi, IUserData } from '@/types/profile';
-
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+
+import { FormCreateProfileDoctorProps } from '@/components/form/validation/UserValidator';
+
+import { API_PATH } from '@/config/api';
+
+import { IGetProfileMeApi, IUserData } from '@/types/user';
+import useAxiosAuth from '@/hooks/useAxiosAuth';
 
 interface UserState {
   user: IUserData;
@@ -28,6 +30,7 @@ const initialState: UserState = {
 };
 
 export const fetchUser = createAsyncThunk('fetchUser', async () => {
+  const axiosAuth = useAxiosAuth();
   try {
     const {
       data: { data },
@@ -43,6 +46,7 @@ export const fetchUser = createAsyncThunk('fetchUser', async () => {
 export const updateUser = createAsyncThunk(
   'updateUser',
   async (updatedData: FormCreateProfileDoctorProps) => {
+    const axiosAuth = useAxiosAuth();
     try {
       const response = await axiosAuth.put(
         API_PATH.PUT_PROFILE_ME,
@@ -100,7 +104,9 @@ const profileSlice = createSlice({
   },
 });
 
-export const selectUser = (state: { user: UserState }) => state.user.user;
+// export const selectUser = (state: { user: UserState }) => state.user.user;
+export const selectUser = (state: { user: UserState }) =>
+  state.user?.user || initialState.user;
 
 export const { getUser } = profileSlice.actions;
 

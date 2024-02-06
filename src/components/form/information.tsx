@@ -8,14 +8,14 @@ import { RadioOption } from '@/components/form/RadioOption';
 import {
   FormRegisterDoctorProps,
   registerDoctorSchema,
-} from '@/components/form/validation/form-validation';
+} from '@/components/form/validation/UserValidator';
 
 import {
   dataOptions,
   medicalDepartment,
   medicalSpecialist,
   yearOptions,
-} from '@/constant/question';
+} from '@/constant/user';
 
 //ข้อมูลส่วนตัว
 const Information = () => {

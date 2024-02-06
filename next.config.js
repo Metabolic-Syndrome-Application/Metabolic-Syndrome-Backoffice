@@ -14,6 +14,10 @@ const nextConfig = {
   //   ],
   // },
 
+  experimental: {
+    appDir: true,
+  },
+
   webpack(config) {
     // Grab the existing rule that handles SVG imports
     const fileLoaderRule = config.module.rules.find((rule) =>

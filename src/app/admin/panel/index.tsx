@@ -2,7 +2,7 @@
 import { useSession } from 'next-auth/react';
 import { useState } from 'react';
 
-import { IUser } from '@/types/user';
+import { IUser } from '@/types/login';
 
 const Panel = () => {
   const { data: session } = useSession();

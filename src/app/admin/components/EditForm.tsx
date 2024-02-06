@@ -7,6 +7,7 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { FaUserDoctor } from 'react-icons/fa6';
 import { MdEdit } from 'react-icons/md';
+import { useDispatch, useSelector } from 'react-redux';
 
 import useAxiosAuth from '@/hooks/useAxiosAuth';
 import useModal from '@/hooks/useModal';
@@ -19,25 +20,38 @@ import { RadioOption } from '@/components/form/RadioOption';
 import {
   createProfileDoctorSchema,
   FormCreateProfileDoctorProps,
-} from '@/components/form/validation/form-validation';
+} from '@/components/form/validation/UserValidator';
 
 import {
   dataOptions,
   medicalDepartment,
   medicalSpecialist,
-} from '@/constant/question';
+} from '@/constant/user';
+import { fetchUser } from '@/redux/slices/profileSlice';
+import { selectAllUsers } from '@/redux/slices/usersSlice';
+
 interface IEditMemberFormProps {
   loadData: () => void;
+  id: string;
   api: string;
 }
 
-const EditForm = ({ loadData, api }: IEditMemberFormProps) => {
+const EditForm = ({ loadData, api, id }: IEditMemberFormProps) => {
   const { data: session } = useSession();
   const axiosAuth = useAxiosAuth();
   const { enqueueSnackbar } = useSnackbar();
 
   const { Modal, openModal, closeModal } = useModal();
   const [waiting, setWaiting] = useState(false);
+
+  const users = useSelector(selectAllUsers);
+  const dispatch = useDispatch<any>();
+
+  //filter id ใน users เเล้วดูว่า id ตรงกันมั้ย ตอนนี้เแน array => [0]
+  // const user = users.filter((u) => u.id === id)[0];
+  const currentUser = users.find((user) => user.id === id);
+
+  console.log('index', currentUser);
 
   const {
     control,
@@ -46,6 +60,14 @@ const EditForm = ({ loadData, api }: IEditMemberFormProps) => {
   } = useForm<FormCreateProfileDoctorProps>({
     mode: 'onChange',
     resolver: zodResolver(createProfileDoctorSchema),
+    defaultValues: {
+      prefix: currentUser?.prefix || '',
+      firstName: currentUser?.firstName || '',
+      lastName: currentUser?.lastName || '',
+      gender: currentUser?.gender || '',
+      department: currentUser?.department || '',
+      specialist: currentUser?.specialist || '',
+    },
   });
 
   const onSubmit = async (data: FormCreateProfileDoctorProps) => {
@@ -65,6 +87,8 @@ const EditForm = ({ loadData, api }: IEditMemberFormProps) => {
       // Reload the data after successful edit
       enqueueSnackbar('edit success', { variant: 'success' });
       loadData();
+      await dispatch(fetchUser());
+
       closeModal(); // Close the modal if needed
     } catch (error) {
       console.log('Error:', error);

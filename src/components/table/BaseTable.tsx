@@ -30,7 +30,7 @@ const BaseTable = ({ rows, columns }: ITableProps) => {
 
   return (
     <div className='flex w-full items-center justify-center px-1 py-4 md:px-2 lg:max-w-[1180px] xl:max-w-full'>
-      <div className='h-[600px] max-w-[450px] sm:max-w-[600px] md:max-w-[900px] lg:max-w-[1100px] 2xl:min-w-fit'>
+      <div className='h-[600px] max-w-[450px] bg-white sm:max-w-[600px] md:max-w-[900px] lg:max-w-[1100px] 2xl:min-w-fit'>
         <DataGrid
           rows={rows}
           columns={columns}

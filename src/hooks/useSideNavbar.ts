@@ -10,7 +10,7 @@ export const useSideNavbar = () => {
 
   const customRoleNav = SIDENAV_ITEMS.filter((item) => {
     if (status !== 'authenticated') {
-      return item.path === '/auth/signIn' || item.path === '/';
+      return item.path === '/auth/signIn' || item.path === '/' ;
     }
 
     switch (userRole) {

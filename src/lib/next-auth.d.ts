@@ -22,7 +22,7 @@
 import NextAuth from 'next-auth';
 import { JWT } from 'next-auth/jwt';
 
-import { IUser } from '@/types/user';
+import { IUser } from '@/types/login';
 
 declare module 'next-auth' {
   interface Session {

@@ -8,7 +8,7 @@ import Information from '@/components/form/information';
 import { InputText } from '@/components/form/InputText';
 import RadioSelectStage from '@/components/form/radio-select-stage';
 
-import { dataOptions } from '@/constant/question';
+import { dataOptions } from '@/constant/user';
 
 const TestCreatePatient = () => {
   const [hasAccount, setHasAccount] = useState(false);

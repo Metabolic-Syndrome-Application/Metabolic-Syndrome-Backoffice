@@ -16,6 +16,7 @@ export default function Loading() {
           className='md:[250px] lg:[350px] w-[250px]'
           width={400}
           height={400}
+          priority={false}
         />
         <div className='repeat-infinite animate-text text-default-blue animate-pulse py-2 text-center text-3xl font-semibold tracking-wide'>
           กรุณารอสักครู่ ...

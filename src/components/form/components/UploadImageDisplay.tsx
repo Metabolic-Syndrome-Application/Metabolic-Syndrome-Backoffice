@@ -1,5 +1,6 @@
-import { cn } from '@/lib/utils';
 import { IoMdCloudUpload } from 'react-icons/io';
+
+import { cn } from '@/lib/utils';
 
 type UploadImageDisplayProps = {
   displayType?: string;
@@ -11,7 +12,7 @@ export default function UploadImageDisplay({
   return (
     <div
       className={cn(
-        'border-main-gray focus:outline-main-form-placeholder min-h-fit w-full cursor-pointer rounded-xl border-2 border-dashed bg-transparent px-16'
+        'border-main-gray focus:outline-main-form-placeholder flex h-full w-full cursor-pointer items-center justify-center rounded-lg border-2 border-dashed bg-transparent px-16'
       )}
     >
       <div

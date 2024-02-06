@@ -39,6 +39,7 @@ const HeaderNav = () => {
                   height={350}
                   alt='Hero'
                   priority={true}
+                  quality={95}
                 />
               </div>
               <span className='flex text-xl font-bold '>Metaplan</span>

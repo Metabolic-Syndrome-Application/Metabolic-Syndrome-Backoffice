@@ -15,7 +15,7 @@ export default {
         'default-gray': '#7B7B7B',
         'light-gray': '#E3E3E3',
         'default-yellow': '#FFC556',
-        'dark-yellow': '#915E0C',
+        'dark-yellow': '#EE9E03',
         'light-yellow': '#FFE58A',
         'default-green': '#42884B',
         'dark-green': '#27532D',
@@ -23,6 +23,7 @@ export default {
         'default-red': '#FB6262',
         'dark-red': '#8A0E0E',
         'light-red': '#FFA1A1',
+        'default-orange': '#FC825D',
       },
       boxShadow: {
         'default-shadow': '0px 16px 40px 0px rgba(112, 144, 182, 0.20)',
