@@ -5,7 +5,7 @@ import { FormCreateProfileDoctorProps } from '@/components/form/validation/UserV
 import { API_PATH } from '@/config/api';
 
 import { IGetProfileMeApi, IUserData } from '@/types/user';
-import useAxiosAuth from '@/hooks/useAxiosAuth';
+import { axiosAuth } from '@/lib/axios';
 
 interface UserState {
   user: IUserData;
@@ -30,11 +30,12 @@ const initialState: UserState = {
 };
 
 export const fetchUser = createAsyncThunk('fetchUser', async () => {
-  const axiosAuth = useAxiosAuth();
   try {
     const {
       data: { data },
     } = await axiosAuth.get<IGetProfileMeApi>(API_PATH.GET_PROFILE_ME);
+
+    console.log('get profile me', data);
 
     return data.user;
   } catch (error) {
@@ -46,7 +47,6 @@ export const fetchUser = createAsyncThunk('fetchUser', async () => {
 export const updateUser = createAsyncThunk(
   'updateUser',
   async (updatedData: FormCreateProfileDoctorProps) => {
-    const axiosAuth = useAxiosAuth();
     try {
       const response = await axiosAuth.put(
         API_PATH.PUT_PROFILE_ME,
@@ -105,8 +105,7 @@ const profileSlice = createSlice({
 });
 
 // export const selectUser = (state: { user: UserState }) => state.user.user;
-export const selectUser = (state: { user: UserState }) =>
-  state.user?.user || initialState.user;
+export const selectUser = (state: { user: UserState }) => state.user?.user;
 
 export const { getUser } = profileSlice.actions;
 

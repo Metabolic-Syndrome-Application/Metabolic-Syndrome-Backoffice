@@ -14,7 +14,7 @@ import BaseTable from '@/components/table/BaseTable';
 
 import AdminEditProfile from '@/app/admin/components/AdminEditProfile';
 import { API_PATH } from '@/config/api';
-import { fetchUsers, selectAllUsers } from '@/redux/slices/usersSlice';
+import { fetchAllUsers, selectAllUsers } from '@/redux/slices/usersSlice';
 
 const ManageUserTable = () => {
   const { data: session } = useSession();
@@ -29,7 +29,7 @@ const ManageUserTable = () => {
 
   const loadUsers = async () => {
     try {
-      dispatch(fetchUsers());
+      dispatch(fetchAllUsers());
       //setUsers(dataAddIndex);
     } catch (error) {
       console.log('error', error);
@@ -57,7 +57,7 @@ const ManageUserTable = () => {
     if (session && session.user) {
       // If session exists, load users
       //loadUsers();
-      dispatch(fetchUsers());
+      dispatch(fetchAllUsers());
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [session]);

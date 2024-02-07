@@ -27,8 +27,7 @@ import {
   medicalDepartment,
   medicalSpecialist,
 } from '@/constant/user';
-import { fetchUser } from '@/redux/slices/profileSlice';
-import { selectAllUsers } from '@/redux/slices/usersSlice';
+import { fetchAllUsers, selectAllUsers } from '@/redux/slices/usersSlice';
 
 interface IEditMemberFormProps {
   loadData: () => void;
@@ -85,7 +84,7 @@ const AdminEditProfile = ({ loadData, api, id }: IEditMemberFormProps) => {
       // Reload the data after successful edit
       enqueueSnackbar('edit success', { variant: 'success' });
       loadData();
-      await dispatch(fetchUser());
+      dispatch(fetchAllUsers());
 
       closeModal(); // Close the modal if needed
     } catch (error) {

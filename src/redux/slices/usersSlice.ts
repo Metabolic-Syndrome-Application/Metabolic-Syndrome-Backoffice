@@ -20,7 +20,7 @@ const initialState: UserState = {
   error: false,
 };
 
-export const fetchUsers = createAsyncThunk('fetchUsers', async () => {
+export const fetchAllUsers = createAsyncThunk('fetchAllUsers', async () => {
   try {
     const {
       data: { data },
@@ -51,10 +51,10 @@ const usersSlice = createSlice({
   },
   extraReducers(builder) {
     builder
-      .addCase(fetchUsers.pending, (state) => {
+      .addCase(fetchAllUsers.pending, (state) => {
         state.status = 'loading';
       })
-      .addCase(fetchUsers.fulfilled, (state, action) => {
+      .addCase(fetchAllUsers.fulfilled, (state, action) => {
         state.status = 'succeeded';
 
         console.log('Admin Create Register2:', action.payload);
@@ -63,7 +63,7 @@ const usersSlice = createSlice({
 
         console.log('usersWithIndex', action.payload);
       })
-      .addCase(fetchUsers.rejected, (state) => {
+      .addCase(fetchAllUsers.rejected, (state) => {
         state.status = 'failed';
         state.error = true;
       });
