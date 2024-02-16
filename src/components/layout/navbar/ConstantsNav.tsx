@@ -43,14 +43,13 @@ export const SIDENAV_ITEMS: SideNavItem[] = [
   },
   {
     title: 'ภารกิจ',
-    path: '/challange',
-    icon: <Icon icon='octicon:goal-16' width='26' height='26' />,
-    submenu: true,
-    subMenuItems: [
-      { title: 'All', path: '/manage-users' },
-      { title: 'Web Design', path: '/projects/web-design' },
-      { title: 'Graphic Design', path: '/projects/graphic-design' },
-    ],
+    path: '/challenge',
+    icon: < Icon icon='octicon:goal-16' width='26' height='26' />,
+    // submenu: true,
+    // subMenuItems: [
+    //   { title: 'ภารกิจทั่วไป', path: '/challenge/daily' },
+    //   { title: 'ภารกิจตอบคำถามประจำวัน', path: '/challenge/quiz' },
+    // ],
     role: 'doctor,staff',
   },
   {

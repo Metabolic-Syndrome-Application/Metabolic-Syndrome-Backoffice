@@ -1,13 +1,14 @@
-import { PiBowlFood } from 'react-icons/pi';
-import { RiMentalHealthLine } from 'react-icons/ri';
+import { IconType } from 'react-icons';
 import { CiStethoscope } from 'react-icons/ci';
-import { typeplanDropdown } from '@/constant/plan';
 import { FaRunning } from 'react-icons/fa';
 import { GiNightSleep } from 'react-icons/gi';
-import { IconType } from 'react-icons';
+import { PiBowlFood } from 'react-icons/pi';
+import { RiMentalHealthLine } from 'react-icons/ri';
+
+import { typePlanOptions } from '@/constant/plan';
 
 //Type Plan : show icon and varaint color mapping
-export type TypePlan = (typeof typeplanDropdown)[number]['value'];
+export type TypePlan = (typeof typePlanOptions)[number]['value'];
 
 type IconTypeMapping = {
   [key in TypePlan]: { icon: IconType; variant: string; label?: string };

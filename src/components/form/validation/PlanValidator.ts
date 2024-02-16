@@ -1,9 +1,6 @@
 import { z } from 'zod';
 
-import {
-  baseStringValidator,
-  validateMinMax,
-} from '@/components/form/validation/ZodCheck';
+import { baseStringValidator } from '@/components/form/validation/ZodCheck';
 
 export type FormCreatePlanProps = {
   id: string;
@@ -11,27 +8,40 @@ export type FormCreatePlanProps = {
   type: string;
   description: string;
   photo?: string;
-  detail?: DetailPlan[];
+  detail: {
+    name: string[];
+    day: {
+      label: string;
+      value: string;
+    }[];
+  };
 };
 
-export type DetailPlan = {
-  name: string[];
-  day?: string[];
-};
-
-// Create Plan
+// Create Plan Schema
 export const createPlanSchema = z.object({
-  name: validateMinMax(
-    3,
-    200,
-    'กรุณากรอกอย่างน้อย 3 ตัวอักษร และไม่เกิน 200 ตัวอักษร'
-  ),
-  type: baseStringValidator,
+  name: z.string({ required_error: 'กรุณากรอกชื่อโปรแกรมสุขภาพ' }),
+  type: z.string({ required_error: 'กรุณาเลือกหมวดที่ต้องการ' }),
   description: z.string(),
-  // photo: z.string(),
-  //detail: z.string(),
+  photo: z.string(),
+  detail: z.object({
+    name: z.array(
+      z.object({
+        name: z.string().min(1, {
+          message: 'กรุณากรอกรายละเอียดโปรแกรมอย่างน้อย 1 โปรแกรม',
+        }),
+      })
+    ),
+
+    day: z
+      .array(z.object({ label: z.string(), value: z.string() }))
+      .nonempty({ message: 'กรุณาเลือกวันที่ต้องการให้มีโปรแกรกมสุขภาพ' }),
+  }),
 });
 
+//Type Create Plan
+export type createPlanSchemaValues = z.infer<typeof createPlanSchema>;
+
+//test
 export const detailSchemaTest = z.object({
   name: baseStringValidator,
   type: baseStringValidator,
@@ -43,10 +53,15 @@ export const detailSchemaTest = z.object({
   detail: z.array(
     z.object({
       name: z.string({ required_error: 'Name is required' }),
-      day: z.string({ required_error: 'Day is required' }),
+      // day: z.string({ required_error: 'Day is required' }),
     })
   ),
 });
+
+export const multicheckbox = z.object({
+  day: baseStringValidator,
+});
+
 // detail: z
 //   .array(
 //     z.object({

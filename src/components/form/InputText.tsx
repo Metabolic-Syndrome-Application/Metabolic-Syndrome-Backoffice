@@ -13,6 +13,7 @@ export const InputText: React.FC<FormInputProps> = ({
   label,
   type = 'text',
   showPasswordToggle = false,
+  defaultValue,
 }) => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
 
@@ -25,6 +26,7 @@ export const InputText: React.FC<FormInputProps> = ({
     <Controller
       name={name}
       control={control}
+      defaultValue={defaultValue}
       render={({ field: { onChange, value }, fieldState: { error } }) => {
         return (
           <TextField

@@ -3,7 +3,7 @@ import { IUserData } from '@/types/user';
 
 //Add Index Number
 // number.ts
-export const addIndex = (users: IUserData[] = []) =>
+export const addIndexUser = (users: IUserData[] = []) =>
   users.map((user, index) => ({ ...user, index: index + 1 }));
 
 //Add Index plan

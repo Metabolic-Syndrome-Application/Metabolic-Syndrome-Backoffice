@@ -6,7 +6,8 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        primary: ['var(--font-ibm)', ...defaultTheme.fontFamily.sans],
+        ibm: ['var(--font-ibm)'],
+        primary: ['Inter', ...defaultTheme.fontFamily.sans],
       },
       colors: {
         'default-blue': '#2F4EF1',
@@ -14,6 +15,7 @@ export default {
         'light-blue': '#C9E1FD',
         'default-gray': '#7B7B7B',
         'light-gray': '#E3E3E3',
+        'form-gray': '#C4C4C4',
         'default-yellow': '#FFC556',
         'dark-yellow': '#EE9E03',
         'light-yellow': '#FFE58A',
@@ -27,8 +29,8 @@ export default {
       },
       boxShadow: {
         'default-shadow': '0px 16px 40px 0px rgba(112, 144, 182, 0.20)',
-        'light-shadow':
-          'rgb(239, 240, 244) 0px -1px 0px inset, rgb(239, 240, 244) 0px 1px 0px inset',
+        //rgb(239, 240, 244) 0px -1px 0px inset, rgb(239, 240, 244) 0px 1px 0px inset
+        'light-shadow': 'rgba(0, 0, 0, 0.1) 0px 1px 2px 0px;',
       },
 
       keyframes: {

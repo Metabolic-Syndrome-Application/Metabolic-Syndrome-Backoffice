@@ -35,7 +35,7 @@ const TiptapTextField: React.FC<TiptapTextFieldProps> = ({
       <Controller
         name={name}
         control={control}
-        defaultValue=''
+        // defaultValue=''
         render={({ field: { onChange, value }, fieldState: { error } }) => (
           <>
             <Tiptap

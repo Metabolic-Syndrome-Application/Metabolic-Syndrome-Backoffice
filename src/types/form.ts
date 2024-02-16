@@ -1,11 +1,8 @@
-import { IconType } from 'react-icons';
-
 //Form Input Text
 export type FormInputProps = {
   name: string;
   control: any;
   label: string;
-  setValue?: any;
   type?: string;
   showPasswordToggle?: boolean;
 };
@@ -34,4 +31,16 @@ export type FormRadioBtnPropsTest = {
   //options: { label: string; value: string }[];
   options: FormOptionProps['options'];
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+};
+
+// Use in Autocomplete Multiselect checkbox
+export type FormMultiCheckboxProps = {
+  name: string;
+  control: any;
+  label: string;
+  options: {
+    label: string;
+    value: string;
+  }[];
+  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 };

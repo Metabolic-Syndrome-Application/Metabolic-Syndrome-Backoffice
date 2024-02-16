@@ -1,76 +1,86 @@
 'use client';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useSession } from 'next-auth/react';
-import { enqueueSnackbar } from 'notistack';
-import React, { useEffect } from 'react';
-import { useForm } from 'react-hook-form';
+import { useSnackbar } from 'notistack';
+import { FormProvider, useForm } from 'react-hook-form';
 import { MdOutlineCreateNewFolder } from 'react-icons/md';
 import { useDispatch } from 'react-redux';
+import { z } from 'zod';
 
 import useAxiosAuth from '@/hooks/useAxiosAuth';
 import useModal from '@/hooks/useModal';
 
+import ActionButton from '@/components/buttons/ActionButton';
 import { IconFlatButton } from '@/components/buttons/IconFlatButton';
 import UploadImageDisplay from '@/components/form/components/UploadImageDisplay';
 import FormHeaderText from '@/components/form/FormHeaderText';
 import { InputDropdown } from '@/components/form/InputDropdown';
 import { InputText } from '@/components/form/InputText';
-import { MultiselectCheckboxTags } from '@/components/form/MultiselectCheckboxTags';
 import {
   createPlanSchema,
-  FormCreatePlanProps,
+  createPlanSchemaValues,
 } from '@/components/form/validation/PlanValidator';
 import TiptapTextField from '@/components/text-editor/TipTapTextField';
 
+import DetailPlanFields from '@/app/plan/components/create-plan/nested-form/DetailPlanFields';
 import { API_PATH } from '@/config/api';
-import { DaysOfWeekOptions, typePlanOptions } from '@/constant/plan';
+import { typePlanOptions } from '@/constant/plan';
 import { fetchAllPlans } from '@/redux/slices/plansSlice';
 
-const CreatePlan = () => {
-  const { data: session } = useSession();
+const TestSendForm = () => {
   const axiosAuth = useAxiosAuth();
+
   const { Modal, openModal, closeModal } = useModal();
+  const { enqueueSnackbar } = useSnackbar();
 
   const dispatch = useDispatch<any>();
+
+  const methods = useForm<createPlanSchemaValues>({
+    mode: 'onChange',
+    resolver: zodResolver(createPlanSchema),
+
+    defaultValues: {
+      type: 'health',
+      photo: '',
+      detail: {
+        name: [{ name: '' }],
+        day: [],
+      },
+    },
+  });
 
   const {
     control,
     handleSubmit,
-    formState: { errors, isValid },
-  } = useForm<FormCreatePlanProps>({
-    mode: 'onChange',
-    resolver: zodResolver(createPlanSchema),
-    defaultValues: {
-      type: 'health',
-    },
-  });
+    reset,
+    formState: { errors, isDirty },
+  } = methods;
 
-  const onSubmit = async (data: FormCreatePlanProps) => {
-    const { name, type, description } = data;
 
+  const onSubmit = async (data: z.infer<typeof createPlanSchema>) => {
     try {
+      const selectedDays = data.detail.day.map(
+        (day: { value: string }) => day.value
+      );
       const response = await axiosAuth.post(API_PATH.CREATE_PLAN, {
-        name,
-        type,
-        description,
-        // photo,
-        // detail,
+        name: data.name,
+        description: data.description,
+        type: data.type,
+        photo: data.photo,
+        detail: {
+          name: data.detail.name.map((item: any) => item.name),
+          day: selectedDays,
+        },
       });
-
-      console.log('Create Plan:', response.data);
-
       enqueueSnackbar('Create Plan Success', { variant: 'success' });
-      dispatch(fetchAllPlans());
+      console.log('Create Plan', response);
+      await dispatch(fetchAllPlans());
+      closeModal();
+      reset();
     } catch (error: any) {
       enqueueSnackbar(error.response?.data, { variant: 'error' });
-
-      console.error('Error:', error);
+      console.error(error);
     }
   };
-
-  useEffect(() => {
-    // response();
-  }, []);
 
   return (
     <div className='w-full'>
@@ -80,22 +90,17 @@ const CreatePlan = () => {
       </article>
 
       <Modal>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <div className=''>
+        <FormProvider {...methods}>
+          <form onSubmit={handleSubmit(onSubmit)}>
             <FormHeaderText
               icon={MdOutlineCreateNewFolder}
               title='สร้างแผนสุขภาพ'
               useBigestHeader
             />
-
             <div className='grid w-full grid-cols-1 gap-4 md:grid-cols-7'>
               {/* section1 */}
-              <div className='col-span-1 space-y-4 rounded-lg border p-2 md:col-span-4'>
-                <InputText
-                  name='name'
-                  label='ชื่อโปรแกรมสุขภาพ'
-                  control={control}
-                />
+              <div className='col-span-1 space-y-4 rounded-lg md:col-span-4'>
+                <InputText name='name' control={control} label='ชื่อโปรแกรม' />
                 <InputDropdown
                   name='type'
                   control={control}
@@ -107,43 +112,38 @@ const CreatePlan = () => {
                   control={control}
                   label='รายละเอียด'
                 />
+
               </div>
 
-              {/* section2 : picture */}
+              {/* section2 : wait picture */}
               <div className='order-first col-span-1 space-y-4 rounded-lg md:order-none md:col-span-3'>
                 <UploadImageDisplay displayType='large' />
+                {/* <InputText name='photo' control={control} label='photo' /> */}
               </div>
 
               {/* section3 : detail */}
               <div className='col-span-1 space-y-4 rounded-lg md:col-span-7'>
-                <MultiselectCheckboxTags
-                  name='day'
-                  control={control}
-                  label='เลือกวันที่ต้องการที่จะให้มีโปรแกรมสุขภาพ'
-                  options={DaysOfWeekOptions}
-                />
+                <DetailPlanFields />
               </div>
             </div>
 
-            <div className='flex w-full justify-end space-x-3 p-4'>
-              <button
-                onClick={closeModal}
-                className='rounded-xl bg-gray-50 px-4 py-4'
-              >
-                cancel
-              </button>
-              <button
+            <div className='flex w-full justify-end space-x-3 py-4'>
+              <ActionButton type='reset' variant='cancel' onClick={closeModal}>
+                ยกเลิก
+              </ActionButton>
+              <ActionButton
                 type='submit'
-                className='flex items-center rounded-xl bg-blue-400 px-4 py-2'
+                variant='submit'
+                disabled={!isDirty || Object.keys(errors).length > 0}
               >
-                submit
-              </button>
+                ยืนยันการสร้างโปรแกรม
+              </ActionButton>
             </div>
-          </div>
-        </form>
+          </form>
+        </FormProvider>
       </Modal>
     </div>
   );
 };
 
-export default CreatePlan;
+export default TestSendForm;

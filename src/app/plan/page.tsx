@@ -1,9 +1,9 @@
 'use client';
-import CreatePlanForm from '@/app/plan/components/create-plan';
-import TestGeneralForm from '@/app/plan/components/create-plan/TestGeneralForm';
-import PlanTable from '@/app/plan/components/manage-plan/PlanTable';
 import { useSession } from 'next-auth/react';
 import React from 'react';
+
+import TestCheckbox from '@/app/plan/components/create-plan/TestChekbox';
+import PlanTable from '@/app/plan/components/manage-plan/PlanTable';
 
 const PlanPage = () => {
   const { data: session, status } = useSession();
@@ -15,10 +15,12 @@ const PlanPage = () => {
   if (session && session.user) {
     return (
       <div>
-        <p>test</p>
-        <TestGeneralForm></TestGeneralForm>
-        <CreatePlanForm></CreatePlanForm>
+        {/* <TestGeneralForm></TestGeneralForm> */}
+        {/* <CreatePlanForm></CreatePlanForm> */}
+
+        < TestCheckbox></TestCheckbox>
         <PlanTable></PlanTable>
+        {/* <Kuay3></Kuay3> */}
       </div>
     );
   }

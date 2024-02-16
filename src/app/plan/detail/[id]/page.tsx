@@ -1,12 +1,16 @@
 'use client';
-import { CardPlan } from '@/components/common/cards/CardPlan';
-import { BackButton } from '@/components/tabbed/BackButton';
-import Tiptap from '@/components/text-editor/Tiptap';
-import { API_PATH } from '@/config/api';
-import useAxiosAuth from '@/hooks/useAxiosAuth';
-import { IGetPlanAllApi, IPlanData } from '@/types/plan';
 import { useSession } from 'next-auth/react';
 import React, { useEffect, useState } from 'react';
+
+import useAxiosAuth from '@/hooks/useAxiosAuth';
+
+import { CardPlan } from '@/components/common/cards/CardPlan';
+import { BackButton } from '@/components/tabbed/BackButton';
+
+import EditPlan from '@/app/plan/components/manage-plan/EditPlan';
+import { API_PATH } from '@/config/api';
+
+import { IPlanData } from '@/types/plan';
 
 const ViewPlanPage = ({ params }: { params: { id: string } }) => {
   const { data: session, status } = useSession();
@@ -21,7 +25,7 @@ const ViewPlanPage = ({ params }: { params: { id: string } }) => {
       const {
         data: { data },
       } = await axiosAuth.get(API_PATH.GET_PLAN(id as string));
-      console.log('Get 1 plan', data);
+      //console.log('Get 1 plan', data);
       setUserData(data.plan);
     } catch (error) {
       console.log('Error fetching user data:', error);
@@ -35,9 +39,13 @@ const ViewPlanPage = ({ params }: { params: { id: string } }) => {
   if (session && session.user) {
     return (
       <div>
-        <BackButton></BackButton>
-        ViewPlanPage
-        <div>
+        <BackButton />
+
+
+        <div className='shadow-light-shadow rounded-xl container mx-auto'>
+
+          <EditPlan params={{ id }} loadData={fetchUser} />
+
           {userData && (
             <CardPlan
               id={userData.id}
@@ -45,23 +53,16 @@ const ViewPlanPage = ({ params }: { params: { id: string } }) => {
               type={userData.type}
               description={userData.description}
               photo={userData.photo}
+              detail={userData.detail}
             />
           )}
-          <button onClick={fetchUser} className='bg-blue-50'>
+          {/* <button onClick={fetchUser} className='bg-blue-50'>
             Get all user
           </button>
           <button onClick={() => setUserData(null)} className='bg-blue-50'>
             Clear Users
           </button>
-          {/* <div>
-            {userData && (
-              <Tiptap
-                description={userData.description}
-                onChange={(richText) => console.log(richText)}
-              />
-            )}
-          </div> */}
-          {userData && JSON.stringify(userData)}
+          {userData && JSON.stringify(userData)} */}
         </div>
       </div>
     );

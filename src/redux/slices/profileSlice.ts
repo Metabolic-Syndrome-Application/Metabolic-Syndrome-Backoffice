@@ -1,11 +1,12 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
+import { axiosAuth } from '@/lib/axios';
+
 import { FormCreateProfileDoctorProps } from '@/components/form/validation/UserValidator';
 
 import { API_PATH } from '@/config/api';
 
 import { IGetProfileMeApi, IUserData } from '@/types/user';
-import { axiosAuth } from '@/lib/axios';
 
 interface UserState {
   user: IUserData;
@@ -87,20 +88,20 @@ const profileSlice = createSlice({
       .addCase(fetchUser.rejected, (state) => {
         state.status = 'failed';
         state.error = true;
+      })
+      .addCase(updateUser.fulfilled, (state, action) => {
+        if (!action.payload?.id) {
+          console.log('Update could not complete');
+          console.log(action.payload);
+          return;
+        }
+        action.payload.date = new Date().toISOString();
+        state.user = {
+          ...state.user,
+          ...action.payload,
+          date: new Date().toISOString(),
+        };
       });
-    builder.addCase(updateUser.fulfilled, (state, action) => {
-      if (!action.payload?.id) {
-        console.log('Update could not complete');
-        console.log(action.payload);
-        return;
-      }
-      action.payload.date = new Date().toISOString();
-      state.user = {
-        ...state.user,
-        ...action.payload,
-        date: new Date().toISOString(),
-      };
-    });
   },
 });
 

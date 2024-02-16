@@ -77,9 +77,8 @@ const ManageUserTable = () => {
       renderCell: (params: GridCellParams) => (
         <div>
           <span className='flex'>
-            {`${params.row.prefix || ''}${params.row.firstName || ''} ${
-              params.row.lastName || ''
-            }`}
+            {`${params.row.prefix || ''}${params.row.firstName || ''} ${params.row.lastName || ''
+              }`}
           </span>
           <span className='text-default-blue '>
             {params.row.username || ''}
