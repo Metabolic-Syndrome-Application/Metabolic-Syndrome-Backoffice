@@ -6,9 +6,7 @@ import React from 'react';
 
 import { IconFlatButton } from '@/components/buttons/IconFlatButton';
 
-import PatientTable from '@/app/patient/components/manage-patient-table/PatientTable';
-
-const PatientPage = () => {
+const ChallengePage = () => {
   const { data: session } = useSession({
     required: true,
     onUnauthenticated() {
@@ -24,14 +22,14 @@ const PatientPage = () => {
     <div className='p-4'>
 
       <article className='flex w-full items-center justify-between px-4 py-2'>
-        <h1 className='text-balance'>ข้อมูลคนไข้</h1>
+        <h1 className='text-balance'>ภารกิจ</h1>
         <IconFlatButton
-          title='เพิ่มข้อมูลคนไข้'
+          title='เพิ่มภารกิจ'
         //icon={Bs1Square}
         />
       </article>
-      <PatientTable />
+
     </div>
   );
 };
-export default PatientPage;
+export default ChallengePage;

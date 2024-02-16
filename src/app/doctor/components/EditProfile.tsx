@@ -1,7 +1,6 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useSession } from 'next-auth/react';
 import { useSnackbar } from 'notistack';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -9,7 +8,6 @@ import { FaUserDoctor } from 'react-icons/fa6';
 import { FiEdit } from 'react-icons/fi';
 import { useDispatch, useSelector } from 'react-redux';
 
-import useAxiosAuth from '@/hooks/useAxiosAuth';
 import useModal from '@/hooks/useModal';
 
 import FormHeaderText from '@/components/form/FormHeaderText';
@@ -33,8 +31,7 @@ interface IEditMemberFormProps {
 }
 
 const EditProfile = ({ loadData, api }: IEditMemberFormProps) => {
-  const { data: session } = useSession();
-  const axiosAuth = useAxiosAuth();
+
   const { enqueueSnackbar } = useSnackbar();
 
   const { Modal, openModal, closeModal } = useModal();

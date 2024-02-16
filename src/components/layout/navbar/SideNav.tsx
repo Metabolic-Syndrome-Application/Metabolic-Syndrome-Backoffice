@@ -26,20 +26,18 @@ const SideNav = ({ open, setOpen }: SideNavProps) => {
 
   return (
     <div
-      className={`${
-        open ? 'md:flex md:w-72' : 'md:flex md:w-24'
-      } md: fixed z-20 hidden h-screen flex-1 border-r border-zinc-200 bg-white`}
+      className={`${open ? 'md:flex md:w-72' : 'md:flex md:w-24'
+        } md: fixed z-20 hidden h-screen flex-1 border-r border-zinc-200 bg-white`}
     >
       <RxDoubleArrowLeft
         className={`hover:bg-light-gray text-default-gray absolute -right-3 top-11
-           w-8 cursor-pointer rounded-full border-[1.5px] bg-white ${
-             !open && 'rotate-180'
-           }`}
+           w-8 cursor-pointer rounded-full border-[1.5px] bg-white ${!open && 'rotate-180'
+          }`}
         onClick={() => setOpen(!open)}
         aria-hidden='true'
       />
 
-      <div className='flex w-full flex-col space-y-6'>
+      <div className='flex h-full w-full flex-col space-y-6'>
         {/* Render Logo and Title */}
         <Link
           href='/'
@@ -62,7 +60,7 @@ const SideNav = ({ open, setOpen }: SideNavProps) => {
 
         {/* Render Menu Items */}
         <div className='flex h-full flex-col justify-between md:px-6'>
-          <div className='space-y-4'>
+          <div className='space-y-4 md:space-y-6 2xl:space-y-10'>
             {otherItems.map((item, idx) => (
               <MenuItem key={idx} item={item} open={open} />
             ))}
@@ -96,9 +94,8 @@ const MenuItem = ({ item, open }: { item: SideNavItem; open: boolean }) => {
         <>
           <button
             onClick={toggleSubMenu}
-            className={` hover:bg-light-blue flex w-full flex-row items-center justify-between rounded-lg p-2 ${
-              pathname.includes(item.path) ? 'bg-light-blue' : ''
-            }`}
+            className={` hover:bg-light-blue flex w-full flex-row items-center justify-between rounded-lg p-2 ${pathname.includes(item.path) ? 'bg-light-blue' : ''
+              }`}
           >
             <div className='flex flex-row items-center justify-center space-x-4'>
               {item.icon}
@@ -111,15 +108,14 @@ const MenuItem = ({ item, open }: { item: SideNavItem; open: boolean }) => {
           </button>
 
           {subMenuOpen && (
-            <div className='my-2 ml-12 flex flex-col space-y-4'>
+            <div className='my-4 ml-12 flex flex-col space-y-6'>
               {item.subMenuItems?.map((subItem, idx) => {
                 return (
                   <Link
                     key={idx}
                     href={subItem.path}
-                    className={`${
-                      subItem.path === pathname ? 'font-medium' : ''
-                    }`}
+                    className={`${subItem.path === pathname ? 'font-medium' : ''
+                      }`}
                   >
                     <span>{subItem.title}</span>
                   </Link>
@@ -131,9 +127,8 @@ const MenuItem = ({ item, open }: { item: SideNavItem; open: boolean }) => {
       ) : (
         <Link
           href={item.path}
-          className={`hover:bg-light-blue flex flex-row items-center space-x-4 rounded-lg p-2 ${
-            item.path === pathname ? 'bg-light-blue text-default-blue' : ''
-          }`}
+          className={`hover:bg-light-blue flex flex-row items-center space-x-4 rounded-lg p-2 ${item.path === pathname ? 'bg-light-blue text-default-blue' : ''
+            }`}
         >
           {item.icon}
           {/* Show only icon when sidebar is collapsed */}

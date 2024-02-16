@@ -28,3 +28,18 @@ export interface IGetProfileMeApi {
   };
   status: string;
 }
+
+//get profile doctor all
+export interface IGetDoctorOptions {
+  id: string;
+  prefix: string;
+  firstName: string;
+  lastName: string;
+}
+
+export interface IGetDoctorOptionsApi {
+  data: {
+    users: IGetDoctorOptions[];
+  };
+  status: string;
+}

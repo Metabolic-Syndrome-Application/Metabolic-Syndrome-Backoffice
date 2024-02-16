@@ -2,7 +2,7 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useSession } from 'next-auth/react';
-import { enqueueSnackbar } from 'notistack';
+import { useSnackbar } from 'notistack';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { FaUserDoctor } from 'react-icons/fa6';
@@ -11,6 +11,7 @@ import { useDispatch } from 'react-redux';
 import useAxiosAuth from '@/hooks/useAxiosAuth';
 import useModal from '@/hooks/useModal';
 
+import ActionButton from '@/components/buttons/ActionButton';
 import { IconFlatButton } from '@/components/buttons/IconFlatButton';
 import FormHeaderText from '@/components/form/FormHeaderText';
 import { InputDropdown } from '@/components/form/InputDropdown';
@@ -21,20 +22,20 @@ import {
   registerDoctorSchema,
 } from '@/components/form/validation/UserValidator';
 
+import { API_PATH } from '@/config/api';
 import {
   dataOptions,
   medicalDepartment,
   medicalSpecialist,
 } from '@/constant/user';
-import { fetchUsers } from '@/redux/slices/usersSlice';
-import { API_PATH } from '@/config/api';
-import ActionButton from '@/components/buttons/ActionButton';
+import { fetchAllUsers } from '@/redux/slices/usersSlice';
 
 const AdminCreateRegister = () => {
   const { data: session } = useSession();
   const axiosAuth = useAxiosAuth();
 
   const { Modal, openModal, closeModal } = useModal();
+  const { enqueueSnackbar } = useSnackbar();
 
   const dispatch = useDispatch<any>();
 
@@ -42,7 +43,7 @@ const AdminCreateRegister = () => {
     control,
     handleSubmit,
     reset,
-    formState: { errors, isDirty, isValid },
+    formState: { errors, isDirty },
   } = useForm<FormRegisterDoctorProps>({
     mode: 'onChange',
     resolver: zodResolver(registerDoctorSchema),
@@ -102,7 +103,7 @@ const AdminCreateRegister = () => {
 
         //console.log('Create Profile API Response:', createProfileResponse);
         enqueueSnackbar('Register Success', { variant: 'success' });
-        await dispatch(fetchUsers());
+        await dispatch(fetchAllUsers());
         closeModal();
         reset();
       }
@@ -198,7 +199,7 @@ const AdminCreateRegister = () => {
               </div>
             </div>
 
-            <div className='flex w-full justify-end space-x-3 p-4'>
+            <div className='flex w-full justify-end space-x-3 py-4'>
               <ActionButton type='reset' variant='cancel' onClick={closeModal}>
                 ยกเลิก
               </ActionButton>

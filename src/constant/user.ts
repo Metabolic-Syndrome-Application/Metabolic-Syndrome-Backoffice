@@ -1,4 +1,6 @@
-import { generateBirthYear } from '@/components/helpers/date';
+import { generateBirthYear } from '@/helpers/date';
+
+import { IGetDoctorOptions } from '@/types/user';
 
 const personalInfoQuestions = {
   question1: {
@@ -83,8 +85,17 @@ const dataOptions = {
 
 const yearOptions = generateBirthYear();
 
+//Get All Doctor Options
+const getDoctorOptions = (options: IGetDoctorOptions[]) => {
+  return options.map((option) => ({
+    label: `${option.prefix}${option.firstName} ${option.lastName}`,
+    value: option.id,
+  }));
+};
+
 export {
   dataOptions,
+  getDoctorOptions,
   medicalDepartment,
   medicalSpecialist,
   personalInfoQuestions,

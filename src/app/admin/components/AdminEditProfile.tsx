@@ -1,7 +1,6 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useSession } from 'next-auth/react';
 import { useSnackbar } from 'notistack';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -36,7 +35,6 @@ interface IEditMemberFormProps {
 }
 
 const AdminEditProfile = ({ loadData, api, id }: IEditMemberFormProps) => {
-  const { data: session } = useSession();
   const axiosAuth = useAxiosAuth();
   const { enqueueSnackbar } = useSnackbar();
 

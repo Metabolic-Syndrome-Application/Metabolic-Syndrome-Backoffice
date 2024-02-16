@@ -5,8 +5,8 @@ export const PatientStatus = [
     value: 'SUCCESS',
   },
   {
-    label: 'pending',
-    value: 'PENDING',
+    label: 'in process',
+    value: 'in process',
   },
   {
     label: 'reject',

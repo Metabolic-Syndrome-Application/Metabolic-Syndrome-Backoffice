@@ -47,32 +47,32 @@
 
   /* #region  /**=========== Typography =========== */
   .h0 {
-    @apply font-primary text-3xl font-bold md:text-4xl lg:text-5xl;
+    @apply font-ibm text-3xl font-bold md:text-4xl lg:text-5xl;
   }
 
   h1,
   .h1 {
-    @apply font-primary text-xl font-medium md:text-2xl xl:text-3xl 2xl:text-4xl;
+    @apply font-ibm text-xl font-medium md:text-2xl xl:text-3xl 2xl:text-4xl;
   }
 
   h2,
   .h2 {
-    @apply font-primary text-xl font-medium md:text-2xl xl:text-3xl;
+    @apply font-ibm text-xl font-medium md:text-2xl xl:text-3xl;
   }
 
   h3,
   .h3 {
-    @apply font-primary text-lg font-medium md:text-xl xl:text-2xl;
+    @apply font-ibm text-lg font-medium md:text-xl xl:text-2xl;
   }
 
   h4,
   .h4 {
-    @apply font-primary text-base font-medium md:text-lg;
+    @apply font-ibm text-base font-medium md:text-lg;
   }
 
   body,
   .p {
-    @apply font-primary text-sm md:text-base;
+    @apply font-ibm text-sm md:text-base;
   }
   /* #endregion  /**======== Typography =========== */
 
@@ -183,11 +183,11 @@
 
   .ProseMirror blockquote {
     padding-left: 1rem;
-    border-left: 2px solid #999999;
+    border-left: 2px solid #e5e7eb;
   }
 
   .ProseMirror hr {
-    @apply my-2 rounded-full border border-gray-400;
+    @apply my-2 rounded-full border border-gray-200;
   }
 
   /* ............................ */

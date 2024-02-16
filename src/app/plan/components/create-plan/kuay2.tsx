@@ -1,15 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
+import FormCard from '@/app/plan/components/create-plan/Formcard';
+import { InputText } from '@/components/form/InputText';
+
 import { useFieldArray, useFormContext } from 'react-hook-form';
 import { AiOutlineClose } from 'react-icons/ai';
-
-import { InputText } from '@/components/form/InputText';
-import { MultiselectCheckboxTags } from '@/components/form/MultiselectCheckboxTags';
-
-import FormCard from '@/app/plan/components/create-plan/Formcard';
-import { DaysOfWeekOptions } from '@/constant/plan';
+import ToggleDays from '@/components/form/crons/DayOfWeek';
 
 const Kuay = () => {
-  const { control, handleSubmit, watch } = useFormContext();
+  const { control } = useFormContext();
 
   const {
     fields: detailFields,
@@ -29,7 +27,7 @@ const Kuay = () => {
     control,
   });
 
-  const selectedDays = watch('day'); // Get selected days from CheckboxesTags
+  const [selectedDays, setSelectedDays] = useState<number[]>([]);
 
   return (
     <FormCard heading='General'>
@@ -75,15 +73,10 @@ const Kuay = () => {
           </button>
         </div>
       </div>
+
       <h4 className='mt-4'>Detail</h4>
       <div className='flex flex-col gap-2'>
         {/* Mapping over the detail fields */}
-        <MultiselectCheckboxTags
-          name='day'
-          control={control}
-          label='เลือกวันที่ต้องการ'
-          options={DaysOfWeekOptions}
-        />
         {detailFields.map((field, index) => (
           <div key={field.id} className='flex gap-3'>
             {/* Input field for detail name */}
@@ -92,6 +85,13 @@ const Kuay = () => {
               control={control}
               label={`name ${index + 1}`}
             />
+            {/* ToggleDays component for selecting repeat day */}
+            {/* <ToggleDays
+              selectedDays={selectedDays}
+              setSelectedDays={setSelectedDays}
+              name={`detail[${index}].day`}
+              control={control}
+            /> */}
 
             {/* Render a button to remove the detail field */}
             {detailFields.length > 1 && (
@@ -112,7 +112,7 @@ const Kuay = () => {
             className='text-primary mt-1'
             onClick={() => {
               // Append a new object with empty name and day values
-              appendDetail({ name: '', day: selectedDays });
+              appendDetail({ name: '', day: '' });
             }}
           >
             + Add new detail

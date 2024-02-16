@@ -16,6 +16,8 @@ export const API_PATH = {
   GET_PROFILE_ME: '/api/user/profile',
   PUT_PROFILE_ME: '/api/user/profile',
 
+  GET_PROFILE_ALL_DOCTOR: '/api/user/profile/all/doctor',
+
   //Plan
   CREATE_PLAN: '/api/plan/create',
   PUT_PLAN: (id: string) => `/api/plan/${id}`,

@@ -41,9 +41,8 @@ const HeaderMobile = () => {
       initial={false}
       animate={isOpen ? 'open' : 'closed'}
       custom={height}
-      className={`fixed inset-0 z-10 w-full md:hidden ${
-        isOpen ? '' : 'pointer-events-none'
-      }`}
+      className={`fixed inset-0 z-10 w-full md:hidden ${isOpen ? '' : 'pointer-events-none'
+        }`}
       ref={containerRef}
     >
       <motion.div
@@ -67,9 +66,8 @@ const HeaderMobile = () => {
                   <Link
                     href={item.path}
                     onClick={() => toggleOpen()}
-                    className={`flex w-full text-2xl ${
-                      item.path === pathname ? 'font-medium' : ''
-                    } ${isLogoutItem ? 'hidden' : ''}`}
+                    className={`flex w-full text-2xl ${item.path === pathname ? 'font-medium' : ''
+                      } ${isLogoutItem ? 'hidden' : ''}`}
                   >
                     {item.title}
                   </Link>
@@ -181,7 +179,7 @@ const MenuItemWithSubMenu: React.FC<MenuItemWithSubMenuProps> = ({
           </div>
         </button>
       </MenuItem>
-      <div className='ml-2 mt-2 flex flex-col space-y-2 text-lg'>
+      <div className='ml-2 mt-4 flex flex-col space-y-4 text-lg'>
         {subMenuOpen && (
           <>
             {item.subMenuItems?.map((subItem, subIdx) => {
@@ -190,9 +188,8 @@ const MenuItemWithSubMenu: React.FC<MenuItemWithSubMenuProps> = ({
                   <Link
                     href={subItem.path}
                     onClick={() => toggleOpen()}
-                    className={` ${
-                      subItem.path === pathname ? 'font-medium' : ''
-                    }`}
+                    className={` ${subItem.path === pathname ? 'font-medium' : ''
+                      }`}
                   >
                     {subItem.title}
                   </Link>

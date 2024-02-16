@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 import useAxiosAuth from '@/hooks/useAxiosAuth';
 
 import DeleteButton from '@/components/buttons/delete-button';
-import { addIndex } from '@/components/helpers/number';
+import { addIndexUser } from '@/helpers/number';
 import BaseTable from '@/components/table/BaseTable';
 
 import { API_PATH } from '@/config/api';
@@ -25,7 +25,7 @@ const DoctorTable = () => {
         data: { data },
       } = await axiosAuth.get<IGetProfileAllApi>(API_PATH.GET_PROFILE_ALL);
       console.log('data', data);
-      const dataAddIndex = addIndex(data.users);
+      const dataAddIndex = addIndexUser(data.users);
 
       setUsers(dataAddIndex);
       console.log('usersWithIndex', dataAddIndex);
