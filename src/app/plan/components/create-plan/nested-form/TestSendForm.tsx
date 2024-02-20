@@ -112,7 +112,6 @@ const TestSendForm = () => {
                   control={control}
                   label='รายละเอียด'
                 />
-
               </div>
 
               {/* section2 : wait picture */}

@@ -1,10 +1,12 @@
 "use client"
+import { zodResolver } from '@hookform/resolvers/zod';
 import { useSnackbar } from 'notistack';
 import React, { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { FiEdit } from 'react-icons/fi';
-import { MdOutlineCreateNewFolder } from 'react-icons/md';
-import { useDispatch } from 'react-redux';
+import { MdEdit } from 'react-icons/md';
+import { useDispatch, useSelector } from 'react-redux';
+import { z } from 'zod';
 
 import useAxiosAuth from '@/hooks/useAxiosAuth';
 import useModal from '@/hooks/useModal';
@@ -14,19 +16,16 @@ import UploadImageDisplay from '@/components/form/components/UploadImageDisplay'
 import FormHeaderText from '@/components/form/FormHeaderText';
 import { InputDropdown } from '@/components/form/InputDropdown';
 import { InputText } from '@/components/form/InputText';
+import { createPlanSchema, createPlanSchemaValues } from '@/components/form/validation/PlanValidator';
 import TiptapTextField from '@/components/text-editor/TipTapTextField';
 
 import DetailPlanFields from '@/app/plan/components/create-plan/nested-form/DetailPlanFields';
 import { API_PATH } from '@/config/api';
 import { typePlanOptions } from '@/constant/plan';
 import { dayOfWeekThaiLabel } from '@/helpers/date';
-import { fetchPlanById } from '@/redux/slices/plansSlice';
+import { fetchPlanById, selectAllPlans } from '@/redux/slices/plansSlice';
 
-interface IPlanProps {
-  loadData: () => void;
-  id: string;
-  api: string;
-}
+
 
 const EditPlan = ({ params, loadData }: { params: { id: string }, loadData: () => void }) => {
   const id = params.id;
@@ -36,22 +35,23 @@ const EditPlan = ({ params, loadData }: { params: { id: string }, loadData: () =
   const { enqueueSnackbar } = useSnackbar()
 
   const dispatch = useDispatch<any>();
-  // const plans = useSelector(selectAllPlans);
-  // const currentPlan = plans.find((plan) => plan.id === id);
+  const plans = useSelector(selectAllPlans);
+  const currentPlan = plans.find((plan) => plan.id === id)
+
 
   // const plan = plans.find((item) => {
   //   return item.id === (id)
   // });
 
-  ///const planId = useSelector((state: any) => selectPlanById(state, id));
+  //const planId = useSelector((state: any) => selectPlanById(state, id));
 
-  const methods = useForm({
+  const methods = useForm<createPlanSchemaValues>({
     mode: 'onChange',
-    //resolver: zodResolver(createPlanSchema),
+    resolver: zodResolver(createPlanSchema),
     defaultValues: async () => {
       const response = await axiosAuth.get(`/api/plan/${id}`);
       const data = await response.data.data.plan
-      console.log('defaultValues', data)
+
 
       const thaiDays = data?.detail.day.map((dayItem: string) => ({
         label: dayOfWeekThaiLabel(dayItem), // Convert English day name to Thai label
@@ -60,15 +60,16 @@ const EditPlan = ({ params, loadData }: { params: { id: string }, loadData: () =
       return {
         name: data.name,
         type: data.type,
+        photo: data.photo,
         description: data?.description,
         detail: {
-          // name: data?.detail.name.map((item: any) => ({ name: item })), // Map each name to an object
           name: data?.detail.name.map((nameItem: any) => ({ name: nameItem })), // Convert name array to array of objects
           //day: data?.detail.day.map((dayItem: string) => ({ label: dayItem, value: dayItem })) // Map each day string to an object with label and value
           day: thaiDays
         }
       }
     }
+
   });
 
   const {
@@ -83,7 +84,7 @@ const EditPlan = ({ params, loadData }: { params: { id: string }, loadData: () =
   }, [dispatch, id]);
 
 
-  const onSubmit = async (data: any) => {
+  const onSubmit = async (data: z.infer<typeof createPlanSchema>) => {
     try {
       const selectedDays = data.detail.day.map(
         (day: { value: string }) => day.value
@@ -99,11 +100,11 @@ const EditPlan = ({ params, loadData }: { params: { id: string }, loadData: () =
           day: selectedDays,
         },
       });
-      console.log('edit plan', data)
+      // console.log('Edit Plan Succcess', data)
 
       enqueueSnackbar('Edit Plan Success', { variant: 'success' });
-      // await dispatch(fetchAllPlans());
-      // await dispatch(fetchPlanById(id));  loadData();
+      ;
+      // await dispatch(fetchPlanById(id));
       loadData();
 
 
@@ -134,8 +135,8 @@ const EditPlan = ({ params, loadData }: { params: { id: string }, loadData: () =
         <FormProvider {...methods}>
           <form onSubmit={handleSubmit(onSubmit)}>
             <FormHeaderText
-              icon={MdOutlineCreateNewFolder}
-              title='สร้างแผนสุขภาพ'
+              icon={MdEdit}
+              title='แก้ไขแผนสุขภาพ'
               useBigestHeader
             />
             <div className='grid w-full grid-cols-1 gap-4 md:grid-cols-7'>
@@ -175,7 +176,7 @@ const EditPlan = ({ params, loadData }: { params: { id: string }, loadData: () =
               >
                 ยกเลิก
               </ActionButton>
-              <ActionButton type='submit' variant='submit'>
+              <ActionButton type='submit' variant='submit' disabled={!isDirty || Object.keys(errors).length > 0}>
                 แก้ไข
               </ActionButton>
             </div>

@@ -186,7 +186,7 @@ export const authOptions: NextAuthOptions = {
 
         // Check if refresh token is expired
         if (isRefreshTokenExpired(session.user.refresh_token)) {
-          await signOut();
+          await signIn();
         }
       }
 

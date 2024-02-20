@@ -14,6 +14,7 @@ export const InputText: React.FC<FormInputProps> = ({
   type = 'text',
   showPasswordToggle = false,
   defaultValue,
+  disabled = false,
 }) => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
 
@@ -35,20 +36,21 @@ export const InputText: React.FC<FormInputProps> = ({
             onChange={onChange}
             ///type={type}
             type={inputType}
+            disabled={disabled}
             error={!!error}
             helperText={error ? error.message : null}
             fullWidth
             InputProps={
               showPasswordToggle
                 ? {
-                    endAdornment: (
-                      <InputAdornment position='end'>
-                        <IconButton onClick={handleTogglePassword} edge='end'>
-                          {showPassword ? <IoIosEye /> : <IoIosEyeOff />}
-                        </IconButton>
-                      </InputAdornment>
-                    ),
-                  }
+                  endAdornment: (
+                    <InputAdornment position='end'>
+                      <IconButton onClick={handleTogglePassword} edge='end'>
+                        {showPassword ? <IoIosEye /> : <IoIosEyeOff />}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }
                 : undefined
             }
             sx={{
@@ -57,6 +59,7 @@ export const InputText: React.FC<FormInputProps> = ({
               '& .MuiInputBase-root': {
                 height: 50,
                 borderRadius: '0.575rem',
+                backgroundColor: disabled ? '#F6F6F6' : 'transparent',
               },
               //mb: 2,
             }}

@@ -24,4 +24,11 @@ export const API_PATH = {
   GET_PLAN: (id: string) => `/api/plan/${id}`,
   GET_PLAN_ALL: '/api/plan/all',
   DELETE_PLAN: (id: string) => `/api/plan/${id}`,
+
+  //Challenge
+  CREATE_QUIZ: '/api/challenge/quiz',
+  PUT_QUIZ: (id: string) => `/api/challenge/quiz/${id}`,
+  GET_QUIZ: (id: string) => `/api/challenge/quiz/${id}`,
+  GET_QUIZ_ALL: '/api/challenge/quiz/all',
+  DELETE_QUIZ: (id: string) => `/api/challenge/quiz/${id}`,
 };

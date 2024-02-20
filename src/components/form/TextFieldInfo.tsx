@@ -1,62 +1,56 @@
-// Use in Profile Doctor/Staff
-// import React from 'react';
-// import { TextField } from '@mui/material';
 
-// type TextFieldInfo = {
-//   label: string;
-//   value: string | unknown;
-// };
-
-// export const TextFieldInfo = ({ label, value }: TextFieldInfo) => (
-//   <TextField
-//     id='outlined-read-only-input'
-//     label={label}
-//     value={value}
-//     InputProps={{
-//       readOnly: true,
-//     }}
-//     sx={{
-//       width: '100%',
-//       '& .MuiInputBase-root': {
-//         height: 50,
-//         borderRadius: '0.575rem',
-//       },
-//     }}
-//   />
-// );
-import { TextField } from '@mui/material';
+import { styled, TextField } from '@mui/material';
 import React from 'react';
 
 interface TextFieldInfoProps {
   label: string;
   value: string | string[] | unknown;
+  className?: string;
+  isSelected?: string | boolean
 }
 
 export const TextFieldInfo: React.FC<TextFieldInfoProps> = ({
   label,
   value,
+  className,
+  isSelected,
+  ...props
 }) => {
+
+  // Styled TextField
+  const StyledTextField = styled(({ isSelected, ...props }: TextFieldInfoProps) => (
+    <TextField {...props} fullWidth />
+  ))(({ isSelected }: TextFieldInfoProps) => ({
+    '& .MuiInputBase-root': {
+      height: 50,
+      borderRadius: '0.575rem',
+      backgroundColor: isSelected ? '#C9E1FD' : '#FFFFFF',
+    },
+    '& .Mui-focused': {
+      backgroundColor: '#C9E1FD',
+    }
+  }));
+
+
   const renderTextField = (text: string | unknown, index?: number) => (
-    <TextField
+    <StyledTextField
+      {...props}
       key={index}
-      id={`outlined-read-only-input-${index}`}
       label={label}
       value={text}
-      InputProps={{
-        readOnly: true,
-      }}
-      fullWidth
-      sx={{
-        '& .MuiInputBase-root': {
-          height: 50,
-          borderRadius: '0.575rem',
-        },
-      }}
+      className={`${className}`}
+      // isSelected={`${isSelected}`}
+      isSelected={isSelected} // Convert isSelected to a boolean value
+
+    // InputProps={{
+    //   readOnly: true,
+    // }}
     />
   );
 
   return (
-    <div className=''>
+    //Show array Textfield list plan
+    <div>
       {Array.isArray(value) ? (
         <ul className='flex flex-wrap items-center gap-4 '>
           {value.map((item, index) => (
@@ -72,5 +66,3 @@ export const TextFieldInfo: React.FC<TextFieldInfoProps> = ({
     </div>
   );
 };
-
-export default TextFieldInfo;

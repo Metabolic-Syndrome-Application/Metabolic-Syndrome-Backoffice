@@ -9,6 +9,7 @@ export interface IPlanData {
     name: string[];
     day: string[];
   };
+  date?: string;
 }
 
 //get profile doctor all
@@ -29,7 +30,7 @@ export interface IGetPlanAllApi {
 //1 Plan
 export interface IGetPlanIdApi {
   data: {
-    plan: IPlanData[];
+    plan: IPlanData;
   };
   status: string;
 }

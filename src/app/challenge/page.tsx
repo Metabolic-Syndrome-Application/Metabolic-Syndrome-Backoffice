@@ -4,8 +4,6 @@ import { redirect } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import React from 'react';
 
-import { IconFlatButton } from '@/components/buttons/IconFlatButton';
-
 const ChallengePage = () => {
   const { data: session } = useSession({
     required: true,
@@ -23,11 +21,11 @@ const ChallengePage = () => {
 
       <article className='flex w-full items-center justify-between px-4 py-2'>
         <h1 className='text-balance'>ภารกิจ</h1>
-        <IconFlatButton
+        {/* <IconFlatButton
           title='เพิ่มภารกิจ'
-        //icon={Bs1Square}
-        />
+        /> */}
       </article>
+
 
     </div>
   );

@@ -11,9 +11,9 @@ import PatientTable from '@/app/patient/components/manage-patient-table/PatientT
 const PatientPage = () => {
   const { data: session } = useSession({
     required: true,
-    onUnauthenticated() {
-      redirect('/api/auth/signin?callbackUrl=/client');
-    },
+    // onUnauthenticated() {
+    //   redirect('/api/auth/signin?callbackUrl=/client');
+    // },
   });
 
   if (session?.user.role !== 'staff' && session?.user.role !== 'doctor') {

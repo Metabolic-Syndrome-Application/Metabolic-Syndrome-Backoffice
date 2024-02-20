@@ -5,6 +5,8 @@ export type FormInputProps = {
   label: string;
   type?: string;
   showPasswordToggle?: boolean;
+  defaultValue?: any;
+  disabled?: boolean;
 };
 
 //Form Options

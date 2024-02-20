@@ -54,6 +54,7 @@ import createWebStorage from 'redux-persist/lib/storage/createWebStorage';
 import plansSlice from '@/redux/slices/plansSlice';
 import profileSlice from '@/redux/slices/profileSlice';
 import usersSlice from '@/redux/slices/usersSlice';
+import quizsSlice from '@/redux/slices/quizsSlice';
 
 const createNoopStorage = () => {
   return {
@@ -84,6 +85,7 @@ const rootReducer = combineReducers({
   users: usersSlice,
   user: profileSlice,
   plan: plansSlice,
+  quiz: quizsSlice,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

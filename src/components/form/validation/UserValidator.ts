@@ -71,7 +71,7 @@ export const registerDoctorSchema = z
   })
   .refine((data) => data.password === data.passwordConfirm, {
     message: 'รหัสผ่านของคุณไม่ตรงกัน',
-    path: ['confirmPassword'],
+    path: ['passwordConfirm'],
   });
 
 //Update Profile for Doctor/Staff

@@ -59,7 +59,7 @@ const PlanTable = () => {
       // If session exists, load users
       dispatch(fetchAllPlans());
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-dis able-next-line react-hooks/exhaustive-deps
   }, [session]);
 
   const columns: GridColDef[] = [
@@ -73,7 +73,7 @@ const PlanTable = () => {
     },
     {
       field: 'name',
-      width: 400,
+      width: 450,
       renderHeader: () => <h5 className='font-bold'>ชื่อโปรแกรมสุขภาพ</h5>,
       headerClassName: 'super-app-theme--header',
       valueGetter: (params: GridValueGetterParams) =>
@@ -114,12 +114,6 @@ const PlanTable = () => {
         return (
           <div className='flex flex-row items-center space-x-4'>
             <ViewButton href={`/plan/detail/${params.row.id}`} />
-            {/* <EditPlan
-              loadData={loadPlans}
-              api={`http://localhost:8000/api/plan/profile/${params.row.id}`}
-              id={params.row.id}
-             
-            /> */}
             <DeleteButton
               loadData={loadPlans}
               api={API_PATH.DELETE_PLAN(params.row.id)}
