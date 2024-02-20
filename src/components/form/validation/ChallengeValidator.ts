@@ -1,34 +1,55 @@
 import { z } from 'zod';
 
-import { baseStringValidator } from '@/components/form/validation/ZodCheck';
+import {
+  baseStringValidator,
+  validateMinMax,
+} from '@/components/form/validation/ZodCheck';
 
-export type FormCreatePlanProps = {
-  id: string;
-  name: string;
-  type: string;
-  description: string;
-  photo?: string;
-  detail: {
-    name: string[];
-    day: {
-      label: string;
-      value: string;
-    }[];
-  };
-};
+//Quiz challenge Schema
+export const createQuizChallengeSchema = z.object({
+  question: validateMinMax(
+    2,
+    300,
+    'กรุณากรอกอย่างน้อย 2 ตัวอักษร และไม่เกิน 300 ตัวอักษร'
+  ),
+  points: z.number({ required_error: 'กรุณากรอกคะแนนรวมภารกิจ' }),
+  limitTime: z.number({
+    required_error: 'กรุณากรอกคะแนนระยะเวลาในการตอบคำถาม',
+  }),
+  choices: z
+    .array(
+      z.object({
+        option: z.string().min(2, {
+          message: 'กรุณากรอกอย่างน้อย 2 ตัวอักษร',
+        }),
 
-// Create Plan Schema
-export const createPlanSchema = z.object({
-  name: z
-    .string({
-      required_error: 'กรุณากรอกชื่อโปรแกรมสุขภาพ',
-    })
+        isCorrect: z.boolean({
+          required_error: 'isActive is required',
+          invalid_type_error: 'isActive must be a boolean',
+        }),
+      })
+    )
     .min(2, {
-      message: 'ชื่อโปรแกรมสุขภาพต้องมีความยาวอย่างน้อย 2 ตัวอักษร',
+      message: 'กรุณาเลือกตัวเลือกอย่างน้อย 2 ตัวเลือก',
     })
-    .max(50, {
-      message: 'ชื่อโปรแกรมสุขภาพต้องมีความยาวไม่เกิน 50 ตัวอักษร',
-    }),
+    .refine(
+      (choices) => {
+        const correctChoices = choices.filter((choice) => choice.isCorrect);
+        return correctChoices.length >= 1 && correctChoices.length <= 1;
+      },
+      {
+        message: 'ต้องมีตัวเลือกอย่างน้อย 1 ตัวเลือกที่ถูกต้อง',
+      }
+    ),
+});
+
+//Type Create Quiz Challenge
+export type createQuizSchemaValues = z.infer<typeof createQuizChallengeSchema>;
+
+/////////
+// Create Challenge Schema
+export const createPlanSchema = z.object({
+  name: z.string({ required_error: 'กรุณากรอกชื่อโปรแกรมสุขภาพ' }),
   type: z.string({ required_error: 'กรุณาเลือกหมวดที่ต้องการ' }),
   description: z.string(),
   photo: z.string(),
@@ -101,15 +122,3 @@ export const multicheckbox = z.object({
 //     value: z.string({ required_error: 'Description is required' }),
 //   })
 // ),
-
-//challenge
-export const challengeSchemaTest = z.object({
-  name: z.string({ required_error: 'name is required' }),
-  allPoints: z.string({ required_error: 'all points is required' }),
-  description: z.array(
-    z.object({
-      title: z.string({ required_error: 'title is required' }),
-      point: z.string({ required_error: 'point is required' }),
-    })
-  ),
-});

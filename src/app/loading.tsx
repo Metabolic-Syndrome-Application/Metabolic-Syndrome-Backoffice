@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 
 export default function Loading() {
   return (
-    <section className='bg-white'>
+    <section className='bg-transparent'>
       <div className='layout flex min-h-screen flex-col items-center justify-center text-center'>
         <Image
           src='/assets/images/loading.gif'

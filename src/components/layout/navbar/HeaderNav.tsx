@@ -19,14 +19,14 @@ const HeaderNav = () => {
     return (
       <div
         className={cn(
-          `stick inset-x-0 top-0 z-[-1] w-full border-b border-gray-200 bg-[#FAFCFB] transition-all`,
+          `stick inset-x-0 top-0 z-[-1] w-full border-b border-gray-200 transition-all`,
           {
             'border-b border-gray-200 bg-white/75 backdrop-blur-lg': scrolled,
             'border-b border-gray-200 bg-white': selectedLayout,
           }
         )}
       >
-        <div className='flex h-[55px] items-center justify-between bg-[#FAFCFB] px-4'>
+        <div className='flex h-[55px] items-center justify-between px-4'>
           <div className='flex items-center space-x-4'>
             <Link
               href='/'

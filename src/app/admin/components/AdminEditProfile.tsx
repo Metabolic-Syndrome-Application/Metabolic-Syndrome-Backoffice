@@ -4,7 +4,6 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useSnackbar } from 'notistack';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { FaUserDoctor } from 'react-icons/fa6';
 import { MdEdit } from 'react-icons/md';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -105,7 +104,7 @@ const AdminEditProfile = ({ loadData, api, id }: IEditMemberFormProps) => {
           ) : (
             <div>
               <FormHeaderText
-                icon={FaUserDoctor}
+                icon={MdEdit}
                 title='แก้ไขข้อมูลในระบบ'
                 useBigestHeader
               />

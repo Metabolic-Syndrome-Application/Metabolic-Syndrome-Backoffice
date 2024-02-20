@@ -66,10 +66,10 @@ export default withAuth(
   function middleware(request: NextRequestWithAuth) {
     // console.log(request.nextUrl.pathname);
     // console.log(request.nextauth.token);
-    // if (!request.nextauth?.token) {
-    //   // Redirect to signIn page if not authenticated
-    //   return NextResponse.redirect('/auth/signIn');
-    // }
+    if (!request.nextauth?.token) {
+      // Redirect to signIn page if not authenticated
+      return NextResponse.redirect('/auth/signIn');
+    }
 
     if (
       request.nextUrl.pathname.startsWith('/') &&
@@ -110,6 +110,22 @@ export default withAuth(
     }
 
     if (
+      request.nextUrl.pathname.startsWith('/plan') &&
+      request.nextauth.token?.role !== 'doctor' &&
+      request.nextauth.token?.role !== 'staff'
+    ) {
+      return NextResponse.rewrite(new URL('/denied', request.url));
+    }
+
+    if (
+      request.nextUrl.pathname.startsWith('/challenge') &&
+      request.nextauth.token?.role !== 'doctor' &&
+      request.nextauth.token?.role !== 'staff'
+    ) {
+      return NextResponse.rewrite(new URL('/denied', request.url));
+    }
+
+    if (
       request.nextUrl.pathname.startsWith('/client') &&
       request.nextauth.token?.role !== 'admin' &&
       request.nextauth.token?.role !== 'staff'
@@ -132,6 +148,8 @@ export const config = {
     '/doctor:path*',
     '/staff:path*',
     '/patient:path*',
+    '/plan:path*',
+    '/challenge:path*',
     '/client',
     '/',
   ],

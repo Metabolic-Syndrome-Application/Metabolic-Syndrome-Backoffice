@@ -1,9 +1,11 @@
-import FormCard from '@/app/plan/components/create-plan/Formcard';
-import { InputText } from '@/components/form/InputText';
 import { useFieldArray, useFormContext } from 'react-hook-form';
 import { AiOutlineClose } from 'react-icons/ai';
 
-const GeneralFormChallenge = () => {
+import { InputText } from '@/components/form/InputText';
+
+import FormCard from '@/app/plan/components/create-plan/Formcard';
+
+const GeneralChallenge = () => {
   const { control } = useFormContext();
 
   const { fields, append, remove } = useFieldArray({
@@ -65,4 +67,4 @@ const GeneralFormChallenge = () => {
   );
 };
 
-export default GeneralFormChallenge;
+export default GeneralChallenge;

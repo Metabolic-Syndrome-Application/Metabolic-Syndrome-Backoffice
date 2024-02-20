@@ -45,11 +45,12 @@ export const SIDENAV_ITEMS: SideNavItem[] = [
     title: 'ภารกิจ',
     path: '/challenge',
     icon: < Icon icon='octicon:goal-16' width='26' height='26' />,
-    // submenu: true,
-    // subMenuItems: [
-    //   { title: 'ภารกิจทั่วไป', path: '/challenge/daily' },
-    //   { title: 'ภารกิจตอบคำถามประจำวัน', path: '/challenge/quiz' },
-    // ],
+    submenu: true,
+    subMenuItems: [
+      { title: 'ทั้งหมด', path: '/challenge' },
+      { title: 'ภารกิจทั่วไป', path: '/challenge/daily' },
+      { title: 'ภารกิจตอบคำถามประจำวัน', path: '/challenge/quiz' },
+    ],
     role: 'doctor,staff',
   },
   {

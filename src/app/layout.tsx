@@ -31,9 +31,11 @@ export const metadata: Metadata = {
   // !STARTERCONF this is the default favicon, you can generate your own from https://realfavicongenerator.net/
   // ! copy to /favicon folder
   icons: {
-    icon: '/favicon/favicon.ico',
-    shortcut: '/favicon/favicon-16x16.png',
-    apple: '/favicon/apple-touch-icon.png',
+    // icon: '/favicon/favicon.ico',
+    // shortcut: '/favicon/favicon-16x16.png',
+    icon: '/favicon/logo.svg',
+    shortcut: '/favicon/logo.svg',
+    apple: '/favicon/logo.svg',
   },
   manifest: `/favicon/site.webmanifest`,
   openGraph: {
@@ -71,7 +73,7 @@ export default async function RootLayout({
       className={`${IBMPlexSansThai.variable}`}
       suppressHydrationWarning={true}
     >
-      <body className='bg-[#FAFCFB]'>
+      <body>
         <div className=''>
           <NextAuthProviders>
             <Suspense fallback={<Loading />}>
