@@ -96,7 +96,7 @@ const CreateQuiz = () => {
                 </div>
 
                 {/* section2 : Answer Choices */}
-                {/* <OptionQuizFields /> */}
+                <OptionQuizFields />
               </div>
             </div>
 

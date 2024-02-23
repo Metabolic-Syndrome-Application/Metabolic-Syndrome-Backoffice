@@ -16,6 +16,7 @@ function ReduxProvider({ children }: PropsWithChildren) {
         {children}
       </PersistGate>
     </Provider>
+
   );
 }
 

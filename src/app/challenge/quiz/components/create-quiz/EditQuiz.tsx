@@ -18,52 +18,30 @@ import { createQuizChallengeSchema, createQuizSchemaValues } from '@/components/
 import OptionQuizFields from '@/app/challenge/quiz/components/create-quiz/OptionQuizFields';
 import { API_PATH } from '@/config/api';
 import { FiEdit } from 'react-icons/fi';
-import { fetchQuizById, selectAllQuizs, selectQuizById } from '@/redux/slices/quizsSlice';
+import { fetchQuizById, getIdQuiz, selectAllQuizs, selectQuizById } from '@/redux/slices/quizsSlice';
 import { useCallback, useEffect, useState } from 'react';
 import { IChoicesQuiz } from '@/types/challenge';
 import { TextFieldInfo } from '@/components/form/TextFieldInfo';
 
 
 const EditQuiz = ({ params, loadData }: { params: { id: string }, loadData: () => void }) => {
-  const id = params.id;
 
+  const id = params.id;
   const axiosAuth = useAxiosAuth();
 
   const { Modal, openModal, closeModal } = useModal();
   const { enqueueSnackbar } = useSnackbar();
-  const [loading, setLoading] = useState(true);
   const dispatch = useDispatch<any>();
 
-
-  // const quiz = useSelector(selectAllQuizs);
   const quiz = useSelector(selectQuizById);
 
   //const quiz = useSelector((state: { quiz: any }) => selectQuizById(state, id));
   console.log('currentQuiz', quiz)
 
 
-  // Check if quiz?.choices is defined before mapping over it
-  let defaultValue;
-  if (quiz?.choices) {
-    defaultValue = quiz?.choices.map(choice => ({
-      option: choice.option,
-      isCorrect: choice.isCorrect,
-    }));
-    console.log('defaultValue', defaultValue);
-  } else {
-    console.log('Quiz choices are undefined');
-  }
-
   const methods = useForm<createQuizSchemaValues>({
     mode: 'onChange',
     resolver: zodResolver(createQuizChallengeSchema),
-    defaultValues: {
-      question: quiz?.question,
-      points: quiz?.points,
-      limitTime: quiz?.limitTime,
-      choices: defaultValue
-    }
-
     // defaultValues: async () => {
     //   const response = await axiosAuth.get(`/api/challenge/quiz/${id}`);
     //   const data = await response.data.data.quiz
@@ -81,7 +59,31 @@ const EditQuiz = ({ params, loadData }: { params: { id: string }, loadData: () =
     //     choices: choices,
     //   }
     // }
+    defaultValues: async () => {
+      const response = await axiosAuth.get(`/api/challenge/quiz/${id}`);
+      const data = await response.data.data.quiz
+
+      // Map choices array to the desired structure
+      const choices = data?.choices.map((choice: { option: any; isCorrect: any; }) => ({
+        option: choice.option,
+        isCorrect: choice.isCorrect,
+      })) || [];
+      return {
+        question: data.question,
+        points: data.points,
+        limitTime: data?.limitTime,
+        choices: choices,
+        resetOptions: {
+          keepDirtyValues: true,
+        }
+      }
+    }
   });
+
+  useEffect(() => {
+    dispatch(fetchQuizById);
+  }, [dispatch]);
+
 
 
   const {
@@ -121,31 +123,10 @@ const EditQuiz = ({ params, loadData }: { params: { id: string }, loadData: () =
   };
 
 
-  // useEffect(() => {
-  //   dispatch(fetchQuizById(id))
-  //     .then(() => setLoading(false))
-  //     .catch((error: any) => {
-  //       console.error('Error fetching quiz:', error);
-  //       enqueueSnackbar('Failed to fetch quiz', { variant: 'error' });
-  //     });
-  // }, [dispatch, id]);
-
 
   return (
     <div className='w-full'>
-      {quiz && quiz.choices && (
-        <div>
-          <h2>{quiz.question}</h2>
-          <ul>
-            {quiz.choices.map((choice, index) => (
-              <TextFieldInfo key={index} label={''} value={`${choice.option} - ${choice.isCorrect}`} isSelected={choice.isCorrect} />
-            ))}
-          </ul>
-        </div>
-      )}
-
       <article className='flex w-full items-center justify-between px-4 py-2'>
-
         <FiEdit
           className='hover:bg-light-gray text-default-blue group h-5 w-5 cursor-pointer rounded-md transition-all duration-300 ease-in-out'
           onClick={openModal}

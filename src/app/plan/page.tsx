@@ -18,7 +18,7 @@ const PlanPage = () => {
         {/* <TestGeneralForm></TestGeneralForm> */}
         {/* <CreatePlanForm></CreatePlanForm> */}
 
-        < TestCheckbox></TestCheckbox>
+        {/* < TestCheckbox></TestCheckbox> */}
         <PlanTable></PlanTable>
         {/* <Kuay3></Kuay3> */}
       </div>

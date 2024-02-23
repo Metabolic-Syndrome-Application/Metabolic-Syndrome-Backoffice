@@ -47,7 +47,7 @@ const AdminEditProfile = ({ loadData, api, id }: IEditMemberFormProps) => {
   // const user = users.filter((u) => u.id === id)[0];
   const currentUser = users.find((user) => user.id === id);
 
-  // console.log('currentUser index', currentUser);
+  console.log('currentUser index', currentUser);
 
   const {
     control,

@@ -1,8 +1,12 @@
-//Radio Button Challenge
+//Status Daily Challenge -> Toggle Status
 const dataOptions = {
-  choiceOptions: [
-    { label: 'ถูก', value: 'true' },
-    { label: 'ผิด', value: 'false' },
+  dailyChallengeStatus: [
+    {
+      value: 'active',
+    },
+    {
+      value: 'inactive',
+    },
   ],
 };
 

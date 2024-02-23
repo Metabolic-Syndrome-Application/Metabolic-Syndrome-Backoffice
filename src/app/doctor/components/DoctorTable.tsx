@@ -94,7 +94,7 @@ const DoctorTable = () => {
     {
       field: 'Action',
       width: 150,
-      renderHeader: () => <h5 className='font-bold'>กระทำ</h5>,
+      renderHeader: () => <h5 className='font-bold'>จัดการ</h5>,
       headerClassName: 'super-app-theme--header',
       renderCell: (params) => {
         return (

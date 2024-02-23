@@ -43,11 +43,11 @@ const ViewPlanPage = ({ params }: { params: { id: string } }) => {
     <div>
       <BackButton />
 
-
       <div className='shadow-light-shadow bg-white rounded-xl container mx-auto'>
 
         <EditPlan params={{ id }} loadData={fetchPlan} />
-
+        {/* 
+wait refresh page */}
         {userData && (
           <CardPlan
             id={userData.id}

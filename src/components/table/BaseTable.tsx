@@ -11,6 +11,7 @@ const tableStyles = {
   boxShadow:
     '0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.05)',
   borderRadius: '16px',
+  backgroundColor: 'white',
   padding: '12px',
   //row height
   '&.MuiDataGrid-root--densityCompact .MuiDataGrid-cell': { py: '8px' },
@@ -36,7 +37,7 @@ const BaseTable = ({ rows, columns }: ITableProps) => {
 
   return (
     <div className='flex w-full items-center justify-center px-1 py-4 md:px-2 lg:max-w-[1180px] xl:max-w-full'>
-      <div className='bg-white h-[600px] min-w-full max-w-[450px] sm:max-w-[600px] md:max-w-[900px] lg:max-w-[1100px] xl:max-w-full'>
+      <div className='h-[600px] min-w-full max-w-[450px] sm:max-w-[600px] md:max-w-[900px] lg:max-w-[1100px] xl:max-w-full'>
         <DataGrid
           rows={rows}
           columns={columns}

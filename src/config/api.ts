@@ -7,7 +7,7 @@ export const API_PATH = {
   POST_LOGIN: '/api/auth/login',
   POST_REFRESH: '/api/auth/refresh',
 
-  //User
+  //Doctor & Staff
   GET_PROFILE_ALL: '/api/user/profile/all',
   PUT_PROFILE_OTHER: (role: string, id: string) =>
     `/api/user/profile/${role}/${id}`,
@@ -18,6 +18,9 @@ export const API_PATH = {
 
   GET_PROFILE_ALL_DOCTOR: '/api/user/profile/all/doctor',
 
+  //Patient
+  GET_PROFILE_OTHER: (id: string) => `/api/user/profile/patient/${id}`,
+
   //Plan
   CREATE_PLAN: '/api/plan/create',
   PUT_PLAN: (id: string) => `/api/plan/${id}`,
@@ -25,10 +28,17 @@ export const API_PATH = {
   GET_PLAN_ALL: '/api/plan/all',
   DELETE_PLAN: (id: string) => `/api/plan/${id}`,
 
-  //Challenge
+  //Quiz Challenge
   CREATE_QUIZ: '/api/challenge/quiz',
   PUT_QUIZ: (id: string) => `/api/challenge/quiz/${id}`,
   GET_QUIZ: (id: string) => `/api/challenge/quiz/${id}`,
   GET_QUIZ_ALL: '/api/challenge/quiz/all',
   DELETE_QUIZ: (id: string) => `/api/challenge/quiz/${id}`,
+
+  //Daily Challenge
+  CREATE_DAILY_CHALLENGE: '/api/challenge/daily',
+  PUT_DAILY_CHALLENGE: (id: string) => `/api/challenge/daily/${id}`,
+  GET_DAILY_CHALLENGE: (id: string) => `/api/challenge/daily/${id}`,
+  GET_DAILY_CHALLENGE_ALL: '/api/challenge/daily/all',
+  DELETE_DAILY_CHALLENGE: (id: string) => `/api/challenge/daily/${id}`,
 };

@@ -4,7 +4,7 @@ import {
   GridValueGetterParams,
 } from '@mui/x-data-grid';
 import { useSession } from 'next-auth/react';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import useAxiosAuth from '@/hooks/useAxiosAuth';
@@ -15,6 +15,8 @@ import BaseTable from '@/components/table/BaseTable';
 import AdminEditProfile from '@/app/admin/components/AdminEditProfile';
 import { API_PATH } from '@/config/api';
 import { fetchAllUsers, selectAllUsers } from '@/redux/slices/usersSlice';
+import { IGetProfileAllApi, IUserData } from '@/types/user';
+import { addIndexUser } from '@/helpers/number';
 
 const ManageUserTable = () => {
   const { data: session } = useSession();
@@ -36,27 +38,11 @@ const ManageUserTable = () => {
     }
   };
 
-  // const loadUsers = async () => {
-  //   try {
-  //     const {
-  //       data: { data },
-  //     } = await axiosAuth.get<IGetProfileAllApi>(API_PATH.GET_PROFILE_ALL);
-  //     //console.log('data', data);
-  //     const dataAddIndex = addIndex(data.users);
-
-  //     dispatch(getUsers(dataAddIndex));
-  //     //setUsers(dataAddIndex);
-
-  //     console.log('usersWithIndex', dataAddIndex);
-  //   } catch (error) {
-  //     console.log('error', error);
-  //   }
-  // };
 
   useEffect(() => {
     if (session && session.user) {
       // If session exists, load users
-      //loadUsers();
+
       dispatch(fetchAllUsers());
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -127,7 +113,7 @@ const ManageUserTable = () => {
     {
       field: 'Action',
       width: 150,
-      renderHeader: () => <h5 className='font-bold'>กระทำ</h5>,
+      renderHeader: () => <h5 className='font-bold'>จัดการ</h5>,
       headerClassName: 'super-app-theme--header',
       renderCell: (params) => {
         return (

@@ -49,7 +49,7 @@ export const fetchQuizById = createAsyncThunk(
       return data.quiz;
     } catch (error) {
       console.log('Error fetching user data id:', error);
-      throw error; // Ensure the error is propagated
+      throw error;
     }
   }
 );
@@ -63,9 +63,6 @@ const quizsSlice = createSlice({
       state.status = 'succeeded';
     },
     getIdQuiz: (state, action: PayloadAction<IQuizChallengeData>) => {
-      const { type, payload } = action;
-      const choices = payload.choices;
-
       state.quiz = [action.payload]; // Store the single quiz as an array
       state.status = 'succeeded';
     },
@@ -88,22 +85,6 @@ const quizsSlice = createSlice({
       .addCase(fetchQuizById.pending, (state) => {
         state.status = 'loading';
       })
-      // .addCase(fetchQuizById.fulfilled, (state, action) => {
-      //   if (!action.payload?.id) {
-      //     console.log('Update could not complete');
-      //     console.log(action.payload);
-      //     return;
-      //   }
-
-      //   const updateQuiz: IQuizChallengeData = {
-      //     ...action.payload,
-      //     date: new Date().toISOString(),
-      //   };
-
-      //   state.quiz = [updateQuiz]; // Replace the array with a single object
-      //   state.status = 'succeeded';
-      // })
-
       .addCase(fetchQuizById.fulfilled, (state, action) => {
         if (!action.payload?.id) {
           console.log('Update could not complete');
@@ -126,12 +107,6 @@ export const selectAllQuizs = (state: { quiz: QuizState }) => state.quiz.quiz;
 
 export const selectQuizById = (state: { quiz: QuizState }) =>
   state.quiz.quiz[0];
-
-// export const selectQuizById = (state: { quiz: QuizState2 }, id: string) =>
-//   state.quiz.quiz.find((quiz: IQuizChallengeData) => quiz.id === id);
-
-// export const selectQuizById = (state: { quiz: QuizState2 }, id: string) =>
-//   state.quiz.quiz.id === id ? state.quiz.quiz : id;
 
 export const { getQuizs, getIdQuiz } = quizsSlice.actions;
 

@@ -9,10 +9,10 @@ const BaseModal = ({ children, isOpen, closeModal }: BaseModalProps) => {
     <Dialog open={isOpen} onClose={closeModal}>
       <div className='fixed inset-0 bg-black/20' aria-hidden='true' />
       <div className='fixed inset-0 z-20 h-full w-full overflow-y-auto'>
-        <div className='container mx-auto flex max-h-full min-h-screen w-[85%] items-center justify-center p-4 md:max-w-[1100px] md:px-16'>
+        <div className='container mx-auto flex max-h-full min-h-screen w-[90%] items-center justify-center p-4 md:max-w-[1100px] md:px-14'>
           <Dialog.Panel
             as='div'
-            style={{ maxHeight: "90vh" }}
+            style={{ maxHeight: "92vh" }}
             className='shadow-default-shadow rounded-xl bg-white p-4 md:px-6  max-h-screen overflow-y-auto'
           >
             <div className='relative pb-4'>

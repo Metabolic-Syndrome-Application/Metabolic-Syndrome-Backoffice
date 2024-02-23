@@ -41,7 +41,7 @@ const PlanTable = () => {
 
   const plan = useSelector(selectAllPlans);
 
-  console.log('Users:', plan);
+  console.log('Plans:', plan);
 
   const dispatch = useDispatch<any>();
 
@@ -108,7 +108,7 @@ const PlanTable = () => {
     {
       field: 'Action',
       width: 200,
-      renderHeader: () => <h5 className='font-bold'>กระทำ</h5>,
+      renderHeader: () => <h5 className='font-bold'>จัดการ</h5>,
       headerClassName: 'super-app-theme--header',
       renderCell: (params) => {
         return (

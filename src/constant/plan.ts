@@ -10,12 +10,13 @@ const typePlanOptions = [
 
 // Day of week
 const DaysOfWeekOptions = [
-  { label: 'วันจันทร์', value: 'monday' },
-  { label: 'วันอังคาร', value: 'tuesday' },
-  { label: 'วันพุธ', value: 'wednesday' },
-  { label: 'วันพฤหัสบดี', value: 'thursday' },
-  { label: 'วันศุกร์', value: 'friday' },
-  { label: 'วันเสาร์', value: 'saturday' },
+  { id: '1', label: 'วันจันทร์', value: 'monday' },
+  { id: '2', label: 'วันอังคาร', value: 'tuesday' },
+  { id: '3', label: 'วันพุธ', value: 'wednesday' },
+  { id: '4', label: 'วันพฤหัสบดี', value: 'thursday' },
+  { id: '5', label: 'วันศุกร์', value: 'friday' },
+  { id: '6', label: 'วันเสาร์', value: 'saturday' },
+  { id: '7', label: 'วันอาทิตย์', value: 'sunday' },
 ];
 
 //Get All Plan Options

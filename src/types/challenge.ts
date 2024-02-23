@@ -1,3 +1,4 @@
+//Quiz Challenege
 export type IQuizChallengeData = {
   id: string;
   question: string;
@@ -24,6 +25,38 @@ export interface IGetQuizAllApi {
 export interface IGetQuizIdApi {
   data: {
     quiz: IQuizChallengeData;
+  };
+  status: string;
+}
+
+// ======================================================= //
+//Daily Challenge
+export type IDailyChallengeData = {
+  id: string;
+  name: string;
+  numDays: number;
+  points: number;
+  description: string;
+  photo?: string;
+  detail: {
+    name: string[];
+    day: string[];
+  };
+  status?: string;
+};
+
+//All Quiz
+export interface IGetDailyChallengeAllApi {
+  data: {
+    daily: IDailyChallengeData[];
+  };
+  status: string;
+}
+
+//Only 1 Quiz
+export interface IGetDailyChallengeIdApi {
+  data: {
+    daily: IDailyChallengeData;
   };
   status: string;
 }

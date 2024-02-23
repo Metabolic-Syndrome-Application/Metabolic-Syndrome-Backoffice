@@ -9,6 +9,7 @@ import { InputText } from '@/components/form/InputText';
 import RadioSelectStage from '@/components/form/radio-select-stage';
 
 import { dataOptions } from '@/constant/user';
+import ActionButton from '@/components/buttons/ActionButton';
 
 const TestCreatePatient = () => {
   const [hasAccount, setHasAccount] = useState(false);
@@ -67,13 +68,12 @@ const TestCreatePatient = () => {
                 />
               </div>
 
-              <div className='flex h-full flex-col justify-between'>
+              <div className='flex h-full flex-col justify-between '>
                 <div>
                   {/* Your form content */}
-                  {!hasAccount && selectedValue === 'noAccount' ? (
-                    <div className=''>
-                      <h2>Step 1: Register New Patient</h2>
-
+                  {!hasAccount && selectedValue === 'noAccount' && (
+                    <div className='space-y-4'>
+                      {/* <h2>Step 1: Register New Patient</h2> */}
                       <InputText
                         name='IDCard'
                         label='เลขประตัวประชาชน'
@@ -101,11 +101,6 @@ const TestCreatePatient = () => {
                         ]}
                       /> */}
                     </div>
-                  ) : (
-                    <div className='bg-blue-50'>
-                      <h2>Step 2 : have an account</h2>
-                      {/* Account verification fields */}
-                    </div>
                   )}
                 </div>
               </div>
@@ -123,18 +118,20 @@ const TestCreatePatient = () => {
           {hasAccount ? (
             <button
               onClick={handleNextStep}
-              className='rounded-lg bg-blue-500 px-4 py-2'
+              className='rounded-lg bg-default-blue px-4 py-2 text-white'
             >
-              Next
+              ถัดไป
             </button>
+
           ) : (
-            <button className='rounded-lg bg-blue-500 px-4 py-2'>
-              Register
-            </button>
+            <ActionButton type='submit' variant='submit'>
+              สมัครบัญชี
+            </ActionButton>
+
           )}
         </div>
       </div>
-    </form>
+    </form >
   );
 };
 
