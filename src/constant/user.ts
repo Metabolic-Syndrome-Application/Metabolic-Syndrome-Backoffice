@@ -74,8 +74,8 @@ const dataOptions = {
     { label: 'พยาบาล', value: 'staff' },
   ],
   accountOptions: [
-    { label: 'ยังไม่เคยบัญชี', value: 'ยังไม่เคยบัญชี' },
-    { label: 'มีบัญชีแล้ว', value: 'มีบัญชีแล้ว' },
+    { label: 'ยังไม่เคยบัญชี', value: 'noAccount' },
+    { label: 'มีบัญชีแล้ว', value: 'haveAccount' },
   ],
   genderOptions: [
     { label: 'ชาย', value: 'male' },

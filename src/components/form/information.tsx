@@ -35,7 +35,7 @@ const Information = () => {
         <div className='border-light-gray border-[1px]'></div>
       </div>
       <InputText name='HN' label='รหัสคนไข้' control={control} />
-      <InputText name='alias' label='คำนำหน้า' control={control} />
+
       <div className='flex space-x-4'>
         <InputText name='firstName' label='ชื่อจริง' control={control} />
         <InputText name='lastName' label='นามสกุล' control={control} />

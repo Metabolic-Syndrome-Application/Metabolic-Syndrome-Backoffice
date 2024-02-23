@@ -7,24 +7,21 @@ import UploadImageDisplay from '@/components/form/components/UploadImageDisplay'
 import ToggleDays from '@/components/form/crons/DayOfWeek';
 import { TextFieldInfo } from '@/components/form/TextFieldInfo';
 
-import { iconTypeMapping, TypePlan } from '@/helpers/typeIcon';
+import { IDailyChallengeData } from '@/types/challenge';
+import { getStatusChallengeColor } from '@/helpers/status';
+import ColorButton from '@/components/buttons/ColorButton';
+import { SwitchToggle } from '@/components/buttons/SwitchToggle';
 
-import { IPlanData } from '@/types/plan';
-import Image from 'next/image'
 
-export const CardPlan = ({
+export const CardDailyChallenge = ({
   name,
-  type,
+  points,
+  numDays,
   description,
   photo,
   detail,
-}: IPlanData) => {
-  const {
-    icon: Icon,
-    variant,
-    label: thaiLabel,
-  } = iconTypeMapping[type as TypePlan] || iconTypeMapping.default;
-  const displayValueType = thaiLabel || type; //if label is not available
+  status
+}: IDailyChallengeData) => {
 
   //Read more and Read Less button
   const [isExpanded, setIsExpanded] = useState(false);
@@ -32,28 +29,28 @@ export const CardPlan = ({
     setIsExpanded(!isExpanded);
   };
 
+
   return (
     <div className=''>
 
       <div className='flex w-full flex-col p-6 md:flex-row md:gap-8 min-h-[650px]'>
         <div className='flex w-full flex-col gap-4 md:w-3/5'>
-          {/* <UploadImageDisplay></UploadImageDisplay> */}
-          <Image
-            alt="The guitarist in the concert."
-            src='/assets/images/test.webp'
-            width={2250}
-            height={1390}
-            layout="responsive"
-          />
+          <UploadImageDisplay></UploadImageDisplay>
           <div>{photo}</div>
 
           <div className='flex w-full flex-wrap items-center justify-between gap-2'>
             <h4 className='max-w-[280px] whitespace-pre-line text-wrap font-semibold leading-normal tracking-wide'>
               {name}
             </h4>
-            <OutlineButton variant={variant} icon={Icon}>
-              {displayValueType}
-            </OutlineButton>
+            <p>{points}</p>
+            <p>{numDays}</p>
+
+            {/* Display status color and text in ColorButton */}
+            <ColorButton variant={getStatusChallengeColor(status)?.color} size='sm'>
+              {getStatusChallengeColor(status)?.text}
+            </ColorButton>
+
+
           </div>
 
           <h5 className='font-medium'>รายละเอียด</h5>

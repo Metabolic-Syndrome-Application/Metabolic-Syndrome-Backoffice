@@ -17,6 +17,10 @@ const useAxiosAuth = () => {
           config.headers[
             'Authorization'
           ] = `Bearer ${session?.user?.access_token}`;
+          //catch localSrorage
+          //  config.headers['Authorization'] = `Bearer ${localStorage.getItem(
+          //    'accessToken'
+          //  )}`;
 
           // console.log('Access Token:', session?.user.access_token);
           // console.log('Refresh Token:', session?.user.refresh_token);

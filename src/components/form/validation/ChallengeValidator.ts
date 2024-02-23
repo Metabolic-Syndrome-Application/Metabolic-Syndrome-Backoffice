@@ -5,7 +5,7 @@ import {
   validateMinMax,
 } from '@/components/form/validation/ZodCheck';
 
-//Quiz challenge Schema
+//Create Quiz challenge Schema
 export const createQuizChallengeSchema = z.object({
   question: validateMinMax(
     2,
@@ -46,30 +46,109 @@ export const createQuizChallengeSchema = z.object({
 //Type Create Quiz Challenge
 export type createQuizSchemaValues = z.infer<typeof createQuizChallengeSchema>;
 
-/////////
-// Create Challenge Schema
-export const createPlanSchema = z.object({
-  name: z.string({ required_error: 'กรุณากรอกชื่อโปรแกรมสุขภาพ' }),
-  type: z.string({ required_error: 'กรุณาเลือกหมวดที่ต้องการ' }),
+//------------------------------------------------------------------
+// Create Daily Challenge Schema
+
+export const createDailyChallengeSchema = z.object({
+  name: z
+    .string({
+      required_error: 'กรุณากรอกชื่อโปรแกรมภารกิจ',
+    })
+    .min(2, {
+      message: 'ชื่อโปรแกรมภารกิจต้องมีความยาวอย่างน้อย 2 ตัวอักษร',
+    })
+    .max(50, {
+      message: 'ชื่อโปรแกรมภารกิจต้องมีความยาวไม่เกิน 50 ตัวอักษร',
+    }),
+  points: z.coerce
+    .number({
+      required_error: 'กรุณากรอกคะแนนสะสม',
+      invalid_type_error:
+        'คะแนนสะสมต้องเป็นตัวเลขเท่านั้น  และอยู่ในช่วง 50 - 500 คะแนน',
+    })
+    .positive()
+    .gte(50, 'กรุณากรอกคะแนนสะสมขั้นต่ำ 50 คะแนน')
+    .lte(500, 'กรุณากรอกคะแนนสะสมสูงสุดไม่เกิน 500 คะแนน'),
+  numDays: z.coerce
+    .number({
+      required_error: 'กรุณาเลือกระยะเวลาแผนสุขภาพ',
+      invalid_type_error:
+        'ระยะเวลาแผนสุขภาพต้องเป็นตัวเลขเท่านั้น และอยู่ในช่วง 1 - 14 วัน',
+    })
+    .positive()
+    .gte(1, 'กรุณากรอกระยะเวลาแผนสุขภาพขั้นต่ำ 1 วัน')
+    .lte(14, 'กรุณากรอกระยะเวลาแผนสุขภาพไม่เกิน 14 วัน'),
   description: z.string(),
   photo: z.string(),
   detail: z.object({
     name: z.array(
       z.object({
         name: z.string().min(1, {
-          message: 'กรุณากรอกรายละเอียดโปรแกรมอย่างน้อย 1 โปรแกรม',
+          message: 'กรุณากรอกรายละเอียดภารกิจอย่างน้อย 1 ภารกิจ',
         }),
       })
     ),
-
     day: z
       .array(z.object({ label: z.string(), value: z.string() }))
-      .nonempty({ message: 'กรุณาเลือกวันที่ต้องการให้มีโปรแกรกมสุขภาพ' }),
+      .nonempty({ message: 'กรุณาเลือกวันที่ต้องการให้มีภารกิจ' }),
   }),
+});
+//Type Create Plan
+export type createDailyChallengeValues = z.infer<
+  typeof createDailyChallengeSchema
+>;
+
+// Create Daily Challenge Schema
+export const updateDailyChallengeSchema = z.object({
+  name: z
+    .string({
+      required_error: 'กรุณากรอกชื่อโปรแกรมภารกิจ',
+    })
+    .min(2, {
+      message: 'ชื่อโปรแกรมภารกิจต้องมีความยาวอย่างน้อย 2 ตัวอักษร',
+    })
+    .max(50, {
+      message: 'ชื่อโปรแกรมภารกิจต้องมีความยาวไม่เกิน 50 ตัวอักษร',
+    }),
+  points: z.coerce
+    .number({
+      required_error: 'กรุณากรอกคะแนนสะสม',
+      invalid_type_error:
+        'คะแนนสะสมต้องเป็นตัวเลขเท่านั้น  และอยู่ในช่วง 50 - 500 คะแนน',
+    })
+    .positive()
+    .gte(50, 'กรุณากรอกคะแนนสะสมขั้นต่ำ 50 คะแนน')
+    .lte(500, 'กรุณากรอกคะแนนสะสมสูงสุดไม่เกิน 500 คะแนน'),
+  numDays: z.coerce
+    .number({
+      required_error: 'กรุณาเลือกระยะเวลาแผนสุขภาพ',
+      invalid_type_error:
+        'ระยะเวลาแผนสุขภาพต้องเป็นตัวเลขเท่านั้น และอยู่ในช่วง 1 - 14 วัน',
+    })
+    .positive()
+    .gte(1, 'กรุณากรอกระยะเวลาแผนสุขภาพขั้นต่ำ 1 วัน')
+    .lte(14, 'กรุณากรอกระยะเวลาแผนสุขภาพไม่เกิน 14 วัน'),
+  description: z.string(),
+  photo: z.string(),
+  detail: z.object({
+    name: z.array(
+      z.object({
+        name: z.string().min(1, {
+          message: 'กรุณากรอกรายละเอียดภารกิจอย่างน้อย 1 ภารกิจ',
+        }),
+      })
+    ),
+    day: z
+      .array(z.object({ label: z.string(), value: z.string() }))
+      .nonempty({ message: 'กรุณาเลือกวันที่ต้องการให้มีภารกิจ' }),
+  }),
+  status: z.string(),
 });
 
 //Type Create Plan
-export type createPlanSchemaValues = z.infer<typeof createPlanSchema>;
+export type updateDailyChallengeValues = z.infer<
+  typeof updateDailyChallengeSchema
+>;
 
 //test
 export const detailSchemaTest = z.object({

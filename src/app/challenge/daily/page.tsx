@@ -1,9 +1,13 @@
+"use client"
+import CreateDailyChallenge from '@/app/challenge/daily/components/create-daily-challenge/CreateDailyChallenge';
+import DailyChallengeTable from '@/app/challenge/daily/components/manage-daily-table/DailyChallengeTable';
 import React from 'react';
 
 const DailyChallengePage = () => {
   return (
     <>
-      <span className="font-bold text-4xl">ภารกิจทั่วไป</span>
+      <CreateDailyChallenge></CreateDailyChallenge>
+      <DailyChallengeTable></DailyChallengeTable>
 
       <div className="border-dashed border border-zinc-500 w-full h-12 rounded-lg"></div>
       <div className="border-dashed border border-zinc-500 w-full h-64 rounded-lg"></div>

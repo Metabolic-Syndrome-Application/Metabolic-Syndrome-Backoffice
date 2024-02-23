@@ -14,51 +14,56 @@ import useModal from '@/hooks/useModal';
 import ActionButton from '@/components/buttons/ActionButton';
 import UploadImageDisplay from '@/components/form/components/UploadImageDisplay';
 import FormHeaderText from '@/components/form/FormHeaderText';
-import { InputDropdown } from '@/components/form/InputDropdown';
 import { InputText } from '@/components/form/InputText';
-import { createPlanSchema, createPlanSchemaValues } from '@/components/form/validation/PlanValidator';
 import TiptapTextField from '@/components/text-editor/TipTapTextField';
 
-import DetailPlanFields from '@/app/plan/components/create-plan/nested-form/DetailPlanFields';
 import { API_PATH } from '@/config/api';
-import { typePlanOptions } from '@/constant/plan';
 import { dayOfWeekThaiLabel } from '@/helpers/date';
-import { fetchPlanById, selectAllPlans } from '@/redux/slices/plansSlice';
-import session from 'redux-persist/es/storage/session';
-import { useSession } from 'next-auth/react';
+import { updateDailyChallengeSchema, updateDailyChallengeValues } from '@/components/form/validation/ChallengeValidator';
+import DetailDailyFields from '@/app/challenge/daily/components/create-daily-challenge/DetailDailyFields';
+import { dataOptions } from '@/constant/challenge';
+import { SwitchToggle } from '@/components/buttons/SwitchToggle';
 
 
 
-const EditPlan = ({ params, loadData }: { params: { id: string }, loadData: () => void }) => {
+const EditDailyChallenge = ({ params, loadData }: { params: { id: string }, loadData: () => void }) => {
+
+  //params id
   const id = params.id;
 
   const axiosAuth = useAxiosAuth();
   const { Modal, openModal, closeModal } = useModal();
   const { enqueueSnackbar } = useSnackbar()
 
-  const methods = useForm<createPlanSchemaValues>({
+  const methods = useForm<updateDailyChallengeValues>({
     mode: 'onChange',
-    resolver: zodResolver(createPlanSchema),
+    resolver: zodResolver(updateDailyChallengeSchema),
     defaultValues: async () => {
-
-      const response = await axiosAuth.get(`/api/plan/${id}`);
-      const data = await response.data.data.plan
+      //GET_DAILY_CHALLENGE
+      const response = await axiosAuth.get(`/api/challenge/daily/${id}`);
+      const data = await response.data.data.daily
 
 
       const thaiDays = data?.detail.day.map((dayItem: string) => ({
         label: dayOfWeekThaiLabel(dayItem), // Convert English day name to Thai label
         value: dayItem
       }));
+
+      // Map status array to the desired structure
+      const status = data?.status
+      console.log('status', status)
+
       return {
         name: data.name,
-        type: data.type,
+        points: data.points,
+        numDays: data.numDays,
+        description: data.description,
         photo: data.photo,
-        description: data?.description,
         detail: {
-          name: data?.detail.name.map((nameItem: any) => ({ name: nameItem })), // Convert name array to array of objects
-          //day: data?.detail.day.map((dayItem: string) => ({ label: dayItem, value: dayItem })) // Map each day string to an object with label and value
+          name: data?.detail.name.map((nameItem: string) => ({ name: nameItem })), // Convert name array to array of objects
           day: thaiDays
         },
+        status: data?.status,
         resetOptions: {
           keepDirtyValues: true,
         }
@@ -72,31 +77,32 @@ const EditPlan = ({ params, loadData }: { params: { id: string }, loadData: () =
   const {
     control,
     handleSubmit,
-    reset,
-    formState: { errors, isDirty },
+    formState: { errors, },
+    getValues
   } = methods;
 
-  const onSubmit = async (data: z.infer<typeof createPlanSchema>) => {
+  const onSubmit = async (data: z.infer<typeof updateDailyChallengeSchema>) => {
     try {
       const selectedDays = data.detail.day.map(
         (day: { value: string }) => day.value
       );
       // Make the API call and handle success
-      await axiosAuth.put(API_PATH.PUT_PLAN(id), {
+      await axiosAuth.put(API_PATH.PUT_DAILY_CHALLENGE(id), {
         name: data.name,
+        points: data.points,
+        numDays: data.numDays,
         description: data.description,
-        type: data.type,
         photo: data.photo,
         detail: {
           name: data.detail.name.map((item: any) => item.name),
-          day: selectedDays,
+          day: selectedDays
         },
+        status: data.status
       });
-      // console.log('Edit Plan Succcess', data)
+      console.log('Edit Daily Succcess', data)
 
-      enqueueSnackbar('Edit Plan Success', { variant: 'success' });;
+      enqueueSnackbar('Edit Daily Success', { variant: 'success' });;
       loadData();
-
 
     } catch (error: any) {
       enqueueSnackbar(error.response?.data, { variant: 'error' });
@@ -120,48 +126,46 @@ const EditPlan = ({ params, loadData }: { params: { id: string }, loadData: () =
           <form onSubmit={handleSubmit(onSubmit)}>
             <FormHeaderText
               icon={MdEdit}
-              title='แก้ไขแผนสุขภาพ'
+              title='แก้ไขภารกิจ'
               useBigestHeader
             />
             <div className='grid w-full grid-cols-1 gap-4 md:grid-cols-7'>
               {/* section1 */}
-              <div className='col-span-1 space-y-4 rounded-lg md:col-span-4'>
+              <div className='col-span-1 space-y-4 md:space-y-8 rounded-lg md:col-span-4 flex flex-col'>
                 <InputText name='name' control={control} label='ชื่อโปรแกรม' />
-                <InputDropdown
-                  name='type'
-                  control={control}
-                  label='ประเภท'
-                  options={typePlanOptions}
-                />
-                <TiptapTextField
-                  name='description'
-                  control={control}
-                  label='รายละเอียด'
-                />
+                <InputText name='points' control={control} label='คะแนนรวมสะสม' type='number' />
+                <InputText name='numDays' control={control} label='ระยะเวลาการทำภารกิจ' type='number' />
+
+                {/* <SwitchToggle name="status" control={control} label="Toggle Status" status={getValues().status} /> */}
+                <SwitchToggle name="status" control={control} label="สถานะการเปิดใช้งาน" options={dataOptions.dailyChallengeStatus} status={getValues().status} />
+
               </div>
 
               {/* section2 : wait picture */}
               <div className='order-first col-span-1 space-y-4 rounded-lg md:order-none md:col-span-3'>
                 <UploadImageDisplay displayType='large' />
-                {/* <InputText name='photo' control={control} label='photo' /> */}
               </div>
 
               {/* section3 : detail */}
-              <div className='col-span-1 space-y-4 rounded-lg md:col-span-7'>
-                <DetailPlanFields />
+              <div className='pt-2 col-span-1 space-y-4 rounded-lg md:col-span-7'>
+                <TiptapTextField
+                  name='description'
+                  control={control}
+                  label='รายละเอียด'
+                />
+                <DetailDailyFields />
               </div>
             </div>
 
-            <div className='flex h-full justify-end space-x-3 p-4'>
-              <ActionButton
-                type='reset'
-                variant='cancel'
-                onClick={closeModal}
-              >
+            <div className='flex w-full justify-end space-x-3 py-4'>
+              <ActionButton type='reset' variant='cancel' onClick={closeModal}>
                 ยกเลิก
               </ActionButton>
-              <ActionButton type='submit' variant='submit' disabled={!isDirty || Object.keys(errors).length > 0}>
-                แก้ไข
+              <ActionButton
+                type='submit'
+                variant='submit'
+              >
+                แก้ไขภารกิจ
               </ActionButton>
             </div>
           </form>
@@ -171,4 +175,4 @@ const EditPlan = ({ params, loadData }: { params: { id: string }, loadData: () =
   );
 };
 
-export default EditPlan;
+export default EditDailyChallenge;

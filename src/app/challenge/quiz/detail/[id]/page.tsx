@@ -23,34 +23,35 @@ const QuizDetailPage = ({ params }: { params: { id: string } }) => {
   const [userData, setUserData] = useState<IQuizChallengeData | null>(null);
   const id = params.id;
 
-  // const dispatch = useDispatch<any>();
-  // const quiz = useSelector(selectQuizById);
+  const dispatch = useDispatch<any>();
+  const quiz = useSelector(selectQuizById);
+  //console.log('current detail page Quiz', quiz)
 
-  const fetchQuiz = useCallback(async () => {
-    try {
-      const {
-        data: { data },
-      } = await axiosAuth.get(API_PATH.GET_QUIZ(id as string));
-      setUserData(data.quiz);
-    } catch (error) {
-      console.log('Error fetching user data:', error);
-    }
-  }, [axiosAuth, id]);
-
-  // const loadQuizs = useCallback(async () => {
+  //ไม่ได้ใช้ redux
+  // const fetchQuiz = useCallback(async () => {
   //   try {
-  //     dispatch(fetchQuizById(id));
-  //     //setUsers(dataAddIndex);
-  //     console.log('dispatch(fetchQuizById(id))', loadQuizs)
+  //     const {
+  //       data: { data },
+  //     } = await axiosAuth.get(API_PATH.GET_QUIZ(id as string));
+  //     setUserData(data.quiz);
   //   } catch (error) {
-  //     console.log('error', error);
+  //     console.log('Error fetching user data:', error);
   //   }
-  // }, [id])
+  // }, [axiosAuth, id]);
+
+  const loadQuizs = useCallback(async () => {
+    try {
+      dispatch(fetchQuizById(id));
+      console.log('dispatch(fetchQuizById(id))', loadQuizs)
+    } catch (error) {
+      console.log('error', error);
+    }
+  }, [id])
 
   useEffect(() => {
     if (session) {
-      fetchQuiz();
-      // dispatch(fetchQuizById(id));
+      //fetchQuiz();
+      dispatch(fetchQuizById(id));
     }
   }, []);
 
@@ -67,9 +68,9 @@ const QuizDetailPage = ({ params }: { params: { id: string } }) => {
           />
           แก้ไข
         </div> */}
-        <EditQuiz params={{ id }} loadData={fetchQuiz} />
+        <EditQuiz params={{ id }} loadData={loadQuizs} />
 
-
+        {/* 
         {userData && (
           <div key={userData.id} >
             <CardQuiz
@@ -78,9 +79,9 @@ const QuizDetailPage = ({ params }: { params: { id: string } }) => {
               choices={userData.choices}
             />
           </div>
-        )}
+        )} */}
 
-        {/* {quiz && (
+        {quiz && (
           <div key={quiz.id} >
             <CardQuiz
               id={quiz.id}
@@ -89,7 +90,7 @@ const QuizDetailPage = ({ params }: { params: { id: string } }) => {
 
             />
           </div>
-        )} */}
+        )}
       </div>
     </div>
   );

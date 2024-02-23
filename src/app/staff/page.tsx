@@ -6,7 +6,7 @@ import Profile from '@/app/staff/components/profile/Profile';
 const StaffPage = () => {
   return (
     <div>
-      <span className='text-4xl font-bold'>Staff Page</span>
+      <span className='text-4xl font-bold'>ประวัติส่วนตัว</span>
 
       <Profile />
 

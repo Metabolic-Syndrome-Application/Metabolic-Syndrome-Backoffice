@@ -1,11 +1,10 @@
 import React from 'react';
 
 import { TabbedList } from '@/components/tabbed/TabbedList';
-
-import HealthRecord from '@/app/patient/record/health-record/HealthRecord';
 import PersonalInfo from '@/app/patient/record/personal-info/PersonalInfo';
 
 import { TabConfig } from '@/types/tab';
+import HealthRecordPage from '@/app/patient/record/health-record/HealthRecord';
 
 export const MainPatientTabs = () => {
   const tabConfig: TabConfig[] = [
@@ -17,7 +16,7 @@ export const MainPatientTabs = () => {
     {
       id: 2,
       name: 'ข้อมูลสุขภาพ',
-      component: <HealthRecord />,
+      component: <HealthRecordPage />,
     },
   ];
   return (

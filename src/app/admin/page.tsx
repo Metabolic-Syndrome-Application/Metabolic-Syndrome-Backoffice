@@ -1,7 +1,7 @@
 'use client';
 import React from 'react';
 
-import ManageUserTable from '@/app/admin/components/manage-user-table/UserTable';
+import ManageUserTable from '@/app/admin/components/manage-user-table/AdminTable';
 import AdminCreateRegister from '@/app/admin/components/AdminCreateRegister';
 
 const AdminPage = () => {

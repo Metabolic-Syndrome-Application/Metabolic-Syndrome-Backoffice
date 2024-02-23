@@ -49,7 +49,7 @@ const HeaderNav = () => {
           <div className='hidden items-center gap-4 md:flex'>
             <div>
               <span className='capitalize text-black'>{session.user.role}</span>
-              <p className='text-default-gray text-sm'>โรงพยาบาล xxx</p>
+              <p className='text-default-gray text-sm'>{session.user.user.username}</p>
             </div>
             <div className='flex items-center justify-center rounded-full text-center uppercase'>
               <Avatar {...stringAvatar(session.user.user.username)} />
