@@ -4,7 +4,9 @@ import { SessionProvider } from 'next-auth/react';
 import { SnackbarProvider } from 'notistack';
 import { ReactNode } from 'react';
 
-import { StyledMaterialDesignContent } from '@/components/common/alert/SnackbarStyles';
+import { StyledMaterialDesignContent } from '@/components/common/SnackbarStyles';
+import { ThemeProvider } from '@mui/material/styles';
+import theme from '@/components/common/MuiThemeStyles';
 
 interface Props {
   children: ReactNode;
@@ -12,20 +14,22 @@ interface Props {
 
 const NextAuthProviders = ({ children }: Props) => {
   return (
-    <SnackbarProvider
-      maxSnack={3}
-      anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
-      autoHideDuration={2000}
-      Components={{
-        default: StyledMaterialDesignContent,
-        success: StyledMaterialDesignContent,
-        error: StyledMaterialDesignContent,
-        warning: StyledMaterialDesignContent,
-        info: StyledMaterialDesignContent,
-      }}
-    >
-      <SessionProvider>{children}</SessionProvider>
-    </SnackbarProvider>
+    <ThemeProvider theme={theme}>
+      <SnackbarProvider
+        maxSnack={3}
+        anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
+        autoHideDuration={2000}
+        Components={{
+          default: StyledMaterialDesignContent,
+          success: StyledMaterialDesignContent,
+          error: StyledMaterialDesignContent,
+          warning: StyledMaterialDesignContent,
+          info: StyledMaterialDesignContent,
+        }}
+      >
+        <SessionProvider>{children}</SessionProvider>
+      </SnackbarProvider>
+    </ThemeProvider >
   );
 };
 

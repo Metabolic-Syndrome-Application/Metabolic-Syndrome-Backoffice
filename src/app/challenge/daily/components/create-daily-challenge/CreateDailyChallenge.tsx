@@ -96,8 +96,8 @@ const CreateDailyChallenge = () => {
               {/* section1 */}
               <div className='col-span-1 space-y-4 md:space-y-8 rounded-lg md:col-span-4 flex flex-col'>
                 <InputText name='name' control={control} label='ชื่อภารกิจ' />
-                <InputText name='points' control={control} label='คะแนนรวมสะสม' type='number' />
-                <InputText name='numDays' control={control} label='ระยะเวลาการทำภารกิจ' type='number' />
+                <InputText name='points' control={control} label='คะแนนรวมสะสม' type='number' unit='คะแนน' />
+                <InputText name='numDays' control={control} label='ระยะเวลาการทำภารกิจ' type='number' unit='วัน' />
 
 
               </div>

@@ -2,13 +2,15 @@
 import RecordHealthTable from '@/app/patient/record/health-record/health-record-table/RecordHealthTable';
 import React from 'react';
 
-const HealthRecordPage = () => {
+
+const HealthRecordPage = ({ id }: { id: string }) => {
+  // Use the id to fetch data or perform any other operations
   return (
     <div>
-      HealthRecord
-      <RecordHealthTable></RecordHealthTable>
+      <h1>Health Record Page for ID: {id}</h1>
+      <RecordHealthTable params={{ id }}></RecordHealthTable>
     </div>
   );
-}
+};
 
 export default HealthRecordPage;

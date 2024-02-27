@@ -47,7 +47,7 @@ const RecordPage = ({ params }: { params: { id: string } }) => {
         <BackButton />
         <h1>Record Page</h1>
       </div>
-      <MainPatientTabs />
+      <MainPatientTabs id={id} />
       <button onClick={fetchUser} className='bg-blue-50'>
         Get all user
       </button>

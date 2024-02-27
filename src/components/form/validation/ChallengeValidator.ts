@@ -38,7 +38,7 @@ export const createQuizChallengeSchema = z.object({
         return correctChoices.length >= 1 && correctChoices.length <= 1;
       },
       {
-        message: 'ต้องมีตัวเลือกอย่างน้อย 1 ตัวเลือกที่ถูกต้อง',
+        message: 'ต้องมีตัวเลือก 1 ตัวเลือกที่ถูกต้อง',
       }
     ),
 });

@@ -8,7 +8,7 @@ const BaseModal = ({ children, isOpen, closeModal }: BaseModalProps) => {
   return (
     <Dialog open={isOpen} onClose={closeModal}>
       <div className='fixed inset-0 bg-black/20' aria-hidden='true' />
-      <div className='fixed inset-0 z-20 h-full w-full overflow-y-auto'>
+      <div className='fixed inset-0 z-50 h-full w-full overflow-y-auto'>
         <div className='container mx-auto flex max-h-full min-h-screen w-[90%] items-center justify-center p-4 md:max-w-[1100px] md:px-14'>
           <Dialog.Panel
             as='div'

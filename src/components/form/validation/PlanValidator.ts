@@ -2,6 +2,7 @@ import { z } from 'zod';
 
 import { baseStringValidator } from '@/components/form/validation/ZodCheck';
 
+//not used
 export type FormCreatePlanProps = {
   id: string;
   name: string;
@@ -43,7 +44,7 @@ export const createPlanSchema = z.object({
 
     day: z
       .array(z.object({ label: z.string(), value: z.string() }))
-      .nonempty({ message: 'กรุณาเลือกวันที่ต้องการให้มีโปรแกรกมสุขภาพ' }),
+      .nonempty({ message: 'กรุณาเลือกวันที่ต้องการให้มีโปรแกรมสุขภาพ' }),
   }),
 });
 

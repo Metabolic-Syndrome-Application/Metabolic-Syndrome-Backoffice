@@ -18,6 +18,7 @@ import { createQuizChallengeSchema, createQuizSchemaValues } from '@/components/
 import OptionQuizFields from '@/app/challenge/quiz/components/create-quiz/OptionQuizFields';
 import { API_PATH } from '@/config/api';
 import { fetchAllQuizs } from '@/redux/slices/quizsSlice';
+import { InputMultiline } from '@/components/form/InputMultiline';
 
 
 const CreateQuiz = () => {
@@ -85,10 +86,11 @@ const CreateQuiz = () => {
             />
             <div className='flex flex-col space-y-4'>
               {/* section1 : Question*/}
-              <div className='col-span-1 space-y-4 rounded-lg md:col-span-4'>
-                <h4 className='font-medium text-base'>คำถาม</h4>
-
-                <InputText name='question' control={control} label='คำถาม' />
+              <div className='col-span-1 space-y-5 rounded-lg md:col-span-4'>
+                <div className='space-y-2'>
+                  <h4 className='font-medium text-base'>คำถาม</h4>
+                  <InputMultiline name="question" control={control} label='คำถาม' />
+                </div>
 
                 <div className='flex flex-col md:flex-row gap-4'>
                   <InputText name='points' control={control} label='คะแนนรวมสะสม' defaultValue={150} disabled />
@@ -97,6 +99,7 @@ const CreateQuiz = () => {
 
                 {/* section2 : Answer Choices */}
                 <OptionQuizFields />
+
               </div>
             </div>
 

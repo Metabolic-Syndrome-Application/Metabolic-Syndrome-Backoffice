@@ -66,24 +66,21 @@ const PlanTable = () => {
     {
       field: 'index',
       width: 150,
-      renderHeader: () => <h5 className='font-bold'>ลำดับที่</h5>,
-      headerClassName: 'super-app-theme--header',
+      renderHeader: () => <h5 className='font-medium'>ลำดับที่</h5>,
       valueGetter: (params: GridValueGetterParams) =>
         `${params.row.index || ''}`,
     },
     {
       field: 'name',
       width: 450,
-      renderHeader: () => <h5 className='font-bold'>ชื่อโปรแกรมสุขภาพ</h5>,
-      headerClassName: 'super-app-theme--header',
+      renderHeader: () => <h5 className='font-medium'>ชื่อโปรแกรมสุขภาพ</h5>,
       valueGetter: (params: GridValueGetterParams) =>
         `${params.row.name || ''}`,
     },
     {
       field: 'type',
       width: 300,
-      renderHeader: () => <h5 className='font-bold'>ประเภท</h5>,
-      headerClassName: 'super-app-theme--header',
+      renderHeader: () => <h5 className='font-medium'>ประเภท</h5>,
       renderCell: (params) => {
         const getTypeLabel = (type: string) => {
           const {
@@ -108,8 +105,7 @@ const PlanTable = () => {
     {
       field: 'Action',
       width: 200,
-      renderHeader: () => <h5 className='font-bold'>จัดการ</h5>,
-      headerClassName: 'super-app-theme--header',
+      renderHeader: () => <h5 className='font-medium'>จัดการ</h5>,
       renderCell: (params) => {
         return (
           <div className='flex flex-row items-center space-x-4'>

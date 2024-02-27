@@ -11,7 +11,7 @@ import ViewButton from '@/components/buttons/ViewButton';
 import BaseTable from '@/components/table/BaseTable';
 
 import { getStatusPatientColor } from '@/helpers/status';
-import { fetchAllUsers, selectAllUsers } from '@/redux/slices/usersSlice';
+import { fetchAllUsers, getUsers, selectAllUsers } from '@/redux/slices/usersSlice';
 import { IGetProfileAllApi } from '@/types/user';
 import { addIndexUser } from '@/helpers/number';
 import { API_PATH } from '@/config/api';
@@ -47,8 +47,8 @@ const ManagePatientTable = () => {
       //console.log('data', data);
       const dataAddIndex = addIndexUser(data.users);
 
-      //dispatch(getUsers(dataAddIndex));
-      setUsers(dataAddIndex);
+      dispatch(getUsers(dataAddIndex));
+      //setUsers(dataAddIndex);
 
       console.log('usersWithIndex', dataAddIndex);
     } catch (error) {
@@ -69,21 +69,18 @@ const ManagePatientTable = () => {
     {
       field: 'index',
       width: 100,
-      renderHeader: () => <h5 className='font-bold'>ลำดับที่</h5>,
-      headerClassName: 'super-app-theme--header',
+      renderHeader: () => <h5 className='font-medium'>ลำดับที่</h5>,
     },
     {
       field: 'hn',
       width: 150,
-      renderHeader: () => <h5 className='font-bold'>รหัส HN คนไข้</h5>,
-      headerClassName: 'super-app-theme--header',
+      renderHeader: () => <h5 className='font-medium'>รหัส HN คนไข้</h5>,
       valueGetter: (params: GridValueGetterParams) => `${params.row.hn || ''}`,
     },
     {
       field: 'name',
       width: 225,
-      renderHeader: () => <h5 className='font-bold'>ชื่อ - นามสกุล</h5>,
-      headerClassName: 'super-app-theme--header',
+      renderHeader: () => <h5 className='font-medium'>ชื่อ - นามสกุล</h5>,
       renderCell: (params: GridCellParams) => (
         <div>
           <span className='flex'>
@@ -105,22 +102,19 @@ const ManagePatientTable = () => {
     {
       field: 'gender',
       // width: 120,
-      renderHeader: () => <h5 className='font-bold'>เพศ</h5>,
-      headerClassName: 'super-app-theme--header',
+      renderHeader: () => <h5 className='font-medium'>เพศ</h5>,
       valueGetter: (params: GridValueGetterParams) => `${params.row.gender || ''}`,
     },
     {
       field: 'yearOfBirth',
       // width: 120,
-      renderHeader: () => <h5 className='font-bold'>อายุ</h5>,
-      headerClassName: 'super-app-theme--header',
+      renderHeader: () => <h5 className='font-medium'>อายุ</h5>,
       valueGetter: (params: GridValueGetterParams) => `${params.row.yearOfBirth || ''}`,
     },
     {
       field: 'status',
       width: 120,
-      renderHeader: () => <h5 className='font-bold'>สถานะ</h5>,
-      headerClassName: 'super-app-theme--header',
+      renderHeader: () => <h5 className='font-medium'>สถานะ</h5>,
       renderCell: (params) => {
         const { color, text } = getStatusPatientColor(params.row.status);
         return (
@@ -129,22 +123,21 @@ const ManagePatientTable = () => {
           </ColorButton>
         );
       },
-      //valueGetter can search/filter : wait fix
-      valueGetter: (params: GridValueGetterParams) =>
-        `${params.row.status}`,
+      valueGetter: (params: GridValueGetterParams) => {
+        const { text } = getStatusPatientColor(params.row.status); // Get the Thai label 
+        return text; // Return the Thai label as the field value
+      },
     },
     {
       field: 'mainDoctorID',
       width: 225,
-      renderHeader: () => <h5 className='font-bold'>แพทย์ผู้รับผิดชอบหลัก</h5>,
-      headerClassName: 'super-app-theme--header',
+      renderHeader: () => <h5 className='font-medium'>แพทย์ผู้รับผิดชอบหลัก</h5>,
       valueGetter: (params: GridValueGetterParams) => `${'นายสมศักดิ์ คำดี'}`, //params.row.mainDoctorID || ''
     },
     {
       field: 'Action',
       // width: 150,
-      renderHeader: () => <h5 className='font-bold'>จัดการ</h5>,
-      headerClassName: 'super-app-theme--header',
+      renderHeader: () => <h5 className='font-medium'>จัดการ</h5>,
       renderCell: (params) => {
         return (
           <div className='flex flex-row items-center space-x-4'>
@@ -166,14 +159,11 @@ const ManagePatientTable = () => {
   return (
     <div>
       {/* !user.lenght */}
-      <BaseTable rows={users} columns={columns} loading={undefined} />
+      <BaseTable rows={users} columns={columns} loading={!!users.length} />
     </div>
   );
 };
 
 export default ManagePatientTable;
 
-function setUsers(dataAddIndex: { index: number; id: string; username: string; role: string; prefix: string; firstName: string; lastName: string; gender: string; department: string; specialist: string; }[]) {
-  throw new Error('Function not implemented.');
-}
 

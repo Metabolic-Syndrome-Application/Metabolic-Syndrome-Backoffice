@@ -59,24 +59,21 @@ const DailyChallengeTable = () => {
     {
       field: 'index',
       width: isMobile ? 125 : 140,
-      renderHeader: () => <h5 className='font-bold'>ลำดับที่</h5>,
-      headerClassName: 'super-app-theme--header',
+      renderHeader: () => <h5 className='font-medium'>ลำดับที่</h5>,
       valueGetter: (params: GridValueGetterParams) =>
         `${params.row.index || ''}`,
     },
     {
       field: 'name',
       width: 320,
-      renderHeader: () => <h5 className='font-bold'>ชื่อภารกิจ</h5>,
-      headerClassName: 'super-app-theme--header',
+      renderHeader: () => <h5 className='font-medium'>ชื่อภารกิจ</h5>,
       valueGetter: (params: GridValueGetterParams) =>
         `${params.row.name}`,
     },
     {
       field: 'status',
       width: isMobile ? 180 : 200,
-      renderHeader: () => <h5 className='font-bold'>ประเภท</h5>,
-      headerClassName: 'super-app-theme--header',
+      renderHeader: () => <h5 className='font-medium'>ประเภท</h5>,
       renderCell: (params) => {
         const { color, text } = getStatusChallengeColor(params.row.status);
         return (
@@ -85,22 +82,22 @@ const DailyChallengeTable = () => {
           </ColorButton>
         );
       },
-      valueGetter: (params: GridValueGetterParams) =>
-        `${params.row.status}`,
+      valueGetter: (params: GridValueGetterParams) => {
+        const { text } = getStatusChallengeColor(params.row.status); // Get the Thai label 
+        return text; // Return the Thai label as the field value
+      },
     },
     {
       field: 'points',
       width: isMobile ? 150 : 180,
-      renderHeader: () => <h5 className='font-bold'>คะแนนรวมสะสม</h5>,
-      headerClassName: 'super-app-theme--header',
+      renderHeader: () => <h5 className='font-medium'>คะแนนรวมสะสม</h5>,
       valueGetter: (params: GridValueGetterParams) =>
         `${params.row.points || ''}`,
     },
     {
       field: 'numDays',
       width: isMobile ? 180 : 200,
-      renderHeader: () => <h5 className='font-bold'>ระยะเวลาการทำภารกิจ</h5>,
-      headerClassName: 'super-app-theme--header',
+      renderHeader: () => <h5 className='font-medium'>ระยะเวลาการทำภารกิจ</h5>,
       valueGetter: (params: GridValueGetterParams) =>
         `${params.row.numDays || ''}`,
     },
@@ -108,8 +105,7 @@ const DailyChallengeTable = () => {
     {
       field: 'Action',
       //width: isMobile ? 125 : 150,
-      renderHeader: () => <h5 className='font-bold'>จัดการ</h5>,
-      headerClassName: 'super-app-theme--header',
+      renderHeader: () => <h5 className='font-medium'>จัดการ</h5>,
       renderCell: (params) => {
         return (
           <div className='flex flex-row items-center space-x-4'>

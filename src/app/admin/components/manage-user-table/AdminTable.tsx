@@ -52,14 +52,12 @@ const ManageUserTable = () => {
     {
       field: 'index',
       width: 100,
-      renderHeader: () => <h5 className='font-bold'>ลำดับที่</h5>,
-      headerClassName: 'super-app-theme--header',
+      renderHeader: () => <h5 className='font-medium'>ลำดับที่</h5>,
     },
     {
       field: 'name',
       width: 250,
-      renderHeader: () => <h5 className='font-bold'>ชื่อ-นามสกุล</h5>,
-      headerClassName: 'super-app-theme--header',
+      renderHeader: () => <h5 className='font-medium'>ชื่อ-นามสกุล</h5>,
       renderCell: (params: GridCellParams) => (
         <div>
           <span className='flex'>
@@ -81,40 +79,35 @@ const ManageUserTable = () => {
     {
       field: 'role',
       width: 120,
-      renderHeader: () => <h5 className='font-bold'>บทบาท</h5>,
-      headerClassName: 'super-app-theme--header',
+      renderHeader: () => <h5 className='font-medium'>บทบาท</h5>,
       valueGetter: (params: GridValueGetterParams) =>
         params.row.role === 'doctor' ? 'หมอ' : 'พยาบาล',
     },
     {
       field: 'department',
       width: 200,
-      renderHeader: () => <h5 className='font-bold'>แผนก</h5>,
-      headerClassName: 'super-app-theme--header',
+      renderHeader: () => <h5 className='font-medium'>แผนก</h5>,
       valueGetter: (params: GridValueGetterParams) =>
         `${params.row.department || ''}`,
     },
     {
       field: 'specialist',
       width: 200,
-      renderHeader: () => <h5 className='font-bold'>ความเชี่ยวชาญ</h5>,
-      headerClassName: 'super-app-theme--header',
+      renderHeader: () => <h5 className='font-medium'>ความเชี่ยวชาญ</h5>,
       valueGetter: (params: GridValueGetterParams) =>
         `${params.row.specialist || ''}`,
     },
     {
       field: 'gender',
       width: 100,
-      renderHeader: () => <h5 className='font-bold'>เพศ</h5>,
-      headerClassName: 'super-app-theme--header',
+      renderHeader: () => <h5 className='font-medium'>เพศ</h5>,
       valueGetter: (params: GridValueGetterParams) =>
         params.row.gender === 'male' ? 'ชาย' : 'หญิง',
     },
     {
       field: 'Action',
       width: 150,
-      renderHeader: () => <h5 className='font-bold'>จัดการ</h5>,
-      headerClassName: 'super-app-theme--header',
+      renderHeader: () => <h5 className='font-medium'>จัดการ</h5>,
       renderCell: (params) => {
         return (
           <div className='flex flex-row items-center space-x-4'>

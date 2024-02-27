@@ -133,8 +133,8 @@ const EditDailyChallenge = ({ params, loadData }: { params: { id: string }, load
               {/* section1 */}
               <div className='col-span-1 space-y-4 md:space-y-8 rounded-lg md:col-span-4 flex flex-col'>
                 <InputText name='name' control={control} label='ชื่อโปรแกรม' />
-                <InputText name='points' control={control} label='คะแนนรวมสะสม' type='number' />
-                <InputText name='numDays' control={control} label='ระยะเวลาการทำภารกิจ' type='number' />
+                <InputText name='points' control={control} label='คะแนนรวมสะสม' type='number' unit='คะแนน' />
+                <InputText name='numDays' control={control} label='ระยะเวลาการทำภารกิจ' type='number' unit='วัน' />
 
                 {/* <SwitchToggle name="status" control={control} label="Toggle Status" status={getValues().status} /> */}
                 <SwitchToggle name="status" control={control} label="สถานะการเปิดใช้งาน" options={dataOptions.dailyChallengeStatus} status={getValues().status} />
