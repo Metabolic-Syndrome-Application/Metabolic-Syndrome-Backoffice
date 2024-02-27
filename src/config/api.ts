@@ -21,6 +21,12 @@ export const API_PATH = {
   //Patient
   GET_PROFILE_OTHER: (id: string) => `/api/user/profile/patient/${id}`,
 
+  //Patient : Record Health
+  POST_RECORD_HEALTH: (id: string) => `/api/record/health/${id}`,
+  GET_RECORD_HEALTH_BY_ALL: (id: string) => `/api/record/health/${id}`,
+  GET_RECORD_HEALTH_BY_PATIENT: (id: string) =>
+    `/api/record/health/patient/${id}`,
+
   //Plan
   CREATE_PLAN: '/api/plan/create',
   PUT_PLAN: (id: string) => `/api/plan/${id}`,

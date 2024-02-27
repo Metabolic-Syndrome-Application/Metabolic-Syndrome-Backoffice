@@ -46,22 +46,19 @@ const DoctorTable = () => {
     {
       field: 'index',
       width: 100,
-      renderHeader: () => <h5 className='font-bold'>ลำดับที่</h5>,
-      headerClassName: 'super-app-theme--header',
+      renderHeader: () => <h5 className='font-medium'>ลำดับที่</h5>,
     },
     {
       field: 'Username',
       width: 150,
-      renderHeader: () => <h5 className='font-bold'>ชื่อผู้ใช้</h5>,
-      headerClassName: 'super-app-theme--header',
+      renderHeader: () => <h5 className='font-medium'>ชื่อผู้ใช้</h5>,
       valueGetter: (params: GridValueGetterParams) =>
         `${capitalize(params.row.username || '')}`,
     },
     {
       field: 'firstName',
       width: 250,
-      renderHeader: () => <h5 className='font-bold'>ชื่อ-นามสกุล</h5>,
-      headerClassName: 'super-app-theme--header',
+      renderHeader: () => <h5 className='font-medium'>ชื่อ-นามสกุล</h5>,
       valueGetter: (params: GridValueGetterParams) =>
         `${capitalize(params.row.firstName || '')} ${capitalize(
           params.row.lastName || ''
@@ -70,32 +67,28 @@ const DoctorTable = () => {
     {
       field: 'role',
       width: 120,
-      renderHeader: () => <h5 className='font-bold'>บทบาท</h5>,
-      headerClassName: 'super-app-theme--header',
+      renderHeader: () => <h5 className='font-medium'>บทบาท</h5>,
       valueGetter: (params: GridValueGetterParams) =>
         `${capitalize(params.row.role || '')}`,
     },
     {
       field: 'department',
       width: 200,
-      renderHeader: () => <h5 className='font-bold'>แผนก</h5>,
-      headerClassName: 'super-app-theme--header',
+      renderHeader: () => <h5 className='font-medium'>แผนก</h5>,
       valueGetter: (params: GridValueGetterParams) =>
         `${capitalize(params.row.department || '')}`,
     },
     {
       field: 'specialist',
       width: 200,
-      renderHeader: () => <h5 className='font-bold'>ความเชี่ยวชาญ</h5>,
-      headerClassName: 'super-app-theme--header',
+      renderHeader: () => <h5 className='font-medium'>ความเชี่ยวชาญ</h5>,
       valueGetter: (params: GridValueGetterParams) =>
         `${capitalize(params.row.specialist || '')}`,
     },
     {
       field: 'Action',
       width: 150,
-      renderHeader: () => <h5 className='font-bold'>จัดการ</h5>,
-      headerClassName: 'super-app-theme--header',
+      renderHeader: () => <h5 className='font-medium'>จัดการ</h5>,
       renderCell: (params) => {
         return (
           <div className='flex flex-row items-center space-x-4'>

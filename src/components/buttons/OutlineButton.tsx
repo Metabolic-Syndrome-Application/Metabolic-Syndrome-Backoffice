@@ -6,7 +6,7 @@ import { cn } from '@/lib/utils';
 import { IconType } from 'react-icons';
 import { LucideIcon } from 'lucide-react';
 
-const ButtonVariant = ['blue', 'gray', 'yellow', 'green', 'orange'] as const;
+const ButtonVariant = ['blue', 'gray', 'yellow', 'green', 'orange', 'black'] as const;
 const ButtonSize = ['sm', 'base'] as const;
 
 type ButtonProps = {
@@ -84,11 +84,16 @@ const OutlineButton = React.forwardRef<HTMLButtonElement, ButtonProps>(
               'active:border active:border-[#FFB098]',
               'disabled:border-light-gray disabled:text-stone-800 disabled:opacity-40',
             ],
+            variant === 'black' && [
+              'border-light-gray text-black border',
+              'hover:bg-light-gray ',
+              'active:border-default-gray active:border',
+            ],
           ],
           //#endregion  //*======== Variants ===========
           'disabled:cursor-not-allowed',
           isLoading &&
-            'relative text-transparent transition-none hover:text-transparent disabled:cursor-wait',
+          'relative text-transparent transition-none hover:text-transparent disabled:cursor-wait',
           className
         )}
         {...rest}

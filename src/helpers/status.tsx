@@ -33,3 +33,20 @@ export const getStatusChallengeColor = (
       return { color: 'blue', text: status };
   }
 };
+
+
+//Record By บันทึกโดย
+export const getRecordBy = (
+  status: string
+): { color: 'blue' | 'black' | 'green' | 'red'; text: string } => {
+  switch (status) {
+    case 'patient':
+      return { color: 'black', text: 'คนไข้' };
+    case 'doctor':
+      return { color: 'blue', text: 'หมอ' };
+    case 'staff':
+      return { color: 'green', text: 'พยาบาล' };
+    default:
+      return { color: 'red', text: status };
+  }
+};

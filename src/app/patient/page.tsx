@@ -28,7 +28,6 @@ const PatientPage = () => {
         <h1 className='text-balance'>ข้อมูลคนไข้</h1>
         <IconFlatButton
           title='เพิ่มข้อมูลคนไข้'
-        //icon={Bs1Square}
         />
 
       </article>

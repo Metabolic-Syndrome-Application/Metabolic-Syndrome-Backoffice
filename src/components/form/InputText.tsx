@@ -13,6 +13,7 @@ export const InputText: React.FC<FormInputProps> = ({
   label,
   type = 'text',
   showPasswordToggle = false,
+  unit,
   defaultValue,
   disabled = false,
 }) => {
@@ -51,13 +52,18 @@ export const InputText: React.FC<FormInputProps> = ({
                     </InputAdornment>
                   ),
                 }
-                : undefined
+                : unit
+                  ? {
+                    endAdornment: <InputAdornment position="end">{unit}</InputAdornment>,
+                  }
+                  : undefined
             }
             sx={{
               //width: { sm: 200, md: 350 },
               // width: '100%',
               '& .MuiInputBase-root': {
                 height: 50,
+                textAlign: 'center',
                 borderRadius: '0.575rem',
                 backgroundColor: disabled ? '#F6F6F6' : 'transparent',
               },

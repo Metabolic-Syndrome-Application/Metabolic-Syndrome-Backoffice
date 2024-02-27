@@ -22,6 +22,7 @@ import { fetchQuizById, getIdQuiz, selectAllQuizs, selectQuizById } from '@/redu
 import { useCallback, useEffect, useState } from 'react';
 import { IChoicesQuiz } from '@/types/challenge';
 import { TextFieldInfo } from '@/components/form/TextFieldInfo';
+import { InputMultiline } from '@/components/form/InputMultiline';
 
 
 const EditQuiz = ({ params, loadData }: { params: { id: string }, loadData: () => void }) => {
@@ -143,14 +144,16 @@ const EditQuiz = ({ params, loadData }: { params: { id: string }, loadData: () =
             />
             <div className='flex flex-col space-y-4'>
               {/* section1 : Question*/}
-              <div className='col-span-1 space-y-4 rounded-lg md:col-span-4'>
-                <h4 className='font-medium text-base'>คำถาม</h4>
+              <div className='col-span-1 space-y-5 rounded-lg md:col-span-4'>
+                <div className='space-y-2'>
+                  <h4 className='font-medium text-base'>คำถาม</h4>
+                  <InputMultiline name="question" control={control} label='คำถาม' />
+                </div>
 
-                <InputText name='question' control={control} label='คำถาม' />
 
                 <div className='flex flex-col md:flex-row gap-4'>
                   <InputText name='points' control={control} label='คะแนนรวมสะสม' defaultValue={150} disabled />
-                  <InputText name='limitTime' control={control} label='เวลาในการตอบคำถาม (นาที)' defaultValue={1} disabled />
+                  <InputText name='limitTime' control={control} label='เวลาในการตอบคำถาม' unit='นาที' defaultValue={1} disabled />
                 </div>
 
                 {/* section2 : Answer Choices */}

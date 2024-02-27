@@ -27,7 +27,7 @@ const SideNav = ({ open, setOpen }: SideNavProps) => {
   return (
     <div
       className={`${open ? 'md:flex md:w-72' : 'md:flex md:w-24'
-        } md: fixed z-20 hidden h-screen flex-1 border-r border-zinc-200 bg-white`}
+        } md: fixed z-40 hidden h-screen flex-1 border-r border-zinc-200 bg-white`}
     >
       <RxDoubleArrowLeft
         className={`hover:bg-light-gray text-default-gray absolute -right-3 top-11

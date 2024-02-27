@@ -110,7 +110,7 @@ const QuizTable = () => {
     {
       field: "id",
       width: 40,
-      renderHeader: () => <h5 className='font-bold'></h5>,
+      renderHeader: () => <h5 className='font-medium'></h5>,
       // renderCell: (cellValues: GridRenderCellParams) => (
       //   <IconButton onClick={() => { clickedIndex === cellValues.value ? setClickedIndex(-1) : setClickedIndex(cellValues.value) }}>
       //     {cellValues.value === clickedIndex ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
@@ -134,25 +134,24 @@ const QuizTable = () => {
     {
       field: 'index',
       width: isMobile ? 125 : 150,
-      renderHeader: () => <h5 className='font-bold'>ลำดับที่</h5>,
-      headerClassName: 'super-app-theme--header',
+      renderHeader: () => <h5 className='font-medium'>ลำดับที่</h5>,
       valueGetter: (params: GridValueGetterParams) =>
         `${params.row.index || ''}`,
     },
     {
       field: "question",
       width: isMobile ? 250 : 400,
-      renderHeader: () => <h5 className='font-bold'>ชื่อคำถาม</h5>,
+      renderHeader: () => <h5 className='font-medium'>ชื่อคำถาม</h5>,
       renderCell: (cellValues: GridRenderCellParams) => (
         <Box>
           {/* params.row.question */}
-          <div>{cellValues.value}</div>
+          <div className="flex w-[250px] md:w-[400px] break-all pr-4">{cellValues.value}</div>
           {/* expand row : see question & correct chouce */}
           <Collapse in={expandedQuiz?.id === cellValues.row.id}>
             <Box sx={detailExpandStyles}>
-              <span>คำถาม : {cellValues.value}</span>
+              <span className="break-all">คำถาม : {cellValues.value}</span>
               <br />
-              <span className="text-[#186EC8]">
+              <span className="text-[#186EC8] break-all">
                 คำตอบ : {' '}
                 {expandedQuiz && expandedQuiz.choices ?
                   expandedQuiz.choices
@@ -169,24 +168,21 @@ const QuizTable = () => {
     {
       field: 'points',
       width: isMobile ? 100 : 150,
-      renderHeader: () => <h5 className='font-bold'>คะแนน</h5>,
-      headerClassName: 'super-app-theme--header',
+      renderHeader: () => <h5 className='font-medium'>คะแนน</h5>,
       valueGetter: (params: GridValueGetterParams) =>
         `${params.row.points || ''}`,
     },
     {
       field: 'limitTime',
       width: isMobile ? 200 : 250,
-      renderHeader: () => <h5 className='font-bold'>เวลาในการตอบคำถาม (นาที)</h5>,
-      headerClassName: 'super-app-theme--header',
+      renderHeader: () => <h5 className='font-medium'>เวลาในการตอบคำถาม (นาที)</h5>,
       valueGetter: (params: GridValueGetterParams) =>
         `${params.row.limitTime || ''}`,
     },
     {
       field: 'Action',
       width: isMobile ? 125 : 150,
-      renderHeader: () => <h5 className='font-bold'>จัดการ</h5>,
-      headerClassName: 'super-app-theme--header',
+      renderHeader: () => <h5 className='font-medium'>จัดการ</h5>,
       renderCell: (params) => {
         return (
           <div className='flex flex-row items-center space-x-4'>

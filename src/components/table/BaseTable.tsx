@@ -1,10 +1,12 @@
 "use client"
-import { DataGrid, GridToolbar } from '@mui/x-data-grid';
+import { DataGrid, GridColumnGroupingModel, GridToolbar } from '@mui/x-data-grid';
 import * as React from 'react';
 interface ITableProps {
   rows: any[];
   columns: any[];
   loading: any;
+  columnGroupingModel?: GridColumnGroupingModel;
+
 }
 
 const tableStyles = {
@@ -28,20 +30,25 @@ const tableStyles = {
   '& .MuiDataGrid-virtualScroller::-webkit-scrollbar-thumb:hover': {
     background: '#555',
   },
-
+  '& .MuiDataGrid-columnHeaderTitleContainer': {
+    lineHeight: 1.5,
+  },
 };
 
-const BaseTable = ({ rows, columns }: ITableProps) => {
+const BaseTable = ({ rows, columns, columnGroupingModel }: ITableProps) => {
 
   const [loading, setLoading] = React.useState(false);
 
   return (
     <div className='flex w-full items-center justify-center px-1 py-4 md:px-2 lg:max-w-[1180px] xl:max-w-full'>
-      <div className='h-[600px] min-w-full max-w-[450px] sm:max-w-[600px] md:max-w-[900px] lg:max-w-[1100px] xl:max-w-full'>
+      <div className='h-[600px] min-w-full max-w-[450px] sm:max-w-[600px] md:max-w-[900px] lg:max-w-[1100px] 2xl:max-w-full'>
         <DataGrid
           rows={rows}
           columns={columns}
           loading={loading}
+          experimentalFeatures={{ columnGrouping: true }}
+          columnGroupingModel={columnGroupingModel}
+          getRowId={(row) => row.id}
           getRowHeight={() => 'auto'}
           getEstimatedRowHeight={() => 100}
           slots={{ toolbar: GridToolbar }}
@@ -56,6 +63,7 @@ const BaseTable = ({ rows, columns }: ITableProps) => {
           }}
           pageSizeOptions={[10, 25, 50]}
           sx={tableStyles}
+
         // onRowExpandToggle={handleRowExpandToggle}
         // {...({ expandedRowIds } as any)} // Explicitly cast to 
         />

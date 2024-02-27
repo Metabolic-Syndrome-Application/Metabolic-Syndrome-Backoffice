@@ -1,3 +1,17 @@
+import dayjs from 'dayjs';
+
+export interface dateFormatProp {
+  date: Date | string
+  format: string
+}
+
+// Format the timestamp using dayjs
+export const convertDateFormat = (timestamp: string, format = 'DD/MM/YYYY HH:mm:ss') => {
+  if (!timestamp) return '';
+  return dayjs(timestamp).format(format);
+};
+
+
 //BirthYear
 export const generateBirthYear = () => {
   const thaiBuddhistOffset = 543;
@@ -33,3 +47,4 @@ export const dayOfWeekThaiLabel = (day: string) => {
   };
   return thaiDays[day]; // If the day is not found, return the original day name
 };
+

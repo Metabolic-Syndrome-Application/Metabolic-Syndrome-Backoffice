@@ -25,8 +25,8 @@ export const CardQuiz = ({
           </div>
         </div>
 
-        <div className='pt-8 flex flex-col items-center justify-center bg-white rounded-xl w-full min-w-[350px] md:min-w-[650px] min-h-[200px] h-full p-4'>
-          <h4 className='text-center whitespace-pre-line text-wrap font-semibold leading-normal tracking-wide '>
+        <div className='pt-8 flex flex-col items-center justify-center bg-white rounded-xl w-full min-w-[350px] md:max-w-[650px] min-h-[200px] h-full p-4'>
+          <h4 className='text-center whitespace-pre-line text-wrap font-semibold leading-normal tracking-wide break-all'>
             {question}
           </h4>
         </div>

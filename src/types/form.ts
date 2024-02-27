@@ -5,6 +5,7 @@ export type FormInputProps = {
   label: string;
   type?: string;
   showPasswordToggle?: boolean;
+  unit?: string;
   defaultValue?: any;
   disabled?: boolean;
 };
@@ -20,7 +21,7 @@ export interface FormOptionProps extends FormInputProps {
 //Use in AutocompleteDropdown & RadioGroup
 export type FormDropdownProps = Omit<
   FormInputProps,
-  'setValue' | 'type' | 'showPasswordToggle'
+  'setValue' | 'type' | 'showPasswordToggle' | 'unit'
 > & {
   options: FormOptionProps['options'];
 };
@@ -45,4 +46,12 @@ export type FormMultiCheckboxProps = {
     value: string;
   }[];
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+};
+
+//Form Input Text
+export type FormInputMultilineProps = {
+  name: string;
+  control: any;
+  label: string;
+  type?: string;
 };

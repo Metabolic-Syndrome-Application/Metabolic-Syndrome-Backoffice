@@ -6,7 +6,7 @@ import PersonalInfo from '@/app/patient/record/personal-info/PersonalInfo';
 import { TabConfig } from '@/types/tab';
 import HealthRecordPage from '@/app/patient/record/health-record/HealthRecord';
 
-export const MainPatientTabs = () => {
+export const MainPatientTabs = ({ id }: { id: string }) => {
   const tabConfig: TabConfig[] = [
     {
       id: 1,
@@ -16,13 +16,13 @@ export const MainPatientTabs = () => {
     {
       id: 2,
       name: 'ข้อมูลสุขภาพ',
-      component: <HealthRecordPage />,
+      component: <HealthRecordPage id={id} />,
     },
   ];
   return (
     <TabbedList
       tabs={tabConfig}
-      panelClassName='container w-full p-2 shadow-light-shadow bg-white rounded-lg'
+      panelClassName='p-2 shadow-light-shadow w-full  rounded-lg'
       allPanelClassName='flex flex-col gap-2 md:gap-4'
     />
   );

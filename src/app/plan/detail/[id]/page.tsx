@@ -4,13 +4,13 @@ import React, { useCallback, useEffect, useState } from 'react';
 
 import useAxiosAuth from '@/hooks/useAxiosAuth';
 
-import { CardPlan } from '@/components/common/cards/CardPlan';
 import { BackButton } from '@/components/tabbed/BackButton';
 
 import { API_PATH } from '@/config/api';
 
 import { IPlanData } from '@/types/plan';
 import EditPlan from '@/app/plan/components/manage-plan/EditPlan';
+import { CardPlan } from '@/app/plan/components/cards/CardPlan';
 
 
 const ViewPlanPage = ({ params }: { params: { id: string } }) => {
