@@ -26,6 +26,8 @@ export const API_PATH = {
   GET_RECORD_HEALTH_BY_ALL: (id: string) => `/api/record/health/${id}`,
   GET_RECORD_HEALTH_BY_PATIENT: (id: string) =>
     `/api/record/health/patient/${id}`,
+  GET_RECORD_HEALTH_BY_HOSPITAL: (id: string) =>
+    `/api/record/health/hospital/${id}`,
 
   //Plan
   CREATE_PLAN: '/api/plan/create',

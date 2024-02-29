@@ -66,9 +66,13 @@ export default withAuth(
   function middleware(request: NextRequestWithAuth) {
     // console.log(request.nextUrl.pathname);
     // console.log(request.nextauth.token);
-    if (!request.nextauth?.token) {
-      // Redirect to signIn page if not authenticated
-      return NextResponse.redirect('/auth/signIn');
+    // if (!request.nextauth?.token) {
+    //   // Redirect to signIn page if not authenticated
+    //   return NextResponse.redirect('/auth/signIn');
+    // }
+
+    if (request.nextauth.token?.role == 'patient') {
+      return new Response('Access Denied', { status: 401 });
     }
 
     if (
@@ -151,6 +155,7 @@ export const config = {
     '/plan:path*',
     '/challenge:path*',
     '/client',
+    '/dashboard:path*',
     '/',
   ],
 };

@@ -1,8 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-:root {
+root {
   /* #region  /**=========== Primary Color =========== */
   /* !STARTERCONF Customize these variable, copy and paste from /styles/colors.css for list of colors */
   --tw-color-primary-50: 240 249 255;
@@ -41,10 +40,21 @@
       U+2215, U+FEFF, U+FFFD;
   }
 
+  /* @font-face {
+    font-family: 'IBM Plex Sans Thai', sans-serif;
+    src: url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@100;200;300;400;500;600;700&family=IBM+Plex+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap')
+      format('woff');
+    font-weight: 300;
+    font-style: normal;
+  } */
+
   .cursor-newtab {
     cursor: url('/assets/images/new-tab.png') 10 10, pointer;
   }
 
+  html {
+    font-family: var(--font-ibm);
+  }
   /* #region  /**=========== Typography =========== */
   .h0 {
     @apply font-ibm text-3xl font-bold md:text-4xl lg:text-5xl;

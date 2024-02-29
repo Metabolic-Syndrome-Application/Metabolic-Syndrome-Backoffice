@@ -1,9 +1,9 @@
 import { redirect } from 'next/navigation';
 import { getServerSession } from 'next-auth/next';
 
-import UserCard from '@/components/layout/navbar/UserCard';
 
 import { authOptions } from '@/app/api/auth/[...nextauth]/authOptions';
+import UserCard from '@/components/layout/navbar/UserCard';
 
 export default async function ServerPage() {
   const session = await getServerSession(authOptions);

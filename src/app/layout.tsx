@@ -6,21 +6,21 @@ import { Suspense } from 'react';
 import '@/styles/globals.css';
 import '@/styles/colors.css';
 
-import NavbarLayout from '@/components/layout/layout';
 import NextAuthProviders from '@/components/login/NextAuthProviders';
 
+import NavbarLayout from '@/app/(nav)/layout';
 import Loading from '@/app/loading';
 import { siteConfig } from '@/constant/config';
 import ReduxProvider from '@/redux/Provider';
 
 //👇 Configure our local font object
-
 const IBMPlexSansThai = IBM_Plex_Sans_Thai({
   weight: ['100', '400', '500', '700'],
   subsets: ['thai'],
   variable: '--font-ibm',
 });
 
+//const inter = Inter({ subsets: ['latin'] })
 export const metadata: Metadata = {
   title: {
     default: siteConfig.title,
@@ -66,19 +66,23 @@ export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
+
 }) {
+
+
   return (
     <html
       lang='en'
       className={`${IBMPlexSansThai.variable}`}
+      //className={inter.className}
       suppressHydrationWarning={true}
     >
       <body>
-        <div className=''>
+        <div className='font-ibm'>
           <NextAuthProviders>
             <Suspense fallback={<Loading />}>
+              {/* <SignInButton /> */}
               <NavbarLayout>
-                {/* <SignInButton /> */}
                 <ReduxProvider>{children}</ReduxProvider>
               </NavbarLayout>
             </Suspense>

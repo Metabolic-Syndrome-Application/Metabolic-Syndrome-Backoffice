@@ -56,6 +56,7 @@ import profileSlice from '@/redux/slices/profileSlice';
 import usersSlice from '@/redux/slices/usersSlice';
 import quizsSlice from '@/redux/slices/quizsSlice';
 import dailyChallengesSlice from '@/redux/slices/dailyChallengesSlice';
+import recordHealthsSlice from '@/redux/slices/recordHealthsSlice';
 
 const createNoopStorage = () => {
   return {
@@ -88,6 +89,7 @@ const rootReducer = combineReducers({
   plan: plansSlice,
   quiz: quizsSlice,
   daily: dailyChallengesSlice,
+  record: recordHealthsSlice,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

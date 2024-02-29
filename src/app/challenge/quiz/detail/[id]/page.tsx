@@ -27,7 +27,7 @@ const QuizDetailPage = ({ params }: { params: { id: string } }) => {
   const quiz = useSelector(selectQuizById);
   //console.log('current detail page Quiz', quiz)
 
-  //ไม่ได้ใช้ redux
+  //ไม่ได้ใช้
   // const fetchQuiz = useCallback(async () => {
   //   try {
   //     const {
@@ -60,14 +60,8 @@ const QuizDetailPage = ({ params }: { params: { id: string } }) => {
     <div>
       <BackButton />
 
-      <div className='shadow-light-shadow rounded-xl container mx-auto'>
+      <div className='shadow-light-shadow flex flex-col rounded-xl container mx-auto'>
 
-        {/* <div className='flex px-8 pt-4 justify-end'>
-          <FiEdit
-            className='hover:bg-light-gray text-default-blue group h-5 w-5 cursor-pointer rounded-md transition-all duration-300 ease-in-out'
-          />
-          แก้ไข
-        </div> */}
         <EditQuiz params={{ id }} loadData={loadQuizs} />
 
         {/* 
@@ -87,7 +81,6 @@ const QuizDetailPage = ({ params }: { params: { id: string } }) => {
               id={quiz.id}
               question={quiz.question}
               choices={quiz.choices}
-
             />
           </div>
         )}

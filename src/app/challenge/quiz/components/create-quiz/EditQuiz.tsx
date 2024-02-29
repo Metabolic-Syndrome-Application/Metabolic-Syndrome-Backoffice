@@ -10,7 +10,6 @@ import useAxiosAuth from '@/hooks/useAxiosAuth';
 import useModal from '@/hooks/useModal';
 
 import ActionButton from '@/components/buttons/ActionButton';
-import { IconFlatButton } from '@/components/buttons/IconFlatButton';
 import FormHeaderText from '@/components/form/FormHeaderText';
 import { InputText } from '@/components/form/InputText';
 import { createQuizChallengeSchema, createQuizSchemaValues } from '@/components/form/validation/ChallengeValidator';
@@ -127,7 +126,7 @@ const EditQuiz = ({ params, loadData }: { params: { id: string }, loadData: () =
 
   return (
     <div className='w-full'>
-      <article className='flex w-full items-center justify-between px-4 py-2'>
+      <article className='flex w-full items-center justify-end px-4 py-2'>
         <FiEdit
           className='hover:bg-light-gray text-default-blue group h-5 w-5 cursor-pointer rounded-md transition-all duration-300 ease-in-out'
           onClick={openModal}
@@ -153,7 +152,7 @@ const EditQuiz = ({ params, loadData }: { params: { id: string }, loadData: () =
 
                 <div className='flex flex-col md:flex-row gap-4'>
                   <InputText name='points' control={control} label='คะแนนรวมสะสม' defaultValue={150} disabled />
-                  <InputText name='limitTime' control={control} label='เวลาในการตอบคำถาม' unit='นาที' defaultValue={1} disabled />
+                  <InputText name='limitTime' control={control} label='เวลาในการตอบคำถาม (นาที)' defaultValue={1} disabled />
                 </div>
 
                 {/* section2 : Answer Choices */}

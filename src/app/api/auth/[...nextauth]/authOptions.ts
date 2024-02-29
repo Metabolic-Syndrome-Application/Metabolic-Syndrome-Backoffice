@@ -153,7 +153,7 @@ export const authOptions: NextAuthOptions = {
               });
             }
 
-            console.log('Set-Cookie header:', apiCookies);
+            //console.log('Set-Cookie header:', apiCookies);
 
             return user;
           } else {

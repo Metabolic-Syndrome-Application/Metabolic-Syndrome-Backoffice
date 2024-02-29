@@ -53,8 +53,8 @@ const ActionButton = React.forwardRef<HTMLButtonElement, ActionButtonProps>(
           variant === 'cancel' && [
             'w-fit min-w-[90px]',
             'text-default-gray bg-gray-100',
-            'hover:bg-gray-300 ',
-            'active:ring-light-gray focus:outline-none active:bg-gray-300 active:ring-2',
+            'hover:bg-gray-200 ',
+            'active:ring-light-gray focus:outline-none active:bg-gray-200 active:ring-2',
             'disabled:text-gray-300',
           ],
           variant === 'delete' && [

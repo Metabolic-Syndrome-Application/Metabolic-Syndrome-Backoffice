@@ -1,4 +1,4 @@
-import { ZodTypeAny, z } from 'zod';
+import { z } from 'zod';
 
 export interface FormRecordHealthProps {
   id: string;
@@ -147,9 +147,9 @@ export const createBloodGlucoseSchema = z.object({
       (value) => {
         if (!value) return true;
 
-        return value >= 30 && value <= 300;
+        return value <= 300;
       },
-      { message: 'กรุณากรอกระดับน้ำตาลในเลือดอยู่ในช่วง 30 - 300 mg/dL' }
+      { message: 'กรุณากรอกระดับน้ำตาลในเลือดสูงสุดไม่เกิน 300 mg/dL' }
     )
     .transform((value) => (value === undefined ? 0 : Number(value))) // Transform undefined to 0 & set defaultValues is 0
     .optional(),
@@ -160,6 +160,7 @@ export const createBloodPressureSchema = z
     systolicBloodPressure: z.coerce
       .number()
       .nonnegative('ตัวเลขเป็นจำนวนเต็มบวกเท่านั้น')
+      .gte(50, 'กรุณากรอกน้ความดันช่วงหัวใจบีบตัว (ตัวบน) ขั้นต่ำ 50 กmmHg')
       .lte(
         220,
         'กรุณากรอกความดันช่วงหัวใจบีบตัว (ตัวบน) สูงสุดไม่เกิน 220 mmHg'
@@ -167,6 +168,7 @@ export const createBloodPressureSchema = z
     diastolicBloodPressure: z.coerce
       .number()
       .nonnegative('ตัวเลขเป็นจำนวนเต็มบวกเท่านั้น')
+      .gte(30, 'กรุณากรอกความดันช่วงหัวใจคลายตัว (ตัวล่าง) ขั้นต่ำ 30 กmmHg')
       .lte(
         150,
         'กรุณากรอกความดันช่วงหัวใจคลายตัว (ตัวล่าง) สูงสุดไม่เกิน 150 mmHg'
@@ -174,6 +176,7 @@ export const createBloodPressureSchema = z
     pulseRate: z.coerce
       .number()
       .nonnegative('ตัวเลขเป็นจำนวนเต็มบวกเท่านั้น')
+      .gte(20, 'กรุณากรอกอัตราการเต้นของหัวใจขั้นต่ำ 20 ครั้งต่อนาที')
       .lte(200, 'กรุณากรอกอัตราการเต้นของหัวใจสูงสุดไม่เกิน 200 ครั้งต่อนาที')
       .transform((value) => (value === undefined ? 0 : Number(value))),
   })
