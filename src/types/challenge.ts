@@ -30,6 +30,7 @@ export interface IGetQuizIdApi {
 }
 
 // ======================================================= //
+
 //Daily Challenge
 export type IDailyChallengeData = {
   id: string;
@@ -43,6 +44,7 @@ export type IDailyChallengeData = {
     day: string[];
   };
   status?: string;
+  participants?: number;
 };
 
 //All Quiz

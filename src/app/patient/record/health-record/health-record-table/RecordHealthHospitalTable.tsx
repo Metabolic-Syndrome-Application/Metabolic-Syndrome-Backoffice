@@ -13,10 +13,10 @@ import { convertDateFormat } from '@/helpers/date';
 import { getRecordBy } from '@/helpers/status';
 
 import CreateRecordHealth from '@/app/patient/record/health-record/health-record-table/CreateRecordHealth';
-import { fetchRecordAllById, selectAllrecords } from '@/redux/slices/recordHealthsSlice';
+import { fetchRecordHospitalById, selectAllrecords } from '@/redux/slices/recordHealthsSlice';
 import { useDispatch, useSelector } from 'react-redux';
 
-const RecordHealthTable = ({ params, fetchRecordApi }: { params: { id: string }, fetchRecordApi: (id: string) => void }) => {
+const RecordHealthHospitalTable = ({ params }: { params: { id: string } }) => {
   const { data: session } = useSession();
 
   const axiosAuth = useAxiosAuth()
@@ -30,46 +30,20 @@ const RecordHealthTable = ({ params, fetchRecordApi }: { params: { id: string },
 
   const loadRecords = useCallback(async () => {
     try {
-      //dispatch(fetchRecordAllById(id));
-      fetchRecordApi(id);
-
+      dispatch(fetchRecordHospitalById(id));
+      //fetchRecords(id);
     } catch (error) {
       console.log('error', error);
     }
   }, [id])
 
-  // useEffect(() => {
-  //   if (session) {
-  //     //fetchUser();
-  //     loadRecords()
-  //     // dispatch(fetchRecordById(id));
-  //   }
-  // }, []);
   useEffect(() => {
     if (session) {
-      loadRecords();
-
+      //fetchUser();
+      loadRecords()
+      // dispatch(fetchRecordById(id));
     }
   }, []);
-
-
-  //ก่อนใช้ redux fetch all record health
-  // const [userData, setUserData] = useState<IRecordHealthData[]>([]);
-
-  // const fetchUser = useCallback(async () => {
-  //   try {
-  //     const {
-  //       data: { data },
-  //     } = await axiosAuth.get(
-  //       API_PATH.GET_RECORD_HEALTH_BY_ALL(id));
-  //     console.log('Get record health all', data);
-
-  //     const usersWithIndex = addIndexRecord(data.record);
-  //     setUserData(usersWithIndex);
-  //   } catch (error) {
-  //     console.log('Error fetching user data:', error);
-  //   }
-  // }, [axiosAuth, id]);
 
   //date filter 
   const dateOperators = getGridDateOperators();
@@ -273,6 +247,10 @@ const RecordHealthTable = ({ params, fetchRecordApi }: { params: { id: string },
   return (
     <div className=''>
       <div className='w-full md:max-w-screen-lg lg:max-w-full 2xl:max-w-full'>
+        <CreateRecordHealth params={{ id }} />
+        <article className='flex w-full items-center justify-between px-4 py-2'>
+          <h1 className='text-balance'>ข้อมูลสุขภาพ</h1>
+        </article>
         <BaseTable
           rows={record}
           columns={columns}
@@ -287,4 +265,4 @@ const RecordHealthTable = ({ params, fetchRecordApi }: { params: { id: string },
   )
 }
 
-export default RecordHealthTable
+export default RecordHealthHospitalTable

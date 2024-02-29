@@ -1,3 +1,11 @@
+//Selected Type Record Health
+export enum HealthRecordType {
+  BMI = 'BMI',
+  BloodPressure = 'BloodPressure',
+  BloodGlucose = 'BloodGlucose',
+  Cholesterol = 'Cholesterol',
+}
+
 //Record Health
 export interface IRecordHealthData {
   id: string;

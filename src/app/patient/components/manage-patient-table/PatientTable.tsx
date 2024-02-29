@@ -158,7 +158,6 @@ const ManagePatientTable = () => {
 
   return (
     <div>
-      {/* !user.lenght */}
       <BaseTable rows={users} columns={columns} loading={!!users.length} />
     </div>
   );

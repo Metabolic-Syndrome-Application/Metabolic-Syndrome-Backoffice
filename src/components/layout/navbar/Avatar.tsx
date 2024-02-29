@@ -1,13 +1,10 @@
-import { cn } from '@/lib/utils';
-import { Avatar } from '@mui/material';
-import React from 'react';
 
 function stringToColor(string: string) {
   let hash = 0;
   let i;
 
   /* eslint-disable no-bitwise */
-  for (i = 0; i < string.length; i += 1) {
+  for (i = 0; i < string?.length; i += 1) {
     hash = string.charCodeAt(i) + ((hash << 5) - hash);
   }
 
@@ -40,7 +37,7 @@ export function stringAvatar(
       height,
       bgcolor: stringToColor(name),
     },
-    children: name.charAt(0), // Display only the first character of the name
+    children: name?.charAt(0), // Display only the first character of the name
   };
 }
 

@@ -98,8 +98,8 @@ const QuizTable = () => {
   useEffect(() => {
     if (session && session.user) {
       // If session exists, load users
-      dispatch(fetchAllQuizs());
-      //fetchAllQuiz()
+      // dispatch(fetchAllQuizs());
+      fetchAllQuiz()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

@@ -1,145 +1,195 @@
-"use client"
-import { InputText } from '@/components/form/InputText';
-import { createBMISchema, createBloodGlucoseSchema, createRecordHealthSchema, createRecordHealthValues } from '@/components/form/validation/PatientValidator'; // Import the combined schema
-import { API_PATH } from '@/config/api';
-import useAxiosAuth from '@/hooks/useAxiosAuth';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { enqueueSnackbar } from 'notistack';
-import { useState } from 'react';
-import { SubmitHandler, useForm } from 'react-hook-form';
-import { z } from 'zod';
+'use client';
 
-const RecordHealthForm = ({ params }: { params: { id: string } }) => {
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useSnackbar } from 'notistack';
+import { useEffect, useMemo, useState } from 'react';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { MdOutlineCreateNewFolder } from 'react-icons/md';
+
+import useAxiosAuth from '@/hooks/useAxiosAuth';
+
+import ActionButton from '@/components/buttons/ActionButton';
+import FormHeaderText from '@/components/form/FormHeaderText';
+import { InputText } from '@/components/form/InputText';
+import { MultiselectCheckbox } from '@/components/form/MultiselectCheckbox';
+import {
+  createRecordHealthSchema,
+  createRecordHealthValues,
+} from '@/components/form/validation/PatientValidator'; // Import the combined schema
+
+import { API_PATH } from '@/config/api';
+import { CardInputRecord } from '@/app/patient/components/cards/CardInputRecord';
+import { iconTypeHealth, labelTypeHealth } from '@/helpers/typeIcon';
+import { IconFlatButton } from '@/components/buttons/IconFlatButton';
+import { fetchRecordAllById, selectRecordById } from '@/redux/slices/recordHealthsSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { HealthRecordType } from '@/types/patient';
+import useModal from '@/hooks/useModal';
+import React from 'react';
+
+
+const CreateRecordHealth = ({ params }: { params: { id: string } }) => {
   const id = params.id;
 
   const axiosAuth = useAxiosAuth();
+
+  const { Modal, openModal, closeModal } = useModal();
+  const { enqueueSnackbar } = useSnackbar();
+
+
+  //selected type health & render fotm field
+  const [selectedTypes, setSelectedTypes] = useState<string[]>([
+    HealthRecordType.BMI,
+  ]);
+
+  const toggleSelectedType = useMemo(() => {
+    return (type: string) => {
+      setSelectedTypes((prevSelectedTypes) =>
+        prevSelectedTypes.includes(type)
+          ? prevSelectedTypes.filter((selectedType) => selectedType !== type)
+          : [...prevSelectedTypes, type]
+      );
+    };
+  }, [setSelectedTypes]);
+
+  //Get lasetest record health data
+  const dispatch = useDispatch<any>();
+
+  const latestRecordData = useSelector(selectRecordById);
+  const [submittedData, setSubmittedData] = useState<createRecordHealthValues | null>(null);
 
   const {
     control,
     handleSubmit,
     reset,
-    formState: { errors, isValid },
+    getValues,
+    watch,
+    formState: { errors, isDirty },
   } = useForm<createRecordHealthValues>({
     mode: 'onChange',
     resolver: zodResolver(createRecordHealthSchema),
-    defaultValues: {
-      height: 160,
-      bloodGlucose: 0,
-    },
+    defaultValues: submittedData || {},
   });
+
+  // watch current field -> not used
+  // const watchedFields = watch(["height", "weight", "waistline", "hdl"]);
+  // const [height, weight, waistline, hdl] = watchedFields;
+  // console.log('hdl', hdl)
+
+  //reset form to lastest record
+  useEffect(() => {
+    if (latestRecordData) {
+      reset(latestRecordData);
+    }
+  }, [latestRecordData, reset]);
+
 
   const onSubmit: SubmitHandler<createRecordHealthValues> = async (data) => {
     try {
-      // Validate data against the combined schema
-      const validatedData = createRecordHealthSchema.safeParse(data);
-
-      // If validation passes, submit the data
-      console.log('Validated Data:', validatedData);
-      const response = await axiosAuth.post(API_PATH.POST_RECORD_HEALTH(id), data);
+      const response = await axiosAuth.post(
+        API_PATH.POST_RECORD_HEALTH(id),
+        data
+      );
       enqueueSnackbar('Create Record Success', { variant: 'success' });
-      reset()
+      console.log('Record Health', response);
+
+      await dispatch(fetchRecordAllById(id));
+      closeModal();
+
+      // Update submittedData with the submitted values
+      setSubmittedData(data);
     } catch (error: any) {
-      // If validation fails, show an error message
-      enqueueSnackbar(error.errors?.[0]?.message || 'Validation error', { variant: 'error' });
+      enqueueSnackbar(error.response?.data, { variant: 'error' });
       console.error('Error:', error);
     }
   };
 
+
+  const renderFormField = useMemo(() => (type: string) => {
+    switch (type) {
+      case HealthRecordType.BMI:
+        return (
+          <CardInputRecord key={HealthRecordType.BMI} name='ค่าดัชนีมวลกาย'>
+            <InputText name='height' label='ส่วนสูง' control={control} type='number' unit='ซม.' />
+            <InputText name='weight' label='น้ำหนัก' control={control} type='number' unit='กก.' />
+            <InputText name='waistline' label='รอบเอว' control={control} type='number' unit='นิ้ว' />
+          </CardInputRecord>
+        );
+      case HealthRecordType.BloodPressure:
+        return (
+          <CardInputRecord key={HealthRecordType.BloodPressure} name='ความดันโลหิต'>
+            <InputText name='systolicBloodPressure' label='ช่วงหัวใจบีบตัว (ตัวบน)' control={control} type='number' unit='mmHg' />
+            <InputText name='diastolicBloodPressure' label='ช่วงหัวใจคลายตัว (ตัวล่าง)' control={control} type='number' unit='mmHg' />
+            <InputText name='pulseRate' label='อัตราการเต้นของหัวใจ' control={control} type='number' unit='ครั้ง/นาที' />
+          </CardInputRecord>
+        );
+      case HealthRecordType.BloodGlucose:
+        return (
+          <CardInputRecord key={HealthRecordType.BloodGlucose} name='ระดับน้ำตาล'>
+            <InputText name='bloodGlucose' label='ระดับน้ำตาล' control={control} type='number' unit='ซม.' />
+          </CardInputRecord>
+        );
+      case HealthRecordType.Cholesterol:
+        return (
+          <CardInputRecord key={HealthRecordType.Cholesterol} name='ไขมันในเลือด'>
+            <InputText name='cholesterol' label='คอเลสเตอรอล' control={control} type='number' unit='mg/dL' />
+            <InputText name='hdl' label='ไขมันดี' control={control} type='number' unit='mg/dL' />
+            <InputText name='ldl' label='ไขมันอันตราย' control={control} type='number' unit='mg/dL' />
+            <InputText name='triglyceride' label='ไตรกลีเซอไรด์' control={control} type='number' unit='mg/dL' />
+          </CardInputRecord>
+        );
+      default:
+        return null;
+    }
+  }, [control]);
+
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      {/* Render input fields for both BMI and Blood Glucose records */}
-      <>
-        {/* BMI Input Fields */}
-        <InputText
-          name='height'
-          label='Height'
-          control={control}
-          type='number'
-          unit='cm'
-        />
-        <InputText
-          name='weight'
-          label='Weight'
-          control={control}
-          type='number'
-          unit='kg'
-        />
-        <InputText
-          name='waistline'
-          label='Waistline'
-          control={control}
-          type='number'
-          unit='in'
-        />
+    <div className='w-full'>
+      <article className='flex w-full items-center justify-between px-4 py-2'>
+        <h1 className='text-balance'>จดบันทึกค่าสุขภาพ</h1>
+        <IconFlatButton title='จดบันทึกค่าสุขภาพ' onClick={openModal} />
+      </article>
 
-        {/* Blood Glucose Input Fields */}
-        <InputText
-          name='bloodGlucose'
-          label='Blood Glucose'
-          control={control}
-          type='number'
-          unit='mg/dL'
-        />
+      <Modal>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <div className='flex flex-col flex-wrap rounded-lg w-full'>
+            <FormHeaderText
+              icon={MdOutlineCreateNewFolder}
+              title='จดบันทึกค่าสุขภาพ'
+              useBigestHeader
+            />
+            <div className='flex flex-wrap items-center gap-4 pb-4'>
+              {Object.values(HealthRecordType).map((type: HealthRecordType) => (
+                <MultiselectCheckbox
+                  key={type}
+                  name={type}
+                  control={control}
+                  label={labelTypeHealth[type]}
+                  isSelected={selectedTypes.includes(type)}
+                  setSelectedType={toggleSelectedType}
+                  icon={iconTypeHealth[type]}
+                />
+              ))}
+            </div>
 
-        {/* Blood Pressure Input Fields */}
-        <InputText
-          name='systolicBloodPressure'
-          label='systolicBloodPressure '
-          control={control}
-          type='number'
-          unit='mm/Hg'
-        />
-        <InputText
-          name='diastolicBloodPressure'
-          label='diastolicBloodPressure '
-          control={control}
-          type='number'
-          unit='mm/Hg'
-        />
-        <InputText
-          name='pulseRate'
-          label='pulseRate '
-          control={control}
-          type='number'
-          unit='mm/Hg'
-        />
-
-        {/* Blood Glucose Input Fields */}
-        <InputText
-          name='cholesterol'
-          label='cholesterol '
-          control={control}
-          type='number'
-          unit='mm/Hg'
-        />
-        <InputText
-          name='hdl'
-          label='hdl '
-          control={control}
-          type='number'
-          unit='mm/Hg'
-        />
-        <InputText
-          name='ldl'
-          label='ldl '
-          control={control}
-          type='number'
-          unit='mm/Hg'
-        />
-        <InputText
-          name='triglyceride'
-          label='triglyceride '
-          control={control}
-          type='number'
-          unit='mm/Hg'
-        />
-      </>
+            <div className='flex flex-col space-y-4'>
+              {selectedTypes.map(renderFormField)}
+            </div>
+            <div className='flex w-full justify-end space-x-3 p-4'>
+              <ActionButton type='reset' variant='cancel' onClick={() => reset()}>
+                ยกเลิก
+              </ActionButton>
+              <ActionButton type='submit' variant='submit' disabled={!isDirty || Object.keys(errors).length > 0}>
+                บันทึก
+              </ActionButton>
+            </div>
+          </div>
+        </form>
+      </Modal>
 
 
-      <button type="submit">Submit</button>
-    </form>
+    </div>
   );
 };
 
-export default RecordHealthForm;
-
+export default CreateRecordHealth;

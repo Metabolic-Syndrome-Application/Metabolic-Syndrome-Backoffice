@@ -7,7 +7,7 @@ export const SIDENAV_ITEMS: SideNavItem[] = [
     title: 'หน้าหลัก',
     path: '/',
     icon: <Icon icon='material-symbols:dashboard' width='26' height='26' />,
-    role: 'allRole',
+    //role: 'allRole',
   },
   {
     title: 'จัดการข้อมูลผู้ใช้',

@@ -58,21 +58,21 @@ const DailyChallengeTable = () => {
   const columns: GridColDef[] = [
     {
       field: 'index',
-      width: isMobile ? 125 : 140,
+      width: isMobile ? 95 : 100,
       renderHeader: () => <h5 className='font-medium'>ลำดับที่</h5>,
       valueGetter: (params: GridValueGetterParams) =>
         `${params.row.index || ''}`,
     },
     {
       field: 'name',
-      width: 320,
+      width: 300,
       renderHeader: () => <h5 className='font-medium'>ชื่อภารกิจ</h5>,
       valueGetter: (params: GridValueGetterParams) =>
         `${params.row.name}`,
     },
     {
       field: 'status',
-      width: isMobile ? 180 : 200,
+      width: 150,
       renderHeader: () => <h5 className='font-medium'>ประเภท</h5>,
       renderCell: (params) => {
         const { color, text } = getStatusChallengeColor(params.row.status);
@@ -89,19 +89,25 @@ const DailyChallengeTable = () => {
     },
     {
       field: 'points',
-      width: isMobile ? 150 : 180,
+      width: isMobile ? 150 : 160,
       renderHeader: () => <h5 className='font-medium'>คะแนนรวมสะสม</h5>,
       valueGetter: (params: GridValueGetterParams) =>
         `${params.row.points || ''}`,
     },
     {
       field: 'numDays',
-      width: isMobile ? 180 : 200,
+      width: isMobile ? 180 : 190,
       renderHeader: () => <h5 className='font-medium'>ระยะเวลาการทำภารกิจ</h5>,
       valueGetter: (params: GridValueGetterParams) =>
         `${params.row.numDays || ''}`,
     },
-
+    {
+      field: 'participants',
+      width: isMobile ? 150 : 170,
+      renderHeader: () => <h5 className='font-medium'>จำนวนผู้เข้าร่วม</h5>,
+      valueGetter: (params: GridValueGetterParams) =>
+        `${params.row.participants || ''}`,
+    },
     {
       field: 'Action',
       //width: isMobile ? 125 : 150,

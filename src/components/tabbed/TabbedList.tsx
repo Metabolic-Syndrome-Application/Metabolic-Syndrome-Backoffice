@@ -19,7 +19,7 @@ export const TabbedList = ({
       <Tab.Group selectedIndex={tab} onChange={handleChange}>
         <Tab.List
           className={cn(
-            'flex w-full max-w-xl gap-2 rounded-xl bg-gray-50 p-1',
+            'flex w-full max-w-xl gap-2 rounded-xl bg-white p-1',
             listClassName
           )}
         >

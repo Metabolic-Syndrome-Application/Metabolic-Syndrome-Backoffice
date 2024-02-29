@@ -1,13 +1,15 @@
 'use client';
 
+import Avatar from '@mui/material/Avatar';
+import Image from 'next/image';
 import Link from 'next/link';
 import { useSelectedLayoutSegment } from 'next/navigation';
+import { useSession } from 'next-auth/react';
 import React from 'react';
-import Image from 'next/image';
+
 import { cn } from '@/lib/utils';
 import useScroll from '@/hooks/useScroll';
-import { useSession } from 'next-auth/react';
-import Avatar from '@mui/material/Avatar';
+
 import { stringAvatar } from '@/components/layout/navbar/Avatar';
 
 const HeaderNav = () => {
@@ -22,7 +24,8 @@ const HeaderNav = () => {
           `sticky inset-x-0 top-0 z-30 w-full transition-all border-b border-gray-200`,
           {
             'border-b border-gray-200 bg-white/75 backdrop-blur-lg': scrolled,
-            'border-b border-gray-200 bg-white': selectedLayout,
+            'border-b border-gray-200 bg-white md:bg-[#F9F9F9]': selectedLayout,
+
           },
         )}
       >
@@ -40,7 +43,7 @@ const HeaderNav = () => {
                   alt='Hero'
                   //priority={true}
                   placeholder="blur"
-                  blurDataURL={'/assets/icons/logo.svg'}
+                  blurDataURL="/assets/icons/logo.svg"
                   quality={95}
                 />
               </div>

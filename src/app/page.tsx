@@ -1,12 +1,21 @@
-'use client';
-
+import { IBM_Plex_Sans_Thai } from '@next/font/google';
 import Head from 'next/head';
+import { redirect } from 'next/navigation';
+import { getServerSession } from 'next-auth/next';
 import * as React from 'react';
 
-import ArrowLink from '@/components/links/ArrowLink';
-import UnstyledLink from '@/components/links/UnstyledLink';
-import HomeGallery from '@/components/home/HomeGallery';
-import HomeHero from '@/components/home/HomeHero';
+import { authOptions } from '@/app/api/auth/[...nextauth]/authOptions';
+
+// const inter = Inter({
+//   subsets: ['latin'],
+//   variable: '--font--inter',
+//   weight: '100'
+// });
+const IBMPlexSansThai = IBM_Plex_Sans_Thai({
+  weight: ['100', '400', '500', '700'],
+  subsets: ['latin'],
+  variable: '--font-ibm',
+});
 
 /**
  * SVGR Support
@@ -20,49 +29,33 @@ import HomeHero from '@/components/home/HomeHero';
 // Before you begin editing, follow all comments with `STARTERCONF`,
 // to customize the default configuration.
 
-export default function HomePage() {
+export default async function HomePage() {
+
+  // const { data: session } = useSession()
+  // const router = useRouter()
+
+  // if (session) {
+  //   router.replace('/dashboard')
+  //   return null
+  // }
+  const session = await getServerSession(authOptions);
+
+  if (!session) {
+    redirect('/api/auth/signin');
+  }
+
+  if (session) {
+    redirect('/dashboard');
+  }
+
   return (
-    <main>
+    <main className={`${IBMPlexSansThai.variable}`}>
       <Head>
-        <title>Hi</title>
+        <title>Login Page</title>
+
       </Head>
-      <section className=''>
-        <div className='w-full'>
-          {/* <Logo className='w-16' /> */}
-
-          <HomeHero />
-          <HomeGallery />
-
-          <p className='mt-2 text-sm text-gray-700'>
-            <ArrowLink href='https://github.com/theodorusclarence/ts-nextjs-tailwind-starter'>
-              See the repository
-            </ArrowLink>
-          </p>
-
-          {/* <ButtonLink className='mt-6' href='/components' variant='light'>
-            See all components
-          </ButtonLink> */}
-
-          <UnstyledLink
-            href='https://vercel.com/new/git/external?repository-url=https%3A%2F%2Fgithub.com%2Ftheodorusclarence%2Fts-nextjs-tailwind-starter'
-            className='mt-4'
-          >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              width='92'
-              height='32'
-              src='https://vercel.com/button'
-              alt='Deploy with Vercel'
-            />
-          </UnstyledLink>
-
-          {/* <footer className='absolute bottom-2 text-gray-700'>
-            © {new Date().getFullYear()} By{' '}
-            <UnderlineLink href='https://theodorusclarence.com?ref=tsnextstarter'>
-              Theodorus Clarence
-            </UnderlineLink>
-          </footer> */}
-        </div>
+      <section>
+        <h1>Login Page</h1>
       </section>
     </main>
   );

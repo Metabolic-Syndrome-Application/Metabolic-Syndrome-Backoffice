@@ -5,7 +5,6 @@ const CardInfo = () => {
   return (
     <div>
       <h3 className='text-gray-500'>ข้อมูลส่วนตัว</h3>
-
     </div>
   )
 }

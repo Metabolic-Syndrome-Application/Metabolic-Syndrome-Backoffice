@@ -1,3 +1,4 @@
+//Tabbes List
 export interface TabConfig {
   id: number;
   icon?: JSX.Element;
