@@ -1,3 +1,21 @@
+//Record Health
+export interface IPatientData {
+  id: string;
+  hn: string;
+  firstName: string;
+  lastName: string;
+  yearOfBirth: number;
+  gender: number;
+  status: string;
+  mainDoctorID: string;
+  mainDoctor: {
+    prefix: string;
+    firstName: string;
+    lastName: string;
+  };
+}
+
+// ------------------------------------------- //
 //Selected Type Record Health
 export enum HealthRecordType {
   BMI = 'BMI',

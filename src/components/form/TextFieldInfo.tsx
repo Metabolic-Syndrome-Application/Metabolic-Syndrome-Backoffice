@@ -39,9 +39,7 @@ export const TextFieldInfo: React.FC<TextFieldInfoProps> = ({
       label={label}
       value={text}
       className={`${className}`}
-      // isSelected={`${isSelected}`}
       isSelected={isSelected} // Convert isSelected to a boolean value
-
     // InputProps={{
     //   readOnly: true,
     // }}

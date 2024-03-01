@@ -1,19 +1,17 @@
 'use client';
 import { useSession } from 'next-auth/react';
 import React, { useCallback, useEffect, useState } from 'react';
-import { FiEdit } from 'react-icons/fi';
+import { useDispatch, useSelector } from 'react-redux';
 
 import useAxiosAuth from '@/hooks/useAxiosAuth';
 
 import { BackButton } from '@/components/tabbed/BackButton';
 
 import { CardQuiz } from '@/app/challenge/components/cards/CardQuiz';
-import { API_PATH } from '@/config/api';
+import EditQuiz from '@/app/challenge/quiz/components/create-quiz/EditQuiz';
+import { fetchQuizById, selectQuizById } from '@/redux/slices/quizsSlice';
 
 import { IQuizChallengeData } from '@/types/challenge';
-import EditQuiz from '@/app/challenge/quiz/components/create-quiz/EditQuiz';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchQuizById, selectQuizById } from '@/redux/slices/quizsSlice';
 
 
 const QuizDetailPage = ({ params }: { params: { id: string } }) => {
@@ -60,7 +58,7 @@ const QuizDetailPage = ({ params }: { params: { id: string } }) => {
     <div>
       <BackButton />
 
-      <div className='shadow-light-shadow flex flex-col rounded-xl container mx-auto'>
+      <div className='bg-white shadow-light-shadow flex flex-col rounded-xl container mx-auto'>
 
         <EditQuiz params={{ id }} loadData={loadQuizs} />
 

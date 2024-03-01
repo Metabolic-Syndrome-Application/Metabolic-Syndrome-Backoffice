@@ -2,7 +2,8 @@
 
 import { getGridDateOperators, GridColDef, GridColumnGroupingModel, GridRenderCellParams, GridValueGetterParams } from '@mui/x-data-grid';
 import { useSession } from 'next-auth/react';
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
 
 import useAxiosAuth from '@/hooks/useAxiosAuth';
 
@@ -11,10 +12,7 @@ import BaseTable from '@/components/table/BaseTable';
 
 import { convertDateFormat } from '@/helpers/date';
 import { getRecordBy } from '@/helpers/status';
-
-import CreateRecordHealth from '@/app/patient/record/health-record/health-record-table/CreateRecordHealth';
-import { fetchRecordAllById, selectAllrecords } from '@/redux/slices/recordHealthsSlice';
-import { useDispatch, useSelector } from 'react-redux';
+import { selectAllrecords } from '@/redux/slices/recordHealthsSlice';
 
 const RecordHealthTable = ({ params, fetchRecordApi }: { params: { id: string }, fetchRecordApi: (id: string) => void }) => {
   const { data: session } = useSession();
@@ -45,10 +43,10 @@ const RecordHealthTable = ({ params, fetchRecordApi }: { params: { id: string },
   //     // dispatch(fetchRecordById(id));
   //   }
   // }, []);
+
   useEffect(() => {
     if (session) {
       loadRecords();
-
     }
   }, []);
 
@@ -271,16 +269,14 @@ const RecordHealthTable = ({ params, fetchRecordApi }: { params: { id: string },
   ];
 
   return (
-    <div className=''>
-      <div className='w-full md:max-w-screen-lg lg:max-w-full 2xl:max-w-full'>
-        <BaseTable
-          rows={record}
-          columns={columns}
-          // loading={!!userData.length}
-          loading={undefined}
-          columnGroupingModel={columnGroupingModel}
-        />
-      </div>
+    <div className='w-full md:max-w-screen-lg lg:max-w-full 2xl:max-w-full'>
+      <BaseTable
+        rows={record}
+        columns={columns}
+        loading={!!record.length}
+        columnGroupingModel={columnGroupingModel}
+      />
+
     </div>
 
 

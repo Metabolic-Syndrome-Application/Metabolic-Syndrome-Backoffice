@@ -1,15 +1,13 @@
 'use client';
 import { useSession } from 'next-auth/react';
-import React, { useCallback, useEffect, useState } from 'react';
-import { FiEdit } from 'react-icons/fi';
-
+import React, { useCallback, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { BackButton } from '@/components/tabbed/BackButton';
 
-import { useDispatch, useSelector } from 'react-redux';
 import { CardDailyChallenge } from '@/app/challenge/daily/components/cards/CardDailyChallenge';
-import { fetchDailyChallengeById, selectDailyChallengeById } from '@/redux/slices/dailyChallengesSlice';
 import EditDailyChallenge from '@/app/challenge/daily/components/create-daily-challenge/EditDailyChallenge';
+import { fetchDailyChallengeById, selectDailyChallengeById } from '@/redux/slices/dailyChallengesSlice';
 
 
 const DailyDetailChallengePage = ({ params }: { params: { id: string } }) => {
@@ -43,7 +41,7 @@ const DailyDetailChallengePage = ({ params }: { params: { id: string } }) => {
     <div>
       <BackButton />
 
-      <div className='shadow-light-shadow rounded-xl container mx-auto'>
+      <div className='bg-white shadow-light-shadow rounded-xl container mx-auto'>
 
         {/* <div className='flex px-8 pt-4 justify-end'>
           <FiEdit

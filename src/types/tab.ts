@@ -11,6 +11,7 @@ export interface TabbedListProps {
   listClassName?: string;
   panelClassName?: string;
   allPanelClassName?: string;
+  btnClassName?: string;
 }
 
 export interface TabPanelProps {

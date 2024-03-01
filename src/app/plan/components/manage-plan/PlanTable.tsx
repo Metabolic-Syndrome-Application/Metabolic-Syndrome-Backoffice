@@ -57,10 +57,10 @@ const PlanTable = () => {
   useEffect(() => {
     if (session && session.user) {
       // If session exists, load users
-      dispatch(fetchAllPlans());
+      loadPlans()
     }
     // eslint-dis able-next-line react-hooks/exhaustive-deps
-  }, [session]);
+  }, []);
 
   const columns: GridColDef[] = [
     {

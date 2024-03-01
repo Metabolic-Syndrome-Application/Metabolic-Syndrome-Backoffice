@@ -1,4 +1,4 @@
-import { IBM_Plex_Sans_Thai } from '@next/font/google';
+import { IBM_Plex_Sans_Thai } from "next/font/google";
 import Head from 'next/head';
 import { redirect } from 'next/navigation';
 import { getServerSession } from 'next-auth/next';

@@ -5,6 +5,7 @@ interface CardInputProps {
   children: React.ReactNode;
 }
 
+//Create Record Health จดบันทึกค่าสุขภาพ
 export const CardInputRecord: React.FC<CardInputProps> = ({ name, children }) => {
   return (
     <div key='id' className='flex flex-col p-4 border border-light-gray gap-4 rounded-lg'>

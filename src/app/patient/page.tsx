@@ -1,13 +1,11 @@
 'use client';
 
-import { redirect } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import React from 'react';
 
 import { IconFlatButton } from '@/components/buttons/IconFlatButton';
 
 import PatientTable from '@/app/patient/components/manage-patient-table/PatientTable';
-import TestCreatePatient from '@/components/form/TestCreatePatient';
 
 const PatientPage = () => {
   const { data: session } = useSession({
