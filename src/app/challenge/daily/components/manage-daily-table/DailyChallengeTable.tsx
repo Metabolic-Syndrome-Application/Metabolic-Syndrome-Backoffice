@@ -1,22 +1,18 @@
 "use client"
-import { Box, Collapse, IconButton, useMediaQuery, useTheme } from "@mui/material";
-import { GridColDef, GridRenderCellParams, GridValueGetterParams } from "@mui/x-data-grid";
+import { useMediaQuery, useTheme } from "@mui/material";
+import { GridColDef, GridValueGetterParams } from "@mui/x-data-grid";
 import { useSession } from "next-auth/react";
-import React, { useEffect, useState } from "react";
-import { IoIosArrowUp } from "react-icons/io";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
-import useAxiosAuth from "@/hooks/useAxiosAuth";
-
+import ColorButton from "@/components/buttons/ColorButton";
+import DeleteButton from "@/components/buttons/delete-button";
 import ViewButton from "@/components/buttons/ViewButton";
 import BaseTable from "@/components/table/BaseTable";
 
-import { useDispatch, useSelector } from "react-redux";
-import DeleteButton from "@/components/buttons/delete-button";
-import { fetchAllDailyChallenge, selectAllDailyChallenge } from "@/redux/slices/dailyChallengesSlice";
-import ColorButton from "@/components/buttons/ColorButton";
-import { getStatusChallengeColor } from "@/helpers/status";
 import { API_PATH } from "@/config/api";
-import EditDailyChallenge from "@/app/challenge/daily/components/create-daily-challenge/EditDailyChallenge";
+import { getStatusChallengeColor } from "@/helpers/status";
+import { fetchAllDailyChallenge, selectAllDailyChallenge } from "@/redux/slices/dailyChallengesSlice";
 
 
 const DailyChallengeTable = () => {
@@ -26,14 +22,12 @@ const DailyChallengeTable = () => {
   const dispatch = useDispatch<any>();
 
   const daily = useSelector(selectAllDailyChallenge);
-  console.log('Daily Plan:', daily);
+  //console.log('Daily Plan:', daily);
 
 
   // width column styles
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-
-
 
   const loadDailyChallenge = async () => {
     try {

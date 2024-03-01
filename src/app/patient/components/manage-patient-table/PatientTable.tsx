@@ -1,21 +1,21 @@
 import { GridCellParams, GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
-import axios from 'axios';
 import { useSession } from 'next-auth/react';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import useAxiosAuth from '@/hooks/useAxiosAuth';
 
 import ColorButton from '@/components/buttons/ColorButton';
+import DeleteButton from '@/components/buttons/delete-button';
 import ViewButton from '@/components/buttons/ViewButton';
 import BaseTable from '@/components/table/BaseTable';
 
+import { API_PATH } from '@/config/api';
+import { addIndexUser } from '@/helpers/number';
 import { getStatusPatientColor } from '@/helpers/status';
 import { fetchAllUsers, getUsers, selectAllUsers } from '@/redux/slices/usersSlice';
+
 import { IGetProfileAllApi } from '@/types/user';
-import { addIndexUser } from '@/helpers/number';
-import { API_PATH } from '@/config/api';
-import DeleteButton from '@/components/buttons/delete-button';
 
 const ManagePatientTable = () => {
   const { data: session } = useSession();

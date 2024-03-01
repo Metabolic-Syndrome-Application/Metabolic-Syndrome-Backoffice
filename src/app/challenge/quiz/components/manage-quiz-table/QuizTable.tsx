@@ -4,19 +4,18 @@ import { GridColDef, GridRenderCellParams, GridValueGetterParams } from "@mui/x-
 import { useSession } from "next-auth/react";
 import React, { useCallback, useEffect, useState } from "react";
 import { IoIosArrowUp } from "react-icons/io";
+import { useDispatch, useSelector } from "react-redux";
 
 import useAxiosAuth from "@/hooks/useAxiosAuth";
 
+import DeleteButton from "@/components/buttons/delete-button";
 import ViewButton from "@/components/buttons/ViewButton";
 import BaseTable from "@/components/table/BaseTable";
 
 import { API_PATH } from "@/config/api";
-import { addIndexQuiz } from "@/helpers/number";
-
-import { IChoicesQuiz, IGetQuizAllApi, IQuizChallengeData } from "@/types/challenge";
 import { fetchAllQuizs, selectAllQuizs } from "@/redux/slices/quizsSlice";
-import { useDispatch, useSelector } from "react-redux";
-import DeleteButton from "@/components/buttons/delete-button";
+
+import { IChoicesQuiz, IQuizChallengeData } from "@/types/challenge";
 
 const detailExpandStyles = {
   mt: 1,
@@ -54,16 +53,25 @@ const QuizTable = () => {
       console.log('error', error);
     }
   };
-  const fetchAllQuiz = async () => {
+  //not used ใช้ redux แทน
+  // const fetchAllQuiz = async () => {
+  //   try {
+  //     const {
+  //       data: { data },
+  //     } = await axiosAuth.get<IGetQuizAllApi>(API_PATH.GET_QUIZ_ALL);
+  //     // console.log('Get All quiz', data);
+
+  //     const quizWithIndex = addIndexQuiz(data.quiz);
+  //     setQuizData(quizWithIndex);
+
+  //   } catch (error) {
+  //     console.log('error', error);
+  //   }
+  // };
+
+  const loadQuizAll = async () => {
     try {
-      const {
-        data: { data },
-      } = await axiosAuth.get<IGetQuizAllApi>(API_PATH.GET_QUIZ_ALL);
-      console.log('Get All quiz', data);
-
-      const quizWithIndex = addIndexQuiz(data.quiz);
-      setQuizData(quizWithIndex);
-
+      dispatch(fetchAllQuizs());
     } catch (error) {
       console.log('error', error);
     }
@@ -98,8 +106,8 @@ const QuizTable = () => {
   useEffect(() => {
     if (session && session.user) {
       // If session exists, load users
-      // dispatch(fetchAllQuizs());
-      fetchAllQuiz()
+      loadQuizAll()
+
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

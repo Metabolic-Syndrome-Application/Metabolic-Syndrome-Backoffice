@@ -1,14 +1,14 @@
 'use client';
 
+import { useSession } from 'next-auth/react';
 import { useCallback, useEffect, useState } from 'react';
+
+import useAxiosAuth from '@/hooks/useAxiosAuth';
 
 import { BackButton } from '@/components/tabbed/BackButton';
 
 import { MainPatientTabs } from '@/app/patient/components/tabs';
-import { fetchUser } from '@/redux/slices/profileSlice';
 import { API_PATH } from '@/config/api';
-import useAxiosAuth from '@/hooks/useAxiosAuth';
-import { useSession } from 'next-auth/react';
 
 const RecordPage = ({ params }: { params: { id: string } }) => {
   const { data: session } = useSession();
@@ -45,17 +45,10 @@ const RecordPage = ({ params }: { params: { id: string } }) => {
     <div>
       <div className='flex'>
         <BackButton />
-        <h1>Record Page</h1>
+        <h1>สมุดบันทึกคนไข้</h1>
       </div>
       <MainPatientTabs id={id} />
-      <button onClick={fetchUser} className='bg-blue-50'>
-        Get all user
-      </button>
 
-      <button onClick={() => setUserData(null)} className='bg-blue-50'>
-        Clear Users
-      </button>
-      {userData && JSON.stringify(userData)}
     </div>
   );
 };

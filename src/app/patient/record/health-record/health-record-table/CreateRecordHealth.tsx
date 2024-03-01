@@ -3,12 +3,16 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useSnackbar } from 'notistack';
 import { useEffect, useMemo, useState } from 'react';
+import React from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { MdOutlineCreateNewFolder } from 'react-icons/md';
+import { useDispatch, useSelector } from 'react-redux';
 
 import useAxiosAuth from '@/hooks/useAxiosAuth';
+import useModal from '@/hooks/useModal';
 
 import ActionButton from '@/components/buttons/ActionButton';
+import { IconFlatButton } from '@/components/buttons/IconFlatButton';
 import FormHeaderText from '@/components/form/FormHeaderText';
 import { InputText } from '@/components/form/InputText';
 import { MultiselectCheckbox } from '@/components/form/MultiselectCheckbox';
@@ -17,15 +21,12 @@ import {
   createRecordHealthValues,
 } from '@/components/form/validation/PatientValidator'; // Import the combined schema
 
-import { API_PATH } from '@/config/api';
 import { CardInputRecord } from '@/app/patient/components/cards/CardInputRecord';
+import { API_PATH } from '@/config/api';
 import { iconTypeHealth, labelTypeHealth } from '@/helpers/typeIcon';
-import { IconFlatButton } from '@/components/buttons/IconFlatButton';
 import { fetchRecordAllById, selectRecordById } from '@/redux/slices/recordHealthsSlice';
-import { useDispatch, useSelector } from 'react-redux';
+
 import { HealthRecordType } from '@/types/patient';
-import useModal from '@/hooks/useModal';
-import React from 'react';
 
 
 const CreateRecordHealth = ({ params }: { params: { id: string } }) => {
@@ -146,7 +147,7 @@ const CreateRecordHealth = ({ params }: { params: { id: string } }) => {
   return (
     <div className='w-full'>
       <article className='flex w-full items-center justify-between px-4 py-2'>
-        <h1 className='text-balance'>จดบันทึกค่าสุขภาพ</h1>
+        <h2 className='text-balance'>ข้อมูลสุขภาพที่จดบันทึก</h2>
         <IconFlatButton title='จดบันทึกค่าสุขภาพ' onClick={openModal} />
       </article>
 

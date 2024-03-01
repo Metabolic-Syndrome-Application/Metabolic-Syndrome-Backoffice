@@ -1,5 +1,5 @@
-import { IBM_Plex_Sans_Thai } from '@next/font/google';
 import { Metadata } from 'next';
+import { IBM_Plex_Sans_Thai } from "next/font/google";
 import * as React from 'react';
 import { Suspense } from 'react';
 
@@ -20,7 +20,6 @@ const IBMPlexSansThai = IBM_Plex_Sans_Thai({
   variable: '--font-ibm',
 });
 
-//const inter = Inter({ subsets: ['latin'] })
 export const metadata: Metadata = {
   title: {
     default: siteConfig.title,
@@ -74,7 +73,6 @@ export default async function RootLayout({
     <html
       lang='en'
       className={`${IBMPlexSansThai.variable}`}
-      //className={inter.className}
       suppressHydrationWarning={true}
     >
       <body>

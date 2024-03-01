@@ -11,6 +11,7 @@ export const TabbedList = ({
   listClassName,
   panelClassName,
   allPanelClassName,
+  btnClassName
 }: TabbedListProps) => {
   const { tab, handleChange } = useTabbed();
 
@@ -19,7 +20,7 @@ export const TabbedList = ({
       <Tab.Group selectedIndex={tab} onChange={handleChange}>
         <Tab.List
           className={cn(
-            'flex w-full max-w-xl gap-2 rounded-xl bg-white p-1',
+            'flex w-full max-w-xl gap-2 bg-white p-1',
             listClassName
           )}
         >
@@ -36,9 +37,13 @@ export const TabbedList = ({
                 )
               }
             >
-              <div className='flex w-full items-center justify-start'>
-                {data.icon && <div className='flex p-1.5'>{data.icon}</div>}
-                <div className='ml-2'>{data.name}</div>
+              <div
+                className={cn(
+                  'flex w-full items-center text-center space-x-2',
+                  btnClassName
+                )}>
+                {data.icon && <div className='flex p-1.5 text-center'>{data.icon}</div>}
+                <div className='font-medium'>{data.name}</div>
               </div>
             </Tab>
           ))}
@@ -55,6 +60,6 @@ export const TabbedList = ({
           ))}
         </Tab.Panels>
       </Tab.Group>
-    </div>
+    </div >
   );
 };

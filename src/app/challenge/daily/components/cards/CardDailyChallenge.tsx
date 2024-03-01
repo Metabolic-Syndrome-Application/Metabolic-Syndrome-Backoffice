@@ -1,17 +1,17 @@
 'use client';
 import parse from 'html-react-parser'; // Import the parse function
+import Image from 'next/image';
 import React, { useState } from 'react';
+import { IoMdTime } from 'react-icons/io';
+import { TbCoin } from 'react-icons/tb';
 
-import OutlineButton from '@/components/buttons/OutlineButton';
-import UploadImageDisplay from '@/components/form/components/UploadImageDisplay';
+import ColorButton from '@/components/buttons/ColorButton';
 import ToggleDays from '@/components/form/crons/DayOfWeek';
 import { TextFieldInfo } from '@/components/form/TextFieldInfo';
 
-import { IDailyChallengeData } from '@/types/challenge';
 import { getStatusChallengeColor } from '@/helpers/status';
-import ColorButton from '@/components/buttons/ColorButton';
-import { SwitchToggle } from '@/components/buttons/SwitchToggle';
 
+import { IDailyChallengeData } from '@/types/challenge';
 
 export const CardDailyChallenge = ({
   name,
@@ -32,26 +32,47 @@ export const CardDailyChallenge = ({
 
   return (
     <div className=''>
-
       <div className='flex w-full flex-col p-6 md:flex-row md:gap-8 min-h-[650px]'>
         <div className='flex w-full flex-col gap-4 md:w-3/5'>
-          <UploadImageDisplay></UploadImageDisplay>
+          {/* <UploadImageDisplay></UploadImageDisplay> */}
+          <div className='flex items-center justify-center '>
+            <div className='flex items-center justify-center w-[200px]'>
+              <Image
+                alt="The guitarist in the concert."
+                src='/assets/images/challenge.png'
+                width={550}
+                height={550}
+                layout="responsive"
+              />
+            </div>
+          </div>
+
+
           <div>{photo}</div>
 
           <div className='flex w-full flex-wrap items-center justify-between gap-2'>
             <h4 className='max-w-[280px] whitespace-pre-line text-wrap font-semibold leading-normal tracking-wide'>
               {name}
             </h4>
-            <p>{points}</p>
-            <p>{numDays}</p>
 
-            {/* Display status color and text in ColorButton */}
+            {/* Display status color & text */}
             <ColorButton variant={getStatusChallengeColor(status)?.color} size='sm'>
               {getStatusChallengeColor(status)?.text}
             </ColorButton>
-
-
           </div>
+          <div className='flex flex-col items-start gap-3'>
+            <div className='flex items-center justify-center gap-1 md:gap-2 text-dark-gray'>
+              <TbCoin className='w-4 h-4' />
+              <p className='text-sm md:text-base text-center'>{points} คะแนน</p>
+            </div>
+
+            <div className='flex items-center justify-center gap-1 md:gap-2 text-dark-gray'>
+              <IoMdTime className='w-4 h-4 text-center' />
+              <p className='text-sm md:text-base text-center'>{numDays} วัน</p>
+            </div>
+          </div>
+
+
 
           <h5 className='font-medium'>รายละเอียด</h5>
           <div className='ProseMirror ProseMirror hr textEditor border-none'>

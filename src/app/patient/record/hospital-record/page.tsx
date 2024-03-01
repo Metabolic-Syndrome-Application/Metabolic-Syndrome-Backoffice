@@ -11,22 +11,15 @@ const HospitalRecordPage = ({ id }: { id: string }) => {
 
   const dispatch = useDispatch<any>();
 
-  const fetchHospitalRecord = (id: string) => {
+  //ข้อมูลสุขภาพที่หมอบันทึกอย่างเดียว
+  const fetchHospitalHealthRecord = (id: string) => {
     dispatch(fetchRecordHospitalById(id));
   };
 
   return (
     <div className='w-full'>
-
-
-      <article className='flex w-full items-center justify-between px-4 py-2'>
-        <h1 className='text-balance'>ข้อมูลสุขภาพ</h1>
-        <CreateRecordHealth params={{ id }} />
-      </article>
-      <h1>Health Record Page for ID: {id}</h1>
-      <RecordHealthTable params={{ id }} fetchRecordApi={fetchHospitalRecord} />
-
-
+      <CreateRecordHealth params={{ id }} />
+      <RecordHealthTable params={{ id }} fetchRecordApi={fetchHospitalHealthRecord} />
     </div>
   );
 };

@@ -1,16 +1,15 @@
 'use client';
 import parse from 'html-react-parser'; // Import the parse function
+import Image from 'next/image'
 import React, { useState } from 'react';
 
 import OutlineButton from '@/components/buttons/OutlineButton';
-import UploadImageDisplay from '@/components/form/components/UploadImageDisplay';
 import ToggleDays from '@/components/form/crons/DayOfWeek';
 import { TextFieldInfo } from '@/components/form/TextFieldInfo';
 
 import { iconTypeMapping, TypePlan } from '@/helpers/typeIcon';
 
 import { IPlanData } from '@/types/plan';
-import Image from 'next/image'
 
 export const CardPlan = ({
   name,

@@ -4,11 +4,8 @@ import { axiosAuth } from '@/lib/axios';
 
 import { API_PATH } from '@/config/api';
 import { addIndexRecord } from '@/helpers/number';
-import {
-  IGetRecordHealthAll,
-  IGetRecordHealthIdApi,
-  IRecordHealthData,
-} from '@/types/patient';
+
+import { IGetRecordHealthAll, IRecordHealthData } from '@/types/patient';
 
 interface recordState {
   record: IRecordHealthData[];
@@ -86,7 +83,7 @@ const recordsSlice = createSlice({
         state.status = 'succeeded';
         state.record = action.payload || [];
 
-        console.log('usersWithIndex', action.payload);
+        // console.log('usersWithIndex', action.payload);
       })
       .addCase(fetchRecordAllById.rejected, (state) => {
         state.status = 'failed';
@@ -98,8 +95,6 @@ const recordsSlice = createSlice({
       .addCase(fetchRecordHospitalById.fulfilled, (state, action) => {
         state.status = 'succeeded';
         state.record = action.payload || [];
-
-        console.log('usersWithIndex', action.payload);
       })
       .addCase(fetchRecordHospitalById.rejected, (state) => {
         state.status = 'failed';

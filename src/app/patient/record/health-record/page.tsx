@@ -1,30 +1,27 @@
 'use client';
 import React from 'react';
+import { useDispatch } from 'react-redux';
 
 import RecordHealthTable from '@/app/patient/record/health-record/health-record-table/RecordHealthTable';
-import { fetchRecordAllById, fetchRecordHospitalById } from '@/redux/slices/recordHealthsSlice';
-import { useDispatch } from 'react-redux';
-import CreateRecordHealth from '@/app/patient/record/health-record/health-record-table/CreateRecordHealth';
+import { fetchRecordAllById } from '@/redux/slices/recordHealthsSlice';
 
 
 const HealthRecordPage = ({ id }: { id: string }) => {
 
   const dispatch = useDispatch<any>();
 
-  const fetchHospitalRecord = (id: string) => {
-    dispatch(fetchRecordHospitalById(id));
+  //ข้อมูลสุขภาพจากแอปพลิเคชัน
+  const fetchHealthRecord = (id: string) => {
+    dispatch(fetchRecordAllById(id));
   };
 
   return (
     <div className='w-full'>
-
-
       <article className='flex w-full items-center justify-between px-4 py-2'>
-        <h1 className='text-balance'>ข้อมูลสุขภาพ</h1>
-        <CreateRecordHealth params={{ id }} />
+        <h2 className='text-balance'>ข้อมูลสุขภาพของคนไข้</h2>
       </article>
-      <h1>Health Record Page for ID: {id}</h1>
-      <RecordHealthTable params={{ id }} fetchRecordApi={fetchHospitalRecord} />
+
+      <RecordHealthTable params={{ id }} fetchRecordApi={fetchHealthRecord} />
 
 
     </div>

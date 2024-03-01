@@ -6,11 +6,11 @@ import useAxiosAuth from '@/hooks/useAxiosAuth';
 
 import { BackButton } from '@/components/tabbed/BackButton';
 
+import { CardPlan } from '@/app/plan/components/cards/CardPlan';
+import EditPlan from '@/app/plan/components/manage-plan/EditPlan';
 import { API_PATH } from '@/config/api';
 
 import { IPlanData } from '@/types/plan';
-import EditPlan from '@/app/plan/components/manage-plan/EditPlan';
-import { CardPlan } from '@/app/plan/components/cards/CardPlan';
 
 
 const ViewPlanPage = ({ params }: { params: { id: string } }) => {
@@ -46,8 +46,7 @@ const ViewPlanPage = ({ params }: { params: { id: string } }) => {
       <div className='shadow-light-shadow bg-white rounded-xl container mx-auto'>
 
         <EditPlan params={{ id }} loadData={fetchPlan} />
-        {/* 
-wait refresh page */}
+        {/* wait refresh page */}
         {userData && (
           <CardPlan
             id={userData.id}
