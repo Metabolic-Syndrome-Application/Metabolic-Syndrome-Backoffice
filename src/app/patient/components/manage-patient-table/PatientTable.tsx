@@ -11,6 +11,7 @@ import ViewButton from '@/components/buttons/ViewButton';
 import BaseTable from '@/components/table/BaseTable';
 
 import { API_PATH } from '@/config/api';
+import { calculateAgeThaiBuddhist } from '@/helpers/date';
 import { addIndexUser } from '@/helpers/number';
 import { getStatusPatientColor } from '@/helpers/status';
 import { fetchAllUsers, getUsers, selectAllUsers } from '@/redux/slices/usersSlice';
@@ -109,7 +110,13 @@ const ManagePatientTable = () => {
       field: 'yearOfBirth',
       // width: 120,
       renderHeader: () => <h5 className='font-medium'>อายุ</h5>,
-      valueGetter: (params: GridValueGetterParams) => `${params.row.yearOfBirth || ''}`,
+      valueGetter: (params: GridValueGetterParams) => {
+        const yearOfBirth = params.row.yearOfBirth;
+        if (!yearOfBirth) {
+          return '-'; // Return '-' if yearOfBirth is null or empty string
+        }
+        return calculateAgeThaiBuddhist(yearOfBirth);
+      },
     },
     {
       field: 'status',

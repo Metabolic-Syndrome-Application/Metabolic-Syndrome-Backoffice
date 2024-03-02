@@ -107,6 +107,8 @@ const RecordHealthTable = ({ params, fetchRecordApi }: { params: { id: string },
   const columns: GridColDef[] = [
     {
       field: 'index',
+      headerAlign: 'center',
+      align: 'center',
       renderHeader: () => <h5 className='font-medium'>ลำดับที่</h5>,
       renderCell: (params: GridRenderCellParams) => renderCellWithColor(params, 'id'),
       valueGetter: (params: GridValueGetterParams) =>
@@ -115,6 +117,8 @@ const RecordHealthTable = ({ params, fetchRecordApi }: { params: { id: string },
     {
       field: 'timestamp',
       width: 200,
+      headerAlign: 'center',
+      align: 'center',
       renderHeader: () => <h5 className='font-medium'>วันและเวลาที่บันทึก</h5>,
       renderCell: (params: GridRenderCellParams) => renderCellWithColor(params, (params) => convertDateFormat(params.row.timestamp)),
       valueGetter: (params: GridValueGetterParams) => {

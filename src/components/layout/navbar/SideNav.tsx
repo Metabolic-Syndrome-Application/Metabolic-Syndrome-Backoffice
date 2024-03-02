@@ -3,14 +3,13 @@
 import { Icon } from '@iconify/react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { redirect, usePathname } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import React, { useState } from 'react';
 import { RxDoubleArrowLeft } from 'react-icons/rx';
 
 import { useSideNavbar } from '@/hooks/useSideNavbar';
 
 import { SideNavItem } from '@/types/navbar';
-import { useSession } from 'next-auth/react';
 
 type SideNavProps = {
   open: boolean;
