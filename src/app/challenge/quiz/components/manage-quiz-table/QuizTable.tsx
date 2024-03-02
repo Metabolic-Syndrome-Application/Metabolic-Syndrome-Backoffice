@@ -151,25 +151,28 @@ const QuizTable = () => {
       width: isMobile ? 250 : 400,
       renderHeader: () => <h5 className='font-medium'>ชื่อคำถาม</h5>,
       renderCell: (cellValues: GridRenderCellParams) => (
-        <Box>
-          {/* params.row.question */}
-          <div className="flex w-[250px] md:w-[400px] break-all pr-4">{cellValues.value}</div>
-          {/* expand row : see question & correct chouce */}
-          <Collapse in={expandedQuiz?.id === cellValues.row.id}>
-            <Box sx={detailExpandStyles}>
-              <span className="break-all">คำถาม : {cellValues.value}</span>
-              <br />
-              <span className="text-[#186EC8] break-all">
-                คำตอบ : {' '}
-                {expandedQuiz && expandedQuiz.choices ?
-                  expandedQuiz.choices
-                    .filter((choice: IChoicesQuiz) => choice.isCorrect) // Filter choices with isCorrect true
-                    .map((choice: IChoicesQuiz) => choice.option)
-                  : 'ไม่มีข้อถูก'}
-              </span>
-            </Box>
-          </Collapse>
-        </Box>
+        <div>
+          <Box>
+            {/* params.row.question */}
+            <div className="flex w-[250px] md:w-[400px] break-all pr-4">{cellValues.value}</div>
+            {/* expand row : see question & correct chouce */}
+            <Collapse in={expandedQuiz?.id === cellValues.row.id}>
+              <Box sx={detailExpandStyles}>
+                <span className="break-all">คำถาม : {cellValues.value}</span>
+                <br />
+                <span className="text-[#186EC8] break-all">
+                  คำตอบ : {' '}
+                  {expandedQuiz && expandedQuiz.choices ?
+                    expandedQuiz.choices
+                      .filter((choice: IChoicesQuiz) => choice.isCorrect) // Filter choices with isCorrect true
+                      .map((choice: IChoicesQuiz) => choice.option)
+                    : 'ไม่มีข้อถูก'}
+                </span>
+              </Box>
+            </Collapse>
+          </Box>
+        </div>
+
       ),
       valueGetter: (params: GridValueGetterParams) => `${params.row.question}`,
     },

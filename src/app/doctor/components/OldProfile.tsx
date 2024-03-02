@@ -1,3 +1,4 @@
+//not used
 import { Avatar } from '@mui/material';
 import { useSession } from 'next-auth/react';
 import React, { useEffect } from 'react';
@@ -9,11 +10,11 @@ import FormHeaderText from '@/components/form/FormHeaderText';
 import { TextFieldInfo } from '@/components/form/TextFieldInfo';
 import { stringAvatar } from '@/components/layout/navbar/Avatar';
 
-import EditProfile from '@/app/doctor/components/EditProfile';
 import Loading from '@/app/loading';
+import EditProfile from '@/app/staff/components/profile/EditProfile';
 import { fetchUser, selectUser } from '@/redux/slices/profileSlice';
 
-const Profile = () => {
+const OldProfile = () => {
   const { data: session, status } = useSession();
   const axiosAuth = useAxiosAuth();
   //const [userData, setUserData] = useState<IUserData | null>(null);
@@ -103,4 +104,4 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default OldProfile;

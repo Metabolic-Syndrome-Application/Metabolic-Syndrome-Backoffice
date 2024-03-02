@@ -8,7 +8,7 @@ export const API_PATH = {
   POST_REFRESH: '/api/auth/refresh',
 
   //Doctor & Staff
-  GET_PROFILE_ALL: '/api/user/profile/all',
+  GET_PROFILE_ALL: '/api/user/profile/all', //patient too
   PUT_PROFILE_OTHER: (role: string, id: string) =>
     `/api/user/profile/${role}/${id}`,
   DELETE_USER: (role: string, id: string) => `/api/user/profile/${role}/${id}`,
@@ -20,6 +20,7 @@ export const API_PATH = {
 
   //Patient
   GET_PROFILE_OTHER: (id: string) => `/api/user/profile/patient/${id}`,
+  PUT_PROFILE_PATIENT_OTHER: (id: string) => `/api/user/profile/patient/${id}`,
 
   //Patient : Record Health
   POST_RECORD_HEALTH: (id: string) => `/api/record/health/${id}`,

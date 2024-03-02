@@ -4,7 +4,7 @@ import {
   GridValueGetterParams,
 } from '@mui/x-data-grid';
 import { useSession } from 'next-auth/react';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import useAxiosAuth from '@/hooks/useAxiosAuth';
@@ -15,8 +15,7 @@ import BaseTable from '@/components/table/BaseTable';
 import AdminEditProfile from '@/app/admin/components/AdminEditProfile';
 import { API_PATH } from '@/config/api';
 import { fetchAllUsers, selectAllUsers } from '@/redux/slices/usersSlice';
-import { IGetProfileAllApi, IUserData } from '@/types/user';
-import { addIndexUser } from '@/helpers/number';
+
 
 const ManageUserTable = () => {
   const { data: session } = useSession();

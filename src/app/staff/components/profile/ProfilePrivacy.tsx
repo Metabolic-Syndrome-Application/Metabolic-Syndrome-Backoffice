@@ -1,8 +1,9 @@
+import React from 'react';
+import { useForm } from 'react-hook-form';
+
 import ActionButton from '@/components/buttons/ActionButton';
 import FormHeaderText from '@/components/form/FormHeaderText';
 import { InputText } from '@/components/form/InputText';
-import React from 'react';
-import { useForm } from 'react-hook-form';
 
 const ProfilePrivacy = () => {
 

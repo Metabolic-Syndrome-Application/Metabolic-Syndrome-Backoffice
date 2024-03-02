@@ -6,6 +6,7 @@ import React from 'react';
 import { IconFlatButton } from '@/components/buttons/IconFlatButton';
 
 import PatientTable from '@/app/patient/components/manage-patient-table/PatientTable';
+import CreatePatient from '@/app/patient/components/multi-step-form/register-patients/form-patient';
 
 const PatientPage = () => {
   const { data: session } = useSession({
@@ -27,8 +28,8 @@ const PatientPage = () => {
         <IconFlatButton
           title='เพิ่มข้อมูลคนไข้'
         />
-
       </article>
+      <CreatePatient></CreatePatient>
       {/* <TestCreatePatient></TestCreatePatient> */}
       <PatientTable />
     </div>

@@ -14,7 +14,7 @@ export type FormInputProps = {
 export interface FormOptionProps extends FormInputProps {
   options: {
     label: string;
-    value: string;
+    value: string | number;
   }[];
 }
 

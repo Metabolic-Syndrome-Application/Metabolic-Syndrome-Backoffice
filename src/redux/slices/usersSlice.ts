@@ -2,9 +2,8 @@ import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { axiosAuth } from '@/lib/axios';
 
-import { addIndex, addIndexUser } from '@/helpers/number';
-
 import { API_PATH } from '@/config/api';
+import { addIndex } from '@/helpers/number';
 
 import { IGetProfileAllApi, IUserData } from '@/types/user';
 

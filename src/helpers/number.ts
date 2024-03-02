@@ -1,5 +1,5 @@
 import { IDailyChallengeData, IQuizChallengeData } from '@/types/challenge';
-import { IRecordHealthData } from '@/types/patient';
+import { IPatientData, IRecordHealthData } from '@/types/patient';
 import { IPlanData } from '@/types/plan';
 import { IUserData } from '@/types/user';
 
@@ -25,4 +25,8 @@ export const addIndexDailyChallenge = (daily: IDailyChallengeData[] = []) =>
 
 //Add Index Record Patient
 export const addIndexRecord = (record: IRecordHealthData[] = []) =>
-  record.map((record, index) => ({ ...record, id: `${index + 1}` }));
+  record.map((record, index) => ({ ...record, index: `${index + 1}` }));
+
+//Add Index Patient
+export const addIndexPatient = (users: IPatientData[] = []) =>
+  users.map((users, index) => ({ ...users, index: `${index + 1}` }));

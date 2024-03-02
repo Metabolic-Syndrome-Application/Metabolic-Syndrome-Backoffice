@@ -88,6 +88,7 @@ const dataOptions = {
     { id: 1, label: 'ชาย', value: 'male' },
     { id: 2, label: 'หญิง', value: 'female' },
   ],
+  patientOption: [{ id: 1, label: 'คนไข้', value: 'patient' }],
 };
 
 const yearOptions = generateBirthYear();

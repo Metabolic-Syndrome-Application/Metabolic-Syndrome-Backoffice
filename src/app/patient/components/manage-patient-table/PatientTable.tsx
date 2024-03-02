@@ -10,48 +10,30 @@ import DeleteButton from '@/components/buttons/delete-button';
 import ViewButton from '@/components/buttons/ViewButton';
 import BaseTable from '@/components/table/BaseTable';
 
-import { API_PATH } from '@/config/api';
 import { calculateAgeThaiBuddhist } from '@/helpers/date';
-import { addIndexUser } from '@/helpers/number';
 import { getStatusPatientColor } from '@/helpers/status';
-import { fetchAllUsers, getUsers, selectAllUsers } from '@/redux/slices/usersSlice';
+import { fetchAllDoctors, selectAllDoctors } from '@/redux/slices/doctorSlice';
+import { fetchAllPatients, selectAllPatients } from '@/redux/slices/patientsSlice';
 
-import { IGetProfileAllApi } from '@/types/user';
+
 
 const ManagePatientTable = () => {
   const { data: session } = useSession();
   const axiosAuth = useAxiosAuth();
 
-  const users = useSelector(selectAllUsers);
-  console.log('Patients:', users);
-
   const dispatch = useDispatch<any>();
 
-  // const [users, setUsers] = useState([]);
-  // const fetchUsers = async () => {
-  //   try {
-  //     const response = await axios.get(
-  //       'https://jsonplaceholder.typicode.com/posts'
-  //     );
-  //     console.log('data', response.data);
+  const patients = useSelector(selectAllPatients);
+  console.log('Patients:', patients);
 
-  //     setUsers(response.data);
-  //   } catch (error) {
-  //     console.log('error', error);
-  //   }
-  // };
-  const loadUsers = async () => {
+
+  const doctors = useSelector(selectAllDoctors);
+  console.log('Doctors:', doctors);
+
+  const loadPatients = async () => {
     try {
-      const {
-        data: { data },
-      } = await axiosAuth.get<IGetProfileAllApi>(API_PATH.GET_PROFILE_ALL);
-      //console.log('data', data);
-      const dataAddIndex = addIndexUser(data.users);
-
-      dispatch(getUsers(dataAddIndex));
+      dispatch(fetchAllPatients());
       //setUsers(dataAddIndex);
-
-      console.log('usersWithIndex', dataAddIndex);
     } catch (error) {
       console.log('error', error);
     }
@@ -59,12 +41,16 @@ const ManagePatientTable = () => {
 
   useEffect(() => {
     if (session && session.user) {
-      // If session exists, load users
-      //fetchUsers();
-      dispatch(fetchAllUsers());
+      // Dispatch actions to fetch patients and doctors
+      dispatch(fetchAllPatients());
+      dispatch(fetchAllDoctors());
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [session]);
+  }, [dispatch, session]);
+
+  const getDoctorById = (doctorId: string) => {
+    const doctor = doctors.find((doctor: { id: string; }) => doctor.id === doctorId);
+    return doctor;
+  };
 
   const columns: GridColDef[] = [
     {
@@ -135,11 +121,22 @@ const ManagePatientTable = () => {
         return text; // Return the Thai label as the field value
       },
     },
+    // {
+    //   field: 'mainDoctorID',
+    //   width: 225,
+    //   renderHeader: () => <h5 className='font-medium'>แพทย์ผู้รับผิดชอบหลัก</h5>,
+    //   valueGetter: (params: GridValueGetterParams) =>
+    //     `${params.row.mainDoctorID}`,
+    // },
     {
       field: 'mainDoctorID',
       width: 225,
       renderHeader: () => <h5 className='font-medium'>แพทย์ผู้รับผิดชอบหลัก</h5>,
-      valueGetter: (params: GridValueGetterParams) => `${'นายสมศักดิ์ คำดี'}`, //params.row.mainDoctorID || ''
+      valueGetter: (params: GridValueGetterParams) => {
+        const mainDoctorId = params.row.mainDoctorID;
+        const mainDoctor = getDoctorById(mainDoctorId);
+        return mainDoctor ? `${mainDoctor.prefix}${mainDoctor.firstName} ${mainDoctor.lastName}` : '-';
+      },
     },
     {
       field: 'Action',
@@ -149,13 +146,9 @@ const ManagePatientTable = () => {
         return (
           <div className='flex flex-row items-center space-x-4'>
             <ViewButton href={`/patient/record/${params.row.id}`} />
-            {/* <EditForm
-              loadData={loadUsers}
-              api={`http://localhost:8000/api/user/profile/${params.row.role}/${params.row.id}`}
-            /> */}
             <DeleteButton
-              loadData={loadUsers}
-              api={`/api/user/profile/${params.row.role}/${params.row.id}`}
+              loadData={loadPatients}
+              api={`/api/user/profile/patient/${params.row.id}`}
             />
           </div>
         );
@@ -165,7 +158,7 @@ const ManagePatientTable = () => {
 
   return (
     <div>
-      <BaseTable rows={users} columns={columns} loading={!!users.length} />
+      <BaseTable rows={patients.patients} columns={columns} loading={undefined} />
     </div>
   );
 };

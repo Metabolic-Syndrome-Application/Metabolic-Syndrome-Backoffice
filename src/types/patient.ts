@@ -1,30 +1,51 @@
-//Record Health
+//Get profile otherprofile
+
+import { IUserData } from '@/types/user';
+
+//http://localhost:8000/api/user/profile/patient/9c11398f-f3b9-4a8a-af76-b59a07cc59e1
 export interface IPatientData {
   id: string;
   hn: string;
   firstName: string;
   lastName: string;
   yearOfBirth: number;
-  gender: number;
+  gender: string;
   status: string;
   mainDoctorID: string;
-  mainDoctor: {
-    id: string;
-    prefix: string;
-    firstName: string;
-    lastName: string;
-  };
+  mainDoctor?: IUserData;
   assistanceDoctorID?: string;
-  assistanceDoctor?: {
-    id: string;
-    prefix: string;
-    firstName: string;
-    lastName: string;
-  };
+  assistanceDoctor?: IUserData;
   diseaseRisk?: IDiseaseRisk;
   disease?: string;
   planID?: string[];
   Plan?: IPlan[];
+}
+
+export interface IGetProfilePatientData {
+  id: string;
+  hn: string;
+  firstName: string;
+  lastName: string;
+  gender: string;
+  yearOfBirth: number;
+  status: string;
+  mainDoctorID: string;
+}
+
+//All Patient
+export interface IGetProfilePatientAllApi {
+  data: {
+    users: IGetProfilePatientData[];
+  };
+  status: string;
+}
+
+//Only Patient By ID
+export interface IGetProfilePatientIdApi {
+  data: {
+    user: IPatientData[];
+  };
+  status: string;
 }
 
 // ------------------------------------------- //
@@ -63,6 +84,7 @@ export interface IPlan {
   updatedAt: string;
 }
 
+// ------------------------------------------- //
 // ------------------------------------------- //
 //Selected Type Record Health
 export enum HealthRecordType {

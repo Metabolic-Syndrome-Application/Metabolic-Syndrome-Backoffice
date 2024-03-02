@@ -3,7 +3,7 @@
 import { useSession } from 'next-auth/react';
 import React from 'react';
 
-import AccountProfile from '@/app/doctor/components/AccountProfile';
+import Profile from '@/app/staff/components/profile/Profile';
 
 const DoctorPage = () => {
   // useLayoutEffect(() => {
@@ -29,8 +29,9 @@ const DoctorPage = () => {
 
   return (
     <div>
-      <span className='text-4xl font-bold'>ข้อมูลหมอ</span>
-      <AccountProfile></AccountProfile>
+      <span className='text-4xl font-bold'>ประวัติส่วนตัว</span>
+      <Profile />
+      {/* <AccountProfile></AccountProfile> */}
       {/* <ProfileTabs></ProfileTabs> */}
       {/* <div className='h-12 w-full rounded-lg border border-dashed border-zinc-500'></div>
       <div className='h-64 w-full rounded-lg border border-dashed border-zinc-500'></div> */}
