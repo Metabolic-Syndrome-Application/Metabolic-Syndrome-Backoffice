@@ -23,9 +23,9 @@ export const addIndexQuiz = (quiz: IQuizChallengeData[] = []) =>
 export const addIndexDailyChallenge = (daily: IDailyChallengeData[] = []) =>
   daily.map((daily, index) => ({ ...daily, index: index + 1 }));
 
-//Add Index Record Patient
+//Add Index for 'id' Record Patient
 export const addIndexRecord = (record: IRecordHealthData[] = []) =>
-  record.map((record, index) => ({ ...record, index: `${index + 1}` }));
+  record.map((record, index) => ({ ...record, id: `${index + 1}` }));
 
 //Add Index Patient
 export const addIndexPatient = (users: IPatientData[] = []) =>

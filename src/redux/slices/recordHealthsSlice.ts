@@ -31,7 +31,7 @@ export const fetchRecordAllById = createAsyncThunk(
       );
       const usersWithIndex = data.record ? addIndexRecord(data.record) : [];
 
-      // console.log('record redux', usersWithIndex);
+      console.log('record redux', usersWithIndex);
       return usersWithIndex;
     } catch (error) {
       console.log('Error fetching user data id:', error);
