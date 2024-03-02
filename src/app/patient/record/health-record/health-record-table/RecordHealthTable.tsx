@@ -36,13 +36,10 @@ const RecordHealthTable = ({ params, fetchRecordApi }: { params: { id: string },
     }
   }, [id])
 
-  // useEffect(() => {
-  //   if (session) {
-  //     //fetchUser();
-  //     loadRecords()
-  //     // dispatch(fetchRecordById(id));
-  //   }
-  // }, []);
+  const updatedRecord = record.map((row, index) => ({
+    ...row,
+    id: index + 1 // Generate unique id for each row
+  }));
 
   useEffect(() => {
     if (session) {
@@ -275,7 +272,7 @@ const RecordHealthTable = ({ params, fetchRecordApi }: { params: { id: string },
   return (
     <div className='w-full md:max-w-screen-lg lg:max-w-full 2xl:max-w-full'>
       <BaseTable
-        rows={record}
+        rows={updatedRecord}
         columns={columns}
         loading={!!record.length}
         columnGroupingModel={columnGroupingModel}

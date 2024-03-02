@@ -3,7 +3,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { axiosAuth } from '@/lib/axios';
 
 import { API_PATH } from '@/config/api';
-import { addIndex } from '@/helpers/number';
+import { addIndexUser } from '@/helpers/number';
 
 import { IGetProfileAllApi, IUserData } from '@/types/user';
 
@@ -28,7 +28,7 @@ export const fetchAllUsers = createAsyncThunk('fetchAllUsers', async () => {
 
     // Assuming response.data.users is an array of IUserData
     //const usersWithIndex = addIndex(data.users);
-    const usersWithIndex = data.users ? addIndex(data.users) : [];
+    const usersWithIndex = data.users ? addIndexUser(data.users) : [];
     console.log('users redux', usersWithIndex);
     return usersWithIndex;
   } catch (error) {
