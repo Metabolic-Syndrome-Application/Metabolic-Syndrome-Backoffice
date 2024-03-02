@@ -7,10 +7,13 @@ import useAxiosAuth from '@/hooks/useAxiosAuth';
 
 import FormHeaderText from '@/components/form/FormHeaderText';
 
+import CardDiseaseRisk from '@/app/patient/components/cards/CardDiseaseRisk';
 import { CardInfo } from '@/app/patient/components/cards/CardInfo';
+import CardInfoPlan from '@/app/patient/components/cards/CardInfoPlan';
 import { API_PATH } from '@/config/api';
 
-import { IPatientData } from '@/types/patient';
+import { IDiseaseRisk, IPatientData } from '@/types/patient';
+
 
 const PersonalInfo = ({ id }: { id: string }) => {
   const { data: session } = useSession();
@@ -20,6 +23,7 @@ const PersonalInfo = ({ id }: { id: string }) => {
   const dispatch = useDispatch<any>();
 
   const [userData, setUserData] = useState<IPatientData | null>(null);
+  const [patientDiseaseRisk, setPatientDiseaseRisk] = useState<IDiseaseRisk | null>(null);
 
   const fetchUser = useCallback(async () => {
     try {
@@ -52,8 +56,30 @@ const PersonalInfo = ({ id }: { id: string }) => {
           gender={userData?.gender}
           status={userData?.status}
           mainDoctorID={userData?.mainDoctorID}
-          mainDoctor={userData?.mainDoctor} />
+          mainDoctor={userData?.mainDoctor}
+          assistanceDoctorID={userData?.assistanceDoctorID}
+          assistanceDoctor={userData?.assistanceDoctor}
+          disease={userData?.disease}
+        />
+
       )}
+      {userData && userData.diseaseRisk && (
+        <CardDiseaseRisk
+          id={userData.id}
+          diseaseRisk={userData.diseaseRisk} />
+      )}
+
+
+
+      {userData && userData.Plan && userData.planID && (
+        <CardInfoPlan
+          id={userData.id}
+          planData={{ planID: userData.planID, Plan: userData.Plan }}
+        />
+      )}
+
+      <h2>eeeee</h2>
+
       <FormHeaderText title='การเพิ่มสิทธิ์ให้แพทย์' useBigestHeader={false} />
       <FormHeaderText title='การปรับเปลี่ยนพฤติกรรม' useBigestHeader={false} />
       <button onClick={fetchUser} className='bg-blue-50'>

@@ -16,7 +16,7 @@ export const TabbedList = ({
   const { tab, handleChange } = useTabbed();
 
   return (
-    <div className={cn('w-full p-2', allPanelClassName)}>
+    <div className={cn('w-full p-1 md:p-2', allPanelClassName)}>
       <Tab.Group selectedIndex={tab} onChange={handleChange}>
         <Tab.List
           className={cn(
@@ -30,7 +30,7 @@ export const TabbedList = ({
               className={({ selected }) =>
                 cn(
                   'text-md w-full rounded-lg py-2.5 font-medium leading-5',
-                  'border-indigo-500 ring-white/60  focus:border-b-2 focus:outline-none',
+                  'border-indigo-500 ring-white/60 focus:border-b-2 focus:outline-none',
                   selected
                     ? 'text-default-blue bg-light-blue shadow'
                     : 'text-default-gray hover:bg-[#F3F3F3] hover:text-[#585454]'
@@ -39,7 +39,7 @@ export const TabbedList = ({
             >
               <div
                 className={cn(
-                  'flex w-full items-center text-center space-x-2',
+                  'flex w-full items-center text-center space-x-2 md:space-x-1',
                   btnClassName
                 )}>
                 {data.icon && <div className='flex p-1.5 text-center'>{data.icon}</div>}

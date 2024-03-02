@@ -1,14 +1,15 @@
+import { Activity, HeartPulse, LucideIcon, Syringe } from 'lucide-react';
 import { IconType } from 'react-icons';
 import { CiStethoscope } from 'react-icons/ci';
 import { FaRunning } from 'react-icons/fa';
 import { GiNightSleep } from 'react-icons/gi';
 import { PiBowlFood } from 'react-icons/pi';
 import { RiMentalHealthLine } from 'react-icons/ri';
+import { TbBrandSugarizer } from 'react-icons/tb';
 
 import { typePlanOptions } from '@/constant/plan';
-import { HealthRecordType } from '@/types/patient';
-import { Activity, HeartPulse, LucideIcon, Syringe } from 'lucide-react';
-import { TbBrandSugarizer } from 'react-icons/tb';
+
+import { DiseaseType, HealthRecordType } from '@/types/patient';
 
 //Type Plan : show icon and varaint color mapping
 export type TypePlan = (typeof typePlanOptions)[number]['value'];
@@ -40,4 +41,28 @@ export const iconTypeHealth: { [key in HealthRecordType]: IconType | LucideIcon 
   [HealthRecordType.BloodPressure]: HeartPulse,
   [HealthRecordType.BloodGlucose]: TbBrandSugarizer,
   [HealthRecordType.Cholesterol]: Syringe,
+};
+
+//DiseaseRisk
+export const labelDisease: { [key in DiseaseType]: string } = {
+  [DiseaseType.diabetes]: 'โรคเบาหวาน',
+  [DiseaseType.hyperlipidemia]: 'ภาวะไขมันในเลือดสูง',
+  [DiseaseType.hypertension]: 'โรคความดันโลหิตสูง',
+  [DiseaseType.obesity]: 'โรคอ้วน',
+  [DiseaseType.metabolicLow]: 'ภาวะเมตาบอลินซินโดรม',
+};
+
+export const imgDisease: { [key in DiseaseType]: string } = {
+  [DiseaseType.diabetes]: '/assets/images/diabetes.png',
+  [DiseaseType.hyperlipidemia]: '/assets/images/hyperlipidemia.png',
+  [DiseaseType.hypertension]: '/assets/images/hypertension.png',
+  [DiseaseType.obesity]: '/assets/images/obesity.png',
+  [DiseaseType.metabolicLow]: '/assets/images/metabolic.png',
+};
+
+export const thaiLabelDiseaseRisk: { [key: string]: string } = {
+  low: 'ความเสี่ยงต่ำ',
+  medium: 'ความเสี่ยงปานกลาง',
+  high: 'ความเสี่ยงสูง',
+  metabolicLow: 'ความเสี่ยงต่ำ',
 };

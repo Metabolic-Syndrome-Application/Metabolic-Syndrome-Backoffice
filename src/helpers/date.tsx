@@ -34,6 +34,14 @@ export const generateBirthYear = () => {
   return birthYearOptions;
 };
 
+//Calculate Age from birthYearThaiBuddhist
+export const calculateAgeThaiBuddhist = (birthYear: number) => {
+  const thaiBuddhistOffset = 543;
+  const currentYearThaiBuddhist = new Date().getFullYear() + thaiBuddhistOffset;
+
+  return currentYearThaiBuddhist - birthYear;
+};
+
 //Convert DaysOfweek to thai word
 export const dayOfWeekThaiLabel = (day: string) => {
   const thaiDays: { [key: string]: string } = {

@@ -9,10 +9,58 @@ export interface IPatientData {
   status: string;
   mainDoctorID: string;
   mainDoctor: {
+    id: string;
     prefix: string;
     firstName: string;
     lastName: string;
   };
+  assistanceDoctorID?: string;
+  assistanceDoctor?: {
+    id: string;
+    prefix: string;
+    firstName: string;
+    lastName: string;
+  };
+  diseaseRisk?: IDiseaseRisk;
+  disease?: string;
+  planID?: string[];
+  Plan?: IPlan[];
+}
+
+// ------------------------------------------- //
+// Disease Risk
+export interface IDiseaseRisk {
+  id: string;
+  diseaseRisk: {
+    diabetes: string;
+    hyperlipidemia: string;
+    hypertension: string;
+    obesity: string;
+  };
+}
+
+//4 Disease type
+export enum DiseaseType {
+  diabetes = 'diabetes',
+  hyperlipidemia = 'hyperlipidemia',
+  hypertension = 'hypertension',
+  obesity = 'obesity',
+  metabolicLow = 'metabolicLow',
+}
+
+// Show Plan in Patient
+export interface IPlan {
+  id: string;
+  name: string;
+  description: string;
+  photo: string;
+  type: string;
+  detail: {
+    name: string[];
+    day: string[];
+  };
+  createdAt: string;
+  updatedAt: string;
 }
 
 // ------------------------------------------- //

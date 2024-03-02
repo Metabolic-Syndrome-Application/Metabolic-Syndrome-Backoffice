@@ -1,4 +1,5 @@
 'use client';
+import { usePathname } from 'next/navigation';
 import { ReactNode, useState } from 'react';
 
 import HeaderMobile from '@/components/layout/navbar/HeaderMobile';
@@ -6,7 +7,6 @@ import HeaderNav from '@/components/layout/navbar/HeaderNav';
 import MarginWidthWrapper from '@/components/layout/navbar/MarginWidthWrapper';
 import PageWrapper from '@/components/layout/navbar/PageWrapper';
 import SideNav from '@/components/layout/navbar/SideNav';
-import { usePathname } from 'next/navigation';
 
 const NavbarLayout = ({ children }: { children: ReactNode }) => {
   const [open, setOpen] = useState(true);
@@ -16,7 +16,7 @@ const NavbarLayout = ({ children }: { children: ReactNode }) => {
   const isSignInPage = pathname === '/auth/signIn';
 
   return (
-    <div className='flex'>
+    <div className='w-full'>
       {!isSignInPage && <SideNav open={open} setOpen={setOpen} />}
 
       <main className='flex-1'>

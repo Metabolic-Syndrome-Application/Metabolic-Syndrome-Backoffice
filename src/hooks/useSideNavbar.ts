@@ -1,5 +1,6 @@
-import { SIDENAV_ITEMS } from '@/components/layout/navbar/ConstantsNav';
 import { useSession } from 'next-auth/react';
+
+import { SIDENAV_ITEMS } from '@/components/layout/navbar/ConstantsNav';
 
 export const useSideNavbar = () => {
   const { data: session, status } = useSession();
@@ -35,8 +36,8 @@ export const useSideNavbar = () => {
           item.path === '/' ||
           item.path === '/dashboard' ||
           item.role === 'staff' ||
-          item.role === 'doctor,staff' ||
-          // item.path.startsWith('/patient') ||
+          // item.role === 'doctor,staff' ||
+          item.path.startsWith('/patient') ||
           item.path === '/plan' ||
           item.path === '/challenge' ||
           item.role === 'allRole'
