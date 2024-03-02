@@ -27,7 +27,8 @@ export const generateBirthYear = () => {
 
     birthYearOptions.push({
       label: `${birthYearThaiBuddhist}`,
-      value: `${birthYearThaiBuddhist}`,
+      // value: `${birthYearThaiBuddhist}`,
+      value: birthYearThaiBuddhist, //yearOfBirth is number
     });
   }
 

@@ -51,12 +51,14 @@ import { useDispatch } from 'react-redux';
 import { persistReducer, persistStore } from 'redux-persist';
 import createWebStorage from 'redux-persist/lib/storage/createWebStorage';
 
+import dailyChallengesSlice from '@/redux/slices/dailyChallengesSlice';
+import doctorSlice from '@/redux/slices/doctorSlice';
+import patientsSlice from '@/redux/slices/patientsSlice';
 import plansSlice from '@/redux/slices/plansSlice';
 import profileSlice from '@/redux/slices/profileSlice';
-import usersSlice from '@/redux/slices/usersSlice';
 import quizsSlice from '@/redux/slices/quizsSlice';
-import dailyChallengesSlice from '@/redux/slices/dailyChallengesSlice';
 import recordHealthsSlice from '@/redux/slices/recordHealthsSlice';
+import usersSlice from '@/redux/slices/usersSlice';
 
 const createNoopStorage = () => {
   return {
@@ -90,6 +92,8 @@ const rootReducer = combineReducers({
   quiz: quizsSlice,
   daily: dailyChallengesSlice,
   record: recordHealthsSlice,
+  patients: patientsSlice,
+  doctors: doctorSlice,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

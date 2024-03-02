@@ -1,9 +1,10 @@
-import EditProfile from '@/app/doctor/components/EditProfile';
-import Profile from '@/app/doctor/components/Profile';
-import FormHeaderText from '@/components/form/FormHeaderText';
-import ButtonLink from '@/components/links/ButtonLink';
-import UnderlineLink from '@/components/links/UnderlineLink';
+//not used
 import React, { useState } from 'react';
+
+import FormHeaderText from '@/components/form/FormHeaderText';
+import UnderlineLink from '@/components/links/UnderlineLink';
+
+import Profile from '@/app/doctor/components/OldProfile';
 
 const AccountProfile = () => {
   const [selectedTab, setSelectedTab] = useState(1);
@@ -22,14 +23,14 @@ const AccountProfile = () => {
             <UnderlineLink
               onClick={() => handleTabClick(1)}
               className={selectedTab === 1 ? 'active' : ''}
-              href={'/doctor'}
+              href="/doctor"
             >
               จัดการประวัติส่วนตัว
             </UnderlineLink>
             <UnderlineLink
               onClick={() => handleTabClick(2)}
               className={selectedTab === 2 ? 'active' : ''}
-              href={'/doctor'}
+              href="/doctor"
             >
               จัดการความปลอดภัยของรหัสผ่าน
             </UnderlineLink>

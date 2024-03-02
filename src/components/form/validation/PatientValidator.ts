@@ -1,5 +1,94 @@
 import { z } from 'zod';
 
+import {
+  baseStringValidator,
+  passwordPatientValidator,
+  validateMinMax,
+} from '@/components/form/validation/ZodCheck';
+
+export interface ICreatePatientForm {
+  id: string;
+  role: string;
+  username: string;
+  password: string;
+  passwordConfirm: string;
+  hn: string;
+  firstName: string;
+  lastName: string;
+  yearOfBirth: number;
+  gender: string;
+  mainDoctorID: string;
+  mainDoctor: {
+    id: string;
+    prefix: string;
+    firstName: string;
+    lastName: string;
+  };
+  assistanceDoctorID?: string;
+  assistanceDoctor?: {
+    id: string;
+    prefix: string;
+    firstName: string;
+    lastName: string;
+  };
+  disease?: string;
+}
+
+const isDuplicateId = (
+  selectedMainDoctorId: any,
+  selectedAssistanceDoctorId: any
+) => {
+  if (selectedMainDoctorId === selectedAssistanceDoctorId) {
+    return 'ไม่สามารถเลือกแพทย์ผู้รับผิดชอบรองคนเดิมได้';
+  }
+  return true;
+};
+
+// Register for Doctor/Staff
+export const registerPatientSchema = z
+  .object({
+    role: baseStringValidator,
+    // username: z.string().refine((idCard) => /^\d{13}$/.test(idCard), {
+    //   message: 'รหัสบัตรประชาชนต้องมี 13 หลักและเป็นตัวเลขเท่านั้น',
+    // }),
+    username: z.string(),
+    password: passwordPatientValidator,
+    passwordConfirm: passwordPatientValidator,
+    hn: baseStringValidator,
+    firstName: validateMinMax(
+      2,
+      30,
+      'กรุณากรอกอย่างน้อย 2 ตัวอักษร และไม่เกิน 30 ตัวอักษร'
+    ),
+    lastName: validateMinMax(
+      2,
+      30,
+      'กรุณากรอกอย่างน้อย 2 ตัวอักษร และไม่เกิน 30 ตัวอักษร'
+    ),
+    gender: baseStringValidator,
+    yearOfBirth: z.number(),
+    mainDoctorID: baseStringValidator,
+    assistanceDoctorID: z.string(),
+    disease: z.string(),
+  })
+  .refine((data) => data.password === data.passwordConfirm, {
+    message: 'รหัสผ่านของคุณไม่ตรงกัน',
+    path: ['passwordConfirm'],
+  })
+  .refine(
+    (data) => {
+      // Check if mainDoctor and assistanceDoctor are different
+      return data.mainDoctorID !== data.assistanceDoctorID;
+    },
+    {
+      message:
+        'แพทย์ผู้รับผิดชอบหลักและแพทย์ผู้รับผิดชอบรองต้องไม่เป็นคนเดียวกัน',
+      path: ['assistanceDoctor'],
+    }
+  );
+
+// ------------------------------------------------//
+//Form Record Health
 export interface FormRecordHealthProps {
   id: string;
   height: number;
@@ -17,93 +106,6 @@ export interface FormRecordHealthProps {
 }
 
 // Create Record Health
-
-// export const createBloodPressureSchema = z.object({
-//   systolicBloodPressure: z.coerce
-//     .number({
-//       required_error: 'กรุณากรอกความดันช่วงหัวใจบีบตัว (ตัวบน)',
-//       invalid_type_error: 'ความดันต้องเป็นตัวเลขเท่านั้น',
-//     })
-//     .positive()
-//     .gte(50, 'กรุณากรอกความดันช่วงหัวใจบีบตัว (ตัวบน) ขั้นต่ำ 50 mmHg')
-//     .lte(220, 'กรุณากรอกความดันช่วงหัวใจบีบตัว (ตัวบน) สูงสุดไม่เกิน 220 mmHg'),
-//   diastolicBloodPressure: z.coerce
-//     .number({
-//       required_error: 'กรุณากรอกความดันช่วงหัวใจคลายตัว (ตัวล่าง)',
-//       invalid_type_error: 'ความดันต้องเป็นตัวเลขเท่านั้น',
-//     })
-//     .positive()
-//     .gte(30, 'กรุณากรอกความดันช่วงหัวใจคลายตัว (ตัวล่าง) ขั้นต่ำ 30 mmHg')
-//     .lte(
-//       150,
-//       'กรุณากรอกความดันช่วงหัวใจคลายตัว (ตัวล่าง) สูงสุดไม่เกิน 150 mmHg'
-//     ),
-//   pulseRate: z.coerce
-//     .number({
-//       required_error: 'กรุณากรอกอัตราการเต้นของหัวใจ',
-//       invalid_type_error: 'อัตราการเต้นของหัวใจต้องเป็นตัวเลขเท่านั้น',
-//     })
-//     .positive()
-//     .gte(30, 'กรุณากรอกอัตราการเต้นของหัวใจขั้นต่ำ 30 ครั้งต่อนาที')
-//     .lte(200, 'กรุณากรอกอัตราการเต้นของหัวใจสูงสุดไม่เกิน 200 ครั้งต่อนาที'),
-// });
-
-// export const createBloodGlucoseSchema = z.object({
-//   bloodGlucose: z.coerce
-//     .number({
-//       required_error: 'กรุณากรอกระดับน้ำตาลในเลือด',
-//       invalid_type_error:
-//         'กรุณากรอกระดับน้ำตาลในเลือดต้องเป็นตัวเลขเท่านั้น  และอยู่ในช่วง 30 - 300 mg/dL',
-//     })
-//     .multipleOf(0.01, 'กรุณากรอกทศนิยมไม่เกิน 2 ตำแหน่ง')
-//     .positive('กรุณากรอกระดับน้ำตาลในเลือดอยู่ในช่วง 30 - 300 mg/dL')
-//     .gte(30, 'กรุณากรอกระดับน้ำตาลในเลือดขั้นต่ำ 30 mg/dL')
-//     .lte(300, 'กรุณากรอกระดับน้ำตาลในเลือดไม่เกิน 300 mg/dL'),
-// });
-
-// export const createCholesterolSchema = z.object({
-//   cholesterol: z.coerce
-//     .number({
-//       required_error: 'กรุณากรอกคอเลสเตอรอล',
-//       invalid_type_error:
-//         'กรุณาคอเลสเตอรอลต้องเป็นตัวเลขเท่านั้น  และอยู่ในช่วง 20 - 300 mg/dL',
-//     })
-//     .multipleOf(0.01, 'กรุณากรอกทศนิยมไม่เกิน 2 ตำแหน่ง')
-//     .positive('กรุณากรอกคอเลสเตอรอลอยู่ในช่วง 20 - 300 mg/dL')
-//     .gte(20, 'กรุณากรอกคอเลสเตอรอลขั้นต่ำ 20 mg/dL')
-//     .lte(300, 'กรุณากรอกคอเลสเตอรอลไม่เกิน 300 mg/dL'),
-//   hdl: z.coerce
-//     .number({
-//       required_error: 'กรุณากรอกคอเลสเตอรอลชนิดดี (HDL)',
-//       invalid_type_error:
-//         'กรุณาคอเลสเตอรอลชนิดดี (HDL)ต้องเป็นตัวเลขเท่านั้น  และอยู่ในช่วง 20 - 200 mg/dL',
-//     })
-//     .multipleOf(0.01, 'กรุณากรอกทศนิยมไม่เกิน 2 ตำแหน่ง')
-//     .positive('กรุณากรอกคอเลสเตอรอลชนิดดี (HDL) อยู่ในช่วง 20 - 200 mg/dL')
-//     .gte(20, 'กรุณากรอกคอเลสเตอรอลชนิดดี (HDL) ขั้นต่ำ 20 mg/dL')
-//     .lte(200, 'กรุณากรอกคอเลสเตอรอลชนิดดี (HDL) ไม่เกิน 200 mg/dL'),
-//   ldl: z.coerce
-//     .number({
-//       required_error: 'กรุณากรอกคอเลสเตอรอลชนิดไม่ดี (LDL)',
-//       invalid_type_error:
-//         'กรุณาคอเลสเตอรอลชนิดไม่ดี (LDL) ต้องเป็นตัวเลขเท่านั้น  และอยู่ในช่วง 20 - 200 mg/dL',
-//     })
-//     .multipleOf(0.01, 'กรุณากรอกทศนิยมไม่เกิน 2 ตำแหน่ง')
-//     .positive('กรุณากรอกคอเลสเตอรอลชนิดไม่ดี (LDL) อยู่ในช่วง 20 - 200 mg/dL')
-//     .gte(20, 'กรุณากรอกคอเลสเตอรอลชนิดไม่ดี (LDL) ขั้นต่ำ 20 mg/dL')
-//     .lte(200, 'กรุณากรอกคอเลสเตอรอลชนิดไม่ดี (LDL) ไม่เกิน 200 mg/dL'),
-//   triglyceride: z.coerce
-//     .number({
-//       required_error: 'กรุณากรอกไตรกลีเซอไรด์ (TG)',
-//       invalid_type_error:
-//         'กรุณาไตรกลีเซอไรด์ (TG) ต้องเป็นตัวเลขเท่านั้น  และอยู่ในช่วง 20 - 1500 mg/dL',
-//     })
-//     .multipleOf(0.01, 'กรุณากรอกทศนิยมไม่เกิน 2 ตำแหน่ง')
-//     .positive('กรุณากรอกไตรกลีเซอไรด์ (TG) อยู่ในช่วง 20 - 1500 mg/dL')
-//     .gte(20, 'กรุณากรอกไตรกลีเซอไรด์ (TG) ขั้นต่ำ 20 mg/dL')
-//     .lte(1500, 'กรุณากรอกไตรกลีเซอไรด์ (TG) ไม่เกิน 1500 mg/dL'),
-// });
-
 export const createBMISchema = z.object({
   height: z.coerce
     .number({
@@ -257,3 +259,89 @@ export const createRecordHealthSchema = createBMISchema.and(
 // ]);
 
 export type createRecordHealthValues = z.infer<typeof createRecordHealthSchema>;
+
+// export const createBloodPressureSchema = z.object({
+//   systolicBloodPressure: z.coerce
+//     .number({
+//       required_error: 'กรุณากรอกความดันช่วงหัวใจบีบตัว (ตัวบน)',
+//       invalid_type_error: 'ความดันต้องเป็นตัวเลขเท่านั้น',
+//     })
+//     .positive()
+//     .gte(50, 'กรุณากรอกความดันช่วงหัวใจบีบตัว (ตัวบน) ขั้นต่ำ 50 mmHg')
+//     .lte(220, 'กรุณากรอกความดันช่วงหัวใจบีบตัว (ตัวบน) สูงสุดไม่เกิน 220 mmHg'),
+//   diastolicBloodPressure: z.coerce
+//     .number({
+//       required_error: 'กรุณากรอกความดันช่วงหัวใจคลายตัว (ตัวล่าง)',
+//       invalid_type_error: 'ความดันต้องเป็นตัวเลขเท่านั้น',
+//     })
+//     .positive()
+//     .gte(30, 'กรุณากรอกความดันช่วงหัวใจคลายตัว (ตัวล่าง) ขั้นต่ำ 30 mmHg')
+//     .lte(
+//       150,
+//       'กรุณากรอกความดันช่วงหัวใจคลายตัว (ตัวล่าง) สูงสุดไม่เกิน 150 mmHg'
+//     ),
+//   pulseRate: z.coerce
+//     .number({
+//       required_error: 'กรุณากรอกอัตราการเต้นของหัวใจ',
+//       invalid_type_error: 'อัตราการเต้นของหัวใจต้องเป็นตัวเลขเท่านั้น',
+//     })
+//     .positive()
+//     .gte(30, 'กรุณากรอกอัตราการเต้นของหัวใจขั้นต่ำ 30 ครั้งต่อนาที')
+//     .lte(200, 'กรุณากรอกอัตราการเต้นของหัวใจสูงสุดไม่เกิน 200 ครั้งต่อนาที'),
+// });
+
+// export const createBloodGlucoseSchema = z.object({
+//   bloodGlucose: z.coerce
+//     .number({
+//       required_error: 'กรุณากรอกระดับน้ำตาลในเลือด',
+//       invalid_type_error:
+//         'กรุณากรอกระดับน้ำตาลในเลือดต้องเป็นตัวเลขเท่านั้น  และอยู่ในช่วง 30 - 300 mg/dL',
+//     })
+//     .multipleOf(0.01, 'กรุณากรอกทศนิยมไม่เกิน 2 ตำแหน่ง')
+//     .positive('กรุณากรอกระดับน้ำตาลในเลือดอยู่ในช่วง 30 - 300 mg/dL')
+//     .gte(30, 'กรุณากรอกระดับน้ำตาลในเลือดขั้นต่ำ 30 mg/dL')
+//     .lte(300, 'กรุณากรอกระดับน้ำตาลในเลือดไม่เกิน 300 mg/dL'),
+// });
+
+// export const createCholesterolSchema = z.object({
+//   cholesterol: z.coerce
+//     .number({
+//       required_error: 'กรุณากรอกคอเลสเตอรอล',
+//       invalid_type_error:
+//         'กรุณาคอเลสเตอรอลต้องเป็นตัวเลขเท่านั้น  และอยู่ในช่วง 20 - 300 mg/dL',
+//     })
+//     .multipleOf(0.01, 'กรุณากรอกทศนิยมไม่เกิน 2 ตำแหน่ง')
+//     .positive('กรุณากรอกคอเลสเตอรอลอยู่ในช่วง 20 - 300 mg/dL')
+//     .gte(20, 'กรุณากรอกคอเลสเตอรอลขั้นต่ำ 20 mg/dL')
+//     .lte(300, 'กรุณากรอกคอเลสเตอรอลไม่เกิน 300 mg/dL'),
+//   hdl: z.coerce
+//     .number({
+//       required_error: 'กรุณากรอกคอเลสเตอรอลชนิดดี (HDL)',
+//       invalid_type_error:
+//         'กรุณาคอเลสเตอรอลชนิดดี (HDL)ต้องเป็นตัวเลขเท่านั้น  และอยู่ในช่วง 20 - 200 mg/dL',
+//     })
+//     .multipleOf(0.01, 'กรุณากรอกทศนิยมไม่เกิน 2 ตำแหน่ง')
+//     .positive('กรุณากรอกคอเลสเตอรอลชนิดดี (HDL) อยู่ในช่วง 20 - 200 mg/dL')
+//     .gte(20, 'กรุณากรอกคอเลสเตอรอลชนิดดี (HDL) ขั้นต่ำ 20 mg/dL')
+//     .lte(200, 'กรุณากรอกคอเลสเตอรอลชนิดดี (HDL) ไม่เกิน 200 mg/dL'),
+//   ldl: z.coerce
+//     .number({
+//       required_error: 'กรุณากรอกคอเลสเตอรอลชนิดไม่ดี (LDL)',
+//       invalid_type_error:
+//         'กรุณาคอเลสเตอรอลชนิดไม่ดี (LDL) ต้องเป็นตัวเลขเท่านั้น  และอยู่ในช่วง 20 - 200 mg/dL',
+//     })
+//     .multipleOf(0.01, 'กรุณากรอกทศนิยมไม่เกิน 2 ตำแหน่ง')
+//     .positive('กรุณากรอกคอเลสเตอรอลชนิดไม่ดี (LDL) อยู่ในช่วง 20 - 200 mg/dL')
+//     .gte(20, 'กรุณากรอกคอเลสเตอรอลชนิดไม่ดี (LDL) ขั้นต่ำ 20 mg/dL')
+//     .lte(200, 'กรุณากรอกคอเลสเตอรอลชนิดไม่ดี (LDL) ไม่เกิน 200 mg/dL'),
+//   triglyceride: z.coerce
+//     .number({
+//       required_error: 'กรุณากรอกไตรกลีเซอไรด์ (TG)',
+//       invalid_type_error:
+//         'กรุณาไตรกลีเซอไรด์ (TG) ต้องเป็นตัวเลขเท่านั้น  และอยู่ในช่วง 20 - 1500 mg/dL',
+//     })
+//     .multipleOf(0.01, 'กรุณากรอกทศนิยมไม่เกิน 2 ตำแหน่ง')
+//     .positive('กรุณากรอกไตรกลีเซอไรด์ (TG) อยู่ในช่วง 20 - 1500 mg/dL')
+//     .gte(20, 'กรุณากรอกไตรกลีเซอไรด์ (TG) ขั้นต่ำ 20 mg/dL')
+//     .lte(1500, 'กรุณากรอกไตรกลีเซอไรด์ (TG) ไม่เกิน 1500 mg/dL'),
+// });

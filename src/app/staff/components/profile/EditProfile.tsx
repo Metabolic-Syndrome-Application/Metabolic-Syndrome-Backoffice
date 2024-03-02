@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import useModal from '@/hooks/useModal';
 
+import ActionButton from '@/components/buttons/ActionButton';
 import FormHeaderText from '@/components/form/FormHeaderText';
 import { InputDropdown } from '@/components/form/InputDropdown';
 import { InputText } from '@/components/form/InputText';
@@ -61,17 +62,16 @@ const EditProfile = ({ loadData, api }: IEditMemberFormProps) => {
       // Dispatch the updateUser action
       await dispatch(updateUser(data));
 
-      console.log('Edit successful', data);
+      //console.log('Edit Profile successful', data);
 
-      // Reload the data after a successful edit
       enqueueSnackbar('edit success', { variant: 'success' });
-      // Load the updated user data immediately
+      // Load the updated user
       await dispatch(fetchUser());
-      closeModal(); // Close the modal if needed
+      closeModal();
     } catch (error) {
-      console.log('Error:', error);
 
       enqueueSnackbar('Cannot edit', { variant: 'error' });
+      console.log('Error:', error);
     }
   };
 
@@ -111,7 +111,7 @@ const EditProfile = ({ loadData, api }: IEditMemberFormProps) => {
   //     enqueueSnackbar('Cannot edit', { variant: 'error' });
   //   }
   // };
-  console.log('user edit', user);
+
 
   return (
     <div>
@@ -172,18 +172,16 @@ const EditProfile = ({ loadData, api }: IEditMemberFormProps) => {
               </div>
 
               <div className='flex w-full justify-end space-x-3 p-4'>
-                <button
+                <ActionButton
+                  type='reset'
+                  variant='cancel'
                   onClick={closeModal}
-                  className='rounded-xl bg-gray-50 px-4 py-4'
                 >
-                  cancel
-                </button>
-                <button
-                  type='submit'
-                  className='flex items-center rounded-xl bg-blue-400 px-4 py-2'
-                >
-                  submit
-                </button>
+                  ยกเลิก
+                </ActionButton>
+                <ActionButton type='submit' variant='submit'>
+                  แก้ไขโปรไฟล์
+                </ActionButton>
               </div>
             </div>
           )}

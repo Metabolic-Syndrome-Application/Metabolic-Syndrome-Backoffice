@@ -1,11 +1,9 @@
 import {
   Autocomplete,
-  FilterOptionsState,
   Paper,
   TextField,
-  createFilterOptions,
 } from '@mui/material';
-import React, { useMemo } from 'react';
+import React from 'react';
 import { Controller } from 'react-hook-form';
 
 import { FormDropdownProps } from '@/types/form';
@@ -38,9 +36,9 @@ export const InputDropdown: React.FC<FormDropdownProps> = ({
           value={
             value !== undefined && value !== null
               ? options.find((option) => option.value === value) || {
-                  value: '',
-                  label: value || '',
-                }
+                value: '',
+                label: value || '',
+              }
               : null
           }
           onChange={(e, selectedValue) =>

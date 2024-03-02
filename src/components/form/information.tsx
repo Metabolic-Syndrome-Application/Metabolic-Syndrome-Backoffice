@@ -5,10 +5,7 @@ import { useForm } from 'react-hook-form';
 import { InputDropdown } from '@/components/form/InputDropdown';
 import { InputText } from '@/components/form/InputText';
 import { RadioOption } from '@/components/form/RadioOption';
-import {
-  FormRegisterDoctorProps,
-  registerDoctorSchema,
-} from '@/components/form/validation/UserValidator';
+import { ICreatePatientForm, registerPatientSchema } from '@/components/form/validation/PatientValidator';
 
 import {
   dataOptions,
@@ -23,9 +20,9 @@ const Information = () => {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormRegisterDoctorProps>({
+  } = useForm<ICreatePatientForm>({
     mode: 'onChange',
-    resolver: zodResolver(registerDoctorSchema),
+    resolver: zodResolver(registerPatientSchema),
   });
 
   return (
@@ -34,7 +31,7 @@ const Information = () => {
         <h4>ข้อมูลส่วนตัว</h4>
         <div className='border-light-gray border-[1px]'></div>
       </div>
-      <InputText name='HN' label='รหัสคนไข้' control={control} />
+      <InputText name='hn' label='รหัสคนไข้' control={control} />
 
       <div className='flex space-x-4'>
         <InputText name='firstName' label='ชื่อจริง' control={control} />
@@ -53,13 +50,13 @@ const Information = () => {
         options={yearOptions}
       />
       <InputDropdown
-        name='department'
+        name='mainDoctor'
         control={control}
         label='แพทย์ผู้รับผิดชอบหลัก'
         options={medicalDepartment}
       />
       <InputDropdown
-        name='specialize'
+        name='assistanceDoctor'
         control={control}
         label='แพทย์ผู้รับผิดชอบรอง'
         options={medicalSpecialist}

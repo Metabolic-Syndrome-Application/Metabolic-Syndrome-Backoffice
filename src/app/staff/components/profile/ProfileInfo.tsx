@@ -9,7 +9,7 @@ import FormHeaderText from '@/components/form/FormHeaderText';
 import { TextFieldInfo } from '@/components/form/TextFieldInfo';
 import { stringAvatar } from '@/components/layout/navbar/Avatar';
 
-import EditProfile from '@/app/doctor/components/EditProfile';
+import EditProfile from '@/app/staff/components/profile/EditProfile';
 import { fetchUser, selectUser } from '@/redux/slices/profileSlice';
 
 const ProfileInfo = () => {
@@ -17,7 +17,7 @@ const ProfileInfo = () => {
   const axiosAuth = useAxiosAuth();
   const user = useSelector(selectUser);
 
-  console.log('User:', user);
+  console.log('Staff Profile:', user);
 
   const dispatch = useDispatch<any>();
 
@@ -28,7 +28,7 @@ const ProfileInfo = () => {
       dispatch(fetchUser());
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [session]);
+  }, []);
 
   return (
     <div>
