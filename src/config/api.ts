@@ -22,6 +22,10 @@ export const API_PATH = {
   GET_PROFILE_OTHER: (id: string) => `/api/user/profile/patient/${id}`,
   PUT_PROFILE_PATIENT_OTHER: (id: string) => `/api/user/profile/patient/${id}`,
 
+  //Patient : OTP Generate
+  POST_GEN_OTP: '/api/connect/generate-otp',
+  GET_REFRESH_OTP: (id: string) => `/api/connect/refresh-otp/${id}`,
+
   //Patient : Record Health
   POST_RECORD_HEALTH: (id: string) => `/api/record/health/${id}`,
   GET_RECORD_HEALTH_BY_ALL: (id: string) => `/api/record/health/${id}`,

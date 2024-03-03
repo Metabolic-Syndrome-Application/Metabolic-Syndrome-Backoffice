@@ -1,4 +1,4 @@
-//status patient 3 color
+//status patient 3 color ->not used
 export const PatientStatus = [
   {
     label: 'success',

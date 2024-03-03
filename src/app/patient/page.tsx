@@ -3,10 +3,8 @@
 import { useSession } from 'next-auth/react';
 import React from 'react';
 
-import { IconFlatButton } from '@/components/buttons/IconFlatButton';
-
 import PatientTable from '@/app/patient/components/manage-patient-table/PatientTable';
-import CreatePatient from '@/app/patient/components/multi-step-form/register-patients/form-patient';
+import MultiformPatient from '@/app/patient/components/multi-step-form/page';
 
 const PatientPage = () => {
   const { data: session } = useSession({
@@ -23,13 +21,10 @@ const PatientPage = () => {
   return (
     <div className='p-4'>
 
-      <article className='flex w-full items-center justify-between px-4 py-2'>
-        <h1 className='text-balance'>ข้อมูลคนไข้</h1>
-        <IconFlatButton
-          title='เพิ่มข้อมูลคนไข้'
-        />
-      </article>
-      <CreatePatient></CreatePatient>
+      <MultiformPatient></MultiformPatient>
+
+      {/* <Otp></Otp> */}
+
       {/* <TestCreatePatient></TestCreatePatient> */}
       <PatientTable />
     </div>

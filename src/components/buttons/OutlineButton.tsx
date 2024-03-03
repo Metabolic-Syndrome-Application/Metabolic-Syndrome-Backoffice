@@ -1,12 +1,12 @@
 //Outline Icon Button : show category/type (food,exercise,health)
+import { LucideIcon } from 'lucide-react';
 import React from 'react';
+import { IconType } from 'react-icons';
 import { ImSpinner2 } from 'react-icons/im';
 
 import { cn } from '@/lib/utils';
-import { IconType } from 'react-icons';
-import { LucideIcon } from 'lucide-react';
 
-const ButtonVariant = ['blue', 'gray', 'yellow', 'green', 'orange', 'black'] as const;
+const ButtonVariant = ['blue', 'gray', 'yellow', 'green', 'orange', 'black', 'red'] as const;
 const ButtonSize = ['sm', 'base'] as const;
 
 type ButtonProps = {
@@ -82,6 +82,12 @@ const OutlineButton = React.forwardRef<HTMLButtonElement, ButtonProps>(
               'text-default-orange border border-[#FFC6AD]',
               'hover:bg-[#FFC6AD]',
               'active:border active:border-[#FFB098]',
+              'disabled:border-light-gray disabled:text-stone-800 disabled:opacity-40',
+            ],
+            variant === 'red' && [
+              'text-default-red border border-default-red',
+              'hover:bg-light-red',
+              'border-light-red active:border',
               'disabled:border-light-gray disabled:text-stone-800 disabled:opacity-40',
             ],
             variant === 'black' && [

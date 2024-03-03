@@ -5,12 +5,10 @@ import { Controller } from 'react-hook-form';
 import { IconType } from 'react-icons';
 
 import { cn } from '@/lib/utils';
-import { HealthRecordType } from '@/types/patient';
-
 
 type ToggleSelectedType = (type: string) => void;
 
-//Form Input Text
+//Form Multiselect CheckboxProps
 export type FormMultiselectCheckboxProps = {
   className?: string;
   name: string;
@@ -24,6 +22,7 @@ export type FormMultiselectCheckboxProps = {
     icon?: string;
   };
 }
+
 export const MultiselectCheckbox = ({
   className,
   name,
