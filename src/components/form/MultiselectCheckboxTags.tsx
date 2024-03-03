@@ -27,6 +27,7 @@ const checkedIcon = (
   <RiCheckboxCircleFill fontSize='large' style={{ color: 'blue' }} />
 );
 
+//MultiSelect Form Checkbox Dropdown
 export const MultiselectCheckboxTags: React.FC<FormMultiCheckboxProps> = ({
   name,
   control,
@@ -46,7 +47,7 @@ export const MultiselectCheckboxTags: React.FC<FormMultiCheckboxProps> = ({
           value={value}
           onChange={(event: any, newValue: string[]) => {
             onChange(newValue);
-            console.log(newValue);
+            //console.log(newValue);
           }}
           options={options}
           disableCloseOnSelect

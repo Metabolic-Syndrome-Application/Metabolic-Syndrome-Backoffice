@@ -38,8 +38,10 @@
 //fix catch localStorage
 'use client';
 
-import { signIn, signOut, useSession } from 'next-auth/react';
+import { signOut, useSession } from 'next-auth/react';
+
 import axios from '@/lib/axios';
+
 import { API_PATH } from '@/config/api';
 
 export const useRefreshToken = () => {
@@ -57,7 +59,7 @@ export const useRefreshToken = () => {
         }
       );
 
-      console.log('refresh', res);
+      //console.log('refresh', res);
 
       console.log({ newAccessToken: res.data.access_token });
       // Store the new access token in localStorage

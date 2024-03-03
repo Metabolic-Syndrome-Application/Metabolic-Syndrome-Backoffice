@@ -253,7 +253,6 @@ const CreatePatient = () => {
                 name='mainDoctorID'
                 control={control}
                 label='แพทย์ผู้รับผิดชอบหลัก'
-                //options={getDoctorOptions(options)}
                 options={getDoctorOptions()}
 
               />
@@ -263,8 +262,6 @@ const CreatePatient = () => {
                 control={control}
                 label='แพทย์ผู้รับผิดชอบรอง'
                 options={getDoctorOptions()}
-
-              //options={getDoctorOptions(options)}
               />
               <InputText name='disease' label='โรค' control={control} />
             </div>

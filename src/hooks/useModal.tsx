@@ -1,8 +1,10 @@
 'use client';
 
+import { useCallback, useState } from 'react';
+
 import BaseModal from '@/components/modal/BaseModal';
+
 import { BaseModalProps } from '@/types/modal';
-import { useState, useCallback } from 'react';
 
 const useModal = () => {
   const [open, setOpen] = useState<boolean>(false);

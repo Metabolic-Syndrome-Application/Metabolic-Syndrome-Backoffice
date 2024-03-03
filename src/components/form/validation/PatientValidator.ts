@@ -2,7 +2,7 @@ import { z } from 'zod';
 
 import {
   baseStringValidator,
-  passwordPatientValidator,
+  passwordValidator,
   validateMinMax,
 } from '@/components/form/validation/ZodCheck';
 
@@ -33,28 +33,18 @@ export interface ICreatePatientForm {
   };
   disease?: string;
 }
+//-----------------------------------------
 
-const isDuplicateId = (
-  selectedMainDoctorId: any,
-  selectedAssistanceDoctorId: any
-) => {
-  if (selectedMainDoctorId === selectedAssistanceDoctorId) {
-    return 'ไม่สามารถเลือกแพทย์ผู้รับผิดชอบรองคนเดิมได้';
-  }
-  return true;
-};
-
-// Register for Doctor/Staff
-export const registerPatientSchema = z
+// Register new Patient
+export const registerNewPatientSchema = z
   .object({
     role: baseStringValidator,
-    // username: z.string().refine((idCard) => /^\d{13}$/.test(idCard), {
-    //   message: 'รหัสบัตรประชาชนต้องมี 13 หลักและเป็นตัวเลขเท่านั้น',
-    // }),
-    username: z.string(),
-    password: passwordPatientValidator,
-    passwordConfirm: passwordPatientValidator,
-    hn: baseStringValidator,
+    username: z.string().refine((idCard) => /^\d{13}$/.test(idCard), {
+      message: 'รหัสบัตรประชาชนต้องมี 13 หลักและเป็นตัวเลขเท่านั้น',
+    }),
+    password: passwordValidator,
+    passwordConfirm: passwordValidator,
+    hn: z.string().length(4),
     firstName: validateMinMax(
       2,
       30,
@@ -68,24 +58,44 @@ export const registerPatientSchema = z
     gender: baseStringValidator,
     yearOfBirth: z.number(),
     mainDoctorID: baseStringValidator,
-    assistanceDoctorID: z.string(),
+    assistanceDoctorID: z.string().optional(),
     disease: z.string(),
   })
   .refine((data) => data.password === data.passwordConfirm, {
     message: 'รหัสผ่านของคุณไม่ตรงกัน',
     path: ['passwordConfirm'],
   })
-  .refine(
-    (data) => {
-      // Check if mainDoctor and assistanceDoctor are different
-      return data.mainDoctorID !== data.assistanceDoctorID;
-    },
-    {
-      message:
-        'แพทย์ผู้รับผิดชอบหลักและแพทย์ผู้รับผิดชอบรองต้องไม่เป็นคนเดียวกัน',
-      path: ['assistanceDoctor'],
-    }
-  );
+  .refine((data) => data.mainDoctorID !== data.assistanceDoctorID, {
+    message:
+      'แพทย์ผู้รับผิดชอบหลักและแพทย์ผู้รับผิดชอบรองต้องไม่เป็นคนเดียวกัน',
+    path: ['assistanceDoctorID'],
+  });
+
+// Current Info Patient
+export const registerCurrentPatientchema = z
+  .object({
+    hn: z.string().length(4),
+    firstName: validateMinMax(
+      2,
+      30,
+      'กรุณากรอกอย่างน้อย 2 ตัวอักษร และไม่เกิน 30 ตัวอักษร'
+    ),
+    lastName: validateMinMax(
+      2,
+      30,
+      'กรุณากรอกอย่างน้อย 2 ตัวอักษร และไม่เกิน 30 ตัวอักษร'
+    ),
+    gender: baseStringValidator,
+    yearOfBirth: z.number(),
+    mainDoctorID: baseStringValidator,
+    assistanceDoctorID: z.string().optional(),
+    disease: z.string(),
+  })
+  .refine((data) => data.mainDoctorID !== data.assistanceDoctorID, {
+    message:
+      'แพทย์ผู้รับผิดชอบหลักและแพทย์ผู้รับผิดชอบรองต้องไม่เป็นคนเดียวกัน',
+    path: ['assistanceDoctorID'],
+  });
 
 // ------------------------------------------------//
 //Form Record Health
