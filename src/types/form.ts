@@ -46,6 +46,7 @@ export type FormMultiCheckboxProps = {
     value: string;
   }[];
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  defaultValue?: any;
 };
 
 //Form Input Text

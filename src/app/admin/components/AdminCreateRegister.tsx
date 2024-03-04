@@ -84,7 +84,7 @@ const AdminCreateRegister = () => {
         }
       );
       const { id: userId, role: otherRole } = registerResponse.data.data.user;
-      console.log('Register API Response:', registerResponse.data.data.user);
+      //console.log('Register API Response:', registerResponse.data.data.user);
 
       // Only an admin can create a profile
       // API call 2: Create profile

@@ -6,6 +6,8 @@ import {
   validateMinMax,
 } from '@/components/form/validation/ZodCheck';
 
+import { IPlan } from '@/types/patient';
+
 export interface ICreatePatientForm {
   id: string;
   role: string;
@@ -32,9 +34,75 @@ export interface ICreatePatientForm {
     lastName: string;
   };
   disease?: string;
+  planID?: string[];
+  Plan?: IPlan[];
 }
 //-----------------------------------------
+//Doctor Edit & Assign Patient
+export const doctorEditPatientSchema = z
+  .object({
+    hn: z.string().length(4),
+    firstName: validateMinMax(
+      2,
+      30,
+      'กรุณากรอกอย่างน้อย 2 ตัวอักษร และไม่เกิน 30 ตัวอักษร'
+    ),
+    lastName: validateMinMax(
+      2,
+      30,
+      'กรุณากรอกอย่างน้อย 2 ตัวอักษร และไม่เกิน 30 ตัวอักษร'
+    ),
+    gender: baseStringValidator,
+    yearOfBirth: z.number(),
+    mainDoctorID: baseStringValidator,
+    assistanceDoctorID: z.string().optional(),
+    disease: z.string(),
+    planID: z.array(z.object({ label: z.string(), value: z.string() })),
+  })
+  .refine((data) => data.mainDoctorID !== data.assistanceDoctorID, {
+    message:
+      'แพทย์ผู้รับผิดชอบหลักและแพทย์ผู้รับผิดชอบรองต้องไม่เป็นคนเดียวกัน',
+    path: ['assistanceDoctorID'],
+  });
 
+//Type Edit & Assign Patient
+export type doctorEditPatientSchemaValues = z.infer<
+  typeof doctorEditPatientSchema
+>;
+
+//-----------------------------------------
+//Doctor Edit & Assign Patient
+export const staffEditPatientSchema = z
+  .object({
+    hn: z.string().length(4),
+    firstName: validateMinMax(
+      2,
+      30,
+      'กรุณากรอกอย่างน้อย 2 ตัวอักษร และไม่เกิน 30 ตัวอักษร'
+    ),
+    lastName: validateMinMax(
+      2,
+      30,
+      'กรุณากรอกอย่างน้อย 2 ตัวอักษร และไม่เกิน 30 ตัวอักษร'
+    ),
+    gender: baseStringValidator,
+    yearOfBirth: z.number(),
+    mainDoctorID: baseStringValidator,
+    assistanceDoctorID: z.string().optional(),
+    disease: z.string(),
+  })
+  .refine((data) => data.mainDoctorID !== data.assistanceDoctorID, {
+    message:
+      'แพทย์ผู้รับผิดชอบหลักและแพทย์ผู้รับผิดชอบรองต้องไม่เป็นคนเดียวกัน',
+    path: ['assistanceDoctorID'],
+  });
+
+//Type Edit & Assign Patient
+export type staffEditPatientSchemaValues = z.infer<
+  typeof staffEditPatientSchema
+>;
+
+// ----------------------------------------------- //
 // Register new Patient
 export const registerNewPatientSchema = z
   .object({

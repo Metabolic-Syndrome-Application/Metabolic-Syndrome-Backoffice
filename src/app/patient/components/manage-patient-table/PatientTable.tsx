@@ -24,11 +24,11 @@ const ManagePatientTable = () => {
   const dispatch = useDispatch<any>();
 
   const patients = useSelector(selectAllPatients);
-  console.log('Patients:', patients);
+  console.log('Patient Tables:', patients);
 
 
   const doctors = useSelector(selectAllDoctors);
-  console.log('Doctors:', doctors);
+  //console.log('Doctors:', doctors);
 
   const loadPatients = async () => {
     try {

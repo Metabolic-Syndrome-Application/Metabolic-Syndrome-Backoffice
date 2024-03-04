@@ -1,28 +1,27 @@
 "use client"
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useSnackbar } from 'notistack';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { FiEdit } from 'react-icons/fi';
 import { MdEdit } from 'react-icons/md';
-import { useDispatch, useSelector } from 'react-redux';
 import { z } from 'zod';
 
 import useAxiosAuth from '@/hooks/useAxiosAuth';
 import useModal from '@/hooks/useModal';
 
 import ActionButton from '@/components/buttons/ActionButton';
+import { SwitchToggle } from '@/components/buttons/SwitchToggle';
 import UploadImageDisplay from '@/components/form/components/UploadImageDisplay';
 import FormHeaderText from '@/components/form/FormHeaderText';
 import { InputText } from '@/components/form/InputText';
+import { updateDailyChallengeSchema, updateDailyChallengeValues } from '@/components/form/validation/ChallengeValidator';
 import TiptapTextField from '@/components/text-editor/TipTapTextField';
 
-import { API_PATH } from '@/config/api';
-import { dayOfWeekThaiLabel } from '@/helpers/date';
-import { updateDailyChallengeSchema, updateDailyChallengeValues } from '@/components/form/validation/ChallengeValidator';
 import DetailDailyFields from '@/app/challenge/daily/components/create-daily-challenge/DetailDailyFields';
+import { API_PATH } from '@/config/api';
 import { dataOptions } from '@/constant/challenge';
-import { SwitchToggle } from '@/components/buttons/SwitchToggle';
+import { dayOfWeekThaiLabel } from '@/helpers/date';
 
 
 

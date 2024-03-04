@@ -110,11 +110,6 @@ const ManageUserTable = () => {
       renderCell: (params) => {
         return (
           <div className='flex flex-row items-center space-x-4'>
-            {/* <EditForm
-              loadData={loadUsers}
-              api={`http://localhost:8000/api/user/profile/${params.row.role}/${params.row.id}`}
-              id={params.row.id}
-            /> */}
             <AdminEditProfile
               loadData={loadUsers}
               api={API_PATH.PUT_PROFILE_OTHER(params.row.role, params.row.id)}

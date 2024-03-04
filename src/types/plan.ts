@@ -12,7 +12,7 @@ export interface IPlanData {
   date?: string;
 }
 
-//get profile doctor all
+//get plan  optons all
 export interface IGetPlanAllOptions {
   id: string;
   name: string;

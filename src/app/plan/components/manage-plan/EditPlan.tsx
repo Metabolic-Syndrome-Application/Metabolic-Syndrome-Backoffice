@@ -1,11 +1,10 @@
 "use client"
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useSnackbar } from 'notistack';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { FiEdit } from 'react-icons/fi';
 import { MdEdit } from 'react-icons/md';
-import { useDispatch, useSelector } from 'react-redux';
 import { z } from 'zod';
 
 import useAxiosAuth from '@/hooks/useAxiosAuth';
@@ -23,9 +22,6 @@ import DetailPlanFields from '@/app/plan/components/create-plan/nested-form/Deta
 import { API_PATH } from '@/config/api';
 import { typePlanOptions } from '@/constant/plan';
 import { dayOfWeekThaiLabel } from '@/helpers/date';
-import { fetchPlanById, selectAllPlans } from '@/redux/slices/plansSlice';
-import session from 'redux-persist/es/storage/session';
-import { useSession } from 'next-auth/react';
 
 
 

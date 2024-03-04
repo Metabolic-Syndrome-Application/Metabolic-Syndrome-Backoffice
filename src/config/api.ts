@@ -1,4 +1,5 @@
 export const BACKEND_URL = 'http://localhost:8000';
+//export const BACKEND_URL = 'http://34.87.86.35:8000';
 
 export const API_PATH = {
   //Auth : wait add admin form
@@ -20,6 +21,7 @@ export const API_PATH = {
 
   //Patient
   GET_PROFILE_OTHER: (id: string) => `/api/user/profile/patient/${id}`,
+  GET_PROFILE_PATIENT_OTHER: (id: string) => `/api/user/profile/patient/${id}`,
   PUT_PROFILE_PATIENT_OTHER: (id: string) => `/api/user/profile/patient/${id}`,
 
   //Patient : OTP Generate

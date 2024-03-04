@@ -58,7 +58,7 @@ const CardDiseaseRisk = ({ id, diseaseRisk }: CardDiseaseRiskProps) => {
                 className="w-full h-[250px] md:h-full rounded-xl object-contain md:object-fill lg:object-cover"
                 width={400}
                 height={400}
-                priority={false}
+                priority={true}
               />
 
               <div className="absolute inset-0 top-[42.77%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 border-dashed border-2 bg-default-yellow blur-md w-[65px] h-[65px] rounded-full">

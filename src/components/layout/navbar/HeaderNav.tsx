@@ -41,7 +41,7 @@ const HeaderNav = () => {
                   width={350}
                   height={350}
                   alt='Hero'
-                  //priority={true}
+                  priority={true}
                   placeholder="blur"
                   blurDataURL="/assets/icons/logo.svg"
                   quality={95}
