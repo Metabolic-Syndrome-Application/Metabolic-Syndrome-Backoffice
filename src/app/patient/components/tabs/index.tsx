@@ -1,30 +1,15 @@
 import { Icon } from '@iconify/react';
 import React from 'react';
-import { useDispatch } from 'react-redux';
 
 import { TabbedList } from '@/components/tabbed/TabbedList';
 
 import HealthRecordPage from '@/app/patient/record/health-record/page';
 import HospitalRecordPage from '@/app/patient/record/hospital-record/page';
 import PersonalInfo from '@/app/patient/record/personal-info/PersonalInfo';
-import { fetchRecordAllById, fetchRecordHospitalById } from '@/redux/slices/recordHealthsSlice';
 
 import { TabConfig } from '@/types/tab';
 
 export const MainPatientTabs = ({ id }: { id: string }) => {
-
-  const dispatch = useDispatch<any>();
-
-
-  // Define the API fetching functions
-  const fetchHealthRecord = (id: string) => {
-    dispatch(fetchRecordAllById(id));
-  };
-
-  const fetchHospitalRecord = (id: string) => {
-    dispatch(fetchRecordHospitalById(id));
-  };
-
 
   const tabConfig: TabConfig[] = [
     {
@@ -38,14 +23,12 @@ export const MainPatientTabs = ({ id }: { id: string }) => {
       icon: <Icon icon='icon-park-solid:health' width='18' height='20' />,
       name: 'ข้อมูลสุขภาพ',
       component: <HealthRecordPage id={id} />
-      // component: <RecordHealthTable params={{ id }} fetchRecordApi={fetchHealthRecord} />
     },
     {
       id: 3,
       icon: <Icon icon='material-symbols:stylus-note' width='18' height='22' />,
       name: 'จดบันทึกค่าสุขภาพ',
       component: <HospitalRecordPage id={id} />
-      //component: <RecordHealthTable params={{ id }} fetchRecordApi={fetchHospitalRecord} />
     },
   ];
   return (

@@ -1,7 +1,9 @@
 'use client';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useSnackbar } from 'notistack';
-import { FormProvider, SubmitHandler, useForm, useFormContext } from 'react-hook-form';
+import { useEffect } from 'react';
+import { FormProvider, useForm } from 'react-hook-form';
+import { FiEdit } from 'react-icons/fi';
 import { Ri24HoursFill } from "react-icons/ri";
 import { useDispatch, useSelector } from 'react-redux';
 import { z } from 'zod';
@@ -11,17 +13,14 @@ import useModal from '@/hooks/useModal';
 
 import ActionButton from '@/components/buttons/ActionButton';
 import FormHeaderText from '@/components/form/FormHeaderText';
+import { InputMultiline } from '@/components/form/InputMultiline';
 import { InputText } from '@/components/form/InputText';
 import { createQuizChallengeSchema, createQuizSchemaValues } from '@/components/form/validation/ChallengeValidator';
 
 import OptionQuizFields from '@/app/challenge/quiz/components/create-quiz/OptionQuizFields';
 import { API_PATH } from '@/config/api';
-import { FiEdit } from 'react-icons/fi';
-import { fetchQuizById, getIdQuiz, selectAllQuizs, selectQuizById } from '@/redux/slices/quizsSlice';
-import { useCallback, useEffect, useState } from 'react';
-import { IChoicesQuiz } from '@/types/challenge';
-import { TextFieldInfo } from '@/components/form/TextFieldInfo';
-import { InputMultiline } from '@/components/form/InputMultiline';
+import { fetchQuizById, selectQuizById } from '@/redux/slices/quizsSlice';
+
 
 
 const EditQuiz = ({ params, loadData }: { params: { id: string }, loadData: () => void }) => {

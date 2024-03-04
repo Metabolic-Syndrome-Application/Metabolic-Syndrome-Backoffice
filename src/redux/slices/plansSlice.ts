@@ -27,7 +27,7 @@ export const fetchAllPlans = createAsyncThunk('fetchAllPlans', async () => {
     const usersWithIndex = data.plan ? addIndexPlan(data.plan) : [];
     return usersWithIndex;
   } catch (error) {
-    console.error('Error fetching users:', error);
+    console.error('Error fetching plan:', error);
     throw error; // Ensure the error is propagated
   }
 });
@@ -42,7 +42,7 @@ export const fetchPlanById = createAsyncThunk(
       //console.log('Get 1 plan', data.plan);
       return data.plan;
     } catch (error) {
-      console.log('Error fetching user data id:', error);
+      console.log('Error fetching plan data id:', error);
       throw error; // Ensure the error is propagated
     }
   }
@@ -56,23 +56,26 @@ const plansSlice = createSlice({
       state.plan = action.payload;
       state.status = 'succeeded';
     },
-    createPlan: (state, action: PayloadAction<IPlanData>) => {
-      state.plan.push(action.payload);
+    getPlanById: (state, action: PayloadAction<IPlanData>) => {
+      state.plan = [action.payload];
+      state.status = 'succeeded';
     },
-
-    getPlanById: (state: PlanState, action: PayloadAction<IPlanData>) => {
-      const id = action.payload.id;
-      const planIndex = state.plan.findIndex((item) => item.id === id);
-      if (planIndex !== -1) {
-        state.plan[planIndex] = action.payload;
-      }
-    },
-    updatePlanById: (state, action: PayloadAction<IPlanData>) => {
-      const updatedPlan = action.payload;
-      state.plan = state.plan.map((plan) =>
-        plan.id === updatedPlan.id ? updatedPlan : plan
-      );
-    },
+    // createPlan: (state, action: PayloadAction<IPlanData>) => {
+    //   state.plan.push(action.payload);
+    // },
+    // getPlanById: (state: PlanState, action: PayloadAction<IPlanData>) => {
+    //   const id = action.payload.id;
+    //   const planIndex = state.plan.findIndex((item) => item.id === id);
+    //   if (planIndex !== -1) {
+    //     state.plan[planIndex] = action.payload;
+    //   }
+    // },
+    // updatePlanById: (state, action: PayloadAction<IPlanData>) => {
+    //   const updatedPlan = action.payload;
+    //   state.plan = state.plan.map((plan) =>
+    //     plan.id === updatedPlan.id ? updatedPlan : plan
+    //   );
+    // },
   },
   extraReducers(builder) {
     builder
@@ -90,22 +93,30 @@ const plansSlice = createSlice({
       .addCase(fetchPlanById.pending, (state) => {
         state.status = 'loading';
       })
+      // .addCase(fetchPlanById.fulfilled, (state, action) => {
+      //   if (!action.payload?.id) {
+      //     console.log('Update could not complete');
+      //     console.log(action.payload);
+      //     return;
+      //   }
+
+      //   const updatedPlan: IPlanData = {
+      //     ...action.payload,
+      //     date: new Date().toISOString(),
+      //   };
+
+      //   state.plan = [updatedPlan]; // Replace the array with a single object
+      //   state.status = 'succeeded';
+      // })
       .addCase(fetchPlanById.fulfilled, (state, action) => {
         if (!action.payload?.id) {
-          console.log('Update could not complete');
-          console.log(action.payload);
           return;
         }
 
-        const updatedPlan: IPlanData = {
-          ...action.payload,
-          date: new Date().toISOString(),
-        };
-
-        state.plan = [updatedPlan]; // Replace the array with a single object
+        state.plan = [action.payload]; // Store the single quiz as an array
+        console.log('redux2 fetchPlanById', action.payload);
         state.status = 'succeeded';
       })
-
       .addCase(fetchPlanById.rejected, (state) => {
         state.status = 'failed';
         state.error = true;
@@ -115,11 +126,12 @@ const plansSlice = createSlice({
 
 export const selectAllPlans = (state: { plan: PlanState }) => state.plan.plan;
 
+//not used
 // export const selectPlanById = (state: { plan: PlanState }, planId: any) =>
 //   state.plan.plan.find((plan: IPlanData) => plan.id === planId);
-export const selectPlanById = (state: { plan: PlanState }, planId: string) =>
-  state.plan.plan.find((plan: IPlanData) => plan.id === planId);
+export const selectPlanById = (state: { plan: PlanState }) =>
+  state.plan.plan[0];
 
-export const { getPlans, createPlan } = plansSlice.actions;
+export const { getPlans, getPlanById } = plansSlice.actions;
 
 export default plansSlice.reducer;

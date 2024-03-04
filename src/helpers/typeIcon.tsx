@@ -54,7 +54,7 @@ export const labelDisease: { [key in DiseaseType]: string } = {
 
 export const imgDisease: { [key in DiseaseType]: string } = {
   [DiseaseType.diabetes]: '/assets/images/diabetes.png',
-  [DiseaseType.hyperlipidemia]: '/assets/images/hyperlipidemia.png',
+  [DiseaseType.hyperlipidemia]: '/assets/images/cholesterol.png',
   [DiseaseType.hypertension]: '/assets/images/hypertension.png',
   [DiseaseType.obesity]: '/assets/images/obesity.png',
   [DiseaseType.metabolicLow]: '/assets/images/metabolic.png',

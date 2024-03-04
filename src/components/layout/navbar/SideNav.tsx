@@ -51,6 +51,7 @@ const SideNav = ({ open, setOpen }: SideNavProps) => {
               height={350}
               alt='Hero'
               placeholder='blur'
+              priority={false}
               blurDataURL='/assets/icons/logo.svg'
             />
           </div>

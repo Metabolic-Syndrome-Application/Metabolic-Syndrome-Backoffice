@@ -21,7 +21,7 @@ const PatientPage = () => {
   return (
     <div className='p-4'>
 
-      <MultiformPatient></MultiformPatient>
+      <MultiformPatient />
 
       {/* <Otp></Otp> */}
 

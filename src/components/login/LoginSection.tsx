@@ -3,17 +3,17 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { AxiosError } from 'axios';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { getSession, signIn, signOut, useSession } from 'next-auth/react';
+import { getSession, signIn, signOut } from 'next-auth/react';
 import { useSnackbar } from 'notistack';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 
+import ActionButton from '@/components/buttons/ActionButton';
 import { InputText } from '@/components/form/InputText';
 import {
   FormLoginProps,
   loginSchema,
 } from '@/components/form/validation/UserValidator';
-import ActionButton from '@/components/buttons/ActionButton';
 
 type LoginProps = {
   callbackUrl?: string;
@@ -80,6 +80,7 @@ const LoginSection = (props: LoginProps) => {
           <div className='flex flex-col items-center justify-center space-y-4 px-4'>
             <Image
               src='/assets/icons/logo.svg'
+              priority={true}
               alt='logo'
               width={150}
               height={150}

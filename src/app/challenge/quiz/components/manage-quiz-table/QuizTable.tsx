@@ -152,7 +152,6 @@ const QuizTable = () => {
       renderHeader: () => <h5 className='font-medium'>ชื่อคำถาม</h5>,
       renderCell: (cellValues: GridRenderCellParams) => (
         <div>
-
           {/* params.row.question */}
           <div className="flex w-[250px] md:w-[400px] break-all pr-4">{cellValues.value}</div>
           {/* expand row : see question & correct chouce */}
@@ -197,12 +196,6 @@ const QuizTable = () => {
         return (
           <div className='flex flex-row items-center space-x-4'>
             <ViewButton href={`/challenge/quiz/detail/${params.row.id}`} />
-            {/* <EditPlan
-              loadData={loadPlans}
-              api={`http://localhost:8000/api/plan/profile/${params.row.id}`}
-              id={params.row.id}
-             
-            /> */}
             <DeleteButton
               loadData={loadQuizs}
               api={API_PATH.DELETE_QUIZ(params.row.id)}

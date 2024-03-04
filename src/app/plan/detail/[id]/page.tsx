@@ -1,40 +1,51 @@
 'use client';
 import { useSession } from 'next-auth/react';
-import React, { useCallback, useEffect, useState } from 'react';
-
-import useAxiosAuth from '@/hooks/useAxiosAuth';
+import React, { useCallback, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { BackButton } from '@/components/tabbed/BackButton';
 
 import { CardPlan } from '@/app/plan/components/cards/CardPlan';
 import EditPlan from '@/app/plan/components/manage-plan/EditPlan';
-import { API_PATH } from '@/config/api';
+import { fetchPlanById, selectPlanById } from '@/redux/slices/plansSlice';
 
-import { IPlanData } from '@/types/plan';
 
 
 const ViewPlanPage = ({ params }: { params: { id: string } }) => {
-  const { data: session } = useSession();
-  const axiosAuth = useAxiosAuth();
-  //const [userData, setUserData] = useState<IPlanData[]>([]);
-  const [userData, setUserData] = useState<IPlanData | null>(null);
   const id = params.id;
+  const { data: session } = useSession();
 
-  const fetchPlan = useCallback(async () => {
+  //not used redux
+  // const [userData, setUserData] = useState<IPlanData | null>(null);
+  // const fetchPlan = useCallback(async () => {
+  //   try {
+  //     const {
+  //       data: { data },
+  //     } = await axiosAuth.get(API_PATH.GET_PLAN(id as string));
+  //     console.log('Get 1 plan', data);
+  //     setUserData(data.plan);
+  //   } catch (error) {
+  //     console.log('Error fetching user data:', error);
+  //   }
+  // }, [axiosAuth, id]); 
+
+  const dispatch = useDispatch<any>();
+  const plans = useSelector(selectPlanById);
+
+
+  const loadPlan = useCallback(async () => {
     try {
-      const {
-        data: { data },
-      } = await axiosAuth.get(API_PATH.GET_PLAN(id as string));
-      console.log('Get 1 plan', data);
-      setUserData(data.plan);
+      dispatch(fetchPlanById(id));
+      //console.log('fetchPlanById', loadPlan)
     } catch (error) {
-      console.log('Error fetching user data:', error);
+      //console.log('error', error);
     }
-  }, [axiosAuth, id]); // Add axiosAuth and id as dependencies
+  }, [id])
+
 
   useEffect(() => {
     if (session) {
-      fetchPlan();
+      dispatch(fetchPlanById(id));
     }
   }, []);
 
@@ -45,16 +56,16 @@ const ViewPlanPage = ({ params }: { params: { id: string } }) => {
 
       <div className='shadow-light-shadow bg-white rounded-xl container mx-auto'>
 
-        <EditPlan params={{ id }} loadData={fetchPlan} />
+        <EditPlan params={{ id }} loadData={loadPlan} />
         {/* wait refresh page */}
-        {userData && (
+        {plans && (
           <CardPlan
-            id={userData.id}
-            name={userData.name}
-            type={userData.type}
-            description={userData.description}
-            photo={userData.photo}
-            detail={userData.detail}
+            id={plans?.id}
+            name={plans?.name}
+            type={plans?.type}
+            description={plans?.description}
+            photo={plans?.photo}
+            detail={plans?.detail}
           />
         )}
 

@@ -1,7 +1,7 @@
 'use client';
 import { useSession } from 'next-auth/react';
-import React, { useCallback, useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useCallback, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 import useAxiosAuth from '@/hooks/useAxiosAuth';
 
@@ -10,10 +10,10 @@ import FormHeaderText from '@/components/form/FormHeaderText';
 import CardDiseaseRisk from '@/app/patient/components/cards/CardDiseaseRisk';
 import { CardInfo } from '@/app/patient/components/cards/CardInfo';
 import CardInfoPlan from '@/app/patient/components/cards/CardInfoPlan';
-import { API_PATH } from '@/config/api';
-
-import { IDiseaseRisk, IPatientData } from '@/types/patient';
-
+import DoctorEditPatientForm from '@/app/patient/record/personal-info/DoctorEditPatientForm';
+import StaffEditPatientForm from '@/app/patient/record/personal-info/StaffEditPatientForm';
+import { fetchPatientById, selectPatientById } from '@/redux/slices/patientsSlice';
+import { fetchAllPlans } from '@/redux/slices/plansSlice';
 
 const PersonalInfo = ({ id }: { id: string }) => {
   const { data: session } = useSession();
@@ -22,74 +22,112 @@ const PersonalInfo = ({ id }: { id: string }) => {
 
   const dispatch = useDispatch<any>();
 
-  const [userData, setUserData] = useState<IPatientData | null>(null);
-  const [patientDiseaseRisk, setPatientDiseaseRisk] = useState<IDiseaseRisk | null>(null);
+  // const patient = useSelector(selectPatientById)
+  const patient = useSelector(selectPatientById);
 
-  const fetchUser = useCallback(async () => {
+  console.log('Patient infosss:', patient);
+
+  const loadIdPatient = useCallback(async () => {
     try {
-      const {
-        data: { data },
-      } = await axiosAuth.get(
-        API_PATH.GET_PROFILE_OTHER(id));
-      console.log('Get 1 patient', data);
-      setUserData(data.user);
+      dispatch(fetchPatientById(id));
     } catch (error) {
-      console.log('Error fetching user data:', error);
+      console.log('error', error);
     }
-  }, [axiosAuth, id]); // Add axiosAuth and id as dependencies
+  }, [dispatch, id])
+
 
   useEffect(() => {
-    if (session) {
-      fetchUser();
+    if (session && session.user) {
+      // Dispatch actions to fetch patients and doctors
+      dispatch(fetchPatientById(id));
+      // dispatch(fetchAllDoctors());
+      dispatch(fetchAllPlans())
     }
-  }, []);
+  }, [dispatch]);
+
+
+
 
   return (
     <div className='w-full'>
-      {userData && (
+      {session?.user?.role === 'staff' && (
+        <StaffEditPatientForm params={{ id }} loadData={loadIdPatient} />
+      )}
+      {session?.user?.role === 'doctor' && (
+        <DoctorEditPatientForm params={{ id }} loadData={loadIdPatient} />
+      )}
+      {/* 
+      {patient && (
         <CardInfo
-          id={userData?.id}
-          hn={userData?.hn}
-          firstName={userData?.firstName}
-          lastName={userData?.lastName}
-          yearOfBirth={userData?.yearOfBirth}
-          gender={userData?.gender}
-          status={userData?.status}
-          mainDoctorID={userData?.mainDoctorID}
-          mainDoctor={userData?.mainDoctor}
-          assistanceDoctorID={userData?.assistanceDoctorID}
-          assistanceDoctor={userData?.assistanceDoctor}
-          disease={userData?.disease}
+          id={patient?.id}
+          hn={patient?.hn}
+          firstName={patient?.firstName}
+          lastName={patient?.lastName}
+          yearOfBirth={patient?.yearOfBirth}
+          gender={patient?.gender}
+          status={patient?.status}
+          mainDoctorID={patient?.mainDoctorID}
+          mainDoctor={patient?.mainDoctor}
+          assistanceDoctorID={patient?.assistanceDoctorID}
+          assistanceDoctor={patient?.assistanceDoctor}
+          disease={patient?.disease}
         />
 
       )}
-      {userData && userData.diseaseRisk && (
+      {patient && patient.diseaseRisk && (
         <CardDiseaseRisk
-          id={userData.id}
-          diseaseRisk={userData.diseaseRisk} />
+          id={patient.id}
+          diseaseRisk={patient.diseaseRisk} />
       )}
 
 
-
-      {userData && userData.Plan && userData.planID && (
-        <CardInfoPlan
-          id={userData.id}
-          planData={{ planID: userData.planID, Plan: userData.Plan }}
-        />
+      {patient && patient.Plan && patient.planID && (
+        <div>
+          <CardInfoPlan id={patient?.id} planData={{ planID: patient.planID, Plan: patient.Plan }} />
+        </div>
       )}
+   */}
+      <React.Fragment key={`patient-${patient.id}`}>
+        {/* Render patient information */}
+        {patient && (
+          <div key={`patient-info-${patient.id}`}>
+            <CardInfo
+              id={patient?.id}
+              hn={patient?.hn}
+              firstName={patient?.firstName}
+              lastName={patient?.lastName}
+              yearOfBirth={patient?.yearOfBirth}
+              gender={patient?.gender}
+              status={patient?.status}
+              mainDoctorID={patient?.mainDoctorID}
+              mainDoctor={patient?.mainDoctor}
+              assistanceDoctorID={patient?.assistanceDoctorID}
+              assistanceDoctor={patient?.assistanceDoctor}
+              disease={patient?.disease}
+            />
+          </div>
+        )}
 
-      <h2>eeeee</h2>
+        {/* Render disease risk */}
+        {patient && patient.diseaseRisk && (
+          <div key={`patient-disease-risk-${patient.id}`}>
+            <CardDiseaseRisk
+              id={patient.id}
+              diseaseRisk={patient.diseaseRisk}
+            />
+          </div>
+        )}
+
+        {/* Render plan information */}
+        {patient && patient.Plan && patient.planID && (
+          <div key={`patient-plan-${patient.id}`}>
+            <CardInfoPlan planData={{ planID: patient.planID, Plan: patient.Plan }} />
+          </div>
+        )}
+      </React.Fragment>
 
       <FormHeaderText title='การเพิ่มสิทธิ์ให้แพทย์' useBigestHeader={false} />
       <FormHeaderText title='การปรับเปลี่ยนพฤติกรรม' useBigestHeader={false} />
-      <button onClick={fetchUser} className='bg-blue-50'>
-        Get all user
-      </button>
-
-      <button onClick={() => setUserData(null)} className='bg-blue-50'>
-        Clear Users
-      </button>
-      {userData && JSON.stringify(userData)}
     </div>
   );
 };

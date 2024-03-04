@@ -33,11 +33,20 @@ export const MultiselectCheckboxTags: React.FC<FormMultiCheckboxProps> = ({
   control,
   label,
   options = [],
+  defaultValue,
 }) => {
+
+  const convertedDefaultValue = defaultValue?.map((id: string) => {
+    const option = options.find((opt) => opt.value === id);
+    return option ? { label: option.label, value: option.value } : null;
+  });
+
+
   return (
     <Controller
       name={name}
       control={control}
+      defaultValue={defaultValue}
       render={(
         { field: { onChange, value = [] }, fieldState: { error } } // Ensure value is always an array
       ) => (
@@ -51,7 +60,8 @@ export const MultiselectCheckboxTags: React.FC<FormMultiCheckboxProps> = ({
           }}
           options={options}
           disableCloseOnSelect
-          getOptionLabel={(option) => option.label}
+          // getOptionLabel={(option) => option.label}
+          getOptionLabel={(option) => `${option.label}`}
           isOptionEqualToValue={(option, value) => option.value === value.value}
           renderOption={(props, option, { selected }) => {
             return (

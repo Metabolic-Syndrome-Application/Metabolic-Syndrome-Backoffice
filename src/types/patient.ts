@@ -20,7 +20,6 @@ export interface IPatientData {
   planID?: string[];
   Plan?: IPlan[];
 }
-
 export interface IGetProfilePatientData {
   id: string;
   hn: string;
@@ -43,7 +42,7 @@ export interface IGetProfilePatientAllApi {
 //Only Patient By ID
 export interface IGetProfilePatientIdApi {
   data: {
-    user: IPatientData[];
+    user: IPatientData;
   };
   status: string;
 }
