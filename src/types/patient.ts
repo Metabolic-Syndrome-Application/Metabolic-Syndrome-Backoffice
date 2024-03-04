@@ -11,7 +11,7 @@ export interface IPatientData {
   yearOfBirth: number;
   gender: string;
   status: string;
-  mainDoctorID: string;
+  mainDoctorID?: string;
   mainDoctor?: IUserData;
   assistanceDoctorID?: string;
   assistanceDoctor?: IUserData;

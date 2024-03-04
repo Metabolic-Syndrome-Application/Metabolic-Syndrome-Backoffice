@@ -1,8 +1,10 @@
+import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 
 import { selectAllDoctors } from '@/redux/slices/doctorSlice';
 import { selectAllPlans } from '@/redux/slices/plansSlice';
 
+import { IPatientData } from '@/types/patient';
 import { IGetDoctorOptions } from '@/types/user';
 
 //Get All Doctor
@@ -79,6 +81,22 @@ export const usePlanOptions = (planID: string[]) => {
     value: option.id,
     selected: planID.includes(option.id), // Check if the plan is selected
   }));
+};
+
+// Outside of your component file
+export const useMappedPlanID = (
+  patient: IPatientData,
+  getPlanOptions: any[]
+) => {
+  return useMemo(() => {
+    if (!patient || !patient.planID) return []; // Handle the case where planID is undefined
+
+    // Map planID to corresponding options with labels and values
+    return patient.planID.map((id) => {
+      const option = getPlanOptions.find((opt) => opt.value === id);
+      return option ? { label: option.label, value: option.value } : undefined;
+    });
+  }, [patient, getPlanOptions]);
 };
 
 // const getPlanOptions = (options: IGetPlanAllOptions[]) => {

@@ -17,3 +17,7 @@ export const passwordValidator = baseStringValidator
     /[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]/,
     'รหัสผ่านควรมีตัวอักษระพิเศษอย่างน้อย 1 ตัว'
   );
+
+export const passwordPatientValidator = baseStringValidator
+  .min(4, 'รหัสผ่านควรมีความยาวอย่างน้อย 4 ตัวอักษร')
+  .max(8, 'รหัสผ่านควรมีความยาวไม่เกิน 8 ตัวอักษร');
