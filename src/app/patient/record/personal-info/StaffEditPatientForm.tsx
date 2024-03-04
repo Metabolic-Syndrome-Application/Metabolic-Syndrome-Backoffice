@@ -4,7 +4,7 @@ import { useSnackbar } from "notistack";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { FaUserDoctor } from "react-icons/fa6";
-import { MdEdit } from "react-icons/md";
+import { FiEdit } from "react-icons/fi";
 import { useDispatch, useSelector } from "react-redux";
 import { z } from "zod";
 
@@ -13,7 +13,6 @@ import useAxiosAuth from "@/hooks/useAxiosAuth";
 import useModal from "@/hooks/useModal";
 
 import ActionButton from "@/components/buttons/ActionButton";
-import { IconFlatButton } from "@/components/buttons/IconFlatButton";
 import FormHeaderText from "@/components/form/FormHeaderText";
 import { InputDropdown } from "@/components/form/InputDropdown";
 import { InputText } from "@/components/form/InputText";
@@ -88,8 +87,12 @@ const StaffEditPatientForm = ({ params, loadData }: { params: { id: string }, lo
 
   return (
     <div className="w-full">
-      <article className='flex w-full items-center justify-end px-4 py-2'>
-        <IconFlatButton icon={MdEdit} title='แก้ไขข้อมูล' onClick={openModal} />
+      <article className='flex w-full items-center justify-end px-4 py-2 gap-2'>
+        <FiEdit
+          className='hover:bg-light-gray text-default-blue group h-5 w-5 cursor-pointer rounded-md transition-all duration-300 ease-in-out'
+          onClick={openModal}
+        />
+        <p className="text-default-blue">แก้ไข</p>
       </article>
 
       <Modal>

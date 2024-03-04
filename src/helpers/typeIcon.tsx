@@ -15,15 +15,15 @@ import { DiseaseType, HealthRecordType } from '@/types/patient';
 export type TypePlan = (typeof typePlanOptions)[number]['value'];
 
 type IconTypeMapping = {
-  [key in TypePlan]: { icon: IconType; variant: string; label?: string };
+  [key in TypePlan]: { icon: IconType; variant: string; label?: string; bg?: string };
 };
 
 export const iconTypeMapping: IconTypeMapping = {
-  food: { icon: PiBowlFood, variant: 'green', label: 'อาหาร' },
-  exercise: { icon: FaRunning, variant: 'yellow', label: 'ออกกำลังกาย' },
-  rest: { icon: GiNightSleep, variant: 'blue', label: 'การพักผ่อน' },
-  health: { icon: RiMentalHealthLine, variant: 'orange', label: 'สุขภาพ' },
-  default: { icon: CiStethoscope, variant: 'gray' },
+  food: { icon: PiBowlFood, variant: 'green', label: 'อาหาร', bg: '#A5D1B0' },
+  exercise: { icon: FaRunning, variant: 'yellow', label: 'ออกกำลังกาย', bg: '#FFE58A' },
+  rest: { icon: GiNightSleep, variant: 'blue', label: 'การพักผ่อน', bg: '#C9E1FD' },
+  health: { icon: RiMentalHealthLine, variant: 'orange', label: 'สุขภาพ', bg: '#FDC5B4' },
+  default: { icon: CiStethoscope, variant: 'gray', bg: '#F2F2F2' },
 };
 
 // -------------------------------------------------------- //

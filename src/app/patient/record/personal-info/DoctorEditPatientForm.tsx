@@ -4,16 +4,15 @@ import { useSnackbar } from "notistack";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { FaUserDoctor } from "react-icons/fa6";
-import { MdEdit } from "react-icons/md";
+import { FiEdit } from "react-icons/fi";
 import { useDispatch, useSelector } from "react-redux";
 import { z } from "zod";
 
-import { useDoctorOptions, usePlanOptions } from "@/lib/dataOptions";
+import { useDoctorOptions, useMappedPlanID, usePlanOptions } from "@/lib/dataOptions";
 import useAxiosAuth from "@/hooks/useAxiosAuth";
 import useModal from "@/hooks/useModal";
 
 import ActionButton from "@/components/buttons/ActionButton";
-import { IconFlatButton } from "@/components/buttons/IconFlatButton";
 import FormHeaderText from "@/components/form/FormHeaderText";
 import { InputDropdown } from "@/components/form/InputDropdown";
 import { InputText } from "@/components/form/InputText";
@@ -23,7 +22,7 @@ import { doctorEditPatientSchema, doctorEditPatientSchemaValues } from "@/compon
 
 import { API_PATH } from "@/config/api";
 import { dataOptions, yearOptions } from "@/constant/user";
-import { fetchPatientById, selectPatientById } from "@/redux/slices/patientsSlice";
+import { selectPatientById } from "@/redux/slices/patientsSlice";
 
 
 const DoctorEditPatientForm = ({ params, loadData }: { params: { id: string }, loadData: () => void }) => {
@@ -34,8 +33,8 @@ const DoctorEditPatientForm = ({ params, loadData }: { params: { id: string }, l
   const { Modal, openModal, closeModal } = useModal();
 
   const { enqueueSnackbar } = useSnackbar();
-  const dispatch = useDispatch<any>();
 
+  const dispatch = useDispatch<any>();
   const patient = useSelector(selectPatientById);
   const [submittedData, setSubmittedData] = useState<doctorEditPatientSchemaValues | null>(null);
 
@@ -52,23 +51,21 @@ const DoctorEditPatientForm = ({ params, loadData }: { params: { id: string }, l
     defaultValues: submittedData || {},
   });;
 
+  //fix: Maximum update depth exceeded?
   // Get planID array from patient data
   const getDoctorOptions = useDoctorOptions()
   const planID = patient?.planID || [];
   const getPlanOptions = usePlanOptions(planID);
-  const mappedPlanID = patient.planID
-    ? patient.planID.map((id) => {
-      const option = getPlanOptions.find((opt) => opt.value === id);
-      return option ? { label: option.label, value: option.value } : undefined; // Ensure the type is compatible
-    })
-    : [];
+  const mappedPlanID = useMappedPlanID(patient, getPlanOptions);
 
   useEffect(() => {
     if (patient) {
+
       // Map planID to corresponding options with labels and values
       reset({ ...patient, planID: mappedPlanID });
     }
-  }, [patient, planID, reset]);
+  }, [patient, reset]);
+
 
 
   const onSubmit = async (data: z.infer<typeof doctorEditPatientSchema>) => {
@@ -90,9 +87,9 @@ const DoctorEditPatientForm = ({ params, loadData }: { params: { id: string }, l
       // Reload the data after successful edit
       enqueueSnackbar('edit success', { variant: 'success' });
       loadData();
-      await dispatch(fetchPatientById(id));
+      // await dispatch(fetchPatientById(id));
 
-      // closeModal(); // Close the modal if needed
+      closeModal(); // Close the modal if needed
     } catch (error) {
       enqueueSnackbar('Cannot edit', { variant: 'error' });
       console.log('Error:', error);
@@ -103,10 +100,13 @@ const DoctorEditPatientForm = ({ params, loadData }: { params: { id: string }, l
 
   return (
     <div className="w-full">
-      <article className='flex w-full items-center justify-end px-4 py-2'>
-        <IconFlatButton icon={MdEdit} title='แก้ไขข้อมูล' onClick={openModal} />
+      <article className='flex w-full items-center justify-end px-4 py-2 gap-2'>
+        <FiEdit
+          className='hover:bg-light-gray text-default-blue group h-5 w-5 cursor-pointer rounded-md transition-all duration-300 ease-in-out'
+          onClick={openModal}
+        />
+        <p className="text-default-blue">แก้ไข</p>
       </article>
-
       <Modal>
         <form className="flex flex-col w-full" onSubmit={handleSubmit(onSubmit)}>
           <FormHeaderText
@@ -161,7 +161,6 @@ const DoctorEditPatientForm = ({ params, loadData }: { params: { id: string }, l
                 options={getPlanOptions}
               />
             </div>
-
           </div>
           <div className="flex gap-4 justify-end mt-4">
             <ActionButton type='submit' variant='submit' >

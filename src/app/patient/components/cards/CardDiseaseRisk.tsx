@@ -15,8 +15,8 @@ interface CardDiseaseRiskProps {
 
 {/* Display all diseaseRisk */ }
 const DiseaseRiskComponent = ({ disease, rangeRisk }: { disease: DiseaseType; rangeRisk: string }) => (
-  <div className="flex flex-col items-center justify-center w-full shadow-sm border border-light-gray rounded-lg p-4 gap-3">
-    <div className="flex items-start w-full min-w-[230px] gap-3">
+  <div className="flex flex-col items-center justify-center w-full rounded-lg p-4 gap-3 border-[1px] border-light-gray hover:shadow-md hover:bg-light-blue hover:border-blue-200">
+    <div className="flex items-start w-full md:min-w-[230px] gap-3">
       <Image
         src={imgDisease[disease]}
         alt={disease}
@@ -25,9 +25,10 @@ const DiseaseRiskComponent = ({ disease, rangeRisk }: { disease: DiseaseType; ra
         height={400}
         priority={false}
       />
-      <div>
+
+      <div className='whitespace-pre-line flex flex-col flex-grow ml-3'>
         <h5 className="text-base font-medium">{labelDisease[disease]}</h5>
-        <p className="text-[12px] text-default-gray">{thaiLabelDiseaseRisk[rangeRisk]}</p>
+        <p className="py-1 text-xs md:text-sm text-default-gray">{thaiLabelDiseaseRisk[rangeRisk]}</p>
       </div>
     </div>
     <div className="w-full">
@@ -47,21 +48,20 @@ const CardDiseaseRisk = ({ id, diseaseRisk }: CardDiseaseRiskProps) => {
   return (
     <div className="w-full">
       {diseaseRisk && (
-        <div key={id} className="flex flex-col w-full lg:w-[40%] p-2">
-          {/* <FormHeaderText title="แบบประเมินความเสี่ยง" useBigestHeader={true} /> */}
-          <h3>ผลจากแบบประเมินความเสี่ยง</h3>
-          <div className='flex flex-col md:flex-row py-2'>
+        <div key={id} className="flex flex-col w-full ">
+          <h4 className='text-balance p-2'>ผลจากแบบประเมินความเสี่ยง</h4>
+          <div className='flex flex-col md:flex-row'>
             <div className='w-full relative  md:min-h-[350px]'>
               <Image
                 src="/assets/images/wireBody.jpg"
                 alt="screening"
-                className="w-full h-[250px] md:h-full rounded-xl object-contain md:object-fill lg:object-cover"
+                className="w-full h-[250px] md:h-full rounded-xl object-contain md:overflow-hidden lg:object-cover"
                 width={400}
                 height={400}
                 priority={true}
               />
 
-              <div className="absolute inset-0 top-[42.77%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 border-dashed border-2 bg-default-yellow blur-md w-[65px] h-[65px] rounded-full">
+              <div className="md:overflow-hidden block md:hidden lg:block absolute inset-0 top-[42.77%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 border-dashed border-2 bg-default-yellow blur-md w-[65px] h-[65px] rounded-full">
                 <div className="absolute inset-0 m-auto bg-default-red blur-sm w-[30px] h-[30px] rounded-full"></div>
               </div>
 

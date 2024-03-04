@@ -2,7 +2,7 @@ import { z } from 'zod';
 
 import {
   baseStringValidator,
-  passwordValidator,
+  passwordPatientValidator,
   validateMinMax,
 } from '@/components/form/validation/ZodCheck';
 
@@ -110,8 +110,8 @@ export const registerNewPatientSchema = z
     username: z.string().refine((idCard) => /^\d{13}$/.test(idCard), {
       message: 'รหัสบัตรประชาชนต้องมี 13 หลักและเป็นตัวเลขเท่านั้น',
     }),
-    password: passwordValidator,
-    passwordConfirm: passwordValidator,
+    password: passwordPatientValidator,
+    passwordConfirm: passwordPatientValidator,
     hn: z.string().length(4),
     firstName: validateMinMax(
       2,
