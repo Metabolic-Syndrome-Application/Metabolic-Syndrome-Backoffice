@@ -34,7 +34,7 @@ const CardInfoPlan: React.FC<CardInfoPlanProps> = ({ planData }) => {
             <div key={plan.id} className="flex items-center p-4 w-full rounded-lg overflow-hidden hover:shadow-md" style={{ backgroundColor: bg }}>
               <div className='w-14'>
                 <div className="flex flex-col w-full items-center " style={{ color: bg }}>
-                  <Icon className="w-10 h-10 bg-[#FFFFFF] flex rounded-full text-center p-1.5 object-contain" />
+                  <Icon className="w-10 h-10 bg-[#FFFFFF] flex rounded-xl text-center p-1.5 object-contain" />
                 </div>
               </div>
               <div className="flex flex-col items-start ml-3">

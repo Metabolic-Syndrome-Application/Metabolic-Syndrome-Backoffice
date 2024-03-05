@@ -15,7 +15,7 @@ import { DiseaseType, HealthRecordType } from '@/types/patient';
 export type TypePlan = (typeof typePlanOptions)[number]['value'];
 
 type IconTypeMapping = {
-  [key in TypePlan]: { icon: IconType; variant: string; label?: string; bg?: string };
+  [key in TypePlan]: { icon: IconType | LucideIcon; variant: string; label?: string; bg?: string };
 };
 
 export const iconTypeMapping: IconTypeMapping = {
@@ -27,6 +27,22 @@ export const iconTypeMapping: IconTypeMapping = {
 };
 
 // -------------------------------------------------------- //
+//Type Graph Health 
+interface IconTypeHealthMapping {
+  [key: string]: {
+    icon: IconType | LucideIcon; // React component type for the icon
+    variant: string; // Variant color
+    label?: string; // Label for the health type
+    bg?: string; // Background color
+  };
+}
+export const iconTypeHealthMapping: IconTypeHealthMapping = {
+  bmi: { icon: Activity, variant: 'green', label: 'ดัชนีมวลกายและรอบเอว', bg: 'light-green' },
+  bloodPressure: { icon: HeartPulse, variant: 'red', label: 'ความดันโลหิต', bg: 'light-red' },
+  bloodGlucose: { icon: TbBrandSugarizer, variant: 'blue', label: 'ระดับน้ำตาล', bg: 'light-blue' },
+  bloodLipids: { icon: Syringe, variant: 'yellow', label: 'ไขมันในเลือด', bg: 'light-yellow' },
+  default: { icon: CiStethoscope, variant: 'gray', bg: 'light-green' },
+};
 
 //Type Record Health :  show label & icon ex. BMI
 export const labelTypeHealth: { [key in HealthRecordType]: string } = {
