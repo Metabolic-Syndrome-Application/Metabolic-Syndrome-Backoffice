@@ -43,7 +43,7 @@ export const CardInfo = ({
           <div className='flex items-center justify-between w-full'>
             <div className='space-y-2'>
               <h1 className='text-balance'>{`${firstName} ${lastName}`}</h1>
-              <h4 className='text-default-gray'>รหัส HN คนไข้ : {`${hn}`}</h4>
+              <h4 className='text-default-gray'>รหัส HN {`${hn}`}</h4>
             </div>
 
             <div className=''>
