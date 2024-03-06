@@ -57,6 +57,8 @@ export const GenerateOTPForm: FC = () => {
       } = await axiosAuth.get(API_PATH.GET_REFRESH_OTP(id));
       const newOTP = data.otp; // Get the new OTP from the response
       setFormData((prev: any) => ({ ...prev, otp: newOTP }));
+
+      startTimer()
       console.log(newOTP, 'newOTP')
 
       enqueueSnackbar("OTP refreshed successfully", { variant: "success" });

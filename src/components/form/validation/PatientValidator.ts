@@ -56,7 +56,7 @@ export const doctorEditPatientSchema = z
     yearOfBirth: z.number(),
     mainDoctorID: baseStringValidator,
     assistanceDoctorID: z.string().optional(),
-    disease: z.string(),
+    disease: z.string().nullish(),
     planID: z.array(z.object({ label: z.string(), value: z.string() })),
   })
   .refine((data) => data.mainDoctorID !== data.assistanceDoctorID, {
@@ -126,8 +126,8 @@ export const registerNewPatientSchema = z
     gender: baseStringValidator,
     yearOfBirth: z.number(),
     mainDoctorID: baseStringValidator,
-    assistanceDoctorID: z.string().optional(),
-    disease: z.string(),
+    assistanceDoctorID: z.string().nullish(),
+    disease: z.string().nullish(),
   })
   .refine((data) => data.password === data.passwordConfirm, {
     message: 'รหัสผ่านของคุณไม่ตรงกัน',
@@ -156,8 +156,8 @@ export const registerCurrentPatientchema = z
     gender: baseStringValidator,
     yearOfBirth: z.number(),
     mainDoctorID: baseStringValidator,
-    assistanceDoctorID: z.string().optional(),
-    disease: z.string(),
+    assistanceDoctorID: z.string().nullish(), //not required
+    disease: z.string().nullish(),
   })
   .refine((data) => data.mainDoctorID !== data.assistanceDoctorID, {
     message:

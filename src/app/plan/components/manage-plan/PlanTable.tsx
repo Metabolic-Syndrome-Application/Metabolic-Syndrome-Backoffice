@@ -12,10 +12,11 @@ import OutlineButton from '@/components/buttons/OutlineButton';
 import ViewButton from '@/components/buttons/ViewButton';
 import BaseTable from '@/components/table/BaseTable';
 
-import TestSendForm from '@/app/plan/components/create-plan/nested-form/TestSendForm';
+import TestSendForm from '@/app/plan/components/create-plan/nested-form/CreatePlan';
 import { API_PATH } from '@/config/api';
 import { iconTypeMapping, TypePlan } from '@/helpers/typeIcon';
 import { fetchAllPlans, selectAllPlans } from '@/redux/slices/plansSlice';
+import CreatePlan from '@/app/plan/components/create-plan/nested-form/CreatePlan';
 
 const PlanTable = () => {
   const { data: session } = useSession();
@@ -123,7 +124,7 @@ const PlanTable = () => {
   return (
     <div>
       {/* <CreatePlan /> */}
-      <TestSendForm />
+      <CreatePlan />
       <BaseTable rows={plan} columns={columns} loading={!!plan.length} />
     </div>
   );

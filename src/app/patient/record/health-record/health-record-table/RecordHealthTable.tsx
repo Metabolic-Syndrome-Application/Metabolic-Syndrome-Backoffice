@@ -17,10 +17,7 @@ import { selectAllrecords } from '@/redux/slices/recordHealthsSlice';
 const RecordHealthTable = ({ params, fetchRecordApi }: { params: { id: string }, fetchRecordApi: (id: string) => void }) => {
   const { data: session } = useSession();
 
-  const axiosAuth = useAxiosAuth()
-
   const id = params.id;
-
 
   const record = useSelector(selectAllrecords);
 

@@ -45,6 +45,7 @@ export const API_PATH = {
   PUT_PLAN: (id: string) => `/api/plan/${id}`,
   GET_PLAN: (id: string) => `/api/plan/${id}`,
   GET_PLAN_ALL: '/api/plan/all',
+  GET_PLAN_ALL_DEFAULT: `/api/plan/all-default`,
   DELETE_PLAN: (id: string) => `/api/plan/${id}`,
 
   //Quiz Challenge

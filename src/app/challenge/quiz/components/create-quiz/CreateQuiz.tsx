@@ -72,10 +72,12 @@ const CreateQuiz = () => {
   return (
     <div className='w-full'>
       <article className='flex w-full items-center justify-between px-4 py-2'>
-        <h3 className='text-balance'>ภารกิจตอบคำถามประจำวัน</h3>
-        <IconFlatButton title='สร้างภารกิจประจำวัน' onClick={openModal} />
+        <h1 className='text-balance'>ภารกิจตอบคำถามประจำวัน</h1>
+        <IconFlatButton
+          title='สร้างภารกิจประจำวัน'
+          onClick={openModal}
+        />
       </article>
-
       <Modal>
         <FormProvider {...methods}>
           <form onSubmit={handleSubmit(onSubmit)}>

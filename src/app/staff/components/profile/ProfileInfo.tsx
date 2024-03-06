@@ -17,7 +17,7 @@ const ProfileInfo = () => {
   const axiosAuth = useAxiosAuth();
   const user = useSelector(selectUser);
 
-  console.log('Staff Profile:', user);
+  //console.log('Staff Profile:', user);
 
   const dispatch = useDispatch<any>();
 

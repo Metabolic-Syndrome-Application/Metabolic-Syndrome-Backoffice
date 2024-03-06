@@ -100,7 +100,7 @@ const DailyChallengeTable = () => {
       width: isMobile ? 150 : 170,
       renderHeader: () => <h5 className='font-medium'>จำนวนผู้เข้าร่วม</h5>,
       valueGetter: (params: GridValueGetterParams) =>
-        `${params.row.participants || ''}`,
+        `${params.row.participants !== null && params.row.participants !== undefined ? params.row.participants : 0}`,
     },
     {
       field: 'Action',
@@ -110,12 +110,6 @@ const DailyChallengeTable = () => {
         return (
           <div className='flex flex-row items-center space-x-4'>
             <ViewButton href={`/challenge/daily/detail/${params.row.id}`} />
-            {/* <EditDailyChallenge
-              loadData={loadDailyChallenge}
-      
-              id={params.row.id}
-             
-            /> */}
             <DeleteButton
               loadData={loadDailyChallenge}
               api={API_PATH.DELETE_DAILY_CHALLENGE(params.row.id)}

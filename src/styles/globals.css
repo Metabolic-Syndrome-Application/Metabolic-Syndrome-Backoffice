@@ -1,6 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+/* @layer base {
+  input[type='number']::-webkit-inner-spin-button,
+  input[type='number']::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+} */
 root {
   /* #region  /**=========== Primary Color =========== */
   /* !STARTERCONF Customize these variable, copy and paste from /styles/colors.css for list of colors */
@@ -237,5 +244,12 @@ root {
 
   .textEditor ol {
     @apply list-decimal;
+  }
+
+  .my-config {
+    --darkmode: 0;
+    --h-accent: 223;
+    --s-accent: 100%;
+    --l-accent: 61%;
   }
 }

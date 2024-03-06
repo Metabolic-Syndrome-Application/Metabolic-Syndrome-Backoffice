@@ -32,6 +32,22 @@ export const fetchAllPlans = createAsyncThunk('fetchAllPlans', async () => {
   }
 });
 
+export const fetchAllPlansDefault = createAsyncThunk(
+  'fetchAllPlansDefault',
+  async () => {
+    try {
+      const {
+        data: { data },
+      } = await axiosAuth.get<IGetPlanAllApi>(API_PATH.GET_PLAN_ALL_DEFAULT);
+      const usersWithIndex = data.plan ? addIndexPlan(data.plan) : [];
+      return usersWithIndex;
+    } catch (error) {
+      console.error('Error fetching plan:', error);
+      throw error; // Ensure the error is propagated
+    }
+  }
+);
+
 export const fetchPlanById = createAsyncThunk(
   'fetchPlanById',
   async (id: string) => {
@@ -90,31 +106,26 @@ const plansSlice = createSlice({
         state.status = 'failed';
         state.error = true;
       })
+      .addCase(fetchAllPlansDefault.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(fetchAllPlansDefault.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        state.plan = action.payload || [];
+      })
+      .addCase(fetchAllPlansDefault.rejected, (state) => {
+        state.status = 'failed';
+        state.error = true;
+      })
       .addCase(fetchPlanById.pending, (state) => {
         state.status = 'loading';
       })
-      // .addCase(fetchPlanById.fulfilled, (state, action) => {
-      //   if (!action.payload?.id) {
-      //     console.log('Update could not complete');
-      //     console.log(action.payload);
-      //     return;
-      //   }
-
-      //   const updatedPlan: IPlanData = {
-      //     ...action.payload,
-      //     date: new Date().toISOString(),
-      //   };
-
-      //   state.plan = [updatedPlan]; // Replace the array with a single object
-      //   state.status = 'succeeded';
-      // })
       .addCase(fetchPlanById.fulfilled, (state, action) => {
         if (!action.payload?.id) {
           return;
         }
-
         state.plan = [action.payload]; // Store the single quiz as an array
-        console.log('redux2 fetchPlanById', action.payload);
+        //console.log('redux2 fetchPlanById', action.payload);
         state.status = 'succeeded';
       })
       .addCase(fetchPlanById.rejected, (state) => {

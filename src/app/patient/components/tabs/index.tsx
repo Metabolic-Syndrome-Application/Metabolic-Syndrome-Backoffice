@@ -3,7 +3,6 @@ import React from 'react';
 
 import { TabbedList } from '@/components/tabbed/TabbedList';
 
-import GraphRecordPage from '@/app/patient/record/graph-record/page';
 import HealthRecordPage from '@/app/patient/record/health-record/page';
 import HospitalRecordPage from '@/app/patient/record/hospital-record/page';
 import PersonalInfo from '@/app/patient/record/personal-info/page';
@@ -30,12 +29,6 @@ export const MainPatientTabs = ({ id }: { id: string }) => {
       icon: <Icon icon='material-symbols:stylus-note' width='18' height='22' />,
       name: 'จดบันทึกค่าสุขภาพ',
       component: <HospitalRecordPage id={id} />
-    },
-    {
-      id: 4,
-      icon: <Icon icon='material-symbols:stylus-note' width='18' height='22' />,
-      name: 'กราฟค่าสุขภาพ',
-      component: <GraphRecordPage id={id} />
     },
   ];
   return (
