@@ -34,22 +34,30 @@ export const CardDailyChallenge = ({
     <div className=''>
       <div className='flex w-full flex-col p-6 md:flex-row md:gap-8 min-h-[650px]'>
         <div className='flex w-full flex-col gap-4 md:w-3/5'>
-          {/* <UploadImageDisplay></UploadImageDisplay> */}
-          <div className='flex items-center justify-center '>
-            <div className='flex items-center justify-center w-[200px]'>
+          {photo && (
+            <div className='w-full flex max-h-[300px] items-center justify-center border border-dashed rounded-xl p-2'>
               <Image
-                alt="The guitarist in the concert."
-                src='/assets/images/challenge.png'
-                width={550}
-                height={550}
-                layout="responsive"
+                alt="The uploaded image"
+                src={photo.startsWith('/assets/images/') ? photo : `/${photo}`}
+                width={350}
+                height={350}
+                className='w-64 h-64 object-contain'
+                priority={false}
               />
             </div>
-          </div>
-
-
-          <div>{photo}</div>
-
+          )}
+          {!photo && (
+            <div className='w-full min-h-[300px] flex items-center justify-center border border-dashed rounded-xl p-2'>
+              <Image
+                src="/assets/images/challengeDefault.svg"
+                alt="challengeDafault"
+                className="w-56 h-56"
+                width={350}
+                height={350}
+                priority={false}
+              />
+            </div>
+          )}
           <div className='flex w-full flex-wrap items-center justify-between gap-2'>
             <h4 className='max-w-[280px] whitespace-pre-line text-wrap font-semibold leading-normal tracking-wide'>
               {name}

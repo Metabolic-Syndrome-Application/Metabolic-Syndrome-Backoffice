@@ -1,7 +1,7 @@
 "use client"
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useSnackbar } from 'notistack';
-import React from 'react';
+import React, { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { FiEdit } from 'react-icons/fi';
 import { MdEdit } from 'react-icons/md';
@@ -12,7 +12,7 @@ import useModal from '@/hooks/useModal';
 
 import ActionButton from '@/components/buttons/ActionButton';
 import { SwitchToggle } from '@/components/buttons/SwitchToggle';
-import UploadImageDisplay from '@/components/form/components/UploadImageDisplay';
+import ImageUpload from '@/components/form/components/UploadImageDisplay';
 import FormHeaderText from '@/components/form/FormHeaderText';
 import { InputText } from '@/components/form/InputText';
 import { updateDailyChallengeSchema, updateDailyChallengeValues } from '@/components/form/validation/ChallengeValidator';
@@ -34,6 +34,10 @@ const EditDailyChallenge = ({ params, loadData }: { params: { id: string }, load
   const { Modal, openModal, closeModal } = useModal();
   const { enqueueSnackbar } = useSnackbar()
 
+  const [image, setImage] = useState<File | null>(null);
+  const [imageError, setImageError] = useState(false);
+  const [downloadURL, setDownloadURL] = useState<string>('');
+
   const methods = useForm<updateDailyChallengeValues>({
     mode: 'onChange',
     resolver: zodResolver(updateDailyChallengeSchema),
@@ -50,7 +54,7 @@ const EditDailyChallenge = ({ params, loadData }: { params: { id: string }, load
 
       // Map status array to the desired structure
       const status = data?.status
-      console.log('status', status)
+      //console.log('status', status)
 
       return {
         name: data.name,
@@ -68,9 +72,6 @@ const EditDailyChallenge = ({ params, loadData }: { params: { id: string }, load
         }
       }
     }
-
-
-
   });
 
   const {
@@ -98,7 +99,7 @@ const EditDailyChallenge = ({ params, loadData }: { params: { id: string }, load
         },
         status: data.status
       });
-      console.log('Edit Daily Succcess', data)
+      //console.log('Edit Daily Succcess', data)
 
       enqueueSnackbar('Edit Daily Success', { variant: 'success' });;
       loadData();
@@ -141,8 +142,13 @@ const EditDailyChallenge = ({ params, loadData }: { params: { id: string }, load
               </div>
 
               {/* section2 : wait picture */}
-              <div className='order-first col-span-1 space-y-4 rounded-lg md:order-none md:col-span-3'>
-                {/* <UploadImageDisplay displayType='large' /> */}
+              <div className='w-full min-w-[350px] order-first col-span-1 space-y-4 rounded-lg md:order-none md:col-span-3'>
+                <ImageUpload
+                  image={image}
+                  setImage={setImage}
+                  imageError={imageError}
+                  setDownloadURL={setDownloadURL}
+                />
               </div>
 
               {/* section3 : detail */}

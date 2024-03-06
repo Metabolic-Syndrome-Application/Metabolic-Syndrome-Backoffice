@@ -42,13 +42,6 @@ const DailyDetailChallengePage = ({ params }: { params: { id: string } }) => {
       <BackButton />
 
       <div className='bg-white shadow-light-shadow rounded-xl container mx-auto'>
-
-        {/* <div className='flex px-8 pt-4 justify-end'>
-          <FiEdit
-            className='hover:bg-light-gray text-default-blue group h-5 w-5 cursor-pointer rounded-md transition-all duration-300 ease-in-out'
-          />
-          แก้ไข
-        </div> */}
         <EditDailyChallenge params={{ id }} loadData={loadDailyChallenge} />
 
         {daily && (
@@ -56,6 +49,7 @@ const DailyDetailChallengePage = ({ params }: { params: { id: string } }) => {
             <CardDailyChallenge
               id={daily.id}
               name={daily?.name}
+              photo={daily?.photo}
               numDays={daily?.numDays}
               points={daily?.points}
               description={daily?.description}

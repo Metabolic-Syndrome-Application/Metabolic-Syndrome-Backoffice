@@ -1,5 +1,5 @@
-import React from 'react';
 import { Icon } from '@iconify/react';
+import React from 'react';
 
 type HomeCardProps = {
   icon: string;
@@ -9,8 +9,8 @@ type HomeCardProps = {
 
 const HomeGallery = () => {
   return (
-    <div className='flex items-center justify-center'>
-      <div className='container  my-10 flex flex-col items-center gap-5 md:my-12'>
+    <div className='flex items-center justify-center w-full md:w-[600px] lg:w-[750px]'>
+      <div className='container my-10 flex flex-col'>
         <HomeCardItems />
       </div>
     </div>
@@ -43,7 +43,7 @@ const iconSize = { width: '48', height: '48' };
 
 const HomeCardItem = ({ icon, title, description }: HomeCardProps) => {
   return (
-    <div className='hover:bg-default-blue shadow-light-shadow group flex w-full flex-col gap-6 rounded-2xl bg-white px-6 py-10 transition duration-100 ease-in-out hover:-translate-y-4 '>
+    <div className='hover:bg-default-blue shadow-light-shadow group flex w-full flex-col gap-4 rounded-2xl bg-white p-4 transition duration-100 ease-in-out hover:-translate-y-4 '>
       <div className='my-4 flex items-center justify-center group-hover:text-white'>
         <Icon icon={icon} {...iconSize} />
       </div>
@@ -51,7 +51,7 @@ const HomeCardItem = ({ icon, title, description }: HomeCardProps) => {
         <h4 className='text-default-blue font-medium group-hover:text-white '>
           {title}
         </h4>
-        <p className=' group-hover:text-white '>{description}</p>
+        <p className='text-sm group-hover:text-white '>{description}</p>
       </div>
     </div>
   );

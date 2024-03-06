@@ -79,7 +79,7 @@ export const createDailyChallengeSchema = z.object({
     .gte(1, 'กรุณากรอกระยะเวลาแผนสุขภาพขั้นต่ำ 1 วัน')
     .lte(14, 'กรุณากรอกระยะเวลาแผนสุขภาพไม่เกิน 14 วัน'),
   description: z.string(),
-  photo: z.string(),
+  photo: z.string({ required_error: 'กรุณาเลือกรูปที่ต้องการ' }),
   detail: z.object({
     name: z.array(
       z.object({
@@ -129,7 +129,7 @@ export const updateDailyChallengeSchema = z.object({
     .gte(1, 'กรุณากรอกระยะเวลาแผนสุขภาพขั้นต่ำ 1 วัน')
     .lte(14, 'กรุณากรอกระยะเวลาแผนสุขภาพไม่เกิน 14 วัน'),
   description: z.string(),
-  photo: z.string(),
+  photo: z.string({ required_error: 'กรุณาเลือกรูปที่ต้องการ' }),
   detail: z.object({
     name: z.array(
       z.object({
@@ -170,34 +170,3 @@ export const detailSchemaTest = z.object({
 export const multicheckbox = z.object({
   day: baseStringValidator,
 });
-
-// detail: z
-//   .array(
-//     z.object({
-//       name: z
-//         .array(
-//           z.object({
-//             label: z.string(),
-//             value: z.string({ required_error: 'Name is required' }),
-//           })
-//         )
-//         .nonempty(),
-//       day: z
-//         .array(
-//           z.object({
-//             label: z.string(),
-//             value: z.string({ required_error: 'Day is required' }),
-//           })
-//         )
-//         .nonempty(),
-//     })
-//   )
-//   .nonempty(),
-
-//เพิ่มรายการ 1 รายการ
-// description: z.array(
-//   z.object({
-//     label: z.string(),
-//     value: z.string({ required_error: 'Description is required' }),
-//   })
-// ),

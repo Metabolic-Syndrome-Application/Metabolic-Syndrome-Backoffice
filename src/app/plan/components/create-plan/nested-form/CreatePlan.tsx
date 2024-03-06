@@ -26,6 +26,7 @@ import { API_PATH } from '@/config/api';
 import { typePlanOptions } from '@/constant/plan';
 import { fetchAllPlans } from '@/redux/slices/plansSlice';
 import { useState } from 'react';
+import ImageUpload from '@/components/form/components/UploadImageDisplay';
 
 const CreatePlan = () => {
   const axiosAuth = useAxiosAuth();
@@ -35,8 +36,12 @@ const CreatePlan = () => {
 
   const dispatch = useDispatch<any>();
 
+  const [image, setImage] = useState<File | null>(null);
+  const [imageError, setImageError] = useState(false);
+  const [waitingResponse, setWaitingReponse] = useState(false);
+
   const [downloadURL, setDownloadURL] = useState<string>('');
-  console.log('downloadURL', downloadURL)
+  //console.log('downloadURL', downloadURL)
 
 
   const methods = useForm<createPlanSchemaValues>({
@@ -62,6 +67,14 @@ const CreatePlan = () => {
 
 
   const onSubmit = async (data: z.infer<typeof createPlanSchema>) => {
+    if (!image) {
+      setImageError(true);
+      return;
+    }
+
+    setWaitingReponse(true);
+    if (imageError) setImageError(false);
+
     try {
       const selectedDays = data.detail.day.map(
         (day: { value: string }) => day.value
@@ -70,7 +83,6 @@ const CreatePlan = () => {
         name: data.name,
         description: data.description,
         type: data.type,
-        //photo: data.photo,
         photo: downloadURL,
         detail: {
           name: data.detail.name.map((item: any) => item.name),
@@ -121,8 +133,13 @@ const CreatePlan = () => {
               </div>
 
               {/* section2 : wait picture */}
-              <div className='order-first col-span-1 space-y-4 rounded-lg md:order-none md:col-span-3'>
-                <UploadImageDisplay setDownloadURL={setDownloadURL} />
+              <div className='order-first col-span-1 space-y-4 w-full md:order-none md:col-span-3 '>
+                <ImageUpload
+                  image={image}
+                  setImage={setImage}
+                  imageError={imageError}
+                  setDownloadURL={setDownloadURL}
+                />
               </div>
 
               {/* section3 : detail */}
