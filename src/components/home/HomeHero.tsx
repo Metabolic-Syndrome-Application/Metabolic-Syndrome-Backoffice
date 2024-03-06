@@ -22,10 +22,10 @@ const HomeHero = () => {
           <p className='text-black '>ช่วยแนะนำ ปรับเปลี่ยน และติดตามพฤติกรรม</p>
         </div>
         <Link
-          href='/api/auth/signin'
+          href='/patient'
           className='bg-default-blue hover:bg-dark-blue flex cursor-pointer items-center justify-center gap-2 rounded-xl px-4 py-2 text-sm font-semibold text-white md:text-base'
         >
-          เข้าใช้งาน
+          ดูข้อมูลคนไข้
         </Link>
       </div>
       <div className='flex w-[250px] md:w-[350px]'>

@@ -1,6 +1,7 @@
 'use client';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useSnackbar } from 'notistack';
+import { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { GoGoal } from "react-icons/go";
 import { useDispatch } from 'react-redux';
@@ -11,15 +12,15 @@ import useModal from '@/hooks/useModal';
 
 import ActionButton from '@/components/buttons/ActionButton';
 import { IconFlatButton } from '@/components/buttons/IconFlatButton';
+import ImageUpload from '@/components/form/components/UploadImageDisplay';
 import FormHeaderText from '@/components/form/FormHeaderText';
 import { InputText } from '@/components/form/InputText';
 import { createDailyChallengeSchema, createDailyChallengeValues } from '@/components/form/validation/ChallengeValidator';
+import TiptapTextField from '@/components/text-editor/TipTapTextField';
 
+import DetailDailyFields from '@/app/challenge/daily/components/create-daily-challenge/DetailDailyFields';
 import { API_PATH } from '@/config/api';
 import { fetchAllDailyChallenge } from '@/redux/slices/dailyChallengesSlice';
-import TiptapTextField from '@/components/text-editor/TipTapTextField';
-import UploadImageDisplay from '@/components/form/components/UploadImageDisplay';
-import DetailDailyFields from '@/app/challenge/daily/components/create-daily-challenge/DetailDailyFields';
 
 
 const CreateDailyChallenge = () => {
@@ -29,6 +30,9 @@ const CreateDailyChallenge = () => {
   const { enqueueSnackbar } = useSnackbar();
 
   const dispatch = useDispatch<any>();
+  const [image, setImage] = useState<File | null>(null);
+  const [imageError, setImageError] = useState(false);
+  const [downloadURL, setDownloadURL] = useState<string>('');
 
   const methods = useForm<createDailyChallengeValues>({
     mode: 'onChange',
@@ -60,14 +64,14 @@ const CreateDailyChallenge = () => {
         points: data.points,
         numDays: data.numDays,
         description: data.description,
-        photo: data.photo,
+        photo: downloadURL,
         detail: {
           name: data.detail.name.map((item: any) => item.name),
           day: selectedDays,
         },
       });
       enqueueSnackbar('Create Daily Success', { variant: 'success' });
-      console.log('Create Daily', response);
+      //console.log('Create Daily', response);
       await dispatch(fetchAllDailyChallenge());
       closeModal();
       // reset();
@@ -103,10 +107,13 @@ const CreateDailyChallenge = () => {
               </div>
 
               {/* section2 : wait picture */}
-              <div className='order-first col-span-1 space-y-4 rounded-lg md:order-none md:col-span-3'>
-                {/* <p>รูปภาพหน้าปก</p> */}
-                <UploadImageDisplay displayType='large' />
-                {/* <InputText name='photo' control={control} label='photo' /> */}
+              <div className='w-full min-w-[350px] min-h-[250px] order-first col-span-1 space-y-4 rounded-lg md:order-none md:col-span-3'>
+                <ImageUpload
+                  image={image}
+                  setImage={setImage}
+                  imageError={imageError}
+                  setDownloadURL={setDownloadURL}
+                />
               </div>
 
               {/* section3 : detail */}

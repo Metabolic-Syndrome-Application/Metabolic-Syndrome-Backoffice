@@ -1,7 +1,7 @@
 "use client"
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useSnackbar } from 'notistack';
-import React from 'react';
+import React, { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { FiEdit } from 'react-icons/fi';
 import { MdEdit } from 'react-icons/md';
@@ -11,6 +11,7 @@ import useAxiosAuth from '@/hooks/useAxiosAuth';
 import useModal from '@/hooks/useModal';
 
 import ActionButton from '@/components/buttons/ActionButton';
+import ImageUpload from '@/components/form/components/UploadImageDisplay';
 import FormHeaderText from '@/components/form/FormHeaderText';
 import { InputDropdown } from '@/components/form/InputDropdown';
 import { InputText } from '@/components/form/InputText';
@@ -30,6 +31,10 @@ const EditPlan = ({ params, loadData }: { params: { id: string }, loadData: () =
   const axiosAuth = useAxiosAuth();
   const { Modal, openModal, closeModal } = useModal();
   const { enqueueSnackbar } = useSnackbar()
+  const [image, setImage] = useState<File | null>(null);
+  const [imageError, setImageError] = useState(false);
+  const [downloadURL, setDownloadURL] = useState<string>('');
+  //console.log('edit downloadURL', downloadURL)
 
   const methods = useForm<createPlanSchemaValues>({
     mode: 'onChange',
@@ -81,7 +86,8 @@ const EditPlan = ({ params, loadData }: { params: { id: string }, loadData: () =
         name: data.name,
         description: data.description,
         type: data.type,
-        photo: data.photo,
+        //photo: data.photo,
+        photo: downloadURL,
         detail: {
           name: data.detail.name.map((item: any) => item.name),
           day: selectedDays,
@@ -92,14 +98,12 @@ const EditPlan = ({ params, loadData }: { params: { id: string }, loadData: () =
       enqueueSnackbar('Edit Plan Success', { variant: 'success' });;
       loadData();
 
-
+      closeModal()
     } catch (error: any) {
       enqueueSnackbar(error.response?.data, { variant: 'error' });
-      console.error(error);
+      // console.error(error);
     }
   };
-
-
 
   return (
     <div className='w-full'>
@@ -137,8 +141,13 @@ const EditPlan = ({ params, loadData }: { params: { id: string }, loadData: () =
 
               {/* section2 : wait picture */}
               <div className='order-first col-span-1 space-y-4 rounded-lg md:order-none md:col-span-3'>
-                {/* <UploadImageDisplay displayType='large' /> */}
-                {/* <InputText name='photo' control={control} label='photo' /> */}
+                {/* <UploadImageDisplay setDownloadURL={setDownloadURL} /> */}
+                <ImageUpload
+                  image={image}
+                  setImage={setImage}
+                  imageError={imageError}
+                  setDownloadURL={setDownloadURL}
+                />
               </div>
 
               {/* section3 : detail */}

@@ -1,44 +1,45 @@
 "use client"
-import { AvatarCanvas } from "./AvatarCanvas";
+import HomeGallery from "@/components/home/HomeGallery";
+
+import { AvatarCanvas } from "@/app/threeD/components/AvatarCanvas";
+
+
 
 const Hero = () => {
   return (
     //bg-[url('/hero-bck.jpg')]
-    // <section className=" bg-purple-500  bg-center bg-no-repeat bg-cover relative w-full h-screen mx-auto">
-    //   <div className="px-6  absolute inset-0 top-[132px] max-w-7xl mx-auto gap-6">
-    //     {/*  message */}
-    //     <div>
-    //       <h1 className="text-white text-7xl font-extrabold">
-    //         Hi, I'm <span className="text-theme">thabish</span>
-    //       </h1>
-    //       <p className="hidden sm:block text-lg mt-9 text-white w-[550px]">
-    //         My code is so clean, my keyboard has never needed a
-    //         shower.
-    //         <br />
-    //         So come on in, explore a little, and let's make some
-    //         magic together!
-    //       </p>
-    //     </div>
-    //   </div>
-    //   <div className="w-[600px] bg-green-500">
-    //     <AvatarCanvas />
-    //   </div>
+    <main>
+      <section className="bg-center bg-no-repeat bg-cover relative w-full h-screen mx-auto rounded-xl ">
+        <div className="px-6  absolute inset-0 top-[132px] max-w-7xl mx-auto gap-6">
+          <div className="hidden md:block circlePosition w-[590px] h-[400px] bg-blue-500 rounded-[100%] absolute z-1 top-0 right-0 translate-x-[50%] -translate-y-[50%] blur-[150px] "></div>
 
-    // </section>
-    <div className="w-full bg-gray-100 mx-auto flex flex-col md:flex-row">
-      <div className="flex flex-col w-full md:w-2/3 h-fit md:h-full p-4 rounded-lg ">
-        <h1 className="text-balance">ข้อมูลสุขภาพ</h1>
-        <div className=" w-full h-[400px] md:h-[80%] p-4">
-          <AvatarCanvas />
+          <div>
+            <h1 className="text-white text-3xl md:text-7xl font-extrabold flex flex-col justify-end w-full gap-2 md:gap-8">
+              <span className="leading-normal text-dark-blue">ยินดีต้อนรับเข้าสู่เว็บปรับเปลี่ยน <br /> พฤติกรรมเมตาบอลิกซินโดรม</span>
+            </h1>
+            <h2 className="text-black hidden sm:block mt-9 ">
+              ช่วยแนะนำ ปรับเปลี่ยน และติดตามพฤติกรรม
+            </h2>
+          </div>
+          <div className="text-center blurText backdrop-blur-[150px] bg-[white]/40 relative z-10 px-[20px] py-[10px] w-fit rounded-lg">
+            <HomeGallery />
+          </div>
+          <div className="circlePosition w-[590px] h-[400px] bg-blue-500 rounded-[100%] absolute z-1 bottom-0 left-[50] blur-[200px]"></div>
         </div>
 
-      </div>
+        <AvatarCanvas />
+      </section>
+    </main>
 
-      <div className="border-dashed border border-zinc-500 w-full h-12 rounded-lg">
-        <div>right container</div>
-      </div>
+    // <div className="w-full bg-gray-100 mx-auto flex flex-col md:flex-row">
+    //   <div className="flex flex-col w-full md:w-2/3 h-fit md:h-full p-4 rounded-lg ">
+    //     <h1 className="text-balance">ข้อมูลสุขภาพ</h1>
+    //     <div className=" w-full h-full p-4">
+    //       <AvatarCanvas />
+    //     </div>
 
-    </div>
+    //   </div>
+    // </div >
   );
 };
 

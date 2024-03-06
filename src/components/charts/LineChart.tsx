@@ -125,10 +125,13 @@ const LineChart = ({ patientId, nameType, graphType }: Props) => {
           <Line data={transformData(graphData)} />
         ) : (
           <div className='flex flex-col items-center justify-center'>
-            <img
+            <Image
               src="/assets/images/noData.svg"
               alt="noData"
               className="w-56 h-56"
+              width={350}
+              height={350}
+              priority={false}
             />
             <p className='text-default-red'>ตอนนี้ยังไม่มีผลกราฟสุขภาพของคนไข้</p>
           </div>

@@ -1,11 +1,11 @@
 
 "use client"
 
-import HomeGallery from "@/components/home/HomeGallery";
-import HomeHero from "@/components/home/HomeHero";
-import { useSession } from "next-auth/react";
 import Head from "next/head";
 import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
+
+import Hero from "@/app/threeD/components/Hero";
 
 export default function DashboardPage() {
 
@@ -18,12 +18,13 @@ export default function DashboardPage() {
       <Head>
         <title>Hi</title>
       </Head>
-      <section className=''>
+      <section className='p-4'>
         <div className='w-full'>
 
+          <Hero></Hero>
+          {/* <HomeHero /> */}
+          {/* <HomeGallery /> */}
 
-          <HomeHero />
-          <HomeGallery />
 
         </div>
       </section>
