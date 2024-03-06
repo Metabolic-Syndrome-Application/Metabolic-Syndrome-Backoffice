@@ -10,6 +10,8 @@ import { BackButton } from '@/components/tabbed/BackButton';
 
 import { MainPatientTabs } from '@/app/patient/components/tabs';
 import { fetchPatientById, selectPatientById } from '@/redux/slices/patientsSlice';
+import { getNamePatient } from '@/constant/user';
+import FormHeaderText from '@/components/form/FormHeaderText';
 
 const RecordPage = ({ params }: { params: { id: string } }) => {
   const { data: session } = useSession();
@@ -18,29 +20,11 @@ const RecordPage = ({ params }: { params: { id: string } }) => {
 
   const id = params.id;
 
-  // const [userData, setUserData] = useState(null);
-  // const fetchUser = useCallback(async () => {
-  //   try {
-  //     const {
-  //       data: { data },
-  //     } = await axiosAuth.get(
-  //       API_PATH.GET_PROFILE_OTHER(id));
-  //     console.log('Get 1 patient', data);
-  //     setUserData(data.user);
-  //   } catch (error) {
-  //     console.log('Error fetching user data:', error);
-  //   }
-  // }, [axiosAuth, id]); // Add axiosAuth and id as dependencies
-
-  // useEffect(() => {
-  //   if (session) {
-  //     fetchUser();
-  //   }
-  // }, []);
-
   const dispatch = useDispatch<any>();
 
   const patient = useSelector(selectPatientById);
+  const profile = getNamePatient(patient);
+
 
 
   useEffect(() => {
@@ -55,14 +39,10 @@ const RecordPage = ({ params }: { params: { id: string } }) => {
     <div>
       <div className='flex'>
         <BackButton />
-        <h1>สมุดบันทึกคนไข้</h1>
+        <h3 className='text-balance'>สมุดบันทึกคนไข้ของ{profile}</h3>
       </div>
 
       <MainPatientTabs id={id} />
-
-
-
-
     </div>
   );
 };

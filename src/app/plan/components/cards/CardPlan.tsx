@@ -36,15 +36,22 @@ export const CardPlan = ({
 
       <div className='flex w-full flex-col p-6 md:flex-row md:gap-8 min-h-[650px]'>
         <div className='flex w-full flex-col gap-4 md:w-3/5'>
-          {/* <UploadImageDisplay></UploadImageDisplay> */}
-          <Image
-            alt="The guitarist in the concert."
-            src='/assets/images/test.webp'
-            width={2250}
-            height={1390}
-            layout="responsive"
-          />
-          <div>{photo}</div>
+          {photo && (
+            <div>
+              <Image
+                alt="The guitarist in the concert."
+                src={photo}
+                width={2250}
+                height={1390}
+                layout="intrinsic"
+                objectFit="cover"
+              />
+
+            </div>
+          )}
+
+
+          {/* <div>{photo}</div> */}
 
           <div className='flex w-full flex-wrap items-center justify-between gap-2'>
             <h4 className='max-w-[280px] whitespace-pre-line text-wrap font-semibold leading-normal tracking-wide'>

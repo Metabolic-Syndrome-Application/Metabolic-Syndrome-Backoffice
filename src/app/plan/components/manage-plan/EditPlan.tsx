@@ -11,7 +11,6 @@ import useAxiosAuth from '@/hooks/useAxiosAuth';
 import useModal from '@/hooks/useModal';
 
 import ActionButton from '@/components/buttons/ActionButton';
-import UploadImageDisplay from '@/components/form/components/UploadImageDisplay';
 import FormHeaderText from '@/components/form/FormHeaderText';
 import { InputDropdown } from '@/components/form/InputDropdown';
 import { InputText } from '@/components/form/InputText';
@@ -138,7 +137,7 @@ const EditPlan = ({ params, loadData }: { params: { id: string }, loadData: () =
 
               {/* section2 : wait picture */}
               <div className='order-first col-span-1 space-y-4 rounded-lg md:order-none md:col-span-3'>
-                <UploadImageDisplay displayType='large' />
+                {/* <UploadImageDisplay displayType='large' /> */}
                 {/* <InputText name='photo' control={control} label='photo' /> */}
               </div>
 

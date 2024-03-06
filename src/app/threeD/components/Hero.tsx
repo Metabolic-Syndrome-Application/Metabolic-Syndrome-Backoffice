@@ -26,7 +26,7 @@ const Hero = () => {
 
     // </section>
     <div className="w-full bg-gray-100 mx-auto flex flex-col md:flex-row">
-      <div className="bg-green-400 flex flex-col w-full md:w-2/3 h-fit md:h-full p-4 rounded-lg ">
+      <div className="flex flex-col w-full md:w-2/3 h-fit md:h-full p-4 rounded-lg ">
         <h1 className="text-balance">ข้อมูลสุขภาพ</h1>
         <div className=" w-full h-[400px] md:h-[80%] p-4">
           <AvatarCanvas />

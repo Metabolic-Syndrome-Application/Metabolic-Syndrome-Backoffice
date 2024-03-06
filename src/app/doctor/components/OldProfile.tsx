@@ -54,8 +54,9 @@ const OldProfile = () => {
   const renderUserData = () => {
     return (
       <div className='shadow-light-shadow flex h-full w-[600px] flex-col gap-4 rounded-xl bg-white p-4'>
-        <FormHeaderText title='ประวัติส่วนตัว' useBigestHeader />
-        {/* <h4 className='font-medium'>ประวัติส่วนตัว</h4> */}
+        <article className='flex w-full items-center justify-between px-4 py-2'>
+          <h1 className='text-balance'>ประวัติส่วนตัว</h1>
+        </article>
 
         <div className='flex flex-col items-center justify-center gap-2 '>
           <Avatar

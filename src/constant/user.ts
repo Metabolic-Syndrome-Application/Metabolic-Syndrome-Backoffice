@@ -1,4 +1,5 @@
 import { generateBirthYear } from '@/helpers/date';
+import { IPatientData } from '@/types/patient';
 
 import { IGetDoctorOptions } from '@/types/user';
 
@@ -100,10 +101,15 @@ const getDoctorOptions = (options: IGetDoctorOptions[]) => {
     value: option.id,
   }));
 };
+//Get name patient
+const getNamePatient = (patient: IPatientData): string => {
+  return `${patient.firstName} ${patient.lastName}`;
+};
 
 export {
   dataOptions,
   getDoctorOptions,
+  getNamePatient,
   medicalDepartment,
   medicalSpecialist,
   personalInfoQuestions,

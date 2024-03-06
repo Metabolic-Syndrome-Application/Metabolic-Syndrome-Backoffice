@@ -142,7 +142,7 @@ const EditDailyChallenge = ({ params, loadData }: { params: { id: string }, load
 
               {/* section2 : wait picture */}
               <div className='order-first col-span-1 space-y-4 rounded-lg md:order-none md:col-span-3'>
-                <UploadImageDisplay displayType='large' />
+                {/* <UploadImageDisplay displayType='large' /> */}
               </div>
 
               {/* section3 : detail */}

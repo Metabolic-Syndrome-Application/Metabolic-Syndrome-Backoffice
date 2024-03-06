@@ -171,7 +171,7 @@ const EditProfile = ({ loadData, api }: IEditMemberFormProps) => {
                 </div>
               </div>
 
-              <div className='flex w-full justify-end space-x-3 p-4'>
+              <div className='flex w-full justify-end space-x-3 py-4'>
                 <ActionButton
                   type='reset'
                   variant='cancel'

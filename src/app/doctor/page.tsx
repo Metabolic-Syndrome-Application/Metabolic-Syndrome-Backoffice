@@ -14,7 +14,7 @@ const DoctorPage = () => {
   // }, []);
 
   //session auth
-  const { data: session, status } = useSession();
+  //const { data: session, status } = useSession();
   // const router = useRouter();
 
   // if (status === 'loading') {
@@ -29,7 +29,9 @@ const DoctorPage = () => {
 
   return (
     <div>
-      <span className='text-4xl font-bold'>ประวัติส่วนตัว</span>
+      <article className='flex w-full items-center justify-between px-4 py-2'>
+        <h1 className='text-balance'>ประวัติส่วนตัว</h1>
+      </article>
       <Profile />
       {/* <AccountProfile></AccountProfile> */}
       {/* <ProfileTabs></ProfileTabs> */}

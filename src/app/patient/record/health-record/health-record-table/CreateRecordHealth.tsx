@@ -24,7 +24,7 @@ import {
 import { CardInputRecord } from '@/app/patient/components/cards/CardInputRecord';
 import { API_PATH } from '@/config/api';
 import { iconTypeHealth, labelTypeHealth } from '@/helpers/typeIcon';
-import { fetchRecordAllById, selectRecordById } from '@/redux/slices/recordHealthsSlice';
+import { fetchRecordAllById, fetchRecordHospitalById, selectRecordById } from '@/redux/slices/recordHealthsSlice';
 
 import { HealthRecordType } from '@/types/patient';
 
@@ -92,9 +92,9 @@ const CreateRecordHealth = ({ params }: { params: { id: string } }) => {
         data
       );
       enqueueSnackbar('Create Record Success', { variant: 'success' });
-      console.log('Record Health', response);
+      //console.log('Record Health', response);
 
-      await dispatch(fetchRecordAllById(id));
+      await dispatch(fetchRecordHospitalById(id));
       closeModal();
 
       // Update submittedData with the submitted values
@@ -146,8 +146,8 @@ const CreateRecordHealth = ({ params }: { params: { id: string } }) => {
 
   return (
     <div className='w-full'>
-      <article className='flex w-full items-center justify-between px-4 py-2'>
-        <h2 className='text-balance'>ข้อมูลสุขภาพที่จดบันทึก</h2>
+      <article className='flex w-full items-center justify-end px-4 py-2'>
+        {/* <h3 className='text-balance'>ข้อมูลสุขภาพที่หมอบันทึก</h3> */}
         <IconFlatButton title='จดบันทึกค่าสุขภาพ' onClick={openModal} />
       </article>
 

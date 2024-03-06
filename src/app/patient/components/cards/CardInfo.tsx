@@ -25,13 +25,12 @@ export const CardInfo = ({
 }: IPatientData) => {
 
 
-
   return (
     <div key={id} className='w-full'>
       <div className='flex flex-col md:flex-col lg:flex-row items-center justify-evenly space-x-6 p-4'>
         <div className="flex justify-center ">
           <Image
-            src="/assets/models/male.jpg"
+            src="/assets/models/female.jpg"
             alt="avatar"
             className="min-w-[250px] w-full h-[250px] bg-light-yellow rounded-3xl object-contain"
             width={400}
@@ -60,7 +59,7 @@ export const CardInfo = ({
               <div className='flex flex-col  gap-4 '>
                 <div className="flex gap-2">
                   <h5 className='text-dark-gray'>เพศ :</h5>
-                  <h5 className=''>{gender}</h5>
+                  <h5> {gender === 'male' ? 'ชาย' : 'หญิง'}</h5>
                 </div>
 
                 <div className="flex gap-2">

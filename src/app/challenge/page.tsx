@@ -1,32 +1,15 @@
 'use client';
 
-import { redirect } from 'next/navigation';
-import { useSession } from 'next-auth/react';
 import React from 'react';
 
-const ChallengePage = () => {
-  const { data: session } = useSession({
-    required: true,
-    onUnauthenticated() {
-      redirect('/api/auth/signin?callbackUrl=/client');
-    },
-  });
+import HomeChallengeHero from '@/components/home/HomeChallengeHero';
 
-  if (session?.user.role !== 'staff' && session?.user.role !== 'doctor') {
-    return <h1 className='text-5xl'>Access Denied</h1>;
-  }
+const ChallengePage = () => {
 
   return (
-    <div className='p-4'>
+    <div className='w-full'>
 
-      <article className='flex w-full items-center justify-between px-4 py-2'>
-        <h1 className='text-balance'>ภารกิจ</h1>
-        {/* <IconFlatButton
-          title='เพิ่มภารกิจ'
-        /> */}
-      </article>
-
-
+      <HomeChallengeHero />
     </div>
   );
 };

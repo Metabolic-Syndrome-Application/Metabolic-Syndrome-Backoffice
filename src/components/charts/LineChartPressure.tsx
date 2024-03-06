@@ -1,42 +1,20 @@
-"use client"
-
-import Image from 'next/image';
-import {
-  CategoryScale,
-  Chart as ChartJS,
-  Legend,
-  LinearScale,
-  LineElement,
-  PointElement,
-  Title,
-  Tooltip,
-} from 'chart.js'
-
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend
-)
-
-import { subDays, subMonths, subQuarters, subWeeks } from 'date-fns';
+import { subDays, subMonths, subWeeks } from 'date-fns';
 import { useEffect, useState } from 'react';
 import { Line } from 'react-chartjs-2';
 
 import useAxiosAuth from '@/hooks/useAxiosAuth';
+
 type Props = {
   patientId: string;
+  graphType: any;
+  labels: string[];
+  dataKeys: string[];
   nameType: string;
-  graphType: any
-}
+};
 
-const LineChart = ({ patientId, nameType, graphType }: Props) => {
+const LineChartPressure = ({ patientId, graphType, labels, dataKeys, nameType }: Props) => {
   const axiosAuth = useAxiosAuth();
-  const [graphData, setGraphData] = useState<any[] | null>(null);
-
+  const [graphData, setGraphData] = useState<any[]>([]);
   const [filter, setFilter] = useState('1day');
 
   useEffect(() => {
@@ -50,56 +28,44 @@ const LineChart = ({ patientId, nameType, graphType }: Props) => {
     };
 
     fetchData();
-  }, [patientId, graphType]);
+  }, [axiosAuth, patientId, graphType]);
 
   const filterData = (data: any[]) => {
     const currentDate = new Date();
     switch (filter) {
       case '1day':
-        return data.filter((record) => isWithinRange(new Date(record.timestamp), subDays(currentDate, 1), currentDate));
+        return data.filter((record) => new Date(record.timestamp) > subDays(currentDate, 1));
       case '1week':
-        return data.filter((record) => isWithinRange(new Date(record.timestamp), subWeeks(currentDate, 7), currentDate));
+        return data.filter((record) => new Date(record.timestamp) > subWeeks(currentDate, 1));
       case '1month':
-        return data.filter((record) => isWithinRange(new Date(record.timestamp), subMonths(currentDate, 1), currentDate));
+        return data.filter((record) => new Date(record.timestamp) > subMonths(currentDate, 1));
       case '3months':
-        return data.filter((record) => isWithinRange(new Date(record.timestamp), subQuarters(currentDate, 1), currentDate));
+        return data.filter((record) => new Date(record.timestamp) > subMonths(currentDate, 3));
+      case '6months':
+        return data.filter((record) => new Date(record.timestamp) > subMonths(currentDate, 6));
       default:
         return data;
     }
   };
 
-  const isWithinRange = (date: number | Date, startDate: number | Date, endDate: number | Date) => {
-    return startDate <= date && date <= endDate;
-  };
-
-
-  const transformData = (data: any) => {
+  const transformData = (data: any[]) => {
     const filteredData = filterData(data);
+    const colors = ['rgb(251, 98, 98)', 'rgb(5, 2, 241)', 'rgb(66, 132, 75)'];
+
     return {
       labels: filteredData.map((record) => record.timestamp),
-      datasets: [
-        {
-          label: graphType.toUpperCase(),
-          data: filteredData.map((record) => record[graphType]),
-          borderColor: 'rgb(5, 2, 241)',
-          borderRadius: 20,
-          borderWidth: 3,
-          pointBorderColor: '#cb0c9f',
-          pointBorderWidth: 3,
-          tension: 0.5,
-          // fill: true,
-          //backgroundColor: 'rgba(247, 151, 225, 0.5)', // Example gradient
-        },
-      ],
+      datasets: labels.map((label, index) => ({
+        label: label,
+        data: filteredData.map((record) => record[dataKeys[index]]),
+        borderColor: colors[index % colors.length], // Use modulo to cycle through colors array
+        borderWidth: 3,
+        fill: false,
+      })),
     };
   };
 
-  // const handleFilterChange = (value: React.SetStateAction<string>) => {
-  //   setFilter(value);
-  // };
-
   return (
-    <div className='flex flex-col items-center justify-center max-h-[400px] w-full shadow-light-shadow border border-light-gray p-4 rounded-lg h-full'>
+    <div className='flex flex-col items-center justify-center h-full lg:max-h-[400px] w-full shadow-light-shadow border border-light-gray p-4 rounded-lg'>
       {graphData && (
         <div className="flex items-center justify-between w-full px-4">
           <h5 className="font-medium md:text-xl text-start w-full">
@@ -120,7 +86,7 @@ const LineChart = ({ patientId, nameType, graphType }: Props) => {
           </div>
         </div>
       )}
-      <div className='flex w-full h-full items-center justify-center max-w-[500px]'>
+      <div className='flex w-full h-full items-center justify-center lg:max-w-[500px]'>
         {graphData && graphData.length > 0 ? (
           <Line data={transformData(graphData)} />
         ) : (
@@ -139,4 +105,4 @@ const LineChart = ({ patientId, nameType, graphType }: Props) => {
   );
 };
 
-export default LineChart;
+export default LineChartPressure;

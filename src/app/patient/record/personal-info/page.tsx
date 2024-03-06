@@ -11,7 +11,9 @@ import CardInfoPlan from '@/app/patient/components/cards/CardInfoPlan';
 import DoctorEditPatientForm from '@/app/patient/record/personal-info/DoctorEditPatientForm';
 import StaffEditPatientForm from '@/app/patient/record/personal-info/StaffEditPatientForm';
 import { fetchPatientById, selectPatientById } from '@/redux/slices/patientsSlice';
-import { fetchAllPlans } from '@/redux/slices/plansSlice';
+import { fetchAllPlans, fetchAllPlansDefault } from '@/redux/slices/plansSlice';
+import { fetchAllDoctors } from '@/redux/slices/doctorSlice';
+import { getNamePatient } from '@/constant/user';
 
 const PersonalInfo = ({ id }: { id: string }) => {
   const { data: session } = useSession();
@@ -22,8 +24,7 @@ const PersonalInfo = ({ id }: { id: string }) => {
 
   // const patient = useSelector(selectPatientById)
   const patient = useSelector(selectPatientById);
-
-  console.log('Patient infosss:', patient);
+  //console.log('Patient infosss:', patient);
 
   const loadIdPatient = useCallback(async () => {
     if (id) {
@@ -31,13 +32,11 @@ const PersonalInfo = ({ id }: { id: string }) => {
     }
   }, [id, dispatch]);
 
-
   useEffect(() => {
     if (session && session.user) {
       // Dispatch actions to fetch patients and doctors
       dispatch(fetchPatientById(id));
-      // dispatch(fetchAllDoctors());
-      dispatch(fetchAllPlans());
+      dispatch(fetchAllPlansDefault());
     }
   }, [id, dispatch, session]);
 
@@ -70,7 +69,9 @@ const PersonalInfo = ({ id }: { id: string }) => {
                     yearOfBirth={patient?.yearOfBirth}
                     gender={patient?.gender}
                     status={patient?.status}
+                    mainDoctorID={patient?.mainDoctorID}
                     mainDoctor={patient?.mainDoctor}
+                    assistanceDoctorID={patient?.mainDoctorID}
                     assistanceDoctor={patient?.assistanceDoctor}
                     disease={patient?.disease}
                   />

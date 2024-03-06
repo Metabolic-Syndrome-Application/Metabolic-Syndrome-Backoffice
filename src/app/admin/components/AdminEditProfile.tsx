@@ -148,7 +148,7 @@ const AdminEditProfile = ({ loadData, api, id }: IEditMemberFormProps) => {
                 </div>
               </div>
 
-              <div className='flex h-full justify-end space-x-3 p-4'>
+              <div className='flex h-full justify-end space-x-3 py-4'>
                 <ActionButton
                   type='reset'
                   variant='cancel'
