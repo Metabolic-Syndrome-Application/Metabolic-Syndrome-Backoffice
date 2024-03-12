@@ -9,7 +9,6 @@ const ChallengePage = () => {
 
   return (
     <div className='w-full'>
-
       <HomeChallengeHero />
       <HomeTypeChallenge />
     </div>

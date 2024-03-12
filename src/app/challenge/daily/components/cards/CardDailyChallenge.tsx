@@ -1,5 +1,5 @@
 'use client';
-import parse from 'html-react-parser'; // Import the parse function
+//import parse from 'html-react-parser'; // Import the parse function
 import Image from 'next/image';
 import React, { useState } from 'react';
 import { IoMdTime } from 'react-icons/io';
@@ -85,7 +85,7 @@ export const CardDailyChallenge = ({
 
 
           <h5 className='font-medium'>รายละเอียด</h5>
-          <div className='ProseMirror ProseMirror hr textEditor border-none'>
+          {/* <div className='ProseMirror ProseMirror hr textEditor border-none'>
             {description ? (
               <>
                 {parse(description.slice(0, isExpanded ? undefined : 300))}
@@ -101,7 +101,7 @@ export const CardDailyChallenge = ({
             ) : (
               <p className='text-default-gray text-center'>ไม่มีรายละเอียด</p>
             )}
-          </div>
+          </div> */}
         </div>
         <div className='flex w-full flex-col gap-6'>
           <h5 className='font-medium'>รายละเอียดของแต่ละวัน</h5>

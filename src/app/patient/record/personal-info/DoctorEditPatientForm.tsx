@@ -8,7 +8,7 @@ import { FiEdit } from "react-icons/fi";
 import { useDispatch, useSelector } from "react-redux";
 import { z } from "zod";
 
-import { useDoctorOptions, useMappedPlanID, usePlanOptions } from "@/lib/dataOptions";
+import { useDoctorOptions, useMappedPlanID, usePlanOptions, useStatusOptions } from "@/lib/dataOptions";
 import useAxiosAuth from "@/hooks/useAxiosAuth";
 import useModal from "@/hooks/useModal";
 
@@ -36,6 +36,7 @@ const DoctorEditPatientForm = ({ params, loadData }: { params: { id: string }, l
 
   const dispatch = useDispatch<any>();
   const patient = useSelector(selectPatientById);
+
   const [submittedData, setSubmittedData] = useState<doctorEditPatientSchemaValues | null>(null);
 
   console.log('doctor edit plan', patient)
@@ -54,6 +55,7 @@ const DoctorEditPatientForm = ({ params, loadData }: { params: { id: string }, l
   //fix: Maximum update depth exceeded?
   // Get planID array from patient data
   const getDoctorOptions = useDoctorOptions()
+  const getStatusOptions = useStatusOptions()
   const planID = patient?.planID || [];
   const getPlanOptions = usePlanOptions(planID);
   const mappedPlanID = useMappedPlanID(patient, getPlanOptions);
@@ -82,6 +84,7 @@ const DoctorEditPatientForm = ({ params, loadData }: { params: { id: string }, l
         assistanceDoctorID: data.assistanceDoctorID,
         disease: data.disease,
         planID: data.planID ? data.planID.map((plan: any) => plan.value) : [],
+        status: data.status
       });
 
       // Reload the data after successful edit
@@ -135,6 +138,12 @@ const DoctorEditPatientForm = ({ params, loadData }: { params: { id: string }, l
                 label='ปีเกิด (พ.ศ.)'
                 options={yearOptions}
               />
+              <InputDropdown
+                name='status'
+                control={control}
+                label='สถานะการรักษา'
+                options={getStatusOptions}
+              />
               <FormHeaderText title='แพทย์ผู้รับผิดชอบ' />
               <InputDropdown
                 name='mainDoctorID'
@@ -148,6 +157,7 @@ const DoctorEditPatientForm = ({ params, loadData }: { params: { id: string }, l
                 label='แพทย์ผู้รับผิดชอบรอง'
                 options={getDoctorOptions}
               />
+
             </div>
 
             {/* Section2 */}

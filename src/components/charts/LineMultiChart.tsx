@@ -74,7 +74,7 @@ const LineMultiChart = ({ patientId, graphType, labels, dataKeys, nameType }: Pr
     <div className='flex flex-col items-center justify-center  max-h-[400px] w-full shadow-light-shadow border border-light-gray p-4 rounded-lg h-full'>
       {graphData && (
         <div className="flex items-center justify-between w-full px-4">
-          <h5 className="font-medium md:text-xl text-start w-full">
+          <h5 className="font-medium md:text-lg text-start w-full">
             กราฟ{nameType}
           </h5>
           <div>

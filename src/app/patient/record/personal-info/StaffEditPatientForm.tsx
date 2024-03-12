@@ -8,7 +8,7 @@ import { FiEdit } from "react-icons/fi";
 import { useDispatch, useSelector } from "react-redux";
 import { z } from "zod";
 
-import { useDoctorOptions } from "@/lib/dataOptions";
+import { useDoctorOptions, useStatusOptions } from "@/lib/dataOptions";
 import useAxiosAuth from "@/hooks/useAxiosAuth";
 import useModal from "@/hooks/useModal";
 
@@ -51,6 +51,7 @@ const StaffEditPatientForm = ({ params, loadData }: { params: { id: string }, lo
 
 
   const getDoctorOptions = useDoctorOptions()
+  const getStatusOptions = useStatusOptions()
 
   useEffect(() => {
     if (patient) {
@@ -71,6 +72,7 @@ const StaffEditPatientForm = ({ params, loadData }: { params: { id: string }, lo
         mainDoctorID: data.mainDoctorID,
         assistanceDoctorID: data.assistanceDoctorID,
         disease: data.disease,
+        status: data.status,
       });
 
       // Reload the data after successful edit
@@ -121,6 +123,12 @@ const StaffEditPatientForm = ({ params, loadData }: { params: { id: string }, lo
                 control={control}
                 label='ปีเกิด (พ.ศ.)'
                 options={yearOptions}
+              />
+              <InputDropdown
+                name='status'
+                control={control}
+                label='สถานะการรักษา'
+                options={getStatusOptions}
               />
               <FormHeaderText title='แพทย์ผู้รับผิดชอบ' />
               <InputDropdown

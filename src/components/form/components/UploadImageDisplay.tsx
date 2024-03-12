@@ -1,7 +1,7 @@
 // eslint-disable-next-line @next/next/no-img-element
 
+import { storage } from 'firebase.config';
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
-import { storage } from 'firebaseConfig';
 import { useSnackbar } from 'notistack';
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 import { BsFillImageFill } from 'react-icons/bs';
@@ -9,7 +9,6 @@ import { BsFillImageFill } from 'react-icons/bs';
 import { cn } from '@/lib/utils';
 
 import ActionButton from '@/components/buttons/ActionButton';
-import OutlineButton from '@/components/buttons/OutlineButton';
 
 interface ImageUploadProps {
   image?: File | null;
@@ -75,7 +74,7 @@ const ImageUpload = ({ image, setImage, imageError, setDownloadURL }: ImageUploa
   };
 
   return (
-    <div className="w-full h-full border border-dashed rounded-xl relative">
+    <div className="w-full h-full border border-dashed border-form-gray rounded-xl relative">
       {preview ? (
         <>
           <div>
@@ -103,20 +102,19 @@ const ImageUpload = ({ image, setImage, imageError, setDownloadURL }: ImageUploa
           className={cn(
             imageError
               ? 'border-red-800 text-red-700 hover:bg-red-300/10'
-              : 'hover:bg-blue-300/10',
-            'flex w-full h-full flex-col justify-center items-center transition duration-150'
+              : 'hover:border-light-blue text-default-gray  hover:text-blue-500 hover:bg-light-blue',
+            'flex w-full h-full flex-col justify-center items-center transition duration-150 rounded-xl'
           )}
         >
           <BsFillImageFill
             className={cn(
-              imageError ? 'text-red-700' : 'text-primary',
+              imageError ? 'text-red-700' : 'text-form-gray  active:text-default-blue',
               'text-4xl mb-4'
             )}
           />
-          <OutlineButton size="base">
-            กรุณาเลือกรูปภาพ
-          </OutlineButton>
+          กรุณาเลือกรูปภาพ
         </button>
+
       )}
       <input
         type="file"

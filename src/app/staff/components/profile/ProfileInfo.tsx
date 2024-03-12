@@ -20,6 +20,9 @@ const ProfileInfo = () => {
   //console.log('Staff Profile:', user);
 
   const dispatch = useDispatch<any>();
+  const getGenderText = (gender: string) => {
+    return gender === 'male' ? 'ชาย' : 'หญิง';
+  };
 
   useEffect(() => {
     if (session && session.user) {
@@ -53,7 +56,7 @@ const ProfileInfo = () => {
             <TextFieldInfo label='ชื่อจริง' value={user.firstName} />
             <TextFieldInfo label='นามสกุล' value={user.lastName} />
           </div>
-          <TextFieldInfo label='เพศ' value={user.gender} />
+          <TextFieldInfo label='เพศ' value={getGenderText(user.gender)} />
           <TextFieldInfo label='แผนก' value={user.department} />
           <TextFieldInfo label='ความเชี่ยวชาญ' value={user.specialist} />
         </div>
