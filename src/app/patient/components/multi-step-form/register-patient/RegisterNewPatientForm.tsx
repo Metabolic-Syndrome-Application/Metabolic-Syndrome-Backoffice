@@ -96,11 +96,13 @@ export function RegisterNewPatientForm() {
             name='password'
             label='รหัสผ่าน'
             control={control}
+            showPasswordToggle
           />
           <InputText
             name='passwordConfirm'
             label='ยืนยันรหัสผ่าน'
             control={control}
+            showPasswordToggle
           />
         </div>
 

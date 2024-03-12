@@ -39,7 +39,7 @@ export const CardPlan = ({
             <div className='w-full flex max-h-[300px] items-center justify-center border border-dashed rounded-xl p-2'>
               <Image
                 alt="The uploaded image"
-                src={photo.startsWith('/') ? photo : `/${photo}`} // Add a leading slash if missing
+                src={photo.startsWith('/') ? photo : `${photo}`}
                 width={350}
                 height={350}
                 className='w-64 h-64 object-contain'

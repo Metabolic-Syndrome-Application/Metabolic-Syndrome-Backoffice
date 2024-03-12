@@ -101,11 +101,11 @@ const DoctorEditPatientForm = ({ params, loadData }: { params: { id: string }, l
   return (
     <div className="w-full">
       <article className='flex w-full items-center justify-end px-4 py-2 gap-2'>
-        <FiEdit
-          className='hover:bg-light-gray text-default-blue group h-5 w-5 cursor-pointer rounded-md transition-all duration-300 ease-in-out'
-          onClick={openModal}
-        />
-        <p className="text-default-blue">แก้ไข</p>
+        <div className="flex items-center gap-1 cursor-pointer" onClick={openModal}>
+          <FiEdit className="hover:bg-light-gray text-default-blue group h-5 w-5 cursor-pointer rounded-md transition-all duration-300 ease-in-out" />
+          <p className="text-default-blue">แก้ไข</p>
+        </div>
+
       </article>
       <Modal>
         <form className="flex flex-col w-full" onSubmit={handleSubmit(onSubmit)}>
@@ -169,7 +169,7 @@ const DoctorEditPatientForm = ({ params, loadData }: { params: { id: string }, l
           </div>
         </form>
       </Modal>
-    </div>
+    </div >
   );
 }
 export default DoctorEditPatientForm;

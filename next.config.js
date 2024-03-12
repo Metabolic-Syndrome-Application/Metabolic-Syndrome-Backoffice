@@ -5,6 +5,7 @@ const nextConfig = {
   },
   images: {
     domains: ['firebasestorage.googleapis.com'],
+    dangerouslyAllowSVG: true,
   },
   reactStrictMode: true,
   swcMinify: true,
