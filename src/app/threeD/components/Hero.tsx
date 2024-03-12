@@ -17,7 +17,7 @@ const Hero = () => {
             <h1 className="text-white text-3xl md:text-7xl font-extrabold flex flex-col justify-end w-full gap-2 md:gap-8">
               <span className="leading-normal text-dark-blue">ยินดีต้อนรับเข้าสู่เว็บปรับเปลี่ยน <br /> พฤติกรรมเมตาบอลิกซินโดรม</span>
             </h1>
-            <h2 className="text-black hidden sm:block mt-9 ">
+            <h2 className="text-black hidden sm:block my-4">
               ช่วยแนะนำ ปรับเปลี่ยน และติดตามพฤติกรรม
             </h2>
           </div>

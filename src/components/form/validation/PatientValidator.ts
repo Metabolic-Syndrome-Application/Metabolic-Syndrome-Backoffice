@@ -36,6 +36,7 @@ export interface ICreatePatientForm {
   disease?: string;
   planID?: string[];
   Plan?: IPlan[];
+  status: string;
 }
 //-----------------------------------------
 //Doctor Edit & Assign Patient
@@ -55,9 +56,10 @@ export const doctorEditPatientSchema = z
     gender: baseStringValidator,
     yearOfBirth: z.number(),
     mainDoctorID: baseStringValidator,
-    assistanceDoctorID: z.string().optional(),
+    assistanceDoctorID: z.string().nullish(),
     disease: z.string().nullish(),
     planID: z.array(z.object({ label: z.string(), value: z.string() })),
+    status: baseStringValidator,
   })
   .refine((data) => data.mainDoctorID !== data.assistanceDoctorID, {
     message:
@@ -88,8 +90,9 @@ export const staffEditPatientSchema = z
     gender: baseStringValidator,
     yearOfBirth: z.number(),
     mainDoctorID: baseStringValidator,
-    assistanceDoctorID: z.string().optional(),
+    assistanceDoctorID: z.string().nullish(),
     disease: z.string(),
+    status: baseStringValidator,
   })
   .refine((data) => data.mainDoctorID !== data.assistanceDoctorID, {
     message:

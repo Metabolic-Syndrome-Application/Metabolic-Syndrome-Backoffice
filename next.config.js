@@ -3,14 +3,13 @@ const nextConfig = {
   eslint: {
     dirs: ['src'],
   },
+  //Set Image from firebase
   images: {
     domains: ['firebasestorage.googleapis.com'],
     dangerouslyAllowSVG: true,
   },
   reactStrictMode: true,
   swcMinify: true,
-
-  // Uncoment to add domain whitelist
 
   webpack(config) {
     // Grab the existing rule that handles SVG imports
