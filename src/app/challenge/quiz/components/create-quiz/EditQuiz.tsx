@@ -126,10 +126,10 @@ const EditQuiz = ({ params, loadData }: { params: { id: string }, loadData: () =
   return (
     <div className='w-full'>
       <article className='flex w-full items-center justify-end px-4 py-2'>
-        <FiEdit
-          className='hover:bg-light-gray text-default-blue group h-5 w-5 cursor-pointer rounded-md transition-all duration-300 ease-in-out'
-          onClick={openModal}
-        />
+        <div className="flex items-center gap-1 cursor-pointer" onClick={openModal}>
+          <FiEdit className="hover:bg-light-gray text-default-blue group h-5 w-5 cursor-pointer rounded-md transition-all duration-300 ease-in-out" />
+          <p className="text-default-blue">แก้ไข</p>
+        </div>
       </article>
 
       <Modal>

@@ -38,11 +38,13 @@ export const CardDailyChallenge = ({
             <div className='w-full flex max-h-[300px] items-center justify-center border border-dashed rounded-xl p-2'>
               <Image
                 alt="The uploaded image"
-                src={photo.startsWith('/assets/images/') ? photo : `/${photo}`}
+                // src={photo.startsWith('/') ? photo : `/${photo}`}
+                src={photo}
                 width={350}
                 height={350}
                 className='w-64 h-64 object-contain'
                 priority={false}
+
               />
             </div>
           )}

@@ -90,7 +90,8 @@ const ManagePatientTable = () => {
       field: 'gender',
       // width: 120,
       renderHeader: () => <h5 className='font-medium'>เพศ</h5>,
-      valueGetter: (params: GridValueGetterParams) => `${params.row.gender || ''}`,
+      valueGetter: (params: GridValueGetterParams) =>
+        params.row.gender === 'male' ? 'ชาย' : 'หญิง',
     },
     {
       field: 'yearOfBirth',

@@ -115,10 +115,10 @@ const EditDailyChallenge = ({ params, loadData }: { params: { id: string }, load
   return (
     <div className='w-full'>
       <article className='flex w-full items-center justify-end p-4'>
-        <FiEdit
-          className='hover:bg-light-gray text-default-blue group h-5 w-5 cursor-pointer rounded-md transition-all duration-300 ease-in-out'
-          onClick={openModal}
-        />
+        <div className="flex items-center gap-1 cursor-pointer" onClick={openModal}>
+          <FiEdit className="hover:bg-light-gray text-default-blue group h-5 w-5 cursor-pointer rounded-md transition-all duration-300 ease-in-out" />
+          <p className="text-default-blue">แก้ไข</p>
+        </div>
       </article>
 
       <Modal>
