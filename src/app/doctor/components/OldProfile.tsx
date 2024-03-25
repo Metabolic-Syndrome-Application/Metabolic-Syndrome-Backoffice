@@ -4,9 +4,6 @@ import { useSession } from 'next-auth/react';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import useAxiosAuth from '@/hooks/useAxiosAuth';
-
-import FormHeaderText from '@/components/form/FormHeaderText';
 import { TextFieldInfo } from '@/components/form/TextFieldInfo';
 import { stringAvatar } from '@/components/layout/navbar/Avatar';
 
@@ -16,7 +13,6 @@ import { fetchUser, selectUser } from '@/redux/slices/profileSlice';
 
 const OldProfile = () => {
   const { data: session, status } = useSession();
-  const axiosAuth = useAxiosAuth();
   //const [userData, setUserData] = useState<IUserData | null>(null);
 
   // const fetchUser = async () => {

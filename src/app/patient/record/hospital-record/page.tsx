@@ -6,9 +6,21 @@ import CreateRecordHealth from '@/app/patient/record/health-record/health-record
 import RecordHealthTable from '@/app/patient/record/health-record/health-record-table/RecordHealthTable';
 import { fetchRecordHospitalById } from '@/redux/slices/recordHealthsSlice';
 
+type PageProps = {
+  params: {
+    id: string;
+  };
+};
 
-const HospitalRecordPage = ({ id }: { id: string }) => {
+// export async function generateStaticParams() {
+//   const questions = questionsPool.family.question;
 
+//   return questions.map((question) => ({
+//     id: question.id,
+//   }));
+// }
+
+const HospitalRecordPage = ({ params }: PageProps) => {
   const dispatch = useDispatch<any>();
 
   //ข้อมูลสุขภาพที่หมอบันทึกอย่างเดียว
@@ -18,8 +30,11 @@ const HospitalRecordPage = ({ id }: { id: string }) => {
 
   return (
     <div className='w-full'>
-      <CreateRecordHealth params={{ id }} />
-      <RecordHealthTable params={{ id }} fetchRecordApi={fetchHospitalHealthRecord} />
+      <CreateRecordHealth params={params} />
+      <RecordHealthTable
+        params={params}
+        fetchRecordApi={fetchHospitalHealthRecord}
+      />
     </div>
   );
 };

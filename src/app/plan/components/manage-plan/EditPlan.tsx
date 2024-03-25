@@ -1,4 +1,5 @@
-"use client"
+/* eslint-disable unused-imports/no-unused-vars */
+'use client';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useSnackbar } from 'notistack';
 import React, { useState } from 'react';
@@ -15,7 +16,10 @@ import ImageUpload from '@/components/form/components/UploadImageDisplay';
 import FormHeaderText from '@/components/form/FormHeaderText';
 import { InputDropdown } from '@/components/form/InputDropdown';
 import { InputText } from '@/components/form/InputText';
-import { createPlanSchema, createPlanSchemaValues } from '@/components/form/validation/PlanValidator';
+import {
+  createPlanSchema,
+  createPlanSchemaValues,
+} from '@/components/form/validation/PlanValidator';
 import TiptapTextField from '@/components/text-editor/TipTapTextField';
 
 import DetailPlanFields from '@/app/plan/components/create-plan/nested-form/DetailPlanFields';
@@ -23,31 +27,34 @@ import { API_PATH } from '@/config/api';
 import { typePlanOptions } from '@/constant/plan';
 import { dayOfWeekThaiLabel } from '@/helpers/date';
 
-
-
-const EditPlan = ({ params, loadData }: { params: { id: string }, loadData: () => void }) => {
+const EditPlan = ({
+  params,
+  loadData,
+}: {
+  params: { id: string };
+  loadData: () => void;
+}) => {
   const id = params.id;
 
   const axiosAuth = useAxiosAuth();
   const { Modal, openModal, closeModal } = useModal();
-  const { enqueueSnackbar } = useSnackbar()
+  const { enqueueSnackbar } = useSnackbar();
+
   const [image, setImage] = useState<File | null>(null);
   const [imageError, setImageError] = useState(false);
   const [downloadURL, setDownloadURL] = useState<string>('');
-  //console.log('edit downloadURL', downloadURL)
+  console.log('edit downloadURL', downloadURL);
 
   const methods = useForm<createPlanSchemaValues>({
     mode: 'onChange',
     resolver: zodResolver(createPlanSchema),
     defaultValues: async () => {
-
       const response = await axiosAuth.get(`/api/plan/${id}`);
-      const data = await response.data.data.plan
-
+      const data = await response.data.data.plan;
 
       const thaiDays = data?.detail.day.map((dayItem: string) => ({
         label: dayOfWeekThaiLabel(dayItem), // Convert English day name to Thai label
-        value: dayItem
+        value: dayItem,
       }));
       return {
         name: data.name,
@@ -57,24 +64,16 @@ const EditPlan = ({ params, loadData }: { params: { id: string }, loadData: () =
         detail: {
           name: data?.detail.name.map((nameItem: any) => ({ name: nameItem })), // Convert name array to array of objects
           //day: data?.detail.day.map((dayItem: string) => ({ label: dayItem, value: dayItem })) // Map each day string to an object with label and value
-          day: thaiDays
+          day: thaiDays,
         },
         resetOptions: {
           keepDirtyValues: true,
-        }
-      }
-    }
-
-
-
+        },
+      };
+    },
   });
 
-  const {
-    control,
-    handleSubmit,
-    reset,
-    formState: { errors, isDirty },
-  } = methods;
+  const { control, handleSubmit } = methods;
 
   const onSubmit = async (data: z.infer<typeof createPlanSchema>) => {
     try {
@@ -95,10 +94,10 @@ const EditPlan = ({ params, loadData }: { params: { id: string }, loadData: () =
       });
       // console.log('Edit Plan Succcess', data)
 
-      enqueueSnackbar('Edit Plan Success', { variant: 'success' });;
+      enqueueSnackbar('Edit Plan Success', { variant: 'success' });
       loadData();
 
-      closeModal()
+      // closeModal()
     } catch (error: any) {
       enqueueSnackbar(error.response?.data, { variant: 'error' });
       // console.error(error);
@@ -108,9 +107,12 @@ const EditPlan = ({ params, loadData }: { params: { id: string }, loadData: () =
   return (
     <div className='w-full'>
       <article className='flex w-full items-center justify-end p-4'>
-        <div className="flex items-center gap-1 cursor-pointer" onClick={openModal}>
-          <FiEdit className="hover:bg-light-gray text-default-blue group h-5 w-5 cursor-pointer rounded-md transition-all duration-300 ease-in-out" />
-          <p className="text-default-blue">แก้ไข</p>
+        <div
+          className='flex cursor-pointer items-center gap-1'
+          onClick={openModal}
+        >
+          <FiEdit className='hover:bg-light-gray text-default-blue group h-5 w-5 cursor-pointer rounded-md transition-all duration-300 ease-in-out' />
+          <p className='text-default-blue'>แก้ไข</p>
         </div>
       </article>
 
@@ -141,7 +143,6 @@ const EditPlan = ({ params, loadData }: { params: { id: string }, loadData: () =
 
               {/* section2 : wait picture */}
               <div className='order-first col-span-1 space-y-4 rounded-lg md:order-none md:col-span-3'>
-                {/* <UploadImageDisplay setDownloadURL={setDownloadURL} /> */}
                 <ImageUpload
                   image={image}
                   setImage={setImage}
@@ -157,14 +158,14 @@ const EditPlan = ({ params, loadData }: { params: { id: string }, loadData: () =
             </div>
 
             <div className='flex h-full justify-end space-x-3 p-4'>
-              <ActionButton
-                type='reset'
-                variant='cancel'
-                onClick={closeModal}
-              >
+              <ActionButton type='reset' variant='cancel' onClick={closeModal}>
                 ยกเลิก
               </ActionButton>
-              <ActionButton type='submit' variant='submit' disabled={!isDirty || Object.keys(errors).length > 0}>
+              <ActionButton
+                type='submit'
+                variant='submit'
+                //disabled={!isDirty || Object.keys(errors).length > 0}
+              >
                 แก้ไข
               </ActionButton>
             </div>

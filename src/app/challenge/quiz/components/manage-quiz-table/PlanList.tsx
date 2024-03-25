@@ -10,19 +10,20 @@ import { API_PATH } from '@/config/api';
 import { IQuizChallengeData } from '@/types/challenge';
 
 const PlansPage = () => {
-  const axiosAuth = useAxiosAuth()
+  const axiosAuth = useAxiosAuth();
   const router = useRouter();
   const [plans, setPlans] = useState<IQuizChallengeData[]>([]); // Specify the type of plans as IQuizChallengeData[]
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const plansPerPage = 10; // Adjust the number of plans per page
 
-  const fetchPlans = async () => { // Remove the parameter declaration
+  const fetchPlans = async () => {
+    // Remove the parameter declaration
     try {
       const {
         data: { data },
       } = await axiosAuth.get(API_PATH.GET_QUIZ_ALL);
-      console.log('test quiz', data.quiz)
+      console.log('test quiz', data.quiz);
 
       setPlans(data.quiz);
       setTotalPages(Math.ceil(data.quiz.length / plansPerPage));
@@ -31,9 +32,9 @@ const PlansPage = () => {
     }
   };
 
-
   useEffect(() => {
     fetchPlans();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handlePlanClick = async (id: string) => {
@@ -50,7 +51,8 @@ const PlansPage = () => {
           question={plan.question}
           choices={plan.choices}
           points={plan.points}
-          limitTime={plan.limitTime} />
+          limitTime={plan.limitTime}
+        />
       </div>
     ));
   };

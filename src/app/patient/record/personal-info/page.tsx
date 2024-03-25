@@ -1,66 +1,68 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 'use client';
 import { useSession } from 'next-auth/react';
 import React, { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-
-import useAxiosAuth from '@/hooks/useAxiosAuth';
 
 import CardDiseaseRisk from '@/app/patient/components/cards/CardDiseaseRisk';
 import { CardInfo } from '@/app/patient/components/cards/CardInfo';
 import CardInfoPlan from '@/app/patient/components/cards/CardInfoPlan';
 import DoctorEditPatientForm from '@/app/patient/record/personal-info/DoctorEditPatientForm';
 import StaffEditPatientForm from '@/app/patient/record/personal-info/StaffEditPatientForm';
-import { fetchPatientById, selectPatientById } from '@/redux/slices/patientsSlice';
-import { fetchAllPlans, fetchAllPlansDefault } from '@/redux/slices/plansSlice';
-import { fetchAllDoctors } from '@/redux/slices/doctorSlice';
-import { getNamePatient } from '@/constant/user';
+import {
+  fetchPatientById,
+  selectPatientById,
+} from '@/redux/slices/patientsSlice';
+import { fetchAllPlansDefault } from '@/redux/slices/plansSlice';
 
-const PersonalInfo = ({ id }: { id: string }) => {
+type PageProps = {
+  params: {
+    id: string;
+  };
+};
+
+const PersonalInfo: React.FC<PageProps> = ({ params }) => {
   const { data: session } = useSession();
-
-  const axiosAuth = useAxiosAuth()
 
   const dispatch = useDispatch<any>();
 
-  // const patient = useSelector(selectPatientById)
   const patient = useSelector(selectPatientById);
   //console.log('Patient infosss:', patient);
 
   const loadIdPatient = useCallback(async () => {
-    if (id) {
-      await dispatch(fetchPatientById(id));
+    if (params.id) {
+      await dispatch(fetchPatientById(params.id));
     }
-  }, [id, dispatch]);
+  }, [dispatch, params.id]);
 
   useEffect(() => {
     if (session && session.user) {
       // Dispatch actions to fetch patients and doctors
-      dispatch(fetchPatientById(id));
+      dispatch(fetchPatientById(params.id));
       dispatch(fetchAllPlansDefault());
     }
-  }, [id, dispatch, session]);
-
-
-
+  }, [dispatch, session]);
 
   return (
-    <div className=' w-full h-full'>
+    <div className=' h-full w-full'>
       {session?.user?.role === 'staff' && (
-        <StaffEditPatientForm params={{ id }} loadData={loadIdPatient} />
+        <StaffEditPatientForm params={params} loadData={loadIdPatient} />
       )}
       {session?.user?.role === 'doctor' && (
-        <DoctorEditPatientForm params={{ id }} loadData={loadIdPatient} />
+        <DoctorEditPatientForm params={params} loadData={loadIdPatient} />
       )}
 
-
       <React.Fragment key={`patient-${patient.id}`}>
-        <div className="flex flex-col md:flex-row w-full h-full gap-4">
+        <div className='flex h-full w-full flex-col gap-4 md:flex-row'>
           {/* Section 1 */}
-          <div className="flex flex-col md:w-[65%] gap-4">
+          <div className='flex flex-col gap-4 md:w-[65%]'>
             {/* CardInfo */}
-            <div >
+            <div>
               {patient && (
-                <div key={`patient-info-${patient.id}`} className="bg-white rounded-2xl shadow-sm border border-gray-100 w-full mb-6 md:mb-0">
+                <div
+                  key={`patient-info-${patient.id}`}
+                  className='mb-6 w-full rounded-2xl border border-gray-100 bg-white shadow-sm md:mb-0'
+                >
                   <CardInfo
                     id={patient?.id}
                     hn={patient?.hn}
@@ -81,36 +83,35 @@ const PersonalInfo = ({ id }: { id: string }) => {
 
             {/* Render disease risk */}
             {patient && patient.diseaseRisk && (
-              <div key={`patient-disease-risk-${patient.id}`}
-                className='bg-white shadow-sm border border-gray-100 w-full rounded-2xl p-4'>
+              <div
+                key={`patient-disease-risk-${patient.id}`}
+                className='w-full rounded-2xl border border-gray-100 bg-white p-4 shadow-sm'
+              >
                 <CardDiseaseRisk
                   id={patient.id}
                   diseaseRisk={patient.diseaseRisk}
                 />
               </div>
             )}
-
           </div>
 
           {/* Section 2 */}
           {/* Render plan information */}
-          <div className="flex flex-col md:w-[35%]">
+          <div className='flex flex-col md:w-[35%]'>
             {/* Render plan information */}
             {patient && patient.Plan && patient.planID && (
               <div
                 key={`patient-plan-${patient.id}`}
-                className="bg-white rounded-2xl shadow-sm border border-gray-100 w-full h-full"
+                className='h-full w-full rounded-2xl border border-gray-100 bg-white shadow-sm'
               >
-                <CardInfoPlan planData={{ planID: patient.planID, Plan: patient.Plan }} />
+                <CardInfoPlan
+                  planData={{ planID: patient.planID, Plan: patient.Plan }}
+                />
               </div>
             )}
           </div>
-
         </div>
-
       </React.Fragment>
-
-
     </div>
   );
 };

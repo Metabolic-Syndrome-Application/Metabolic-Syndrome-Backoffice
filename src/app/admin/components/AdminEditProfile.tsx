@@ -2,7 +2,7 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useSnackbar } from 'notistack';
-import React, { useState } from 'react';
+import React from 'react';
 import { useForm } from 'react-hook-form';
 import { MdEdit } from 'react-icons/md';
 import { useDispatch, useSelector } from 'react-redux';
@@ -38,7 +38,6 @@ const AdminEditProfile = ({ loadData, api, id }: IEditMemberFormProps) => {
   const { enqueueSnackbar } = useSnackbar();
 
   const { Modal, openModal, closeModal } = useModal();
-  const [waiting, setWaiting] = useState(false);
 
   const users = useSelector(selectAllUsers);
   const dispatch = useDispatch<any>();
@@ -47,13 +46,9 @@ const AdminEditProfile = ({ loadData, api, id }: IEditMemberFormProps) => {
   // const user = users.filter((u) => u.id === id)[0];
   const currentUser = users.find((user) => user.id === id);
 
-  console.log('currentUser index', currentUser);
+  //console.log('currentUser index', currentUser);
 
-  const {
-    control,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<FormCreateProfileDoctorProps>({
+  const { control, handleSubmit } = useForm<FormCreateProfileDoctorProps>({
     mode: 'onChange',
     resolver: zodResolver(createProfileDoctorSchema),
     defaultValues: {
@@ -86,7 +81,7 @@ const AdminEditProfile = ({ loadData, api, id }: IEditMemberFormProps) => {
       closeModal(); // Close the modal if needed
     } catch (error) {
       enqueueSnackbar('Cannot edit', { variant: 'error' });
-      console.log('Error:', error);
+      //console.log('Error:', error);
     }
   };
 
@@ -99,69 +94,61 @@ const AdminEditProfile = ({ loadData, api, id }: IEditMemberFormProps) => {
 
       <Modal>
         <form onSubmit={handleSubmit(onSubmit)}>
-          {waiting ? (
-            <>Loading</>
-          ) : (
-            <div>
-              <FormHeaderText
-                icon={MdEdit}
-                title='แก้ไขข้อมูลในระบบ'
-                useBigestHeader
-              />
+          <div>
+            <FormHeaderText
+              icon={MdEdit}
+              title='แก้ไขข้อมูลในระบบ'
+              useBigestHeader
+            />
 
-              <div className='flex flex-col gap-4'>
-                <div className='space-y-5 rounded-lg border p-4'>
-                  <FormHeaderText title='ข้อมูลส่วนตัว' />
+            <div className='flex flex-col gap-4'>
+              <div className='space-y-5 rounded-lg border p-4'>
+                <FormHeaderText title='ข้อมูลส่วนตัว' />
 
-                  <InputText name='prefix' label='คำนำหน้า' control={control} />
-                  <div className='flex space-x-4'>
-                    <InputText
-                      name='firstName'
-                      label='ชื่อจริง'
-                      control={control}
-                    />
-                    <InputText
-                      name='lastName'
-                      label='นามสกุล'
-                      control={control}
-                    />
-                  </div>
-                  <RadioOption
-                    name='gender'
-                    label='เพศ'
+                <InputText name='prefix' label='คำนำหน้า' control={control} />
+                <div className='flex space-x-4'>
+                  <InputText
+                    name='firstName'
+                    label='ชื่อจริง'
                     control={control}
-                    options={dataOptions.genderOptions}
                   />
-
-                  <InputDropdown
-                    name='department'
+                  <InputText
+                    name='lastName'
+                    label='นามสกุล'
                     control={control}
-                    label='แผนก'
-                    options={medicalDepartment}
-                  />
-                  <InputDropdown
-                    name='specialist'
-                    control={control}
-                    label='ความเชี่ยวชาญ'
-                    options={medicalSpecialist}
                   />
                 </div>
-              </div>
+                <RadioOption
+                  name='gender'
+                  label='เพศ'
+                  control={control}
+                  options={dataOptions.genderOptions}
+                />
 
-              <div className='flex h-full justify-end space-x-3 py-4'>
-                <ActionButton
-                  type='reset'
-                  variant='cancel'
-                  onClick={closeModal}
-                >
-                  ยกเลิก
-                </ActionButton>
-                <ActionButton type='submit' variant='submit'>
-                  แก้ไขโปรไฟล์
-                </ActionButton>
+                <InputDropdown
+                  name='department'
+                  control={control}
+                  label='แผนก'
+                  options={medicalDepartment}
+                />
+                <InputDropdown
+                  name='specialist'
+                  control={control}
+                  label='ความเชี่ยวชาญ'
+                  options={medicalSpecialist}
+                />
               </div>
             </div>
-          )}
+
+            <div className='flex h-full justify-end space-x-3 py-4'>
+              <ActionButton type='reset' variant='cancel' onClick={closeModal}>
+                ยกเลิก
+              </ActionButton>
+              <ActionButton type='submit' variant='submit'>
+                แก้ไขโปรไฟล์
+              </ActionButton>
+            </div>
+          </div>
         </form>
       </Modal>
     </div>

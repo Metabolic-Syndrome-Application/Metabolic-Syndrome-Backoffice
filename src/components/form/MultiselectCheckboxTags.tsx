@@ -35,13 +35,6 @@ export const MultiselectCheckboxTags: React.FC<FormMultiCheckboxProps> = ({
   options = [],
   defaultValue,
 }) => {
-
-  const convertedDefaultValue = defaultValue?.map((id: string) => {
-    const option = options.find((opt) => opt.value === id);
-    return option ? { label: option.label, value: option.value } : null;
-  });
-
-
   return (
     <Controller
       name={name}
@@ -77,7 +70,6 @@ export const MultiselectCheckboxTags: React.FC<FormMultiCheckboxProps> = ({
               </li>
             );
           }}
-
           renderTags={(tagValue, getTagProps) => {
             return tagValue.map((option, index) => (
               <Chip
@@ -122,7 +114,6 @@ export const MultiselectCheckboxTags: React.FC<FormMultiCheckboxProps> = ({
             />
           )}
         />
-
       )}
     />
   );

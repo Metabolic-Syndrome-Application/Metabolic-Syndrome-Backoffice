@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { subDays, subMonths, subWeeks } from 'date-fns';
 import { useEffect, useState } from 'react';
 import { Line } from 'react-chartjs-2';
@@ -12,7 +13,13 @@ type Props = {
   nameType: string;
 };
 
-const LineChartPressure = ({ patientId, graphType, labels, dataKeys, nameType }: Props) => {
+const LineChartPressure = ({
+  patientId,
+  graphType,
+  labels,
+  dataKeys,
+  nameType,
+}: Props) => {
   const axiosAuth = useAxiosAuth();
   const [graphData, setGraphData] = useState<any[]>([]);
   const [filter, setFilter] = useState('1day');
@@ -20,7 +27,9 @@ const LineChartPressure = ({ patientId, graphType, labels, dataKeys, nameType }:
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axiosAuth.get(`/api/record/health/patient/${patientId}/${graphType}`);
+        const response = await axiosAuth.get(
+          `/api/record/health/patient/${patientId}/${graphType}`
+        );
         setGraphData(response.data.data.record);
       } catch (error) {
         console.error('Error fetching graph data:', error);
@@ -34,15 +43,25 @@ const LineChartPressure = ({ patientId, graphType, labels, dataKeys, nameType }:
     const currentDate = new Date();
     switch (filter) {
       case '1day':
-        return data.filter((record) => new Date(record.timestamp) > subDays(currentDate, 1));
+        return data.filter(
+          (record) => new Date(record.timestamp) > subDays(currentDate, 1)
+        );
       case '1week':
-        return data.filter((record) => new Date(record.timestamp) > subWeeks(currentDate, 1));
+        return data.filter(
+          (record) => new Date(record.timestamp) > subWeeks(currentDate, 1)
+        );
       case '1month':
-        return data.filter((record) => new Date(record.timestamp) > subMonths(currentDate, 1));
+        return data.filter(
+          (record) => new Date(record.timestamp) > subMonths(currentDate, 1)
+        );
       case '3months':
-        return data.filter((record) => new Date(record.timestamp) > subMonths(currentDate, 3));
+        return data.filter(
+          (record) => new Date(record.timestamp) > subMonths(currentDate, 3)
+        );
       case '6months':
-        return data.filter((record) => new Date(record.timestamp) > subMonths(currentDate, 6));
+        return data.filter(
+          (record) => new Date(record.timestamp) > subMonths(currentDate, 6)
+        );
       default:
         return data;
     }
@@ -65,42 +84,43 @@ const LineChartPressure = ({ patientId, graphType, labels, dataKeys, nameType }:
   };
 
   return (
-    <div className='flex flex-col items-center justify-center h-full lg:max-h-[400px] w-full shadow-light-shadow border border-light-gray p-4 rounded-lg'>
+    <div className='shadow-light-shadow border-light-gray flex h-full w-full flex-col items-center justify-center rounded-lg border p-4 lg:max-h-[400px]'>
       {graphData && (
-        <div className="flex items-center justify-between w-full px-4">
-          <h5 className="font-medium md:text-lg text-start w-full">
+        <div className='flex w-full items-center justify-between px-4'>
+          <h5 className='w-full text-start font-medium md:text-lg'>
             กราฟ{nameType}
           </h5>
           <div>
             <select
               value={filter} // Set the selected filter value
               onChange={(e) => setFilter(e.target.value)} // Handle filter change
-              className="mr-3 border border-light-gray flex min-w-[60px] md:min-w-[120px] gap-2 px-3 py-2 rounded-lg shadow-sm outline-none focus:ring-2 focus:ring-light-blue sm:text-sm"
+              className='border-light-gray focus:ring-light-blue mr-3 flex min-w-[60px] gap-2 rounded-lg border px-3 py-2 shadow-sm outline-none focus:ring-2 sm:text-sm md:min-w-[120px]'
             >
-              <option value="1day">1 วัน</option>
-              <option value="1week">1 อาทิตย์</option>
-              <option value="1month">1 เดือน</option>
-              <option value="3months">3 เดือน</option>
-              <option value="6months">6 เดือน</option>
+              <option value='1day'>1 วัน</option>
+              <option value='1week'>1 อาทิตย์</option>
+              <option value='1month'>1 เดือน</option>
+              <option value='3months'>3 เดือน</option>
+              <option value='6months'>6 เดือน</option>
             </select>
           </div>
         </div>
       )}
-      <div className='flex w-full h-full items-center justify-center lg:max-w-[500px]'>
+      <div className='flex h-full w-full items-center justify-center lg:max-w-[500px]'>
         {graphData && graphData.length > 0 ? (
           <Line data={transformData(graphData)} />
         ) : (
           <div className='flex flex-col items-center justify-center'>
             <img
-              src="/assets/images/noData.svg"
-              alt="noData"
-              className="w-56 h-56"
+              src='/assets/images/noData.svg'
+              alt='noData'
+              className='h-56 w-56'
             />
-            <p className='text-default-red'>ตอนนี้ยังไม่มีผลกราฟสุขภาพของคนไข้</p>
+            <p className='text-default-red'>
+              ตอนนี้ยังไม่มีผลกราฟสุขภาพของคนไข้
+            </p>
           </div>
         )}
       </div>
-
     </div>
   );
 };

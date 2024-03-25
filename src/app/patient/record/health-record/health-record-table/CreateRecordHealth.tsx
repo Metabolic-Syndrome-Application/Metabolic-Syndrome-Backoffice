@@ -24,10 +24,12 @@ import {
 import { CardInputRecord } from '@/app/patient/components/cards/CardInputRecord';
 import { API_PATH } from '@/config/api';
 import { iconTypeHealth, labelTypeHealth } from '@/helpers/typeIcon';
-import { fetchRecordAllById, fetchRecordHospitalById, selectRecordById } from '@/redux/slices/recordHealthsSlice';
+import {
+  fetchRecordHospitalById,
+  selectRecordById,
+} from '@/redux/slices/recordHealthsSlice';
 
 import { HealthRecordType } from '@/types/patient';
-
 
 const CreateRecordHealth = ({ params }: { params: { id: string } }) => {
   const id = params.id;
@@ -36,7 +38,6 @@ const CreateRecordHealth = ({ params }: { params: { id: string } }) => {
 
   const { Modal, openModal, closeModal } = useModal();
   const { enqueueSnackbar } = useSnackbar();
-
 
   //selected type health & render fotm field
   const [selectedTypes, setSelectedTypes] = useState<string[]>([
@@ -57,14 +58,14 @@ const CreateRecordHealth = ({ params }: { params: { id: string } }) => {
   const dispatch = useDispatch<any>();
 
   const latestRecordData = useSelector(selectRecordById);
-  const [submittedData, setSubmittedData] = useState<createRecordHealthValues | null>(null);
+  const [submittedData, setSubmittedData] =
+    useState<createRecordHealthValues | null>(null);
 
   const {
     control,
     handleSubmit,
     reset,
-    getValues,
-    watch,
+
     formState: { errors, isDirty },
   } = useForm<createRecordHealthValues>({
     mode: 'onChange',
@@ -84,9 +85,9 @@ const CreateRecordHealth = ({ params }: { params: { id: string } }) => {
     }
   }, [latestRecordData, reset]);
 
-
   const onSubmit: SubmitHandler<createRecordHealthValues> = async (data) => {
     try {
+      // eslint-disable-next-line unused-imports/no-unused-vars
       const response = await axiosAuth.post(
         API_PATH.POST_RECORD_HEALTH(id),
         data
@@ -105,44 +106,121 @@ const CreateRecordHealth = ({ params }: { params: { id: string } }) => {
     }
   };
 
-
-  const renderFormField = useMemo(() => (type: string) => {
-    switch (type) {
-      case HealthRecordType.BMI:
-        return (
-          <CardInputRecord key={HealthRecordType.BMI} name='ค่าดัชนีมวลกาย'>
-            <InputText name='height' label='ส่วนสูง' control={control} type='number' unit='ซม.' />
-            <InputText name='weight' label='น้ำหนัก' control={control} type='number' unit='กก.' />
-            <InputText name='waistline' label='รอบเอว' control={control} type='number' unit='นิ้ว' />
-          </CardInputRecord>
-        );
-      case HealthRecordType.BloodPressure:
-        return (
-          <CardInputRecord key={HealthRecordType.BloodPressure} name='ความดันโลหิต'>
-            <InputText name='systolicBloodPressure' label='ช่วงหัวใจบีบตัว (ตัวบน)' control={control} type='number' unit='mmHg' />
-            <InputText name='diastolicBloodPressure' label='ช่วงหัวใจคลายตัว (ตัวล่าง)' control={control} type='number' unit='mmHg' />
-            <InputText name='pulseRate' label='อัตราการเต้นของหัวใจ' control={control} type='number' unit='ครั้ง/นาที' />
-          </CardInputRecord>
-        );
-      case HealthRecordType.BloodGlucose:
-        return (
-          <CardInputRecord key={HealthRecordType.BloodGlucose} name='ระดับน้ำตาล'>
-            <InputText name='bloodGlucose' label='ระดับน้ำตาล' control={control} type='number' unit='ซม.' />
-          </CardInputRecord>
-        );
-      case HealthRecordType.Cholesterol:
-        return (
-          <CardInputRecord key={HealthRecordType.Cholesterol} name='ไขมันในเลือด'>
-            <InputText name='cholesterol' label='คอเลสเตอรอล' control={control} type='number' unit='mg/dL' />
-            <InputText name='hdl' label='ไขมันดี' control={control} type='number' unit='mg/dL' />
-            <InputText name='ldl' label='ไขมันอันตราย' control={control} type='number' unit='mg/dL' />
-            <InputText name='triglyceride' label='ไตรกลีเซอไรด์' control={control} type='number' unit='mg/dL' />
-          </CardInputRecord>
-        );
-      default:
-        return null;
-    }
-  }, [control]);
+  const renderFormField = useMemo(
+    () => (type: string) => {
+      switch (type) {
+        case HealthRecordType.BMI:
+          return (
+            <CardInputRecord key={HealthRecordType.BMI} name='ค่าดัชนีมวลกาย'>
+              <InputText
+                name='height'
+                label='ส่วนสูง'
+                control={control}
+                type='number'
+                unit='ซม.'
+              />
+              <InputText
+                name='weight'
+                label='น้ำหนัก'
+                control={control}
+                type='number'
+                unit='กก.'
+              />
+              <InputText
+                name='waistline'
+                label='รอบเอว'
+                control={control}
+                type='number'
+                unit='นิ้ว'
+              />
+            </CardInputRecord>
+          );
+        case HealthRecordType.BloodPressure:
+          return (
+            <CardInputRecord
+              key={HealthRecordType.BloodPressure}
+              name='ความดันโลหิต'
+            >
+              <InputText
+                name='systolicBloodPressure'
+                label='ช่วงหัวใจบีบตัว (ตัวบน)'
+                control={control}
+                type='number'
+                unit='mmHg'
+              />
+              <InputText
+                name='diastolicBloodPressure'
+                label='ช่วงหัวใจคลายตัว (ตัวล่าง)'
+                control={control}
+                type='number'
+                unit='mmHg'
+              />
+              <InputText
+                name='pulseRate'
+                label='อัตราการเต้นของหัวใจ'
+                control={control}
+                type='number'
+                unit='ครั้ง/นาที'
+              />
+            </CardInputRecord>
+          );
+        case HealthRecordType.BloodGlucose:
+          return (
+            <CardInputRecord
+              key={HealthRecordType.BloodGlucose}
+              name='ระดับน้ำตาล'
+            >
+              <InputText
+                name='bloodGlucose'
+                label='ระดับน้ำตาล'
+                control={control}
+                type='number'
+                unit='ซม.'
+              />
+            </CardInputRecord>
+          );
+        case HealthRecordType.Cholesterol:
+          return (
+            <CardInputRecord
+              key={HealthRecordType.Cholesterol}
+              name='ไขมันในเลือด'
+            >
+              <InputText
+                name='cholesterol'
+                label='คอเลสเตอรอล'
+                control={control}
+                type='number'
+                unit='mg/dL'
+              />
+              <InputText
+                name='hdl'
+                label='ไขมันดี'
+                control={control}
+                type='number'
+                unit='mg/dL'
+              />
+              <InputText
+                name='ldl'
+                label='ไขมันอันตราย'
+                control={control}
+                type='number'
+                unit='mg/dL'
+              />
+              <InputText
+                name='triglyceride'
+                label='ไตรกลีเซอไรด์'
+                control={control}
+                type='number'
+                unit='mg/dL'
+              />
+            </CardInputRecord>
+          );
+        default:
+          return null;
+      }
+    },
+    [control]
+  );
 
   return (
     <div className='w-full'>
@@ -153,7 +231,7 @@ const CreateRecordHealth = ({ params }: { params: { id: string } }) => {
 
       <Modal>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <div className='flex flex-col flex-wrap rounded-lg w-full'>
+          <div className='flex w-full flex-col flex-wrap rounded-lg'>
             <FormHeaderText
               icon={MdOutlineCreateNewFolder}
               title='จดบันทึกค่าสุขภาพ'
@@ -177,18 +255,24 @@ const CreateRecordHealth = ({ params }: { params: { id: string } }) => {
               {selectedTypes.map(renderFormField)}
             </div>
             <div className='flex w-full justify-end space-x-3 p-4'>
-              <ActionButton type='reset' variant='cancel' onClick={() => reset()}>
+              <ActionButton
+                type='reset'
+                variant='cancel'
+                onClick={() => reset()}
+              >
                 ยกเลิก
               </ActionButton>
-              <ActionButton type='submit' variant='submit' disabled={!isDirty || Object.keys(errors).length > 0}>
+              <ActionButton
+                type='submit'
+                variant='submit'
+                disabled={!isDirty || Object.keys(errors).length > 0}
+              >
                 บันทึก
               </ActionButton>
             </div>
           </div>
         </form>
       </Modal>
-
-
     </div>
   );
 };

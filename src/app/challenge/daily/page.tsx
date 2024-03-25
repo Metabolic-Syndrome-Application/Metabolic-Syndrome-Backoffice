@@ -1,7 +1,8 @@
-"use client"
+'use client';
+import React from 'react';
+
 import CreateDailyChallenge from '@/app/challenge/daily/components/create-daily-challenge/CreateDailyChallenge';
 import DailyChallengeTable from '@/app/challenge/daily/components/manage-daily-table/DailyChallengeTable';
-import React from 'react';
 
 const DailyChallengePage = () => {
   return (

@@ -1,3 +1,4 @@
+/* eslint-disable unused-imports/no-unused-vars */
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -26,13 +27,8 @@ import {
   medicalSpecialist,
 } from '@/constant/user';
 import { fetchUser, selectUser, updateUser } from '@/redux/slices/profileSlice';
-interface IEditMemberFormProps {
-  loadData?: () => void;
-  api?: string;
-}
 
-const EditProfile = ({ loadData, api }: IEditMemberFormProps) => {
-
+const EditProfile = () => {
   const { enqueueSnackbar } = useSnackbar();
 
   const { Modal, openModal, closeModal } = useModal();
@@ -40,11 +36,7 @@ const EditProfile = ({ loadData, api }: IEditMemberFormProps) => {
   const user = useSelector(selectUser);
   const dispatch = useDispatch<any>();
 
-  const {
-    control,
-    handleSubmit,
-    formState: { errors, isValid },
-  } = useForm<FormCreateProfileDoctorProps>({
+  const { control, handleSubmit } = useForm<FormCreateProfileDoctorProps>({
     mode: 'onChange',
     resolver: zodResolver(createProfileDoctorSchema),
     defaultValues: {
@@ -69,7 +61,6 @@ const EditProfile = ({ loadData, api }: IEditMemberFormProps) => {
       await dispatch(fetchUser());
       closeModal();
     } catch (error) {
-
       enqueueSnackbar('Cannot edit', { variant: 'error' });
       console.log('Error:', error);
     }
@@ -111,7 +102,6 @@ const EditProfile = ({ loadData, api }: IEditMemberFormProps) => {
   //     enqueueSnackbar('Cannot edit', { variant: 'error' });
   //   }
   // };
-
 
   return (
     <div>

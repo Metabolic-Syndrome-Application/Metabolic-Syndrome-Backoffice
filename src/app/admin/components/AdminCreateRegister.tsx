@@ -66,13 +66,6 @@ const AdminCreateRegister = () => {
     const userRole = session?.user?.role;
 
     try {
-      // Check if the user is logged in
-      if (!userRole) {
-        console.log('User is not logged in.');
-
-        return;
-      }
-
       // API call 1: Register
       const registerResponse = await axiosAuth.post(
         API_PATH.POST_REGISTER_OTHER,
@@ -89,6 +82,7 @@ const AdminCreateRegister = () => {
       // Only an admin can create a profile
       // API call 2: Create profile
       if (userRole === 'admin') {
+        // eslint-disable-next-line unused-imports/no-unused-vars
         const createProfileResponse = await axiosAuth.put(
           API_PATH.PUT_PROFILE_OTHER(otherRole, userId),
           {
@@ -100,16 +94,22 @@ const AdminCreateRegister = () => {
             specialist,
           }
         );
+        if (createProfileResponse.status === 200) {
+          //console.log('Create Profile API Response:', createProfileResponse);
 
-        //console.log('Create Profile API Response:', createProfileResponse);
-        enqueueSnackbar('Register Success', { variant: 'success' });
-        await dispatch(fetchAllUsers());
-        closeModal();
-        reset();
+          enqueueSnackbar('Register Success', { variant: 'success' });
+          await dispatch(fetchAllUsers());
+          closeModal();
+          reset();
+        }
+        // enqueueSnackbar('Register Success', { variant: 'success' });
+        // await dispatch(fetchAllUsers());
+        // closeModal();
+        // reset();
       }
     } catch (error: any) {
       enqueueSnackbar(error.response?.data, { variant: 'error' });
-      console.error('Error:', error);
+      //console.error('Error:', error);
     }
   };
 

@@ -3,16 +3,19 @@ import { useFieldArray, useFormContext } from 'react-hook-form';
 import { AiOutlineClose } from 'react-icons/ai';
 
 import { InputText } from '@/components/form/InputText';
-import { IChoicesQuiz } from '@/types/challenge';
 
 const OptionQuizFields = () => {
-  const { control, setValue, watch, formState: { errors } } = useFormContext();
+  const {
+    control,
+    setValue,
+    watch,
+    formState: { errors },
+  } = useFormContext();
 
   const { fields, append, remove } = useFieldArray({
     name: 'choices',
     control,
   });
-
 
   const watchChoices = watch('choices');
 
@@ -24,10 +27,9 @@ const OptionQuizFields = () => {
     setValue('choices', newChoices);
   };
 
-
   return (
     <div className='flex w-full flex-col gap-4 '>
-      <h4 className='font-medium text-base'>คำตอบ</h4>
+      <h4 className='text-base font-medium'>คำตอบ</h4>
       {fields.map((choice, index) => (
         <div key={choice.id} className='flex gap-3'>
           <Radio
@@ -41,7 +43,6 @@ const OptionQuizFields = () => {
             control={control}
             label={`ตัวเลือกที่ ${index + 1}`}
             defaultValue={`choices.${index}.option`} // Set default value for option
-
           />
 
           {fields.length > 1 && (
@@ -59,7 +60,7 @@ const OptionQuizFields = () => {
       <div className='flex items-center justify-center'>
         <button
           type='button'
-          className='text-sm lgr:text-base cursor-ponter text-default-blue border-form-gray hover:bg-light-blue w-full rounded-[0.575rem] border p-[3.5px]'
+          className='lgr:text-base cursor-ponter text-default-blue border-form-gray hover:bg-light-blue w-full rounded-[0.575rem] border p-[3.5px] text-sm'
           onClick={() => {
             append({ option: '', isCorrect: false });
           }}
@@ -68,7 +69,9 @@ const OptionQuizFields = () => {
         </button>
       </div>
       {errors.choices && typeof errors.choices.message === 'string' && (
-        <span className='text-center py-4 text-xs text-[#d32f2f]'>{errors.choices.message}</span>
+        <span className='py-4 text-center text-xs text-[#d32f2f]'>
+          {errors.choices.message}
+        </span>
       )}
     </div>
   );

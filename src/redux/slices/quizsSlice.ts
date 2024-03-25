@@ -24,16 +24,17 @@ const initialState: QuizState = {
 };
 
 export const fetchAllQuizs = createAsyncThunk('fetchAllQuizs', async () => {
+  // eslint-disable-next-line no-useless-catch
   try {
     const {
       data: { data },
     } = await axiosAuth.get<IGetQuizAllApi>(API_PATH.GET_QUIZ_ALL);
     const usersWithIndex = data.quiz ? addIndexQuiz(data.quiz) : [];
 
-    console.log('quiz redux', usersWithIndex);
+    //console.log('quiz redux', usersWithIndex);
     return usersWithIndex;
   } catch (error) {
-    console.error('Error fetching users:', error);
+    // console.error('Error fetching users:', error);
     throw error; // Ensure the error is propagated
   }
 });
@@ -41,14 +42,15 @@ export const fetchAllQuizs = createAsyncThunk('fetchAllQuizs', async () => {
 export const fetchQuizById = createAsyncThunk(
   'fetchQuizById',
   async (id: string) => {
+    // eslint-disable-next-line no-useless-catch
     try {
       const {
         data: { data },
       } = await axiosAuth.get<IGetQuizIdApi>(API_PATH.GET_QUIZ(id));
-      console.log('Get 1 quiz id', data.quiz);
+      //  console.log('Get 1 quiz id', data.quiz);
       return data.quiz;
     } catch (error) {
-      console.log('Error fetching user data id:', error);
+      //  console.log('Error fetching user data id:', error);
       throw error;
     }
   }
@@ -76,7 +78,7 @@ const quizsSlice = createSlice({
         state.status = 'succeeded';
         state.quiz = action.payload || [];
 
-        console.log('usersWithIndex', action.payload);
+        //  console.log('usersWithIndex', action.payload);
       })
       .addCase(fetchAllQuizs.rejected, (state) => {
         state.status = 'failed';
@@ -87,8 +89,8 @@ const quizsSlice = createSlice({
       })
       .addCase(fetchQuizById.fulfilled, (state, action) => {
         if (!action.payload?.id) {
-          console.log('Update could not complete');
-          console.log(action.payload);
+          //console.log('Update could not complete');
+          //  console.log(action.payload);
           return;
         }
 

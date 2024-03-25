@@ -31,16 +31,17 @@ const initialState: UserState = {
 };
 
 export const fetchUser = createAsyncThunk('fetchUser', async () => {
+  // eslint-disable-next-line no-useless-catch
   try {
     const {
       data: { data },
     } = await axiosAuth.get<IGetProfileMeApi>(API_PATH.GET_PROFILE_ME);
 
-    console.log('get profile me', data);
+    //console.log('get profile me', data);
 
     return data.user;
   } catch (error) {
-    console.error('Error fetching users:', error);
+    // console.error('Error fetching users:', error);
     throw error;
   }
 });
@@ -53,7 +54,7 @@ export const updateUser = createAsyncThunk(
         API_PATH.PUT_PROFILE_ME,
         updatedData
       );
-      console.log('update', response);
+      //  console.log('update', response);
       return response.data;
     } catch (err: any) {
       //return err.message;
@@ -81,7 +82,7 @@ const profileSlice = createSlice({
       .addCase(fetchUser.fulfilled, (state, action) => {
         state.status = 'succeeded';
 
-        console.log('API Response2:', action.payload);
+        // console.log('API Response2:', action.payload);
 
         state.user = action.payload;
       })
@@ -91,8 +92,8 @@ const profileSlice = createSlice({
       })
       .addCase(updateUser.fulfilled, (state, action) => {
         if (!action.payload?.id) {
-          console.log('Update could not complete');
-          console.log(action.payload);
+          //  console.log('Update could not complete');
+          //  console.log(action.payload);
           return;
         }
         action.payload.date = new Date().toISOString();

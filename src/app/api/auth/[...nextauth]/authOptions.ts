@@ -4,13 +4,12 @@ import { parse } from 'cookie';
 import { cookies } from 'next/headers';
 import type { NextAuthOptions } from 'next-auth/index';
 import CredentialsProvider from 'next-auth/providers/credentials';
-import { signIn, signOut } from 'next-auth/react';
+import { signIn } from 'next-auth/react';
 
 import axios from '@/lib/axios';
 import { isRefreshTokenExpired } from '@/lib/jwt';
 
 import { API_PATH } from '@/config/api';
-import { useRouter } from 'next/navigation';
 
 // async function refreshToken(token: JWT): Promise<JWT> {
 //   const res = await fetch(BACKEND_URL + '/auth/refresh', {
@@ -196,6 +195,8 @@ export const authOptions: NextAuthOptions = {
 
   pages: {
     signIn: '/auth/signIn',
+    // signIn: '/signIn',
   },
+
   secret: process.env.NEXTAUTH_SECRET,
 };

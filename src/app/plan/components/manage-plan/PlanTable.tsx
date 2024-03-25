@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 'use client';
 import { GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
 import { useSession } from 'next-auth/react';
@@ -5,22 +6,18 @@ import React from 'react';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import useAxiosAuth from '@/hooks/useAxiosAuth';
-
 import DeleteButton from '@/components/buttons/delete-button';
 import OutlineButton from '@/components/buttons/OutlineButton';
 import ViewButton from '@/components/buttons/ViewButton';
 import BaseTable from '@/components/table/BaseTable';
 
-import TestSendForm from '@/app/plan/components/create-plan/nested-form/CreatePlan';
+import CreatePlan from '@/app/plan/components/create-plan/nested-form/CreatePlan';
 import { API_PATH } from '@/config/api';
 import { iconTypeMapping, TypePlan } from '@/helpers/typeIcon';
 import { fetchAllPlans, selectAllPlans } from '@/redux/slices/plansSlice';
-import CreatePlan from '@/app/plan/components/create-plan/nested-form/CreatePlan';
 
 const PlanTable = () => {
   const { data: session } = useSession();
-  const axiosAuth = useAxiosAuth();
 
   //ตอนยังไม่ได้ทำ redux
   // const [userData, setUserData] = useState<IPlanData[]>([]);
@@ -58,7 +55,7 @@ const PlanTable = () => {
   useEffect(() => {
     if (session && session.user) {
       // If session exists, load users
-      loadPlans()
+      loadPlans();
     }
     // eslint-dis able-next-line react-hooks/exhaustive-deps
   }, []);

@@ -23,6 +23,7 @@ const initialState: recordState = {
 export const fetchRecordAllById = createAsyncThunk(
   'fetchRecordAllById',
   async (id: string) => {
+    // eslint-disable-next-line no-useless-catch
     try {
       const {
         data: { data },
@@ -31,10 +32,10 @@ export const fetchRecordAllById = createAsyncThunk(
       );
       const usersWithIndex = data.record ? addIndexRecord(data.record) : [];
 
-      console.log('record redux', usersWithIndex);
+      //console.log('record redux', usersWithIndex);
       return usersWithIndex;
     } catch (error) {
-      console.log('Error fetching user data id:', error);
+      //console.log('Error fetching user data id:', error);
       throw error;
     }
   }
@@ -44,6 +45,7 @@ export const fetchRecordAllById = createAsyncThunk(
 export const fetchRecordHospitalById = createAsyncThunk(
   'fetchRecordHospitalById',
   async (id: string) => {
+    // eslint-disable-next-line no-useless-catch
     try {
       const {
         data: { data },
@@ -52,10 +54,10 @@ export const fetchRecordHospitalById = createAsyncThunk(
       );
       const usersWithIndex = data.record ? addIndexRecord(data.record) : [];
 
-      console.log('record hospital redux', usersWithIndex);
+      // console.log('record hospital redux', usersWithIndex);
       return usersWithIndex;
     } catch (error) {
-      console.log('Error fetching user data id:', error);
+      // console.log('Error fetching user data id:', error);
       throw error;
     }
   }

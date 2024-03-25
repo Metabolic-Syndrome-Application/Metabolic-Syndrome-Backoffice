@@ -2,27 +2,27 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 
+import GraphHealth from '@/app/patient/record/graph-record/GraphHealth';
 import RecordHealthTable from '@/app/patient/record/health-record/health-record-table/RecordHealthTable';
 import { fetchRecordAllById } from '@/redux/slices/recordHealthsSlice';
-import GraphHealth from '@/app/patient/record/graph-record/GraphHealth';
 
+type PageProps = {
+  params: {
+    id: string;
+  };
+};
 
-const HealthRecordPage = ({ id }: { id: string }) => {
-
+export default function HealthRecordPage({ params }: PageProps) {
   const dispatch = useDispatch<any>();
 
-  //ข้อมูลสุขภาพจากแอปพลิเคชัน
   const fetchHealthRecord = (id: string) => {
     dispatch(fetchRecordAllById(id));
   };
 
   return (
     <div className='w-full'>
-
-      <GraphHealth params={{ id }} />
-      <RecordHealthTable params={{ id }} fetchRecordApi={fetchHealthRecord} />
+      <GraphHealth params={params} />
+      <RecordHealthTable params={params} fetchRecordApi={fetchHealthRecord} />
     </div>
   );
-};
-
-export default HealthRecordPage;
+}

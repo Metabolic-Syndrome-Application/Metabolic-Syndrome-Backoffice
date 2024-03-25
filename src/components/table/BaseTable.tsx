@@ -1,12 +1,15 @@
-"use client"
-import { DataGrid, GridColumnGroupingModel, GridToolbar } from '@mui/x-data-grid';
+'use client';
+import {
+  DataGrid,
+  GridColumnGroupingModel,
+  GridToolbar,
+} from '@mui/x-data-grid';
 import * as React from 'react';
 interface ITableProps {
   rows: any[];
   columns: any[];
   loading: any;
   columnGroupingModel?: GridColumnGroupingModel;
-
 }
 
 const tableStyles = {
@@ -36,7 +39,7 @@ const tableStyles = {
 };
 
 const BaseTable = ({ rows, columns, columnGroupingModel }: ITableProps) => {
-
+  // eslint-disable-next-line unused-imports/no-unused-vars
   const [loading, setLoading] = React.useState(false);
 
   return (
@@ -64,10 +67,9 @@ const BaseTable = ({ rows, columns, columnGroupingModel }: ITableProps) => {
           pageSizeOptions={[10, 25, 50]}
           sx={tableStyles}
 
-        // onRowExpandToggle={handleRowExpandToggle}
-        // {...({ expandedRowIds } as any)} // Explicitly cast to 
+          // onRowExpandToggle={handleRowExpandToggle}
+          // {...({ expandedRowIds } as any)} // Explicitly cast to
         />
-
       </div>
     </div>
   );

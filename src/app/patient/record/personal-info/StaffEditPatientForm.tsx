@@ -1,57 +1,65 @@
-"use client"
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useSnackbar } from "notistack";
-import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
-import { FaUserDoctor } from "react-icons/fa6";
-import { FiEdit } from "react-icons/fi";
-import { useDispatch, useSelector } from "react-redux";
-import { z } from "zod";
+/* eslint-disable unused-imports/no-unused-vars */
+'use client';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useSnackbar } from 'notistack';
+import { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { FaUserDoctor } from 'react-icons/fa6';
+import { FiEdit } from 'react-icons/fi';
+import { useDispatch, useSelector } from 'react-redux';
+import { z } from 'zod';
 
-import { useDoctorOptions, useStatusOptions } from "@/lib/dataOptions";
-import useAxiosAuth from "@/hooks/useAxiosAuth";
-import useModal from "@/hooks/useModal";
+import { useDoctorOptions, useStatusOptions } from '@/lib/dataOptions';
+import useAxiosAuth from '@/hooks/useAxiosAuth';
+import useModal from '@/hooks/useModal';
 
-import ActionButton from "@/components/buttons/ActionButton";
-import FormHeaderText from "@/components/form/FormHeaderText";
-import { InputDropdown } from "@/components/form/InputDropdown";
-import { InputText } from "@/components/form/InputText";
-import { RadioOption } from "@/components/form/RadioOption";
-import { staffEditPatientSchema, staffEditPatientSchemaValues } from "@/components/form/validation/PatientValidator";
+import ActionButton from '@/components/buttons/ActionButton';
+import FormHeaderText from '@/components/form/FormHeaderText';
+import { InputDropdown } from '@/components/form/InputDropdown';
+import { InputText } from '@/components/form/InputText';
+import { RadioOption } from '@/components/form/RadioOption';
+import {
+  staffEditPatientSchema,
+  staffEditPatientSchemaValues,
+} from '@/components/form/validation/PatientValidator';
 
-import { API_PATH } from "@/config/api";
-import { dataOptions, yearOptions } from "@/constant/user";
-import { fetchPatientById, selectPatientById } from "@/redux/slices/patientsSlice";
+import { API_PATH } from '@/config/api';
+import { dataOptions, yearOptions } from '@/constant/user';
+import {
+  fetchPatientById,
+  selectPatientById,
+} from '@/redux/slices/patientsSlice';
 
-
-const StaffEditPatientForm = ({ params, loadData }: { params: { id: string }, loadData: () => void }) => {
+const StaffEditPatientForm = ({
+  params,
+  loadData,
+}: {
+  params: { id: string };
+  loadData: () => void;
+}) => {
   //params id
   const id = params.id;
   const axiosAuth = useAxiosAuth();
 
-  const { Modal, openModal, closeModal } = useModal();
+  const { Modal, openModal } = useModal();
   const { enqueueSnackbar } = useSnackbar();
   const dispatch = useDispatch<any>();
 
   const patient = useSelector(selectPatientById);
-  const [submittedData, setSubmittedData] = useState<staffEditPatientSchemaValues | null>(null);
+  const [submittedData, setSubmittedData] =
+    useState<staffEditPatientSchemaValues | null>(null);
 
-  console.log('edit plan', patient)
+  console.log('edit plan', patient);
 
-  const {
-    control,
-    handleSubmit,
-    reset,
-    formState: { errors, isDirty },
-  } = useForm<staffEditPatientSchemaValues>({
-    mode: 'onChange',
-    resolver: zodResolver(staffEditPatientSchema),
-    defaultValues: submittedData || {},
-  });;
+  const { control, handleSubmit, reset } =
+    useForm<staffEditPatientSchemaValues>({
+      mode: 'onChange',
+      resolver: zodResolver(staffEditPatientSchema),
+      defaultValues: submittedData || {},
+    });
 
-
-  const getDoctorOptions = useDoctorOptions()
-  const getStatusOptions = useStatusOptions()
+  const getDoctorOptions = useDoctorOptions();
+  const getStatusOptions = useStatusOptions();
 
   useEffect(() => {
     if (patient) {
@@ -63,17 +71,20 @@ const StaffEditPatientForm = ({ params, loadData }: { params: { id: string }, lo
     try {
       // Make the API call and handle success
 
-      const response = await axiosAuth.put(API_PATH.PUT_PROFILE_PATIENT_OTHER(id), {
-        hn: data.hn,
-        firstName: data.firstName,
-        lastName: data.lastName,
-        gender: data.gender,
-        yearOfBirth: data.yearOfBirth,
-        mainDoctorID: data.mainDoctorID,
-        assistanceDoctorID: data.assistanceDoctorID,
-        disease: data.disease,
-        status: data.status,
-      });
+      const response = await axiosAuth.put(
+        API_PATH.PUT_PROFILE_PATIENT_OTHER(id),
+        {
+          hn: data.hn,
+          firstName: data.firstName,
+          lastName: data.lastName,
+          gender: data.gender,
+          yearOfBirth: data.yearOfBirth,
+          mainDoctorID: data.mainDoctorID,
+          assistanceDoctorID: data.assistanceDoctorID,
+          disease: data.disease,
+          status: data.status,
+        }
+      );
 
       // Reload the data after successful edit
       enqueueSnackbar('edit success', { variant: 'success' });
@@ -88,11 +99,14 @@ const StaffEditPatientForm = ({ params, loadData }: { params: { id: string }, lo
   };
 
   return (
-    <div className="w-full">
-      <article className='flex w-full items-center justify-end px-4 py-2 gap-2'>
-        <div className="flex items-center gap-1 cursor-pointer" onClick={openModal}>
-          <FiEdit className="hover:bg-light-gray text-default-blue group h-5 w-5 cursor-pointer rounded-md transition-all duration-300 ease-in-out" />
-          <p className="text-default-blue">แก้ไข</p>
+    <div className='w-full'>
+      <article className='flex w-full items-center justify-end gap-2 px-4 py-2'>
+        <div
+          className='flex cursor-pointer items-center gap-1'
+          onClick={openModal}
+        >
+          <FiEdit className='hover:bg-light-gray text-default-blue group h-5 w-5 cursor-pointer rounded-md transition-all duration-300 ease-in-out' />
+          <p className='text-default-blue'>แก้ไข</p>
         </div>
       </article>
 
@@ -103,13 +117,17 @@ const StaffEditPatientForm = ({ params, loadData }: { params: { id: string }, lo
             title='แก้ไขข้อมูลคนไข้'
             useBigestHeader
           />
-          <div className="grid grid-cols-1 w-full">
+          <div className='grid w-full grid-cols-1'>
             {/* Section1 */}
-            <div className='col-span-1 w-full lg:w-[800px] space-y-6 rounded-lg border p-4'>
+            <div className='col-span-1 w-full space-y-6 rounded-lg border p-4 lg:w-[800px]'>
               <FormHeaderText title='ข้อมูลส่วนตัว' />
               <InputText name='hn' label='รหัสคนไข้' control={control} />
               <div className='flex space-x-4'>
-                <InputText name='firstName' label='ชื่อจริง' control={control} />
+                <InputText
+                  name='firstName'
+                  label='ชื่อจริง'
+                  control={control}
+                />
                 <InputText name='lastName' label='นามสกุล' control={control} />
               </div>
               <RadioOption
@@ -146,8 +164,8 @@ const StaffEditPatientForm = ({ params, loadData }: { params: { id: string }, lo
             </div>
           </div>
 
-          <div className="flex gap-4 justify-end mt-4">
-            <ActionButton type='submit' variant='submit' >
+          <div className='mt-4 flex justify-end gap-4'>
+            <ActionButton type='submit' variant='submit'>
               แก้ไข
             </ActionButton>
           </div>
@@ -155,5 +173,5 @@ const StaffEditPatientForm = ({ params, loadData }: { params: { id: string }, lo
       </Modal>
     </div>
   );
-}
+};
 export default StaffEditPatientForm;

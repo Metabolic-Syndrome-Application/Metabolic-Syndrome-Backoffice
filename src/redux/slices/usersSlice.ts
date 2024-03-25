@@ -20,19 +20,20 @@ const initialState: UserState = {
 };
 
 export const fetchAllUsers = createAsyncThunk('fetchAllUsers', async () => {
+  // eslint-disable-next-line no-useless-catch
   try {
     const {
       data: { data },
     } = await axiosAuth.get<IGetProfileAllApi>(API_PATH.GET_PROFILE_ALL);
-    console.log('Admin Create Register:', data);
+    //console.log('Admin Create Register:', data);
 
     // Assuming response.data.users is an array of IUserData
     //const usersWithIndex = addIndex(data.users);
     const usersWithIndex = data.users ? addIndexUser(data.users) : [];
-    console.log('users redux', usersWithIndex);
+    //console.log('users redux', usersWithIndex);
     return usersWithIndex;
   } catch (error) {
-    console.error('Error fetching users:', error);
+    //console.error('Error fetching users:', error);
     throw error;
   }
 });
@@ -56,11 +57,11 @@ const usersSlice = createSlice({
       .addCase(fetchAllUsers.fulfilled, (state, action) => {
         state.status = 'succeeded';
 
-        console.log('Admin Create Register2:', action.payload);
+        //  console.log('Admin Create Register2:', action.payload);
 
         state.users = action.payload || [];
 
-        console.log('usersWithIndex', action.payload);
+        // console.log('usersWithIndex', action.payload);
       })
       .addCase(fetchAllUsers.rejected, (state) => {
         state.status = 'failed';

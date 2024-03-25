@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { axiosAuth } from '@/lib/axios';
@@ -35,6 +36,7 @@ export const fetchAllPlans = createAsyncThunk('fetchAllPlans', async () => {
 export const fetchAllPlansDefault = createAsyncThunk(
   'fetchAllPlansDefault',
   async () => {
+    // eslint-disable-next-line no-useless-catch
     try {
       const {
         data: { data },
@@ -42,7 +44,7 @@ export const fetchAllPlansDefault = createAsyncThunk(
       const usersWithIndex = data.plan ? addIndexPlan(data.plan) : [];
       return usersWithIndex;
     } catch (error) {
-      console.error('Error fetching plan:', error);
+      // console.error('Error fetching plan:', error);
       throw error; // Ensure the error is propagated
     }
   }
