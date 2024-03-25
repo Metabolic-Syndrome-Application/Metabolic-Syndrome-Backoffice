@@ -3,7 +3,7 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useSnackbar } from 'notistack';
-import React, { useState } from 'react';
+import React from 'react';
 import { useForm } from 'react-hook-form';
 import { FiEdit } from 'react-icons/fi';
 import { MdEdit } from 'react-icons/md';
@@ -32,7 +32,6 @@ const EditProfile = () => {
   const { enqueueSnackbar } = useSnackbar();
 
   const { Modal, openModal, closeModal } = useModal();
-  const [waiting, setWaiting] = useState(false);
   const user = useSelector(selectUser);
   const dispatch = useDispatch<any>();
 
@@ -65,44 +64,6 @@ const EditProfile = () => {
       console.log('Error:', error);
     }
   };
-
-  //old function
-  // const onSubmit = async (data: FormCreateProfileDoctorProps) => {
-  //   try {
-  //     // Make the API call and dispatch the updateUser action
-  //     const response = await axiosAuth.put(`${api}`, {
-  //       prefix: data.prefix,
-  //       firstName: data.firstName,
-  //       lastName: data.lastName,
-  //       gender: data.gender,
-  //       department: data.department,
-  //       specialist: data.specialist,
-  //     });
-
-  //     dispatch(updateUser(response.data));
-  //     dispatch(
-  //       updateUser({
-  //         prefix: data.prefix,
-  //         firstName: data.firstName,
-  //         lastName: data.lastName,
-  //         gender: data.gender,
-  //         department: data.department,
-  //         specialist: data.specialist,
-  //       })
-  //     );
-  //     console.log('Edit successful', response.data);
-
-  //     // Reload the data after a successful edit
-  //     enqueueSnackbar('edit success', { variant: 'success' });
-  //     //loadData();
-  //     dispatch(fetchUser());
-  //     closeModal(); // Close the modal if needed
-  //   } catch (error) {
-  //     console.log('Error:', error);
-  //     enqueueSnackbar('Cannot edit', { variant: 'error' });
-  //   }
-  // };
-
   return (
     <div>
       <FiEdit
@@ -111,70 +72,64 @@ const EditProfile = () => {
       />
       <Modal>
         <form onSubmit={handleSubmit(onSubmit)}>
-          {waiting ? (
-            <>Loading</>
-          ) : (
-            <div className=''>
-              <FormHeaderText
-                icon={MdEdit}
-                title='แก้ไขข้อมูลส่วนตัว'
-                useBigestHeader
-              />
+          <div className='w-full'>
+            <FormHeaderText
+              icon={MdEdit}
+              title='แก้ไขข้อมูลส่วนตัว'
+              useBigestHeader
+            />
 
-              <div className='flex flex-col gap-4'>
-                {/* section2 */}
-                <div className='space-y-4 rounded-lg border p-4 '>
-                  <FormHeaderText title='ข้อมูลส่วนตัว' />
+            <div className='flex flex-col gap-4'>
+              <div className='space-y-4 rounded-lg border p-4 '>
+                <FormHeaderText title='ข้อมูลส่วนตัว' />
 
-                  <InputText name='prefix' label='คำนำหน้า' control={control} />
-                  <div className='flex space-x-4'>
-                    <InputText
-                      name='firstName'
-                      label='ชื่อจริง'
-                      control={control}
-                    />
-                    <InputText
-                      name='lastName'
-                      label='นามสกุล'
-                      control={control}
-                    />
-                  </div>
-                  <RadioOption
-                    name='gender'
-                    label='เพศ'
+                <InputText name='prefix' label='คำนำหน้า' control={control} />
+
+                <div className='flex space-x-4'>
+                  <InputText
+                    name='firstName'
+                    label='ชื่อจริง'
                     control={control}
-                    options={dataOptions.genderOptions}
                   />
-
-                  <InputDropdown
-                    name='department'
+                  <InputText
+                    name='lastName'
+                    label='นามสกุล'
                     control={control}
-                    label='แผนก'
-                    options={medicalDepartment}
-                  />
-                  <InputDropdown
-                    name='specialist'
-                    control={control}
-                    label='ความเชี่ยวชาญ'
-                    options={medicalSpecialist}
                   />
                 </div>
-              </div>
 
-              <div className='flex w-full justify-end space-x-3 py-4'>
-                <ActionButton
-                  type='reset'
-                  variant='cancel'
-                  onClick={closeModal}
-                >
-                  ยกเลิก
-                </ActionButton>
-                <ActionButton type='submit' variant='submit'>
-                  แก้ไขโปรไฟล์
-                </ActionButton>
+                <RadioOption
+                  name='gender'
+                  label='เพศ'
+                  control={control}
+                  options={dataOptions.genderOptions}
+                />
+
+                <InputDropdown
+                  name='department'
+                  control={control}
+                  label='แผนก'
+                  options={medicalDepartment}
+                />
+
+                <InputDropdown
+                  name='specialist'
+                  control={control}
+                  label='ความเชี่ยวชาญ'
+                  options={medicalSpecialist}
+                />
               </div>
             </div>
-          )}
+
+            <div className='flex w-full justify-end space-x-3 py-4'>
+              <ActionButton type='reset' variant='cancel' onClick={closeModal}>
+                ยกเลิก
+              </ActionButton>
+              <ActionButton type='submit' variant='submit'>
+                แก้ไขโปรไฟล์
+              </ActionButton>
+            </div>
+          </div>
         </form>
       </Modal>
     </div>

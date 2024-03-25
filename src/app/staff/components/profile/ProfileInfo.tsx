@@ -1,3 +1,5 @@
+/* eslint-disable unused-imports/no-unused-vars */
+// eslint-disable-next-line unused-imports/no-unused-vars
 import { Avatar } from '@mui/material';
 import { useSession } from 'next-auth/react';
 import React, { useEffect } from 'react';
@@ -14,7 +16,7 @@ import { fetchUser, selectUser } from '@/redux/slices/profileSlice';
 
 const ProfileInfo = () => {
   const { data: session } = useSession();
-  // eslint-disable-next-line unused-imports/no-unused-vars
+
   const axiosAuth = useAxiosAuth();
   const user = useSelector(selectUser);
 
@@ -53,7 +55,7 @@ const ProfileInfo = () => {
           </div>
 
           <TextFieldInfo label='คำนำหน้า' value={user.prefix} />
-          <div className='flex gap-2'>
+          <div className='grid grid-cols-2 space-x-4'>
             <TextFieldInfo label='ชื่อจริง' value={user.firstName} />
             <TextFieldInfo label='นามสกุล' value={user.lastName} />
           </div>
