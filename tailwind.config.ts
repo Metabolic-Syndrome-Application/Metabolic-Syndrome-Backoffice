@@ -1,5 +1,4 @@
 import type { Config } from 'tailwindcss';
-import defaultTheme from 'tailwindcss/defaultTheme';
 
 export default {
   content: ['./src/**/*.{js,jsx,ts,tsx}'],
@@ -7,7 +6,7 @@ export default {
     extend: {
       fontFamily: {
         ibm: ['var(--font-ibm)'],
-        primary: ['Inter', ...defaultTheme.fontFamily.sans],
+        // primary: ['Inter', ...defaultTheme.fontFamily.sans],
       },
       colors: {
         'default-blue': '#2F4EF1',
@@ -34,8 +33,7 @@ export default {
       },
       boxShadow: {
         'default-shadow': '0px 16px 40px 0px rgba(112, 144, 182, 0.20)',
-        //rgb(239, 240, 244) 0px -1px 0px inset, rgb(239, 240, 244) 0px 1px 0px inset
-        'light-shadow': 'rgba(0, 0, 0, 0.1) 0px 1px 2px 0px;',
+        'light-shadow': '0px 1px 2px 0px rgba(0, 0, 0, 0.1)',
       },
 
       keyframes: {
