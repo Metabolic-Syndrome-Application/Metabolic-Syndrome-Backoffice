@@ -104,13 +104,10 @@ export function RegisterNewPatientForm() {
   };
 
   return (
-    <form
-      className='flex w-full flex-col'
-      onSubmit={handleSubmit(onHandleFormSubmit)}
-    >
-      <div className='flex flex-col gap-4 md:flex-row'>
+    <form onSubmit={handleSubmit(onHandleFormSubmit)}>
+      <div className='grid w-full grid-cols-3 gap-4 md:flex-row'>
         {/* Section1 */}
-        <div className='flex h-full w-full flex-col space-y-4 rounded-lg border p-4 md:w-2/5'>
+        <div className='col-span-3 h-full w-full flex-col space-y-4 rounded-lg border p-4 md:col-span-1'>
           <FormHeaderText title='สร้างบัญชีผู้ใช้' />
           <RadioOption
             name='role'
@@ -140,7 +137,7 @@ export function RegisterNewPatientForm() {
         </div>
 
         {/* Section2 */}
-        <div className='flex h-full w-full flex-col space-y-4 rounded-lg border p-4 md:w-3/5'>
+        <div className='col-span-3 h-full w-full flex-col space-y-4 rounded-lg border p-4 md:col-span-2 '>
           <FormHeaderText title='ข้อมูลส่วนตัว' />
           <InputText name='hn' label='รหัสคนไข้' control={control} />
           <div className='flex space-x-4'>

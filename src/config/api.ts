@@ -1,5 +1,5 @@
-//export const BACKEND_URL = 'http://localhost:8000';
-export const BACKEND_URL = 'https://34.87.86.35:8000';
+export const BACKEND_URL = 'http://localhost:8000';
+//export const BACKEND_URL = 'http://34.87.86.35:8000';
 
 export const API_PATH = {
   //Auth : wait add admin form
@@ -7,6 +7,7 @@ export const API_PATH = {
   POST_REGISTER_OTHER: '/api/auth/register/other',
   POST_LOGIN: '/api/auth/login',
   POST_REFRESH: '/api/auth/refresh',
+  GET_LOGOUT: '/api/auth/logout',
 
   //Doctor & Staff
   GET_PROFILE_ALL: '/api/user/profile/all', //patient too

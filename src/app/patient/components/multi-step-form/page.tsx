@@ -18,7 +18,8 @@ const MultiFormPatient = () => {
         <IconFlatButton title='เพิ่มข้อมูลคนไข้' onClick={openModal} />
       </article>
       <Modal>
-        <div className='container mx-auto w-full md:w-screen lg:w-[900px]'>
+        {/* md:w-screen lg:w-[900px] */}
+        <div className='container mx-auto  '>
           <FormProvider>
             <AllRegisterPatientForm />
           </FormProvider>
