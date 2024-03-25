@@ -68,61 +68,64 @@ export const GenerateOTPForm: FC = () => {
   };
 
   return (
-    <form className='flex h-fit w-full flex-col space-y-4 rounded-lg border p-4'>
-      <div className='flex flex-col space-y-4'>
+    <div className='w-[900px]'>
+      <form className='grid w-full grid-cols-1 space-y-4 rounded-lg border p-4'>
         <FormHeaderText title='การเชื่อมต่อกับผู้ใช้' />
-        <div className='flex w-full flex-col items-center justify-center'>
-          <Image
-            src='/assets/images/otp.png'
-            className=' h-[150px] w-[150px] object-contain md:h-[200px] md:w-[250px]'
-            width={350}
-            height={350}
-            alt='pinCode'
-            placeholder='blur'
-            blurDataURL='/assets/images/otp.png'
-          />
-        </div>
-        <div className='flex flex-col items-center justify-center space-y-2 text-wrap text-center'>
-          <h4>การยืนยันรหัส OTP</h4>
-          <p>กรุณากรอกรหัส OTP นี้ที่โทรศัพท์ของคนไข้</p>
+        <div className='flex flex-col gap-4'>
+          <div className='flex w-full flex-col items-center justify-center'>
+            <Image
+              src='/assets/images/otp.png'
+              className=' h-[150px] w-[150px] object-contain md:h-[200px] md:w-[250px]'
+              width={350}
+              height={350}
+              alt='pinCode'
+              placeholder='blur'
+              blurDataURL='/assets/images/otp.png'
+            />
+          </div>
+
+          <div className='flex flex-col items-center justify-center space-y-2 text-wrap text-center'>
+            <h4>การยืนยันรหัส OTP</h4>
+            <p>กรุณากรอกรหัส OTP นี้ที่โทรศัพท์ของคนไข้</p>
+          </div>
+
+          <div className='flex items-center justify-center gap-1'>
+            <LuTimer className='text-default-gray' />
+            <p className='text-default-gray'>เหลือเวลาอีก</p>
+            <CountdownTimer
+              expiryTimestamp={expiryTime}
+              onTimerExpired={handleTimerExpired}
+            />
+            <span className='text-default-gray'>นาที</span>
+          </div>
+
+          <div className='flex flex-col items-center justify-center space-y-2 text-wrap text-center'>
+            {timerExpired ? (
+              <p className='text-default-red text-sm'>
+                สิ้นสุดการขอรหัสยืนยัน (OTP) <br /> กรุณากรอกฟอร์มใหม่อีกครั้ง
+              </p>
+            ) : (
+              <OTPField otp={formData.otp} />
+            )}
+          </div>
         </div>
 
-        <div className='flex items-center justify-center gap-1'>
-          <LuTimer className='text-default-gray' />
-          <p className='text-default-gray'>เหลือเวลาอีก</p>
-          <CountdownTimer
-            expiryTimestamp={expiryTime}
-            onTimerExpired={handleTimerExpired}
-          />
-          <span className='text-default-gray'>นาที</span>
-        </div>
-
-        <div className='flex flex-col items-center justify-center space-y-2 text-wrap text-center'>
-          {timerExpired ? (
-            <p className='text-default-red text-sm'>
-              สิ้นสุดการขอรหัสยืนยัน (OTP) <br /> กรุณากรอกฟอร์มใหม่อีกครั้ง
-            </p>
+        <div className='flex flex-col items-center justify-center gap-4 py-4'>
+          {!timerExpired ? (
+            <OutlineButton onClick={refreshOTP} variant='red'>
+              ขอรหัสผ่านใหม่อีกครั้ง ?
+            </OutlineButton>
           ) : (
-            <OTPField otp={formData.otp} />
+            <OutlineButton onClick={onHandleBack} size='base'>
+              กลับสู่หน้าเพิ่มข้อมูลคนไข้
+            </OutlineButton>
           )}
         </div>
-      </div>
 
-      <div className='flex flex-col items-center justify-center gap-4 py-4'>
-        {!timerExpired ? (
-          <OutlineButton onClick={refreshOTP} variant='red'>
-            ขอรหัสผ่านใหม่อีกครั้ง ?
-          </OutlineButton>
-        ) : (
-          <OutlineButton onClick={onHandleBack} size='base'>
-            กลับสู่หน้าเพิ่มข้อมูลคนไข้
-          </OutlineButton>
-        )}
-      </div>
-
-      <ActionButton variant='cancel' onClick={onHandleBack}>
-        ย้อนกลับ
-      </ActionButton>
-    </form>
+        <ActionButton variant='cancel' onClick={onHandleBack}>
+          ย้อนกลับ
+        </ActionButton>
+      </form>
+    </div>
   );
 };

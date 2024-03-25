@@ -35,7 +35,7 @@ interface Props {
   selectedOption: string;
 }
 
-export function InformationFieldForm({ selectedOption }: Props) {
+export function ConnectPatientForm({ selectedOption }: Props) {
   const axiosAuth = useAxiosAuth();
   const { enqueueSnackbar } = useSnackbar();
 
@@ -75,51 +75,50 @@ export function InformationFieldForm({ selectedOption }: Props) {
   };
 
   return (
-    <form
-      className='flex h-fit w-full flex-col space-y-4 rounded-lg border p-4'
-      onSubmit={handleSubmit(onHandleFormSubmit)}
-    >
-      <div className='flex flex-col space-y-4'>
-        <FormHeaderText title='ข้อมูลส่วนตัว' />
+    <div className='w-[900px]'>
+      <form onSubmit={handleSubmit(onHandleFormSubmit)}>
+        <div className='grid w-full grid-cols-1 space-y-4 rounded-lg border p-4'>
+          <FormHeaderText title='ข้อมูลส่วนตัว' />
 
-        <InputText name='hn' label='รหัสคนไข้' control={control} />
-        <div className='flex space-x-4'>
-          <InputText name='firstName' label='ชื่อจริง' control={control} />
-          <InputText name='lastName' label='นามสกุล' control={control} />
+          <InputText name='hn' label='รหัสคนไข้' control={control} />
+          <div className='flex space-x-4'>
+            <InputText name='firstName' label='ชื่อจริง' control={control} />
+            <InputText name='lastName' label='นามสกุล' control={control} />
+          </div>
+          <RadioOption
+            name='gender'
+            label='เพศ'
+            control={control}
+            options={dataOptions.genderOptions}
+          />
+          <InputDropdown
+            name='yearOfBirth'
+            control={control}
+            label='ปีเกิด (พ.ศ.)'
+            options={yearOptions}
+          />
+          <InputDropdown
+            name='mainDoctorID'
+            control={control}
+            label='แพทย์ผู้รับผิดชอบหลัก'
+            options={getDoctorOptions}
+          />
+          <InputDropdown
+            name='assistanceDoctorID'
+            control={control}
+            label='แพทย์ผู้รับผิดชอบรอง'
+            options={getDoctorOptions}
+          />
+          <InputText name='disease' label='โรคที่พบ' control={control} />
         </div>
-        <RadioOption
-          name='gender'
-          label='เพศ'
-          control={control}
-          options={dataOptions.genderOptions}
-        />
-        <InputDropdown
-          name='yearOfBirth'
-          control={control}
-          label='ปีเกิด (พ.ศ.)'
-          options={yearOptions}
-        />
-        <InputDropdown
-          name='mainDoctorID'
-          control={control}
-          label='แพทย์ผู้รับผิดชอบหลัก'
-          options={getDoctorOptions}
-        />
-        <InputDropdown
-          name='assistanceDoctorID'
-          control={control}
-          label='แพทย์ผู้รับผิดชอบรอง'
-          options={getDoctorOptions}
-        />
-        <InputText name='disease' label='โรคที่พบ' control={control} />
-      </div>
-      <div className='flex justify-end'>
-        {selectedOption === AccountOption.haveAccount && (
-          <ActionButton type='submit' variant='submit'>
-            ยืนยันการเพิ่มข้อมูลคนไข้
-          </ActionButton>
-        )}
-      </div>
-    </form>
+        <div className='mt-4 flex justify-end'>
+          {selectedOption === AccountOption.haveAccount && (
+            <ActionButton type='submit' variant='submit'>
+              ยืนยันการเชื่อมต่อข้อมูลคนไข้
+            </ActionButton>
+          )}
+        </div>
+      </form>
+    </div>
   );
 }
