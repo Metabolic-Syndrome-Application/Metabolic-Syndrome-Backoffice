@@ -1,7 +1,7 @@
 import * as React from 'react';
+import { ImSpinner2 } from 'react-icons/im';
 
 import { cn } from '@/lib/utils';
-import { ImSpinner2 } from 'react-icons/im';
 
 const ActionButtonVariant = ['submit', 'cancel', 'delete'] as const;
 const ButtonSize = ['base', 'sm'] as const;
@@ -31,7 +31,7 @@ const ActionButton = React.forwardRef<HTMLButtonElement, ActionButtonProps>(
     return (
       <button
         ref={ref}
-        type={'button'}
+        type='button'
         disabled={disabled}
         className={cn(
           'w-fit min-w-[90px]',

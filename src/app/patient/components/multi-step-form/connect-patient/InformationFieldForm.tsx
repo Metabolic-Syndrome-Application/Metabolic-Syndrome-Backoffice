@@ -1,24 +1,26 @@
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useSnackbar } from "notistack";
-import { useEffect } from "react";
-import { useForm } from "react-hook-form";
-import { useDispatch, useSelector } from "react-redux";
+'use client';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useSnackbar } from 'notistack';
+import { useEffect } from 'react';
+import { useForm } from 'react-hook-form';
+import { useDispatch } from 'react-redux';
 
-import useAxiosAuth from "@/hooks/useAxiosAuth";
+import { useDoctorOptions } from '@/lib/dataOptions';
+import useAxiosAuth from '@/hooks/useAxiosAuth';
 
-import ActionButton from "@/components/buttons/ActionButton";
-import FormHeaderText from "@/components/form/FormHeaderText";
-import { InputDropdown } from "@/components/form/InputDropdown";
-import { InputText } from "@/components/form/InputText";
-import { RadioOption } from "@/components/form/RadioOption";
-import { registerCurrentPatientchema } from "@/components/form/validation/PatientValidator";
+import ActionButton from '@/components/buttons/ActionButton';
+import FormHeaderText from '@/components/form/FormHeaderText';
+import { InputDropdown } from '@/components/form/InputDropdown';
+import { InputText } from '@/components/form/InputText';
+import { RadioOption } from '@/components/form/RadioOption';
+import { registerCurrentPatientchema } from '@/components/form/validation/PatientValidator';
 
-import { AccountOption } from "@/app/patient/components/multi-step-form/form-context/AllRegisterPatientForm";
-import { API_PATH } from "@/config/api";
-import { dataOptions, yearOptions } from "@/constant/user";
-import { fetchAllDoctors, selectAllDoctors } from "@/redux/slices/doctorSlice";
+import { AccountOption } from '@/app/patient/components/multi-step-form/form-context/AllRegisterPatientForm';
+import { API_PATH } from '@/config/api';
+import { dataOptions, yearOptions } from '@/constant/user';
+import { fetchAllDoctors } from '@/redux/slices/doctorSlice';
 
-import { useFormState } from "../form-context/FormContext";
+import { useFormState } from '../form-context/FormContext';
 
 type TFormValues = {
   hn: string;
@@ -39,15 +41,9 @@ export function InformationFieldForm({ selectedOption }: Props) {
 
   const dispatch = useDispatch<any>();
 
-  // const getDoctorOptions = useDoctorOptions();
-  const doctors = useSelector(selectAllDoctors);
+  //get doctor options
+  const getDoctorOptions = useDoctorOptions();
 
-  const getDoctorOptions = () => {
-    return doctors.map((doctor: { prefix: any; firstName: any; lastName: any; id: any; }) => ({
-      label: `${doctor.prefix} ${doctor.firstName} ${doctor.lastName}`,
-      value: doctor.id,
-    }));
-  };
   useEffect(() => {
     dispatch(fetchAllDoctors());
   }, [dispatch]);
@@ -72,7 +68,6 @@ export function InformationFieldForm({ selectedOption }: Props) {
 
       //console.log('gen otp:', response.data);
       enqueueSnackbar('Create OTP Success', { variant: 'success' });
-
     } catch (error: any) {
       //console.error('Error generating OTP:', error);
       enqueueSnackbar(error.response?.data, { variant: 'error' });
@@ -81,10 +76,10 @@ export function InformationFieldForm({ selectedOption }: Props) {
 
   return (
     <form
-      className="flex w-full h-fit flex-col space-y-4 rounded-lg border p-4"
+      className='flex h-fit w-full flex-col space-y-4 rounded-lg border p-4'
       onSubmit={handleSubmit(onHandleFormSubmit)}
     >
-      <div className="flex flex-col space-y-4">
+      <div className='flex flex-col space-y-4'>
         <FormHeaderText title='ข้อมูลส่วนตัว' />
 
         <InputText name='hn' label='รหัสคนไข้' control={control} />
@@ -108,23 +103,23 @@ export function InformationFieldForm({ selectedOption }: Props) {
           name='mainDoctorID'
           control={control}
           label='แพทย์ผู้รับผิดชอบหลัก'
-          options={getDoctorOptions()}
+          options={getDoctorOptions}
         />
         <InputDropdown
           name='assistanceDoctorID'
           control={control}
           label='แพทย์ผู้รับผิดชอบรอง'
-          options={getDoctorOptions()}
+          options={getDoctorOptions}
         />
         <InputText name='disease' label='โรคที่พบ' control={control} />
       </div>
-      <div className="flex justify-end">
+      <div className='flex justify-end'>
         {selectedOption === AccountOption.haveAccount && (
           <ActionButton type='submit' variant='submit'>
             ยืนยันการเพิ่มข้อมูลคนไข้
           </ActionButton>
         )}
       </div>
-    </form >
+    </form>
   );
 }

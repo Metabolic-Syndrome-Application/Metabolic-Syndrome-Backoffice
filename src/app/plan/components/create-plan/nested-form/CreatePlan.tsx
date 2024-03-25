@@ -1,6 +1,7 @@
 'use client';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useSnackbar } from 'notistack';
+import { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { MdOutlineCreateNewFolder } from 'react-icons/md';
 import { useDispatch } from 'react-redux';
@@ -11,7 +12,7 @@ import useModal from '@/hooks/useModal';
 
 import ActionButton from '@/components/buttons/ActionButton';
 import { IconFlatButton } from '@/components/buttons/IconFlatButton';
-import UploadImageDisplay from '@/components/form/components/UploadImageDisplay';
+import ImageUpload from '@/components/form/components/UploadImageDisplay';
 import FormHeaderText from '@/components/form/FormHeaderText';
 import { InputDropdown } from '@/components/form/InputDropdown';
 import { InputText } from '@/components/form/InputText';
@@ -25,8 +26,6 @@ import DetailPlanFields from '@/app/plan/components/create-plan/nested-form/Deta
 import { API_PATH } from '@/config/api';
 import { typePlanOptions } from '@/constant/plan';
 import { fetchAllPlans } from '@/redux/slices/plansSlice';
-import { useState } from 'react';
-import ImageUpload from '@/components/form/components/UploadImageDisplay';
 
 const CreatePlan = () => {
   const axiosAuth = useAxiosAuth();
@@ -37,12 +36,12 @@ const CreatePlan = () => {
   const dispatch = useDispatch<any>();
 
   const [image, setImage] = useState<File | null>(null);
+  // eslint-disable-next-line unused-imports/no-unused-vars
   const [imageError, setImageError] = useState(false);
-  const [waitingResponse, setWaitingReponse] = useState(false);
 
   const [downloadURL, setDownloadURL] = useState<string>('');
-  //console.log('downloadURL', downloadURL)
 
+  //console.log('downloadURL', downloadURL)
 
   const methods = useForm<createPlanSchemaValues>({
     mode: 'onChange',
@@ -65,20 +64,12 @@ const CreatePlan = () => {
     formState: { errors, isDirty },
   } = methods;
 
-
   const onSubmit = async (data: z.infer<typeof createPlanSchema>) => {
-    if (!image) {
-      setImageError(true);
-      return;
-    }
-
-    setWaitingReponse(true);
-    if (imageError) setImageError(false);
-
     try {
       const selectedDays = data.detail.day.map(
         (day: { value: string }) => day.value
       );
+      // eslint-disable-next-line unused-imports/no-unused-vars
       const response = await axiosAuth.post(API_PATH.CREATE_PLAN, {
         name: data.name,
         description: data.description,
@@ -89,14 +80,15 @@ const CreatePlan = () => {
           day: selectedDays,
         },
       });
+
       enqueueSnackbar('Create Plan Success', { variant: 'success' });
-      console.log('Create Plan', response);
+      //console.log('Create Plan', response);
       await dispatch(fetchAllPlans());
       closeModal();
       reset();
     } catch (error: any) {
       enqueueSnackbar(error.response?.data, { variant: 'error' });
-      console.error(error);
+      // console.error(error);
     }
   };
 
@@ -133,7 +125,7 @@ const CreatePlan = () => {
               </div>
 
               {/* section2 : wait picture */}
-              <div className='order-first col-span-1 space-y-4 w-full md:order-none md:col-span-3 '>
+              <div className='order-first col-span-1 w-full space-y-4 md:order-none md:col-span-3 '>
                 <ImageUpload
                   image={image}
                   setImage={setImage}
@@ -157,7 +149,7 @@ const CreatePlan = () => {
                 variant='submit'
                 disabled={!isDirty || Object.keys(errors).length > 0}
               >
-                ยืนยันการสร้างโปรแกรม
+                ยืนยันการสร้างแผนสุขภาพ
               </ActionButton>
             </div>
           </form>

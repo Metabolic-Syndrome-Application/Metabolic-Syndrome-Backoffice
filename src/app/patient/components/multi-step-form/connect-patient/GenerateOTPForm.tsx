@@ -1,22 +1,22 @@
 /* eslint-disable unused-imports/no-unused-vars */
-"use client"
+'use client';
 import Image from 'next/image';
-import { useSnackbar } from "notistack";
-import { FC, useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
-import { LuTimer } from "react-icons/lu";
+import { useSnackbar } from 'notistack';
+import { FC, useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { LuTimer } from 'react-icons/lu';
 
-import useAxiosAuth from "@/hooks/useAxiosAuth";
+import useAxiosAuth from '@/hooks/useAxiosAuth';
 
 import ActionButton from '@/components/buttons/ActionButton';
 import OutlineButton from '@/components/buttons/OutlineButton';
-import FormHeaderText from "@/components/form/FormHeaderText";
+import FormHeaderText from '@/components/form/FormHeaderText';
 
 import OTPField from '@/app/patient/components/multi-step-form/connect-patient/OTPField';
-import { API_PATH } from "@/config/api";
+import { API_PATH } from '@/config/api';
 
-import CountdownTimer from "./CountdownTimer";
-import { useFormState } from "../form-context/FormContext";
+import CountdownTimer from './CountdownTimer';
+import { useFormState } from '../form-context/FormContext';
 
 type TFormValues = {
   id: string;
@@ -38,7 +38,7 @@ export const GenerateOTPForm: FC = () => {
     startTimer();
   }, []);
 
-  // Start Timer => 3 minute 
+  // Start Timer => 3 minute
   const startTimer = () => {
     setExpiryTime(Date.now() + 180000);
   };
@@ -58,23 +58,23 @@ export const GenerateOTPForm: FC = () => {
       const newOTP = data.otp; // Get the new OTP from the response
       setFormData((prev: any) => ({ ...prev, otp: newOTP }));
 
-      startTimer()
-      console.log(newOTP, 'newOTP')
+      startTimer();
+      //console.log(newOTP, 'newOTP')
 
-      enqueueSnackbar("OTP refreshed successfully", { variant: "success" });
+      enqueueSnackbar('OTP refreshed successfully', { variant: 'success' });
     } catch (error: any) {
-      enqueueSnackbar(error.response?.data, { variant: "error" });
+      enqueueSnackbar(error.response?.data, { variant: 'error' });
     }
   };
 
   return (
-    <form className="flex w-full h-fit flex-col space-y-4 rounded-lg border p-4" >
-      <div className="flex flex-col space-y-4">
-        <FormHeaderText title="การเชื่อมต่อกับผู้ใช้" />
-        <div className="flex flex-col items-center justify-center w-full">
+    <form className='flex h-fit w-full flex-col space-y-4 rounded-lg border p-4'>
+      <div className='flex flex-col space-y-4'>
+        <FormHeaderText title='การเชื่อมต่อกับผู้ใช้' />
+        <div className='flex w-full flex-col items-center justify-center'>
           <Image
             src='/assets/images/otp.png'
-            className=' w-[150px] h-[150px] md:w-[250px] md:h-[200px] object-contain'
+            className=' h-[150px] w-[150px] object-contain md:h-[200px] md:w-[250px]'
             width={350}
             height={350}
             alt='pinCode'
@@ -82,32 +82,33 @@ export const GenerateOTPForm: FC = () => {
             blurDataURL='/assets/images/otp.png'
           />
         </div>
-        <div className="flex flex-col items-center justify-center text-center space-y-2 text-wrap">
+        <div className='flex flex-col items-center justify-center space-y-2 text-wrap text-center'>
           <h4>การยืนยันรหัส OTP</h4>
           <p>กรุณากรอกรหัส OTP นี้ที่โทรศัพท์ของคนไข้</p>
         </div>
 
-        <div className="flex gap-1 items-center justify-center">
-          <LuTimer className="text-default-gray" />
-          <p className="text-default-gray">เหลือเวลาอีก</p>
+        <div className='flex items-center justify-center gap-1'>
+          <LuTimer className='text-default-gray' />
+          <p className='text-default-gray'>เหลือเวลาอีก</p>
           <CountdownTimer
             expiryTimestamp={expiryTime}
             onTimerExpired={handleTimerExpired}
           />
-          <span className="text-default-gray">นาที</span>
+          <span className='text-default-gray'>นาที</span>
         </div>
 
-
-        <div className="flex flex-col items-center justify-center text-center space-y-2 text-wrap">
+        <div className='flex flex-col items-center justify-center space-y-2 text-wrap text-center'>
           {timerExpired ? (
-            <p className="text-sm text-default-red">สิ้นสุดการขอรหัสยืนยัน (OTP) <br /> กรุณากรอกฟอร์มใหม่อีกครั้ง</p>
+            <p className='text-default-red text-sm'>
+              สิ้นสุดการขอรหัสยืนยัน (OTP) <br /> กรุณากรอกฟอร์มใหม่อีกครั้ง
+            </p>
           ) : (
             <OTPField otp={formData.otp} />
           )}
         </div>
       </div>
 
-      <div className="flex flex-col gap-4 justify-center items-center py-4">
+      <div className='flex flex-col items-center justify-center gap-4 py-4'>
         {!timerExpired ? (
           <OutlineButton onClick={refreshOTP} variant='red'>
             ขอรหัสผ่านใหม่อีกครั้ง ?
@@ -119,7 +120,9 @@ export const GenerateOTPForm: FC = () => {
         )}
       </div>
 
-      <ActionButton variant='cancel' onClick={onHandleBack}>ย้อนกลับ</ActionButton>
+      <ActionButton variant='cancel' onClick={onHandleBack}>
+        ย้อนกลับ
+      </ActionButton>
     </form>
   );
 };

@@ -17,14 +17,14 @@ export type FormCreatePlanProps = {
     }[];
   };
 };
-const MAX_FILE_SIZE = 1024 * 1024 * 5;
-const ACCEPTED_IMAGE_MIME_TYPES = [
-  'image/jpeg',
-  'image/jpg',
-  'image/png',
-  'image/webp',
-];
-const ACCEPTED_IMAGE_TYPES = ['jpeg', 'jpg', 'png', 'webp'];
+// const MAX_FILE_SIZE = 1024 * 1024 * 5;
+// const ACCEPTED_IMAGE_MIME_TYPES = [
+//   'image/jpeg',
+//   'image/jpg',
+//   'image/png',
+//   'image/webp',
+// ];
+// const ACCEPTED_IMAGE_TYPES = ['jpeg', 'jpg', 'png', 'webp'];
 // Create Plan Schema
 export const createPlanSchema = z.object({
   name: z

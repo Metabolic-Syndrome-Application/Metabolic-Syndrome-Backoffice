@@ -1,31 +1,46 @@
-"use client"
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useSnackbar } from "notistack";
-import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
-import { FaUserDoctor } from "react-icons/fa6";
-import { FiEdit } from "react-icons/fi";
-import { useDispatch, useSelector } from "react-redux";
-import { z } from "zod";
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable unused-imports/no-unused-vars */
+'use client';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useSnackbar } from 'notistack';
+import { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { FaUserDoctor } from 'react-icons/fa6';
+import { FiEdit } from 'react-icons/fi';
+import { useSelector } from 'react-redux';
+import { z } from 'zod';
 
-import { useDoctorOptions, useMappedPlanID, usePlanOptions, useStatusOptions } from "@/lib/dataOptions";
-import useAxiosAuth from "@/hooks/useAxiosAuth";
-import useModal from "@/hooks/useModal";
+import {
+  useDoctorOptions,
+  useMappedPlanID,
+  usePlanOptions,
+  useStatusOptions,
+} from '@/lib/dataOptions';
+import useAxiosAuth from '@/hooks/useAxiosAuth';
+import useModal from '@/hooks/useModal';
 
-import ActionButton from "@/components/buttons/ActionButton";
-import FormHeaderText from "@/components/form/FormHeaderText";
-import { InputDropdown } from "@/components/form/InputDropdown";
-import { InputText } from "@/components/form/InputText";
-import { MultiselectCheckboxTags } from "@/components/form/MultiselectCheckboxTags";
-import { RadioOption } from "@/components/form/RadioOption";
-import { doctorEditPatientSchema, doctorEditPatientSchemaValues } from "@/components/form/validation/PatientValidator";
+import ActionButton from '@/components/buttons/ActionButton';
+import FormHeaderText from '@/components/form/FormHeaderText';
+import { InputDropdown } from '@/components/form/InputDropdown';
+import { InputText } from '@/components/form/InputText';
+import { MultiselectCheckboxTags } from '@/components/form/MultiselectCheckboxTags';
+import { RadioOption } from '@/components/form/RadioOption';
+import {
+  doctorEditPatientSchema,
+  doctorEditPatientSchemaValues,
+} from '@/components/form/validation/PatientValidator';
 
-import { API_PATH } from "@/config/api";
-import { dataOptions, yearOptions } from "@/constant/user";
-import { selectPatientById } from "@/redux/slices/patientsSlice";
+import { API_PATH } from '@/config/api';
+import { dataOptions, yearOptions } from '@/constant/user';
+import { selectPatientById } from '@/redux/slices/patientsSlice';
 
-
-const DoctorEditPatientForm = ({ params, loadData }: { params: { id: string }, loadData: () => void }) => {
+const DoctorEditPatientForm = ({
+  params,
+  loadData,
+}: {
+  params: { id: string };
+  loadData: () => void;
+}) => {
   //params id
   const id = params.id;
 
@@ -34,12 +49,13 @@ const DoctorEditPatientForm = ({ params, loadData }: { params: { id: string }, l
 
   const { enqueueSnackbar } = useSnackbar();
 
-  const dispatch = useDispatch<any>();
+  // const dispatch = useDispatch<any>();
   const patient = useSelector(selectPatientById);
 
-  const [submittedData, setSubmittedData] = useState<doctorEditPatientSchemaValues | null>(null);
+  const [submittedData, setSubmittedData] =
+    useState<doctorEditPatientSchemaValues | null>(null);
 
-  console.log('doctor edit plan', patient)
+  console.log('doctor edit plan', patient);
 
   const {
     control,
@@ -50,42 +66,43 @@ const DoctorEditPatientForm = ({ params, loadData }: { params: { id: string }, l
     mode: 'onChange',
     resolver: zodResolver(doctorEditPatientSchema),
     defaultValues: submittedData || {},
-  });;
+  });
 
   //fix: Maximum update depth exceeded?
   // Get planID array from patient data
-  const getDoctorOptions = useDoctorOptions()
-  const getStatusOptions = useStatusOptions()
+  const getDoctorOptions = useDoctorOptions();
+  const getStatusOptions = useStatusOptions();
   const planID = patient?.planID || [];
   const getPlanOptions = usePlanOptions(planID);
   const mappedPlanID = useMappedPlanID(patient, getPlanOptions);
 
   useEffect(() => {
     if (patient) {
-
       // Map planID to corresponding options with labels and values
       reset({ ...patient, planID: mappedPlanID });
     }
   }, [patient, reset]);
 
-
-
   const onSubmit = async (data: z.infer<typeof doctorEditPatientSchema>) => {
     try {
       // Make the API call and handle success
 
-      const response = await axiosAuth.put(API_PATH.PUT_PROFILE_PATIENT_OTHER(id), {
-        hn: data.hn,
-        firstName: data.firstName,
-        lastName: data.lastName,
-        gender: data.gender,
-        yearOfBirth: data.yearOfBirth,
-        mainDoctorID: data.mainDoctorID,
-        assistanceDoctorID: data.assistanceDoctorID,
-        disease: data.disease,
-        planID: data.planID ? data.planID.map((plan: any) => plan.value) : [],
-        status: data.status
-      });
+      // eslint-disable-next-line unused-imports/no-unused-vars
+      const response = await axiosAuth.put(
+        API_PATH.PUT_PROFILE_PATIENT_OTHER(id),
+        {
+          hn: data.hn,
+          firstName: data.firstName,
+          lastName: data.lastName,
+          gender: data.gender,
+          yearOfBirth: data.yearOfBirth,
+          mainDoctorID: data.mainDoctorID,
+          assistanceDoctorID: data.assistanceDoctorID,
+          disease: data.disease,
+          planID: data.planID ? data.planID.map((plan: any) => plan.value) : [],
+          status: data.status,
+        }
+      );
 
       // Reload the data after successful edit
       enqueueSnackbar('edit success', { variant: 'success' });
@@ -99,31 +116,38 @@ const DoctorEditPatientForm = ({ params, loadData }: { params: { id: string }, l
     }
   };
 
-
-
   return (
-    <div className="w-full">
-      <article className='flex w-full items-center justify-end px-4 py-2 gap-2'>
-        <div className="flex items-center gap-1 cursor-pointer" onClick={openModal}>
-          <FiEdit className="hover:bg-light-gray text-default-blue group h-5 w-5 cursor-pointer rounded-md transition-all duration-300 ease-in-out" />
-          <p className="text-default-blue">แก้ไข</p>
+    <div className='w-full'>
+      <article className='flex w-full items-center justify-end gap-2 px-4 py-2'>
+        <div
+          className='flex cursor-pointer items-center gap-1'
+          onClick={openModal}
+        >
+          <FiEdit className='hover:bg-light-gray text-default-blue group h-5 w-5 cursor-pointer rounded-md transition-all duration-300 ease-in-out' />
+          <p className='text-default-blue'>แก้ไข</p>
         </div>
-
       </article>
       <Modal>
-        <form className="flex flex-col w-full" onSubmit={handleSubmit(onSubmit)}>
+        <form
+          className='flex w-full flex-col'
+          onSubmit={handleSubmit(onSubmit)}
+        >
           <FormHeaderText
             icon={FaUserDoctor}
             title='แก้ไขข้อมูลคนไข้'
             useBigestHeader
           />
-          <div className="grid w-full grid-cols-1 gap-4 md:grid-cols-5">
+          <div className='grid w-full grid-cols-1 gap-4 md:grid-cols-5'>
             {/* Section1 */}
             <div className='col-span-1 space-y-6 rounded-lg border p-4 md:col-span-2'>
               <FormHeaderText title='ข้อมูลส่วนตัว' />
               <InputText name='hn' label='รหัสคนไข้' control={control} />
               <div className='flex space-x-4'>
-                <InputText name='firstName' label='ชื่อจริง' control={control} />
+                <InputText
+                  name='firstName'
+                  label='ชื่อจริง'
+                  control={control}
+                />
                 <InputText name='lastName' label='นามสกุล' control={control} />
               </div>
               <RadioOption
@@ -157,11 +181,10 @@ const DoctorEditPatientForm = ({ params, loadData }: { params: { id: string }, l
                 label='แพทย์ผู้รับผิดชอบรอง'
                 options={getDoctorOptions}
               />
-
             </div>
 
             {/* Section2 */}
-            <div className="col-span-1 space-y-6 rounded-lg border p-4 md:col-span-3">
+            <div className='col-span-1 space-y-6 rounded-lg border p-4 md:col-span-3'>
               <FormHeaderText title='โปรแกรมสุขภาพ' />
               <InputText name='disease' label='โรคที่พบ' control={control} />
               <MultiselectCheckboxTags
@@ -172,14 +195,14 @@ const DoctorEditPatientForm = ({ params, loadData }: { params: { id: string }, l
               />
             </div>
           </div>
-          <div className="flex gap-4 justify-end mt-4">
-            <ActionButton type='submit' variant='submit' >
+          <div className='mt-4 flex justify-end gap-4'>
+            <ActionButton type='submit' variant='submit'>
               แก้ไข
             </ActionButton>
           </div>
         </form>
       </Modal>
-    </div >
+    </div>
   );
-}
+};
 export default DoctorEditPatientForm;

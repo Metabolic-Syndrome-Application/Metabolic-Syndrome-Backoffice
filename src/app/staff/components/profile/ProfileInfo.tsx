@@ -13,7 +13,8 @@ import EditProfile from '@/app/staff/components/profile/EditProfile';
 import { fetchUser, selectUser } from '@/redux/slices/profileSlice';
 
 const ProfileInfo = () => {
-  const { data: session, status } = useSession();
+  const { data: session } = useSession();
+  // eslint-disable-next-line unused-imports/no-unused-vars
   const axiosAuth = useAxiosAuth();
   const user = useSelector(selectUser);
 

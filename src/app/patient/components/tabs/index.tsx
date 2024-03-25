@@ -9,26 +9,31 @@ import PersonalInfo from '@/app/patient/record/personal-info/page';
 
 import { TabConfig } from '@/types/tab';
 
-export const MainPatientTabs = ({ id }: { id: string }) => {
+type PageProps = {
+  params: {
+    id: string;
+  };
+};
 
+export const MainPatientTabs = ({ params }: PageProps) => {
   const tabConfig: TabConfig[] = [
     {
       id: 1,
       icon: <Icon icon='icon-park-solid:people' width='18' height='18' />,
       name: 'ข้อมูลส่วนตัว',
-      component: <PersonalInfo id={id} />,
+      component: <PersonalInfo params={params} />,
     },
     {
       id: 2,
       icon: <Icon icon='icon-park-solid:health' width='18' height='20' />,
       name: 'ข้อมูลสุขภาพ',
-      component: <HealthRecordPage id={id} />
+      component: <HealthRecordPage params={params} />,
     },
     {
       id: 3,
       icon: <Icon icon='material-symbols:stylus-note' width='18' height='22' />,
       name: 'จดบันทึกค่าสุขภาพ',
-      component: <HospitalRecordPage id={id} />
+      component: <HospitalRecordPage params={params} />,
     },
   ];
   return (

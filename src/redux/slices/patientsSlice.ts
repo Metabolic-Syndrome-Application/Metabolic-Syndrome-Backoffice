@@ -34,9 +34,10 @@ export const fetchAllPatients = createAsyncThunk(
       );
 
       const usersWithIndex = data.users ? addIndexPatient(data.users) : [];
-      console.log('patient redux', usersWithIndex);
+      //console.log('patient redux', usersWithIndex);
       return usersWithIndex;
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error('Error fetching users:', error);
       throw error;
     }
@@ -52,7 +53,7 @@ export const fetchPatientById = createAsyncThunk(
       } = await axiosAuth.get<IGetProfilePatientIdApi>(
         API_PATH.GET_PROFILE_PATIENT_OTHER(id)
       );
-      console.log('Get 1 patient', data.user);
+      // console.log('Get 1 patient', data.user);
       return data.user;
     } catch (error) {
       console.log('Error fetching patient data id:', error);

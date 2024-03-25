@@ -1,6 +1,6 @@
 import { generateBirthYear } from '@/helpers/date';
-import { IPatientData } from '@/types/patient';
 
+import { IPatientData } from '@/types/patient';
 import { IGetDoctorOptions } from '@/types/user';
 
 const personalInfoQuestions = {

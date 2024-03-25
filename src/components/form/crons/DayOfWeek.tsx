@@ -7,7 +7,7 @@ interface Props {
   dayValue?: string[]; // Add a day prop
 }
 
-const ToggleDays: React.FC<Props> = ({ name, dayValue = [] }) => {
+const ToggleDays: React.FC<Props> = ({ dayValue = [] }) => {
   return (
     <div className='flex w-full items-center justify-center gap-2 md:gap-4'>
       {dayValue.map((day, index) => (

@@ -24,11 +24,7 @@ const LoginSection = (props: LoginProps) => {
   const router = useRouter();
 
   const { enqueueSnackbar } = useSnackbar();
-  const {
-    control,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<FormLoginProps>({
+  const { control, handleSubmit } = useForm<FormLoginProps>({
     mode: 'onChange',
     resolver: zodResolver(loginSchema),
   });
@@ -45,11 +41,13 @@ const LoginSection = (props: LoginProps) => {
 
       // Check if login is successful
       if (res && res.ok) {
-        // Check role session 
+        // Check role session
         const session = await getSession();
         if (session?.user?.role === 'patient') {
           // If the user's role is 'patient', deny access
-          enqueueSnackbar('Access denied. Please try again.', { variant: 'error' });
+          enqueueSnackbar('Access denied. Please try again.', {
+            variant: 'error',
+          });
           await signOut();
         } else {
           // Other roles, proceed with login
@@ -57,7 +55,9 @@ const LoginSection = (props: LoginProps) => {
           router.push('/');
         }
       } else {
-        enqueueSnackbar('Invalid credentials. Please try again.', { variant: 'error' });
+        enqueueSnackbar('Invalid credentials. Please try again.', {
+          variant: 'error',
+        });
       }
     } catch (error: unknown) {
       if (error instanceof AxiosError && error.response?.data) {
@@ -75,8 +75,8 @@ const LoginSection = (props: LoginProps) => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <div className='flex w-full h-screen items-center justify-center p-2'>
-        <div className='bg-default-blue/75 container mx-auto flex h-fit md:h-[400px] max-w-3xl flex-col items-center justify-around gap-4 rounded-2xl p-4 md:flex-row md:gap-2'>
+      <div className='flex h-screen w-full items-center justify-center p-2'>
+        <div className='bg-default-blue/75 container mx-auto flex h-fit max-w-3xl flex-col items-center justify-around gap-4 rounded-2xl p-4 md:h-[400px] md:flex-row md:gap-2'>
           <div className='flex flex-col items-center justify-center space-y-4 px-4'>
             <Image
               src='/assets/icons/logo.svg'
@@ -105,11 +105,7 @@ const LoginSection = (props: LoginProps) => {
               control={control}
               showPasswordToggle
             />
-            <ActionButton
-              type='submit'
-              variant='submit'
-              className='w-full'
-            >
+            <ActionButton type='submit' variant='submit' className='w-full'>
               เข้าสู่ระบบ
             </ActionButton>
             {/* <Link

@@ -1,7 +1,6 @@
 'use client';
 import Link from 'next/link';
 import { signOut, useSession } from 'next-auth/react';
-import { useSnackbar } from 'notistack';
 import React, { useState } from 'react';
 
 import useAxiosAuth from '@/hooks/useAxiosAuth';
@@ -10,7 +9,6 @@ import { API_PATH } from '@/config/api';
 
 const SignInButton = () => {
   const { data: session, status } = useSession();
-  const { enqueueSnackbar } = useSnackbar();
 
   const [users, setUsers] = useState();
   const axiosAuth = useAxiosAuth();

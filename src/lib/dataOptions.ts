@@ -6,8 +6,6 @@ import { selectAllPlans } from '@/redux/slices/plansSlice';
 
 import { IPatientData } from '@/types/patient';
 import { IGetDoctorOptions } from '@/types/user';
-import { selectPatientById } from '@/redux/slices/patientsSlice';
-import { getStatusPatientColor } from '@/helpers/status';
 
 //Get All Doctor
 export const useDoctorOptions = () => {
@@ -22,8 +20,6 @@ export const useDoctorOptions = () => {
 
 //Get Status Patient
 export const useStatusOptions = () => {
-  const patient = useSelector(selectPatientById);
-
   // Define status options array
   const statusOptions = [
     { label: 'กำลังรักษา', value: 'in process' },

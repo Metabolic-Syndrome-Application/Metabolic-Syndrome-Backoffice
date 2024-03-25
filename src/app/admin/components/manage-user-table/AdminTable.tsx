@@ -1,3 +1,4 @@
+/* eslint-disable unused-imports/no-unused-vars */
 import {
   GridCellParams,
   GridColDef,
@@ -16,7 +17,6 @@ import AdminEditProfile from '@/app/admin/components/AdminEditProfile';
 import { API_PATH } from '@/config/api';
 import { fetchAllUsers, selectAllUsers } from '@/redux/slices/usersSlice';
 
-
 const ManageUserTable = () => {
   const { data: session } = useSession();
   const axiosAuth = useAxiosAuth();
@@ -24,7 +24,7 @@ const ManageUserTable = () => {
   //const [users, setUsers] = useState<IUserData[]>([]);
   const users = useSelector(selectAllUsers);
 
-  console.log('Users:', users);
+  // console.log('Users:', users);
 
   const dispatch = useDispatch<any>();
 
@@ -36,7 +36,6 @@ const ManageUserTable = () => {
       console.log('error', error);
     }
   };
-
 
   useEffect(() => {
     if (session && session.user) {
@@ -60,8 +59,9 @@ const ManageUserTable = () => {
       renderCell: (params: GridCellParams) => (
         <div>
           <span className='flex'>
-            {`${params.row.prefix || ''}${params.row.firstName || ''} ${params.row.lastName || ''
-              }`}
+            {`${params.row.prefix || ''}${params.row.firstName || ''} ${
+              params.row.lastName || ''
+            }`}
           </span>
           <span className='text-default-blue '>
             {params.row.username || ''}

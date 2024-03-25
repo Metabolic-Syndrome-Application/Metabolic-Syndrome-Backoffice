@@ -1,3 +1,4 @@
+/* eslint-disable unused-imports/no-unused-vars */
 // Import the functions you need from the SDKs you need
 import { getAnalytics, isSupported } from 'firebase/analytics';
 import { initializeApp } from 'firebase/app';

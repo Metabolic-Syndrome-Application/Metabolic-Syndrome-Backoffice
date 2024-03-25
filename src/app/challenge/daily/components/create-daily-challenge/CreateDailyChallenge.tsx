@@ -1,9 +1,10 @@
+/* eslint-disable unused-imports/no-unused-vars */
 'use client';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useSnackbar } from 'notistack';
 import { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { GoGoal } from "react-icons/go";
+import { GoGoal } from 'react-icons/go';
 import { useDispatch } from 'react-redux';
 import { z } from 'zod';
 
@@ -15,13 +16,15 @@ import { IconFlatButton } from '@/components/buttons/IconFlatButton';
 import ImageUpload from '@/components/form/components/UploadImageDisplay';
 import FormHeaderText from '@/components/form/FormHeaderText';
 import { InputText } from '@/components/form/InputText';
-import { createDailyChallengeSchema, createDailyChallengeValues } from '@/components/form/validation/ChallengeValidator';
+import {
+  createDailyChallengeSchema,
+  createDailyChallengeValues,
+} from '@/components/form/validation/ChallengeValidator';
 import TiptapTextField from '@/components/text-editor/TipTapTextField';
 
 import DetailDailyFields from '@/app/challenge/daily/components/create-daily-challenge/DetailDailyFields';
 import { API_PATH } from '@/config/api';
 import { fetchAllDailyChallenge } from '@/redux/slices/dailyChallengesSlice';
-
 
 const CreateDailyChallenge = () => {
   const axiosAuth = useAxiosAuth();
@@ -43,7 +46,7 @@ const CreateDailyChallenge = () => {
         name: [{ name: '' }],
         day: [],
       },
-    }
+    },
   });
 
   const {
@@ -52,7 +55,6 @@ const CreateDailyChallenge = () => {
     reset,
     formState: { errors, isDirty },
   } = methods;
-
 
   const onSubmit = async (data: z.infer<typeof createDailyChallengeSchema>) => {
     try {
@@ -98,16 +100,34 @@ const CreateDailyChallenge = () => {
             />
             <div className='grid w-full grid-cols-1 gap-4 md:grid-cols-7'>
               {/* section1 */}
-              <div className='col-span-1 space-y-4 md:space-y-8 rounded-lg md:col-span-4 flex flex-col'>
+              <div className='col-span-1 flex flex-col space-y-4 rounded-lg md:col-span-4 md:space-y-8'>
                 <InputText name='name' control={control} label='ชื่อภารกิจ' />
-                <InputText name='points' control={control} label='คะแนนรวมสะสม' type='number' unit='คะแนน' />
-                <InputText name='numDays' control={control} label='ระยะเวลาการทำภารกิจ' type='number' unit='วัน' />
-
-
+                <InputText
+                  name='points'
+                  control={control}
+                  label='คะแนนรวมสะสม'
+                  type='number'
+                  unit='คะแนน'
+                />
+                <InputText
+                  name='numDays'
+                  control={control}
+                  label='ระยะเวลาการทำภารกิจ'
+                  type='number'
+                  unit='วัน'
+                />
               </div>
 
               {/* section2 : wait picture */}
-              <div className='w-full min-w-[350px] min-h-[250px] order-first col-span-1 space-y-4 rounded-lg md:order-none md:col-span-3'>
+              {/* <div className='w-full min-w-[350px] min-h-[250px] order-first col-span-1 space-y-4 rounded-lg md:order-none md:col-span-3'>
+                <ImageUpload
+                  image={image}
+                  setImage={setImage}
+                  imageError={imageError}
+                  setDownloadURL={setDownloadURL}
+                />
+              </div> */}
+              <div className='order-first col-span-1 w-full space-y-4 md:order-none md:col-span-3 lg:h-[260px] lg:w-[340px] '>
                 <ImageUpload
                   image={image}
                   setImage={setImage}
@@ -117,7 +137,7 @@ const CreateDailyChallenge = () => {
               </div>
 
               {/* section3 : detail */}
-              <div className='pt-2 col-span-1 space-y-4 rounded-lg md:col-span-7'>
+              <div className='col-span-1 space-y-4 rounded-lg pt-2 md:col-span-7'>
                 <TiptapTextField
                   name='description'
                   control={control}

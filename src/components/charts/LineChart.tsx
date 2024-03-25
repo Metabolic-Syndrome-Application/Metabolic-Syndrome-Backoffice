@@ -1,6 +1,6 @@
-"use client"
+/* eslint-disable react-hooks/exhaustive-deps */
+'use client';
 
-import Image from 'next/image';
 import {
   CategoryScale,
   Chart as ChartJS,
@@ -10,7 +10,8 @@ import {
   PointElement,
   Title,
   Tooltip,
-} from 'chart.js'
+} from 'chart.js';
+import Image from 'next/image';
 
 ChartJS.register(
   CategoryScale,
@@ -20,7 +21,7 @@ ChartJS.register(
   Title,
   Tooltip,
   Legend
-)
+);
 
 import { subDays, subMonths, subQuarters, subWeeks } from 'date-fns';
 import { useEffect, useState } from 'react';
@@ -30,8 +31,8 @@ import useAxiosAuth from '@/hooks/useAxiosAuth';
 type Props = {
   patientId: string;
   nameType: string;
-  graphType: any
-}
+  graphType: any;
+};
 
 const LineChart = ({ patientId, nameType, graphType }: Props) => {
   const axiosAuth = useAxiosAuth();
@@ -42,7 +43,9 @@ const LineChart = ({ patientId, nameType, graphType }: Props) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axiosAuth.get(`/api/record/health/patient/${patientId}/${graphType}`);
+        const response = await axiosAuth.get(
+          `/api/record/health/patient/${patientId}/${graphType}`
+        );
         setGraphData(response.data.data.record);
       } catch (error) {
         console.error('Error fetching graph data:', error);
@@ -56,22 +59,49 @@ const LineChart = ({ patientId, nameType, graphType }: Props) => {
     const currentDate = new Date();
     switch (filter) {
       case '1day':
-        return data.filter((record) => isWithinRange(new Date(record.timestamp), subDays(currentDate, 1), currentDate));
+        return data.filter((record) =>
+          isWithinRange(
+            new Date(record.timestamp),
+            subDays(currentDate, 1),
+            currentDate
+          )
+        );
       case '1week':
-        return data.filter((record) => isWithinRange(new Date(record.timestamp), subWeeks(currentDate, 7), currentDate));
+        return data.filter((record) =>
+          isWithinRange(
+            new Date(record.timestamp),
+            subWeeks(currentDate, 7),
+            currentDate
+          )
+        );
       case '1month':
-        return data.filter((record) => isWithinRange(new Date(record.timestamp), subMonths(currentDate, 1), currentDate));
+        return data.filter((record) =>
+          isWithinRange(
+            new Date(record.timestamp),
+            subMonths(currentDate, 1),
+            currentDate
+          )
+        );
       case '3months':
-        return data.filter((record) => isWithinRange(new Date(record.timestamp), subQuarters(currentDate, 1), currentDate));
+        return data.filter((record) =>
+          isWithinRange(
+            new Date(record.timestamp),
+            subQuarters(currentDate, 1),
+            currentDate
+          )
+        );
       default:
         return data;
     }
   };
 
-  const isWithinRange = (date: number | Date, startDate: number | Date, endDate: number | Date) => {
+  const isWithinRange = (
+    date: number | Date,
+    startDate: number | Date,
+    endDate: number | Date
+  ) => {
     return startDate <= date && date <= endDate;
   };
-
 
   const transformData = (data: any) => {
     const filteredData = filterData(data);
@@ -99,45 +129,46 @@ const LineChart = ({ patientId, nameType, graphType }: Props) => {
   // };
 
   return (
-    <div className='flex flex-col items-center justify-center max-h-[400px] w-full shadow-light-shadow border border-light-gray p-4 rounded-lg h-full'>
+    <div className='shadow-light-shadow border-light-gray flex h-full max-h-[400px] w-full flex-col items-center justify-center rounded-lg border p-4'>
       {graphData && (
-        <div className="flex items-center justify-between w-full px-4">
-          <h5 className="font-medium md:text-lg text-start w-full">
+        <div className='flex w-full items-center justify-between px-4'>
+          <h5 className='w-full text-start font-medium md:text-lg'>
             กราฟ{nameType}
           </h5>
           <div>
             <select
               value={filter} // Set the selected filter value
               onChange={(e) => setFilter(e.target.value)} // Handle filter change
-              className="mr-3 border border-light-gray flex min-w-[60px] md:min-w-[120px] gap-2 px-3 py-2 rounded-lg shadow-sm outline-none focus:ring-2 focus:ring-light-blue sm:text-sm"
+              className='border-light-gray focus:ring-light-blue mr-3 flex min-w-[60px] gap-2 rounded-lg border px-3 py-2 shadow-sm outline-none focus:ring-2 sm:text-sm md:min-w-[120px]'
             >
-              <option value="1day">1 วัน</option>
-              <option value="1week">1 อาทิตย์</option>
-              <option value="1month">1 เดือน</option>
-              <option value="3months">3 เดือน</option>
-              <option value="6months">6 เดือน</option>
+              <option value='1day'>1 วัน</option>
+              <option value='1week'>1 อาทิตย์</option>
+              <option value='1month'>1 เดือน</option>
+              <option value='3months'>3 เดือน</option>
+              <option value='6months'>6 เดือน</option>
             </select>
           </div>
         </div>
       )}
-      <div className='flex w-full h-full items-center justify-center max-w-[500px]'>
+      <div className='flex h-full w-full max-w-[500px] items-center justify-center'>
         {graphData && graphData.length > 0 ? (
           <Line data={transformData(graphData)} />
         ) : (
           <div className='flex flex-col items-center justify-center'>
             <Image
-              src="/assets/images/noData.svg"
-              alt="noData"
-              className="w-56 h-56"
+              src='/assets/images/noData.svg'
+              alt='noData'
+              className='h-56 w-56'
               width={350}
               height={350}
               priority={false}
             />
-            <p className='text-default-red'>ตอนนี้ยังไม่มีผลกราฟสุขภาพของคนไข้</p>
+            <p className='text-default-red'>
+              ตอนนี้ยังไม่มีผลกราฟสุขภาพของคนไข้
+            </p>
           </div>
         )}
       </div>
-
     </div>
   );
 };

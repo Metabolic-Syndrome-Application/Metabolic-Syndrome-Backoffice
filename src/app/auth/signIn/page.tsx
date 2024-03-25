@@ -1,15 +1,13 @@
-"use client"
 import React from 'react';
 
 import LoginSection from '@/components/login/LoginSection';
 
 type Props = {
-  error: any;
+  //error: any;
   searchParams?: Record<'callbackUrl' | 'error', string>;
 };
 
-const SignInPage = (props: Props) => {
-
+const SignInPage: React.FC<Props> = (props) => {
   return (
     <div className=''>
       <LoginSection
@@ -17,7 +15,6 @@ const SignInPage = (props: Props) => {
         callbackUrl={props.searchParams?.callbackUrl}
       />
     </div>
-
   );
 };
 

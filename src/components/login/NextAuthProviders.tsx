@@ -1,12 +1,12 @@
 'use client';
 
+import { ThemeProvider } from '@mui/material/styles';
 import { SessionProvider } from 'next-auth/react';
 import { SnackbarProvider } from 'notistack';
 import { ReactNode } from 'react';
 
-import { StyledMaterialDesignContent } from '@/components/common/SnackbarStyles';
-import { ThemeProvider } from '@mui/material/styles';
 import theme from '@/components/common/MuiThemeStyles';
+import { StyledMaterialDesignContent } from '@/components/common/SnackbarStyles';
 
 interface Props {
   children: ReactNode;
@@ -29,7 +29,7 @@ const NextAuthProviders = ({ children }: Props) => {
       >
         <SessionProvider>{children}</SessionProvider>
       </SnackbarProvider>
-    </ThemeProvider >
+    </ThemeProvider>
   );
 };
 

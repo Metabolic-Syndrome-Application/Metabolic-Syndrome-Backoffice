@@ -10,7 +10,7 @@ import SideNav from '@/components/layout/navbar/SideNav';
 
 const NavbarLayout = ({ children }: { children: ReactNode }) => {
   const [open, setOpen] = useState(true);
-  const pathname = usePathname()
+  const pathname = usePathname();
 
   //hide navbar & sidebar
   const isSignInPage = pathname === '/auth/signIn';

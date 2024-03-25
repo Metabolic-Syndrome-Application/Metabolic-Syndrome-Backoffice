@@ -1,11 +1,16 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 'use client';
 
-import { getGridDateOperators, GridColDef, GridColumnGroupingModel, GridRenderCellParams, GridValueGetterParams } from '@mui/x-data-grid';
+import {
+  getGridDateOperators,
+  GridColDef,
+  GridColumnGroupingModel,
+  GridRenderCellParams,
+  GridValueGetterParams,
+} from '@mui/x-data-grid';
 import { useSession } from 'next-auth/react';
-import React, { useCallback, useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux';
-
-import useAxiosAuth from '@/hooks/useAxiosAuth';
+import React, { useCallback, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 
 import OutlineButton from '@/components/buttons/OutlineButton';
 import BaseTable from '@/components/table/BaseTable';
@@ -14,28 +19,33 @@ import { convertDateFormat } from '@/helpers/date';
 import { getRecordBy } from '@/helpers/status';
 import { selectAllrecords } from '@/redux/slices/recordHealthsSlice';
 
-const RecordHealthTable = ({ params, fetchRecordApi }: { params: { id: string }, fetchRecordApi: (id: string) => void }) => {
+const RecordHealthTable = ({
+  params,
+  fetchRecordApi,
+}: {
+  params: { id: string };
+  fetchRecordApi: (id: string) => void;
+}) => {
   const { data: session } = useSession();
 
   const id = params.id;
 
   const record = useSelector(selectAllrecords);
 
-  const dispatch = useDispatch<any>();
+  // const dispatch = useDispatch<any>();
 
   const loadRecords = useCallback(async () => {
     try {
       //dispatch(fetchRecordAllById(id));
       fetchRecordApi(id);
-
     } catch (error) {
       console.log('error', error);
     }
-  }, [id])
+  }, [id]);
 
   const updatedRecord = record.map((row, index) => ({
     ...row,
-    id: index + 1 // Generate unique id for each row
+    id: index + 1, // Generate unique id for each row
   }));
 
   useEffect(() => {
@@ -43,7 +53,6 @@ const RecordHealthTable = ({ params, fetchRecordApi }: { params: { id: string },
       loadRecords();
     }
   }, []);
-
 
   //ก่อนใช้ redux fetch all record health
   // const [userData, setUserData] = useState<IRecordHealthData[]>([]);
@@ -63,11 +72,14 @@ const RecordHealthTable = ({ params, fetchRecordApi }: { params: { id: string },
   //   }
   // }, [axiosAuth, id]);
 
-  //date filter 
+  //date filter
   const dateOperators = getGridDateOperators();
 
   //rendercell color styles base on recordBy
-  const renderCellWithColor = (params: GridRenderCellParams, field: string | ((params: GridRenderCellParams) => any)) => {
+  const renderCellWithColor = (
+    params: GridRenderCellParams,
+    field: string | ((params: GridRenderCellParams) => any)
+  ) => {
     const { color: recordByColor } = getRecordBy(params.row.recordBy);
     let value;
 
@@ -93,10 +105,9 @@ const RecordHealthTable = ({ params, fetchRecordApi }: { params: { id: string },
   const renderHeaderCell = (title: string, unit: string) => (
     <div className='text-center'>
       <h5 className='font-medium'>{title}</h5>
-      {unit && <h5 className='font-medium text-default-gray'>({unit})</h5>}
+      {unit && <h5 className='text-default-gray font-medium'>({unit})</h5>}
     </div>
   );
-
 
   const columns: GridColDef[] = [
     {
@@ -104,9 +115,9 @@ const RecordHealthTable = ({ params, fetchRecordApi }: { params: { id: string },
       headerAlign: 'center',
       align: 'center',
       renderHeader: () => <h5 className='font-medium'>ลำดับที่</h5>,
-      renderCell: (params: GridRenderCellParams) => renderCellWithColor(params, 'id'),
-      valueGetter: (params: GridValueGetterParams) =>
-        `${params.row.id || ''}`,
+      renderCell: (params: GridRenderCellParams) =>
+        renderCellWithColor(params, 'id'),
+      valueGetter: (params: GridValueGetterParams) => `${params.row.id || ''}`,
     },
     {
       field: 'timestamp',
@@ -114,7 +125,10 @@ const RecordHealthTable = ({ params, fetchRecordApi }: { params: { id: string },
       headerAlign: 'center',
       align: 'center',
       renderHeader: () => <h5 className='font-medium'>วันและเวลาที่บันทึก</h5>,
-      renderCell: (params: GridRenderCellParams) => renderCellWithColor(params, (params) => convertDateFormat(params.row.timestamp)),
+      renderCell: (params: GridRenderCellParams) =>
+        renderCellWithColor(params, (params) =>
+          convertDateFormat(params.row.timestamp)
+        ),
       valueGetter: (params: GridValueGetterParams) => {
         return params.row.timestamp;
       },
@@ -125,16 +139,17 @@ const RecordHealthTable = ({ params, fetchRecordApi }: { params: { id: string },
       headerAlign: 'center',
       align: 'center',
       renderHeader: () => <h5 className='font-medium'>BMI</h5>,
-      renderCell: (params: GridRenderCellParams) => renderCellWithColor(params, 'bmi'),
-      valueGetter: (params: GridValueGetterParams) =>
-        `${params.row.bmi || ''}`,
+      renderCell: (params: GridRenderCellParams) =>
+        renderCellWithColor(params, 'bmi'),
+      valueGetter: (params: GridValueGetterParams) => `${params.row.bmi || ''}`,
     },
     {
       field: 'waistline',
       headerAlign: 'center',
       align: 'center',
       renderHeader: () => <h5 className='font-medium'>รอบเอว</h5>,
-      renderCell: (params: GridRenderCellParams) => renderCellWithColor(params, 'waistline'),
+      renderCell: (params: GridRenderCellParams) =>
+        renderCellWithColor(params, 'waistline'),
       valueGetter: (params: GridValueGetterParams) =>
         `${params.row.waistline || ''}`,
     },
@@ -144,7 +159,8 @@ const RecordHealthTable = ({ params, fetchRecordApi }: { params: { id: string },
       headerAlign: 'center',
       align: 'center',
       renderHeader: () => renderHeaderCell('Systolic', 'mmHg'),
-      renderCell: (params: GridRenderCellParams) => renderCellWithColor(params, 'systolicBloodPressure'),
+      renderCell: (params: GridRenderCellParams) =>
+        renderCellWithColor(params, 'systolicBloodPressure'),
       valueGetter: (params: GridValueGetterParams) =>
         `${params.row.systolicBloodPressure || ''}`,
     },
@@ -154,7 +170,8 @@ const RecordHealthTable = ({ params, fetchRecordApi }: { params: { id: string },
       headerAlign: 'center',
       align: 'center',
       renderHeader: () => renderHeaderCell('Diastolic', 'mmHg'),
-      renderCell: (params: GridRenderCellParams) => renderCellWithColor(params, 'diastolicBloodPressure'),
+      renderCell: (params: GridRenderCellParams) =>
+        renderCellWithColor(params, 'diastolicBloodPressure'),
       valueGetter: (params: GridValueGetterParams) =>
         `${params.row.diastolicBloodPressure || ''}`,
     },
@@ -163,7 +180,8 @@ const RecordHealthTable = ({ params, fetchRecordApi }: { params: { id: string },
       headerAlign: 'center',
       align: 'center',
       renderHeader: () => renderHeaderCell('Pulse Rate', 'ครั้ง/นาที'),
-      renderCell: (params: GridRenderCellParams) => renderCellWithColor(params, 'pulseRate'),
+      renderCell: (params: GridRenderCellParams) =>
+        renderCellWithColor(params, 'pulseRate'),
       valueGetter: (params: GridValueGetterParams) =>
         `${params.row.pulseRate || ''}`,
     },
@@ -173,7 +191,8 @@ const RecordHealthTable = ({ params, fetchRecordApi }: { params: { id: string },
       headerAlign: 'center',
       align: 'center',
       renderHeader: () => renderHeaderCell('Hyperglycemia', 'mg/dL'),
-      renderCell: (params: GridRenderCellParams) => renderCellWithColor(params, 'bloodGlucose'),
+      renderCell: (params: GridRenderCellParams) =>
+        renderCellWithColor(params, 'bloodGlucose'),
       valueGetter: (params: GridValueGetterParams) =>
         `${params.row.bloodGlucose || ''}`,
     },
@@ -183,7 +202,8 @@ const RecordHealthTable = ({ params, fetchRecordApi }: { params: { id: string },
       headerAlign: 'center',
       align: 'center',
       renderHeader: () => renderHeaderCell('Total Cholesterol', 'mg/dL'),
-      renderCell: (params: GridRenderCellParams) => renderCellWithColor(params, 'cholesterol'),
+      renderCell: (params: GridRenderCellParams) =>
+        renderCellWithColor(params, 'cholesterol'),
       valueGetter: (params: GridValueGetterParams) =>
         `${params.row.cholesterol || ''}`,
     },
@@ -192,25 +212,26 @@ const RecordHealthTable = ({ params, fetchRecordApi }: { params: { id: string },
       headerAlign: 'center',
       align: 'center',
       renderHeader: () => renderHeaderCell('HDL', 'mg/dL'),
-      renderCell: (params: GridRenderCellParams) => renderCellWithColor(params, 'hdl'),
-      valueGetter: (params: GridValueGetterParams) =>
-        `${params.row.hdl || ''}`,
+      renderCell: (params: GridRenderCellParams) =>
+        renderCellWithColor(params, 'hdl'),
+      valueGetter: (params: GridValueGetterParams) => `${params.row.hdl || ''}`,
     },
     {
       field: 'ldl',
       headerAlign: 'center',
       align: 'center',
       renderHeader: () => renderHeaderCell('LDL', 'mg/dL'),
-      renderCell: (params: GridRenderCellParams) => renderCellWithColor(params, 'ldl'),
-      valueGetter: (params: GridValueGetterParams) =>
-        `${params.row.ldl || ''}`,
+      renderCell: (params: GridRenderCellParams) =>
+        renderCellWithColor(params, 'ldl'),
+      valueGetter: (params: GridValueGetterParams) => `${params.row.ldl || ''}`,
     },
     {
       field: 'triglyceride',
       headerAlign: 'center',
       align: 'center',
       renderHeader: () => renderHeaderCell('TG', 'mg/dL'),
-      renderCell: (params: GridRenderCellParams) => renderCellWithColor(params, 'triglyceride'),
+      renderCell: (params: GridRenderCellParams) =>
+        renderCellWithColor(params, 'triglyceride'),
       valueGetter: (params: GridValueGetterParams) =>
         `${params.row.triglyceride || ''}`,
     },
@@ -231,10 +252,7 @@ const RecordHealthTable = ({ params, fetchRecordApi }: { params: { id: string },
         const { text } = getRecordBy(params.row.recordBy); // Get the Thai label directly from getRecordBy function
         return text;
       },
-
     },
-
-
   ];
 
   const columnGroupingModel: GridColumnGroupingModel = [
@@ -252,7 +270,11 @@ const RecordHealthTable = ({ params, fetchRecordApi }: { params: { id: string },
     {
       groupId: 'ความดัน',
       headerAlign: 'center',
-      children: [{ field: 'systolicBloodPressure' }, { field: 'diastolicBloodPressure' }, { field: 'pulseRate' }],
+      children: [
+        { field: 'systolicBloodPressure' },
+        { field: 'diastolicBloodPressure' },
+        { field: 'pulseRate' },
+      ],
     },
     {
       groupId: 'ระดับน้ำตาลในเลือด',
@@ -262,7 +284,12 @@ const RecordHealthTable = ({ params, fetchRecordApi }: { params: { id: string },
     {
       groupId: 'ระดับไขมันในเลือด',
       headerAlign: 'center',
-      children: [{ field: 'cholesterol' }, { field: 'hdl' }, { field: 'ldl' }, { field: 'triglyceride' }],
+      children: [
+        { field: 'cholesterol' },
+        { field: 'hdl' },
+        { field: 'ldl' },
+        { field: 'triglyceride' },
+      ],
     },
   ];
 
@@ -274,11 +301,8 @@ const RecordHealthTable = ({ params, fetchRecordApi }: { params: { id: string },
         loading={!!record.length}
         columnGroupingModel={columnGroupingModel}
       />
-
     </div>
+  );
+};
 
-
-  )
-}
-
-export default RecordHealthTable
+export default RecordHealthTable;

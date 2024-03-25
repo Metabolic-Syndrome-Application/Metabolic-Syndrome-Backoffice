@@ -1,4 +1,4 @@
-
+/* eslint-disable unused-imports/no-unused-vars */
 import { styled, TextField } from '@mui/material';
 import React from 'react';
 
@@ -6,7 +6,7 @@ interface TextFieldInfoProps {
   label: string;
   value: string | string[] | unknown;
   className?: string;
-  isSelected?: string | boolean
+  isSelected?: string | boolean;
 }
 
 export const TextFieldInfo: React.FC<TextFieldInfoProps> = ({
@@ -16,11 +16,13 @@ export const TextFieldInfo: React.FC<TextFieldInfoProps> = ({
   isSelected,
   ...props
 }) => {
-
   // Styled TextField
-  const StyledTextField = styled(({ isSelected, ...props }: TextFieldInfoProps) => (
-    <TextField {...props} fullWidth />
-  ))(({ isSelected }: TextFieldInfoProps) => ({
+  // eslint-disable-next-line unused-imports/no-unused-vars
+  const StyledTextField = styled(
+    ({ isSelected, ...props }: TextFieldInfoProps) => (
+      <TextField {...props} fullWidth />
+    )
+  )(({ isSelected }: TextFieldInfoProps) => ({
     '& .MuiInputBase-root': {
       height: 50,
       borderRadius: '0.575rem',
@@ -28,9 +30,8 @@ export const TextFieldInfo: React.FC<TextFieldInfoProps> = ({
     },
     '& .Mui-focused': {
       backgroundColor: '#C9E1FD',
-    }
+    },
   }));
-
 
   const renderTextField = (text: string | unknown, index?: number) => (
     <StyledTextField
@@ -40,9 +41,9 @@ export const TextFieldInfo: React.FC<TextFieldInfoProps> = ({
       value={text}
       className={`${className}`}
       isSelected={isSelected} // Convert isSelected to a boolean value
-    // InputProps={{
-    //   readOnly: true,
-    // }}
+      // InputProps={{
+      //   readOnly: true,
+      // }}
     />
   );
 

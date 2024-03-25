@@ -1,4 +1,9 @@
-import { GridCellParams, GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
+/* eslint-disable unused-imports/no-unused-vars */
+import {
+  GridCellParams,
+  GridColDef,
+  GridValueGetterParams,
+} from '@mui/x-data-grid';
 import { useSession } from 'next-auth/react';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -13,9 +18,10 @@ import BaseTable from '@/components/table/BaseTable';
 import { calculateAgeThaiBuddhist } from '@/helpers/date';
 import { getStatusPatientColor } from '@/helpers/status';
 import { fetchAllDoctors, selectAllDoctors } from '@/redux/slices/doctorSlice';
-import { fetchAllPatients, selectAllPatients } from '@/redux/slices/patientsSlice';
-
-
+import {
+  fetchAllPatients,
+  selectAllPatients,
+} from '@/redux/slices/patientsSlice';
 
 const ManagePatientTable = () => {
   const { data: session } = useSession();
@@ -24,8 +30,7 @@ const ManagePatientTable = () => {
   const dispatch = useDispatch<any>();
 
   const patients = useSelector(selectAllPatients);
-  console.log('Patient Tables:', patients);
-
+  // console.log('Patient Tables:', patients);
 
   const doctors = useSelector(selectAllDoctors);
   //console.log('Doctors:', doctors);
@@ -48,7 +53,9 @@ const ManagePatientTable = () => {
   }, [dispatch, session]);
 
   const getDoctorById = (doctorId: string) => {
-    const doctor = doctors.find((doctor: { id: string; }) => doctor.id === doctorId);
+    const doctor = doctors.find(
+      (doctor: { id: string }) => doctor.id === doctorId
+    );
     return doctor;
   };
 
@@ -71,8 +78,9 @@ const ManagePatientTable = () => {
       renderCell: (params: GridCellParams) => (
         <div>
           <span className='flex'>
-            {`${params.row.prefix || ''}${params.row.firstName || ''} ${params.row.lastName || ''
-              }`}
+            {`${params.row.prefix || ''}${params.row.firstName || ''} ${
+              params.row.lastName || ''
+            }`}
           </span>
           <span className='text-default-blue '>
             {params.row.username || ''}
@@ -118,7 +126,7 @@ const ManagePatientTable = () => {
         );
       },
       valueGetter: (params: GridValueGetterParams) => {
-        const { text } = getStatusPatientColor(params.row.status); // Get the Thai label 
+        const { text } = getStatusPatientColor(params.row.status); // Get the Thai label
         return text; // Return the Thai label as the field value
       },
     },
@@ -132,11 +140,15 @@ const ManagePatientTable = () => {
     {
       field: 'mainDoctorID',
       width: 225,
-      renderHeader: () => <h5 className='font-medium'>แพทย์ผู้รับผิดชอบหลัก</h5>,
+      renderHeader: () => (
+        <h5 className='font-medium'>แพทย์ผู้รับผิดชอบหลัก</h5>
+      ),
       valueGetter: (params: GridValueGetterParams) => {
         const mainDoctorId = params.row.mainDoctorID;
         const mainDoctor = getDoctorById(mainDoctorId);
-        return mainDoctor ? `${mainDoctor.prefix}${mainDoctor.firstName} ${mainDoctor.lastName}` : '-';
+        return mainDoctor
+          ? `${mainDoctor.prefix}${mainDoctor.firstName} ${mainDoctor.lastName}`
+          : '-';
       },
     },
     {
@@ -159,11 +171,13 @@ const ManagePatientTable = () => {
 
   return (
     <div>
-      <BaseTable rows={patients.patients} columns={columns} loading={undefined} />
+      <BaseTable
+        rows={patients.patients}
+        columns={columns}
+        loading={undefined}
+      />
     </div>
   );
 };
 
 export default ManagePatientTable;
-
-

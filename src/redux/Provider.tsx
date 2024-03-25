@@ -1,10 +1,11 @@
 'use client';
 
-import Loading from '@/app/loading';
-import store, { persistor } from '@/redux/store';
 import { PropsWithChildren } from 'react';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
+
+import Loading from '@/app/loading';
+import store, { persistor } from '@/redux/store';
 
 // let persistor = persistStore(store);
 
@@ -15,7 +16,6 @@ function ReduxProvider({ children }: PropsWithChildren) {
         {children}
       </PersistGate>
     </Provider>
-
   );
 }
 

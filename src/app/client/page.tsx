@@ -1,7 +1,7 @@
 'use client';
-import { redirect } from 'next/navigation';
 // Remember you must use an AuthProvider for
 // client components to useSession
+import { redirect } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 
 import UserCard from '@/components/layout/navbar/UserCard';

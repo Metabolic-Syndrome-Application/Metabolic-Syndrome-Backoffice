@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 'use client';
 import { useSession } from 'next-auth/react';
 import React, { useCallback, useEffect } from 'react';
@@ -8,8 +9,6 @@ import { BackButton } from '@/components/tabbed/BackButton';
 import { CardPlan } from '@/app/plan/components/cards/CardPlan';
 import EditPlan from '@/app/plan/components/manage-plan/EditPlan';
 import { fetchPlanById, selectPlanById } from '@/redux/slices/plansSlice';
-
-
 
 const ViewPlanPage = ({ params }: { params: { id: string } }) => {
   const id = params.id;
@@ -27,11 +26,10 @@ const ViewPlanPage = ({ params }: { params: { id: string } }) => {
   //   } catch (error) {
   //     console.log('Error fetching user data:', error);
   //   }
-  // }, [axiosAuth, id]); 
+  // }, [axiosAuth, id]);
 
   const dispatch = useDispatch<any>();
   const plans = useSelector(selectPlanById);
-
 
   const loadPlan = useCallback(async () => {
     try {
@@ -40,8 +38,7 @@ const ViewPlanPage = ({ params }: { params: { id: string } }) => {
     } catch (error) {
       //console.log('error', error);
     }
-  }, [id])
-
+  }, [id]);
 
   useEffect(() => {
     if (session) {
@@ -49,13 +46,11 @@ const ViewPlanPage = ({ params }: { params: { id: string } }) => {
     }
   }, []);
 
-
   return (
     <div>
       <BackButton />
 
-      <div className='shadow-light-shadow bg-white rounded-xl container mx-auto'>
-
+      <div className='shadow-light-shadow container mx-auto rounded-xl bg-white'>
         <EditPlan params={{ id }} loadData={loadPlan} />
         {/* wait refresh page */}
         {plans && (
@@ -68,11 +63,9 @@ const ViewPlanPage = ({ params }: { params: { id: string } }) => {
             detail={plans?.detail}
           />
         )}
-
       </div>
     </div>
   );
-}
-
+};
 
 export default ViewPlanPage;

@@ -1,7 +1,6 @@
 import { useSnackbar } from 'notistack';
 import React, { useState } from 'react';
 import { MdDelete } from 'react-icons/md';
-import { useDispatch } from 'react-redux';
 
 import { axiosAuth } from '@/lib/axios';
 import useModal from '@/hooks/useModal';
@@ -16,17 +15,16 @@ interface DeleteBtnProps {
   id?: string;
 }
 
-const DeleteButton = ({ loadData, api, role, id }: DeleteBtnProps) => {
+const DeleteButton = ({ loadData, api }: DeleteBtnProps) => {
   const { Modal, openModal, closeModal } = useModal();
   const { enqueueSnackbar } = useSnackbar();
+  // eslint-disable-next-line unused-imports/no-unused-vars
   const [open, setOpen] = useState(false);
   const [waiting, setWaiting] = useState(false);
 
   const handleClick = (isOpen: boolean) => () => {
     setOpen(isOpen);
   };
-
-  const dispatch = useDispatch<any>();
 
   const handleDelete = async () => {
     try {

@@ -1,9 +1,8 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 'use client';
 import { useSession } from 'next-auth/react';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-
-import useAxiosAuth from '@/hooks/useAxiosAuth';
 
 import { BackButton } from '@/components/tabbed/BackButton';
 
@@ -11,14 +10,9 @@ import { CardQuiz } from '@/app/challenge/components/cards/CardQuiz';
 import EditQuiz from '@/app/challenge/quiz/components/create-quiz/EditQuiz';
 import { fetchQuizById, selectQuizById } from '@/redux/slices/quizsSlice';
 
-import { IQuizChallengeData } from '@/types/challenge';
-
-
 const QuizDetailPage = ({ params }: { params: { id: string } }) => {
   const { data: session } = useSession();
-  const axiosAuth = useAxiosAuth();
   //const [userData, setUserData] = useState<IPlanData[]>([]);
-  const [userData, setUserData] = useState<IQuizChallengeData | null>(null);
   const id = params.id;
 
   const dispatch = useDispatch<any>();
@@ -40,11 +34,11 @@ const QuizDetailPage = ({ params }: { params: { id: string } }) => {
   const loadQuizs = useCallback(async () => {
     try {
       dispatch(fetchQuizById(id));
-      console.log('dispatch(fetchQuizById(id))', loadQuizs)
+      console.log('dispatch(fetchQuizById(id))', loadQuizs);
     } catch (error) {
       console.log('error', error);
     }
-  }, [id])
+  }, [id]);
 
   useEffect(() => {
     if (session) {
@@ -53,13 +47,11 @@ const QuizDetailPage = ({ params }: { params: { id: string } }) => {
     }
   }, []);
 
-
   return (
     <div>
       <BackButton />
 
-      <div className='bg-white shadow-light-shadow flex flex-col rounded-xl container mx-auto'>
-
+      <div className='shadow-light-shadow container mx-auto flex flex-col rounded-xl bg-white'>
         <EditQuiz params={{ id }} loadData={loadQuizs} />
 
         {/* 
@@ -74,7 +66,7 @@ const QuizDetailPage = ({ params }: { params: { id: string } }) => {
         )} */}
 
         {quiz && (
-          <div key={quiz.id} >
+          <div key={quiz.id}>
             <CardQuiz
               id={quiz.id}
               question={quiz.question}
@@ -85,7 +77,6 @@ const QuizDetailPage = ({ params }: { params: { id: string } }) => {
       </div>
     </div>
   );
-}
-
+};
 
 export default QuizDetailPage;
