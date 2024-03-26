@@ -52,59 +52,6 @@ export function RegisterNewPatientForm() {
 
   const getDoctorOptions = useDoctorOptions();
 
-  // const onHandleFormSubmit = async (data: TFormValues) => {
-  //   const {
-  //     role,
-  //     username,
-  //     password,
-  //     passwordConfirm,
-  //     hn,
-  //     firstName,
-  //     lastName,
-  //     yearOfBirth,
-  //     gender,
-  //     mainDoctorID,
-  //     assistanceDoctorID,
-  //     disease,
-  //   } = data;
-
-  //   try {
-  //     const registerResponse = await axiosAuth.post(
-  //       API_PATH.POST_REGISTER_OTHER,
-  //       { role, username, password, passwordConfirm }
-  //     );
-  //     const { id: userId } = registerResponse.data.data.user;
-
-  //     // Check if registerResponse is successful
-  //     if (registerResponse.status === 200) {
-  //       const createProfileResponse = await axiosAuth.put(
-  //         API_PATH.PUT_PROFILE_PATIENT_OTHER(userId),
-  //         {
-  //           hn,
-  //           firstName,
-  //           lastName,
-  //           gender,
-  //           yearOfBirth,
-  //           mainDoctorID,
-  //           assistanceDoctorID,
-  //           disease,
-  //         }
-  //       );
-  //       enqueueSnackbar('Create a new account for the patient', {
-  //         variant: 'success',
-  //       });
-  //       await dispatch(fetchAllPatients());
-  //     } else {
-  //       // Handle unsuccessful registration
-  //       enqueueSnackbar('Create a new account for the patient', {
-  //         variant: 'error',
-  //       });
-  //     }
-  //   } catch (error: any) {
-  //     enqueueSnackbar(error.response?.data, { variant: 'error' });
-  //   }
-  // };
-
   const onHandleFormSubmit = async (data: TFormValues) => {
     const {
       role,
@@ -147,7 +94,9 @@ export function RegisterNewPatientForm() {
           disease,
         }
       );
-      enqueueSnackbar('Register Success', { variant: 'success' });
+      enqueueSnackbar('Create a new account for the patient', {
+        variant: 'success',
+      });
       await dispatch(fetchAllPatients());
     } catch (error: any) {
       console.error('Error:', error);
