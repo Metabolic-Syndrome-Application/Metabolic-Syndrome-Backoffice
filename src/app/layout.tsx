@@ -1,6 +1,5 @@
 import { Metadata } from 'next';
 import { IBM_Plex_Sans_Thai } from 'next/font/google';
-import Head from 'next/head';
 import * as React from 'react';
 import { Suspense } from 'react';
 
@@ -52,14 +51,7 @@ export const metadata: Metadata = {
     title: siteConfig.title,
     description: siteConfig.description,
     images: [`${siteConfig.url}/assets/icons/logo.svg`],
-    // creator: '@th_clarence',
   },
-  // authors: [
-  //   {
-  //     name: 'Theodorus Clarence',
-  //     url: 'https://theodorusclarence.com',
-  //   },
-  // ],
 };
 
 export default async function RootLayout({
@@ -73,12 +65,9 @@ export default async function RootLayout({
       className={`${IBMPlexSansThai.variable}`}
       suppressHydrationWarning={true}
     >
-      <Head>
-        <meta
-          http-equiv='Content-Security-Policy'
-          content='upgrade-insecure-requests'
-        />
-      </Head>
+      {/* <Head>
+        <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests" />
+      </Head> */}
       <body>
         <div className='font-ibm'>
           <NextAuthProviders>

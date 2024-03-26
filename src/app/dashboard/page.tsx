@@ -8,11 +8,11 @@ export default function DashboardPage() {
   return (
     <main>
       <Head>
-        <title>Hi</title>
+        <title>Dashboard</title>
       </Head>
-      <section className='p-4'>
+      <section>
         <div className='w-full'>
-          <Hero></Hero>
+          <Hero />
           {/* <HomeHero /> */}
           {/* <HomeGallery /> */}
         </div>
