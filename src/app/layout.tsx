@@ -1,5 +1,6 @@
 import { Metadata } from 'next';
-import { IBM_Plex_Sans_Thai } from "next/font/google";
+import { IBM_Plex_Sans_Thai } from 'next/font/google';
+import Head from 'next/head';
 import * as React from 'react';
 import { Suspense } from 'react';
 
@@ -65,16 +66,19 @@ export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
-
 }) {
-
-
   return (
     <html
       lang='en'
       className={`${IBMPlexSansThai.variable}`}
       suppressHydrationWarning={true}
     >
+      <Head>
+        <meta
+          http-equiv='Content-Security-Policy'
+          content='upgrade-insecure-requests'
+        />
+      </Head>
       <body>
         <div className='font-ibm'>
           <NextAuthProviders>
