@@ -1,6 +1,7 @@
 /* eslint-disable unused-imports/no-unused-vars */
 'use client';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useSession } from 'next-auth/react';
 import { useSnackbar } from 'notistack';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
@@ -38,6 +39,7 @@ type TFormValues = {
 
 //Register a new patient
 export function RegisterNewPatientForm() {
+  const { data: session } = useSession();
   const axiosAuth = useAxiosAuth();
   const { enqueueSnackbar } = useSnackbar();
   const dispatch = useDispatch<any>();
@@ -49,6 +51,59 @@ export function RegisterNewPatientForm() {
   });
 
   const getDoctorOptions = useDoctorOptions();
+
+  // const onHandleFormSubmit = async (data: TFormValues) => {
+  //   const {
+  //     role,
+  //     username,
+  //     password,
+  //     passwordConfirm,
+  //     hn,
+  //     firstName,
+  //     lastName,
+  //     yearOfBirth,
+  //     gender,
+  //     mainDoctorID,
+  //     assistanceDoctorID,
+  //     disease,
+  //   } = data;
+
+  //   try {
+  //     const registerResponse = await axiosAuth.post(
+  //       API_PATH.POST_REGISTER_OTHER,
+  //       { role, username, password, passwordConfirm }
+  //     );
+  //     const { id: userId } = registerResponse.data.data.user;
+
+  //     // Check if registerResponse is successful
+  //     if (registerResponse.status === 200) {
+  //       const createProfileResponse = await axiosAuth.put(
+  //         API_PATH.PUT_PROFILE_PATIENT_OTHER(userId),
+  //         {
+  //           hn,
+  //           firstName,
+  //           lastName,
+  //           gender,
+  //           yearOfBirth,
+  //           mainDoctorID,
+  //           assistanceDoctorID,
+  //           disease,
+  //         }
+  //       );
+  //       enqueueSnackbar('Create a new account for the patient', {
+  //         variant: 'success',
+  //       });
+  //       await dispatch(fetchAllPatients());
+  //     } else {
+  //       // Handle unsuccessful registration
+  //       enqueueSnackbar('Create a new account for the patient', {
+  //         variant: 'error',
+  //       });
+  //     }
+  //   } catch (error: any) {
+  //     enqueueSnackbar(error.response?.data, { variant: 'error' });
+  //   }
+  // };
 
   const onHandleFormSubmit = async (data: TFormValues) => {
     const {
@@ -65,40 +120,37 @@ export function RegisterNewPatientForm() {
       assistanceDoctorID,
       disease,
     } = data;
+    const userRole = session?.user?.role;
 
     try {
+      if (!userRole) {
+        console.log('User is not logged in.');
+        return;
+      }
+
       const registerResponse = await axiosAuth.post(
         API_PATH.POST_REGISTER_OTHER,
         { role, username, password, passwordConfirm }
       );
       const { id: userId } = registerResponse.data.data.user;
 
-      // Check if registerResponse is successful
-      if (registerResponse.status === 200) {
-        const createProfileResponse = await axiosAuth.put(
-          API_PATH.PUT_PROFILE_PATIENT_OTHER(userId),
-          {
-            hn,
-            firstName,
-            lastName,
-            gender,
-            yearOfBirth,
-            mainDoctorID,
-            assistanceDoctorID,
-            disease,
-          }
-        );
-        enqueueSnackbar('Create a new account for the patient', {
-          variant: 'success',
-        });
-        await dispatch(fetchAllPatients());
-      } else {
-        // Handle unsuccessful registration
-        enqueueSnackbar('Create a new account for the patient', {
-          variant: 'error',
-        });
-      }
+      const createProfileResponse = await axiosAuth.put(
+        API_PATH.PUT_PROFILE_PATIENT_OTHER(userId),
+        {
+          hn,
+          firstName,
+          lastName,
+          gender,
+          yearOfBirth,
+          mainDoctorID,
+          assistanceDoctorID,
+          disease,
+        }
+      );
+      enqueueSnackbar('Register Success', { variant: 'success' });
+      await dispatch(fetchAllPatients());
     } catch (error: any) {
+      console.error('Error:', error);
       enqueueSnackbar(error.response?.data, { variant: 'error' });
     }
   };
