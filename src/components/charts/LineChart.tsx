@@ -1,4 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+//Line Chart
 'use client';
 
 import {
@@ -28,6 +29,7 @@ import { useEffect, useState } from 'react';
 import { Line } from 'react-chartjs-2';
 
 import useAxiosAuth from '@/hooks/useAxiosAuth';
+
 type Props = {
   patientId: string;
   nameType: string;
@@ -123,10 +125,6 @@ const LineChart = ({ patientId, nameType, graphType }: Props) => {
       ],
     };
   };
-
-  // const handleFilterChange = (value: React.SetStateAction<string>) => {
-  //   setFilter(value);
-  // };
 
   return (
     <div className='shadow-light-shadow border-light-gray flex h-full max-h-[400px] w-full flex-col items-center justify-center rounded-lg border p-4'>

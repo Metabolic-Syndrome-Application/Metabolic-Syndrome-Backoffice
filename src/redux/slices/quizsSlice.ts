@@ -1,3 +1,4 @@
+//Quiz Challenge
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { axiosAuth } from '@/lib/axios';
@@ -24,34 +25,31 @@ const initialState: QuizState = {
 };
 
 export const fetchAllQuizs = createAsyncThunk('fetchAllQuizs', async () => {
-  // eslint-disable-next-line no-useless-catch
   try {
     const {
       data: { data },
     } = await axiosAuth.get<IGetQuizAllApi>(API_PATH.GET_QUIZ_ALL);
     const usersWithIndex = data.quiz ? addIndexQuiz(data.quiz) : [];
-
     //console.log('quiz redux', usersWithIndex);
     return usersWithIndex;
-  } catch (error) {
-    // console.error('Error fetching users:', error);
-    throw error; // Ensure the error is propagated
+  } catch (error: any) {
+    // console.error('Error fetching All Quiz:', error);
+    throw new Error(`Error fetching All Quiz ${error.message}`);
   }
 });
 
 export const fetchQuizById = createAsyncThunk(
   'fetchQuizById',
   async (id: string) => {
-    // eslint-disable-next-line no-useless-catch
     try {
       const {
         data: { data },
       } = await axiosAuth.get<IGetQuizIdApi>(API_PATH.GET_QUIZ(id));
       //  console.log('Get 1 quiz id', data.quiz);
       return data.quiz;
-    } catch (error) {
-      //  console.log('Error fetching user data id:', error);
-      throw error;
+    } catch (error: any) {
+      //  console.log('Error fetching Quiz id:', error);
+      throw new Error(`Error fetching Quiz ID ${error.message}`);
     }
   }
 );
@@ -77,7 +75,6 @@ const quizsSlice = createSlice({
       .addCase(fetchAllQuizs.fulfilled, (state, action) => {
         state.status = 'succeeded';
         state.quiz = action.payload || [];
-
         //  console.log('usersWithIndex', action.payload);
       })
       .addCase(fetchAllQuizs.rejected, (state) => {
@@ -89,11 +86,9 @@ const quizsSlice = createSlice({
       })
       .addCase(fetchQuizById.fulfilled, (state, action) => {
         if (!action.payload?.id) {
-          //console.log('Update could not complete');
-          //  console.log(action.payload);
+          console.log('Update could not complete');
           return;
         }
-
         state.quiz = [action.payload]; // Store the single quiz as an array
         state.status = 'succeeded';
       })

@@ -1,31 +1,30 @@
-"use client"
-import { useMediaQuery, useTheme } from "@mui/material";
-import { GridColDef, GridValueGetterParams } from "@mui/x-data-grid";
-import { useSession } from "next-auth/react";
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+'use client';
+import { useMediaQuery, useTheme } from '@mui/material';
+import { GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
+import { useSession } from 'next-auth/react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
-import ColorButton from "@/components/buttons/ColorButton";
-import DeleteButton from "@/components/buttons/delete-button";
-import ViewButton from "@/components/buttons/ViewButton";
-import BaseTable from "@/components/table/BaseTable";
+import ColorButton from '@/components/buttons/ColorButton';
+import DeleteButton from '@/components/buttons/DeleteButton';
+import ViewButton from '@/components/buttons/ViewButton';
+import BaseTable from '@/components/table/BaseTable';
 
-import { API_PATH } from "@/config/api";
-import { getStatusChallengeColor } from "@/helpers/status";
-import { fetchAllDailyChallenge, selectAllDailyChallenge } from "@/redux/slices/dailyChallengesSlice";
-
+import { API_PATH } from '@/config/api';
+import { getStatusChallengeColor } from '@/helpers/status';
+import {
+  fetchAllDailyChallenge,
+  selectAllDailyChallenge,
+} from '@/redux/slices/dailyChallengesSlice';
 
 const DailyChallengeTable = () => {
   const { data: session } = useSession();
 
-  // API_PATH.GET_QUIZ_ALL
+  //API_PATH.GET_QUIZ_ALL
   const dispatch = useDispatch<any>();
-
   const daily = useSelector(selectAllDailyChallenge);
-  //console.log('Daily Plan:', daily);
 
-
-  // width column styles
+  //Width column styles
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
@@ -38,16 +37,13 @@ const DailyChallengeTable = () => {
     }
   };
 
-
-
   useEffect(() => {
     if (session && session.user) {
       // If session exists, load dailys
-      loadDailyChallenge()
+      loadDailyChallenge();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
 
   const columns: GridColDef[] = [
     {
@@ -61,8 +57,7 @@ const DailyChallengeTable = () => {
       field: 'name',
       width: 300,
       renderHeader: () => <h5 className='font-medium'>ชื่อภารกิจ</h5>,
-      valueGetter: (params: GridValueGetterParams) =>
-        `${params.row.name}`,
+      valueGetter: (params: GridValueGetterParams) => `${params.row.name}`,
     },
     {
       field: 'status',
@@ -77,7 +72,7 @@ const DailyChallengeTable = () => {
         );
       },
       valueGetter: (params: GridValueGetterParams) => {
-        const { text } = getStatusChallengeColor(params.row.status); // Get the Thai label 
+        const { text } = getStatusChallengeColor(params.row.status); // Get the Thai label
         return text; // Return the Thai label as the field value
       },
     },
@@ -100,11 +95,15 @@ const DailyChallengeTable = () => {
       width: isMobile ? 150 : 170,
       renderHeader: () => <h5 className='font-medium'>จำนวนผู้เข้าร่วม</h5>,
       valueGetter: (params: GridValueGetterParams) =>
-        `${params.row.participants !== null && params.row.participants !== undefined ? params.row.participants : 0}`,
+        `${
+          params.row.participants !== null &&
+          params.row.participants !== undefined
+            ? params.row.participants
+            : 0
+        }`,
     },
     {
       field: 'Action',
-      //width: isMobile ? 125 : 150,
       renderHeader: () => <h5 className='font-medium'>จัดการ</h5>,
       renderCell: (params) => {
         return (
@@ -121,11 +120,10 @@ const DailyChallengeTable = () => {
   ];
 
   return (
-    <div className="w-full">
+    <div className='w-full'>
       <BaseTable rows={daily} columns={columns} loading={!!daily.length} />
-    </div >
-
+    </div>
   );
-}
+};
 
 export default DailyChallengeTable;

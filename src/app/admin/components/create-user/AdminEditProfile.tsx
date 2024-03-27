@@ -45,7 +45,6 @@ const AdminEditProfile = ({ loadData, api, id }: IEditMemberFormProps) => {
   //filter id ใน users เเล้วดูว่า id ตรงกันมั้ย ตอนนี้เแน array => [0]
   // const user = users.filter((u) => u.id === id)[0];
   const currentUser = users.find((user) => user.id === id);
-
   //console.log('currentUser index', currentUser);
 
   const { control, handleSubmit } = useForm<FormCreateProfileDoctorProps>({
@@ -63,7 +62,6 @@ const AdminEditProfile = ({ loadData, api, id }: IEditMemberFormProps) => {
 
   const onSubmit = async (data: FormCreateProfileDoctorProps) => {
     try {
-      // Make the API call and handle success
       await axiosAuth.put(`${api}`, {
         prefix: data.prefix,
         firstName: data.firstName,
@@ -74,11 +72,11 @@ const AdminEditProfile = ({ loadData, api, id }: IEditMemberFormProps) => {
       });
 
       // Reload the data after successful edit
-      enqueueSnackbar('edit success', { variant: 'success' });
+      enqueueSnackbar('Edit Success', { variant: 'success' });
       loadData();
       dispatch(fetchAllUsers());
 
-      closeModal(); // Close the modal if needed
+      closeModal();
     } catch (error) {
       enqueueSnackbar('Cannot edit', { variant: 'error' });
       //console.log('Error:', error);

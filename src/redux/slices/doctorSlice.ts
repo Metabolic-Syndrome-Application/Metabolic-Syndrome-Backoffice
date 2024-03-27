@@ -1,4 +1,4 @@
-// Redux slice for doctors
+//Fetch Doctor
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { axiosAuth } from '@/lib/axios';
@@ -30,9 +30,9 @@ export const fetchAllDoctors = createAsyncThunk('fetchAllDoctors', async () => {
     const usersWithIndex = data.users ? addIndexUser(data.users) : [];
     //console.log('doctor redux', usersWithIndex);
     return usersWithIndex;
-  } catch (error) {
-    console.error('Error fetching users:', error);
-    throw error;
+  } catch (error: any) {
+    // console.error('Error fetching Doctor', error);
+    throw new Error(`Error fetching Doctor ${error.message}`);
   }
 });
 

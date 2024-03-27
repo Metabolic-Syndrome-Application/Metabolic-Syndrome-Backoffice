@@ -1,5 +1,6 @@
 'use client';
 import { useSession } from 'next-auth/react';
+import { useSnackbar } from 'notistack';
 import React, { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -14,6 +15,7 @@ import {
 
 const DailyDetailChallengePage = ({ params }: { params: { id: string } }) => {
   const { data: session } = useSession();
+  const { enqueueSnackbar } = useSnackbar();
 
   const id = params.id;
 
@@ -23,8 +25,9 @@ const DailyDetailChallengePage = ({ params }: { params: { id: string } }) => {
   const loadDailyChallenge = useCallback(async () => {
     try {
       dispatch(fetchDailyChallengeById(id));
-      console.log('fetchDailyChallengeById', loadDailyChallenge);
-    } catch (error) {
+      // console.log('fetchDailyChallengeById', loadDailyChallenge);
+    } catch (error: any) {
+      enqueueSnackbar(error.response?.data, { variant: 'error' });
       console.log('error', error);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -32,7 +35,6 @@ const DailyDetailChallengePage = ({ params }: { params: { id: string } }) => {
 
   useEffect(() => {
     if (session) {
-      //fetchQuiz();
       dispatch(fetchDailyChallengeById(id));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

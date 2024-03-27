@@ -15,7 +15,6 @@ const DetailDailyFields = () => {
     control,
   });
 
-
   return (
     <div className='flex w-full flex-col gap-4 '>
       <MultiselectCheckboxTags
@@ -49,11 +48,11 @@ const DetailDailyFields = () => {
         </div>
       ))}
       <div className='flex items-center justify-center'>
+        {/* Append a new object with empty name */}
         <button
           type='button'
           className='cursor-ponter text-default-blue border-form-gray hover:bg-light-blue  mt-1  w-full rounded-[0.575rem] border p-[3.5px]'
           onClick={() => {
-            // Append a new object with empty name
             append({ name: [''] });
           }}
         >

@@ -34,6 +34,7 @@ const CreateQuiz = () => {
   const methods = useForm<createQuizSchemaValues>({
     mode: 'onChange',
     resolver: zodResolver(createQuizChallengeSchema),
+
     defaultValues: {
       choices: [
         { option: '', isCorrect: true },
@@ -42,7 +43,7 @@ const CreateQuiz = () => {
     },
   });
 
-  const { control, handleSubmit } = methods;
+  const { control, handleSubmit, reset } = methods;
 
   const onSubmit = async (data: z.infer<typeof createQuizChallengeSchema>) => {
     try {
@@ -57,7 +58,7 @@ const CreateQuiz = () => {
 
       await dispatch(fetchAllQuizs());
       closeModal();
-      // reset();
+      reset();
     } catch (error: any) {
       enqueueSnackbar(error.response?.data, { variant: 'error' });
       console.error(error);

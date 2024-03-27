@@ -3,7 +3,6 @@ import React from 'react';
 import LoginSection from '@/components/login/LoginSection';
 
 type Props = {
-  //error: any;
   searchParams?: Record<'callbackUrl' | 'error', string>;
 };
 

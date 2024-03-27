@@ -9,7 +9,7 @@ type HomeCardProps = {
 
 const HomeGallery = () => {
   return (
-    <div className='flex items-center justify-center w-full md:w-[600px] lg:w-[750px]'>
+    <div className='flex w-full items-center justify-center md:w-[600px] lg:w-[750px]'>
       <div className='container my-10 flex flex-col'>
         <HomeCardItems />
       </div>

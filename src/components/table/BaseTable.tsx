@@ -61,14 +61,10 @@ const BaseTable = ({ rows, columns, columnGroupingModel }: ITableProps) => {
             },
           }}
           initialState={{
-            // ...data.initialState,
             pagination: { paginationModel: { pageSize: 10 } },
           }}
           pageSizeOptions={[10, 25, 50]}
           sx={tableStyles}
-
-          // onRowExpandToggle={handleRowExpandToggle}
-          // {...({ expandedRowIds } as any)} // Explicitly cast to
         />
       </div>
     </div>

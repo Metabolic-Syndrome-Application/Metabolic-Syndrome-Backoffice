@@ -11,7 +11,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import useAxiosAuth from '@/hooks/useAxiosAuth';
 
 import ColorButton from '@/components/buttons/ColorButton';
-import DeleteButton from '@/components/buttons/delete-button';
+import DeleteButton from '@/components/buttons/DeleteButton';
 import ViewButton from '@/components/buttons/ViewButton';
 import BaseTable from '@/components/table/BaseTable';
 

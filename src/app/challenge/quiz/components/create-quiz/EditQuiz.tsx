@@ -109,6 +109,7 @@ const EditQuiz = ({
 
       dispatch(fetchQuizById(id));
       loadData();
+
       closeModal();
     } catch (error: any) {
       enqueueSnackbar(error.response?.data, { variant: 'error' });

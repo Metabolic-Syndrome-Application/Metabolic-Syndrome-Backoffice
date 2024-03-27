@@ -6,7 +6,8 @@ import { IoMdTime } from 'react-icons/io';
 import { TbCoin } from 'react-icons/tb';
 
 import ColorButton from '@/components/buttons/ColorButton';
-import ToggleDays from '@/components/form/crons/DayOfWeek';
+import ShowImageUrl from '@/components/form/components/ShowImageUrl';
+import ToggleDays from '@/components/form/components/ToggleDays';
 import { TextFieldInfo } from '@/components/form/TextFieldInfo';
 
 import { getStatusChallengeColor } from '@/helpers/status';
@@ -34,15 +35,17 @@ export const CardDailyChallenge = ({
         <div className='flex w-full flex-col gap-4 md:w-3/5'>
           {photo && (
             <div className='flex max-h-[300px] w-full items-center justify-center rounded-xl border border-dashed p-2'>
-              <Image
+              {/* <Image
                 alt='The uploaded image'
                 // src={photo.startsWith('/') ? photo : `/${photo}`}
-                src={photo}
+                src={photo.startsWith('/') ? photo : `/${photo}`} // Prepend leading slash if necessary
+                // src={photo}
                 width={350}
                 height={350}
                 className='h-64 w-64 object-contain'
                 priority={false}
-              />
+              /> */}
+              <ShowImageUrl pathName={photo} />
             </div>
           )}
           {!photo && (
