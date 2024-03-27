@@ -97,6 +97,7 @@ export function RegisterNewPatientForm() {
       enqueueSnackbar('Create a new account for the patient', {
         variant: 'success',
       });
+
       await dispatch(fetchAllPatients());
     } catch (error: any) {
       console.error('Error:', error);

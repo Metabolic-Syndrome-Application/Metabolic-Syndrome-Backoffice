@@ -130,13 +130,6 @@ const ManagePatientTable = () => {
         return text; // Return the Thai label as the field value
       },
     },
-    // {
-    //   field: 'mainDoctorID',
-    //   width: 225,
-    //   renderHeader: () => <h5 className='font-medium'>แพทย์ผู้รับผิดชอบหลัก</h5>,
-    //   valueGetter: (params: GridValueGetterParams) =>
-    //     `${params.row.mainDoctorID}`,
-    // },
     {
       field: 'mainDoctorID',
       width: 225,
