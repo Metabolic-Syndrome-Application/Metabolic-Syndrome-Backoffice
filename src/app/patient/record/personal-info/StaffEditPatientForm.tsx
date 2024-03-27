@@ -41,7 +41,7 @@ const StaffEditPatientForm = ({
   const id = params.id;
   const axiosAuth = useAxiosAuth();
 
-  const { Modal, openModal } = useModal();
+  const { Modal, openModal, closeModal } = useModal();
   const { enqueueSnackbar } = useSnackbar();
   const dispatch = useDispatch<any>();
 
@@ -91,9 +91,9 @@ const StaffEditPatientForm = ({
       loadData();
       await dispatch(fetchPatientById(id));
 
-      // closeModal(); // Close the modal if needed
-    } catch (error) {
-      enqueueSnackbar('Cannot edit', { variant: 'error' });
+      closeModal(); // Close the modal if needed
+    } catch (error: any) {
+      enqueueSnackbar(error.response?.data, { variant: 'error' });
       console.log('Error:', error);
     }
   };

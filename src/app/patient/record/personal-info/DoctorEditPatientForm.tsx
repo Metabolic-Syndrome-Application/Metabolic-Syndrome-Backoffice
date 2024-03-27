@@ -110,8 +110,8 @@ const DoctorEditPatientForm = ({
       // await dispatch(fetchPatientById(id));
 
       closeModal(); // Close the modal if needed
-    } catch (error) {
-      enqueueSnackbar('Cannot edit', { variant: 'error' });
+    } catch (error: any) {
+      enqueueSnackbar(error.response?.data, { variant: 'error' });
       console.log('Error:', error);
     }
   };
