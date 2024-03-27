@@ -1,5 +1,4 @@
 'use client';
-
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useSession } from 'next-auth/react';
 import { useSnackbar } from 'notistack';
@@ -102,10 +101,6 @@ const AdminCreateRegister = () => {
           closeModal();
           reset();
         }
-        // enqueueSnackbar('Register Success', { variant: 'success' });
-        // await dispatch(fetchAllUsers());
-        // closeModal();
-        // reset();
       }
     } catch (error: any) {
       enqueueSnackbar(error.response?.data, { variant: 'error' });

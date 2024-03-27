@@ -6,15 +6,19 @@ import React from 'react';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import DeleteButton from '@/components/buttons/delete-button';
+import DeleteButton from '@/components/buttons/DeleteButton';
 import OutlineButton from '@/components/buttons/OutlineButton';
 import ViewButton from '@/components/buttons/ViewButton';
 import BaseTable from '@/components/table/BaseTable';
 
-import CreatePlan from '@/app/plan/components/create-plan/nested-form/CreatePlan';
+import CreatePlan from '@/app/plan/components/create-plan/CreatePlan';
 import { API_PATH } from '@/config/api';
 import { iconTypeMapping, TypePlan } from '@/helpers/typeIcon';
-import { fetchAllPlans, selectAllPlans } from '@/redux/slices/plansSlice';
+import {
+  fetchAllPlans,
+  fetchAllPlansDefault,
+  selectAllPlans,
+} from '@/redux/slices/plansSlice';
 
 const PlanTable = () => {
   const { data: session } = useSession();
@@ -36,29 +40,30 @@ const PlanTable = () => {
   //     console.log('error', error);
   //   }
   // };
-
-  const plan = useSelector(selectAllPlans);
-
-  console.log('Plans:', plan);
-
   const dispatch = useDispatch<any>();
+  const plan = useSelector(selectAllPlans);
+  // console.log('Plans:', plan);
 
   const loadPlans = async () => {
     try {
       dispatch(fetchAllPlans());
+      dispatch(fetchAllPlansDefault());
       //setUsers(dataAddIndex);
     } catch (error) {
       console.log('error', error);
     }
   };
 
+  //Display data from both fetchAllPlans and fetchAllPlansDefault
+  //Because fetchAllPlans ไม่มีข้อมูล plan default
   useEffect(() => {
     if (session && session.user) {
       // If session exists, load users
       loadPlans();
+      dispatch(fetchAllPlansDefault());
     }
     // eslint-dis able-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [dispatch]);
 
   const columns: GridColDef[] = [
     {
@@ -80,6 +85,7 @@ const PlanTable = () => {
       width: 300,
       renderHeader: () => <h5 className='font-medium'>ประเภท</h5>,
       renderCell: (params) => {
+        //Find thai type plan
         const getTypeLabel = (type: string) => {
           const {
             icon: Icon,
@@ -97,7 +103,7 @@ const PlanTable = () => {
       valueGetter: (params: GridValueGetterParams) => {
         const getTypeLabel = (type: string) =>
           iconTypeMapping[type as TypePlan]?.label || type;
-        return getTypeLabel(params.row.type); //find thai type word
+        return getTypeLabel(params.row.type);
       },
     },
     {
@@ -120,7 +126,6 @@ const PlanTable = () => {
 
   return (
     <div>
-      {/* <CreatePlan /> */}
       <CreatePlan />
       <BaseTable rows={plan} columns={columns} loading={!!plan.length} />
     </div>

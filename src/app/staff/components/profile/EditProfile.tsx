@@ -32,6 +32,7 @@ const EditProfile = () => {
   const { enqueueSnackbar } = useSnackbar();
 
   const { Modal, openModal, closeModal } = useModal();
+
   const user = useSelector(selectUser);
   const dispatch = useDispatch<any>();
 
@@ -52,10 +53,9 @@ const EditProfile = () => {
     try {
       // Dispatch the updateUser action
       await dispatch(updateUser(data));
-
       //console.log('Edit Profile successful', data);
 
-      enqueueSnackbar('edit success', { variant: 'success' });
+      enqueueSnackbar('Edit Profile Success', { variant: 'success' });
       // Load the updated user
       await dispatch(fetchUser());
       closeModal();

@@ -1,4 +1,4 @@
-/* eslint-disable no-console */
+//Plan
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { axiosAuth } from '@/lib/axios';
@@ -10,12 +10,14 @@ import { IGetPlanAllApi, IGetPlanIdApi, IPlanData } from '@/types/plan';
 
 interface PlanState {
   plan: IPlanData[];
+  defaultPlans: IPlanData[];
   status: string;
   error: boolean;
 }
 
 const initialState: PlanState = {
   plan: [],
+  defaultPlans: [],
   status: 'idle',
   error: false,
 };
@@ -27,25 +29,25 @@ export const fetchAllPlans = createAsyncThunk('fetchAllPlans', async () => {
     } = await axiosAuth.get<IGetPlanAllApi>(API_PATH.GET_PLAN_ALL);
     const usersWithIndex = data.plan ? addIndexPlan(data.plan) : [];
     return usersWithIndex;
-  } catch (error) {
-    console.error('Error fetching plan:', error);
-    throw error; // Ensure the error is propagated
+  } catch (error: any) {
+    //console.error('Error fetching plan:', error);
+    throw new Error(`Error fetching All Plan ${error.message}`);
   }
 });
 
 export const fetchAllPlansDefault = createAsyncThunk(
   'fetchAllPlansDefault',
   async () => {
-    // eslint-disable-next-line no-useless-catch
     try {
       const {
         data: { data },
       } = await axiosAuth.get<IGetPlanAllApi>(API_PATH.GET_PLAN_ALL_DEFAULT);
       const usersWithIndex = data.plan ? addIndexPlan(data.plan) : [];
+      //console.log('fetchAllPlansDefault', data.plan);
       return usersWithIndex;
-    } catch (error) {
-      // console.error('Error fetching plan:', error);
-      throw error; // Ensure the error is propagated
+    } catch (error: any) {
+      //console.error('Error fetching Plan Default:', error);
+      throw new Error(`Error fetching only Plan Default ${error.message}`);
     }
   }
 );
@@ -57,11 +59,11 @@ export const fetchPlanById = createAsyncThunk(
       const {
         data: { data },
       } = await axiosAuth.get<IGetPlanIdApi>(API_PATH.GET_PLAN(id));
-      //console.log('Get 1 plan', data.plan);
+      console.log('Get 1 plan id', data.plan);
       return data.plan;
-    } catch (error) {
-      console.log('Error fetching plan data id:', error);
-      throw error; // Ensure the error is propagated
+    } catch (error: any) {
+      //console.error('Error fetching Plan ID:', error);
+      throw new Error(`Error fetching Plan ID ${error.message}`);
     }
   }
 );
@@ -78,22 +80,6 @@ const plansSlice = createSlice({
       state.plan = [action.payload];
       state.status = 'succeeded';
     },
-    // createPlan: (state, action: PayloadAction<IPlanData>) => {
-    //   state.plan.push(action.payload);
-    // },
-    // getPlanById: (state: PlanState, action: PayloadAction<IPlanData>) => {
-    //   const id = action.payload.id;
-    //   const planIndex = state.plan.findIndex((item) => item.id === id);
-    //   if (planIndex !== -1) {
-    //     state.plan[planIndex] = action.payload;
-    //   }
-    // },
-    // updatePlanById: (state, action: PayloadAction<IPlanData>) => {
-    //   const updatedPlan = action.payload;
-    //   state.plan = state.plan.map((plan) =>
-    //     plan.id === updatedPlan.id ? updatedPlan : plan
-    //   );
-    // },
   },
   extraReducers(builder) {
     builder
@@ -124,10 +110,10 @@ const plansSlice = createSlice({
       })
       .addCase(fetchPlanById.fulfilled, (state, action) => {
         if (!action.payload?.id) {
+          console.log('cannot fetch plan');
           return;
         }
-        state.plan = [action.payload]; // Store the single quiz as an array
-        //console.log('redux2 fetchPlanById', action.payload);
+        state.plan = [action.payload];
         state.status = 'succeeded';
       })
       .addCase(fetchPlanById.rejected, (state) => {
@@ -142,6 +128,7 @@ export const selectAllPlans = (state: { plan: PlanState }) => state.plan.plan;
 //not used
 // export const selectPlanById = (state: { plan: PlanState }, planId: any) =>
 //   state.plan.plan.find((plan: IPlanData) => plan.id === planId);
+
 export const selectPlanById = (state: { plan: PlanState }) =>
   state.plan.plan[0];
 

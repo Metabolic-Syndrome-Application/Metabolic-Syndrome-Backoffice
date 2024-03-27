@@ -76,10 +76,10 @@ const CreateDailyChallenge = () => {
       //console.log('Create Daily', response);
       await dispatch(fetchAllDailyChallenge());
       closeModal();
-      // reset();
+      reset();
     } catch (error: any) {
       enqueueSnackbar(error.response?.data, { variant: 'error' });
-      console.error(error);
+      //console.error(error);
     }
   };
 

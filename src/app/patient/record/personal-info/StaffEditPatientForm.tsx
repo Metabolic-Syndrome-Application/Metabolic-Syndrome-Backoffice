@@ -87,7 +87,7 @@ const StaffEditPatientForm = ({
       );
 
       // Reload the data after successful edit
-      enqueueSnackbar('edit success', { variant: 'success' });
+      enqueueSnackbar('Edit Success', { variant: 'success' });
       loadData();
       await dispatch(fetchPatientById(id));
 

@@ -48,7 +48,7 @@ const QuizDetailPage = ({ params }: { params: { id: string } }) => {
   }, []);
 
   return (
-    <div>
+    <div className='w-full'>
       <BackButton />
 
       <div className='shadow-light-shadow container mx-auto flex flex-col rounded-xl bg-white'>

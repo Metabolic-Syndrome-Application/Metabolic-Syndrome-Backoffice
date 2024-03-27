@@ -13,13 +13,14 @@ import {
   GridValueGetterParams,
 } from '@mui/x-data-grid';
 import { useSession } from 'next-auth/react';
+import { useSnackbar } from 'notistack';
 import React, { useCallback, useEffect, useState } from 'react';
 import { IoIosArrowUp } from 'react-icons/io';
 import { useDispatch, useSelector } from 'react-redux';
 
 import useAxiosAuth from '@/hooks/useAxiosAuth';
 
-import DeleteButton from '@/components/buttons/delete-button';
+import DeleteButton from '@/components/buttons/DeleteButton';
 import ViewButton from '@/components/buttons/ViewButton';
 import BaseTable from '@/components/table/BaseTable';
 
@@ -37,6 +38,7 @@ const detailExpandStyles = {
 const QuizTable = () => {
   const { data: session } = useSession();
   const axiosAuth = useAxiosAuth();
+  const enqueueSnackbar = useSnackbar();
 
   // API_PATH.GET_QUIZ_ALL
   const [quizData, setQuizData] = useState<IQuizChallengeData[]>([]);
@@ -52,34 +54,9 @@ const QuizTable = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   const quiz = useSelector(selectAllQuizs);
-
-  console.log('quiz:', quiz);
+  //console.log('quiz:', quiz);
 
   const dispatch = useDispatch<any>();
-
-  const loadQuizs = async () => {
-    try {
-      dispatch(fetchAllQuizs());
-      //setUsers(dataAddIndex);
-    } catch (error) {
-      console.log('error', error);
-    }
-  };
-  //not used ใช้ redux แทน
-  // const fetchAllQuiz = async () => {
-  //   try {
-  //     const {
-  //       data: { data },
-  //     } = await axiosAuth.get<IGetQuizAllApi>(API_PATH.GET_QUIZ_ALL);
-  //     // console.log('Get All quiz', data);
-
-  //     const quizWithIndex = addIndexQuiz(data.quiz);
-  //     setQuizData(quizWithIndex);
-
-  //   } catch (error) {
-  //     console.log('error', error);
-  //   }
-  // };
 
   const loadQuizAll = async () => {
     try {
@@ -207,7 +184,7 @@ const QuizTable = () => {
           <div className='flex flex-row items-center space-x-4'>
             <ViewButton href={`/challenge/quiz/detail/${params.row.id}`} />
             <DeleteButton
-              loadData={loadQuizs}
+              loadData={loadQuizAll}
               api={API_PATH.DELETE_QUIZ(params.row.id)}
             />
           </div>

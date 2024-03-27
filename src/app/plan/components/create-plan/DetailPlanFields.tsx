@@ -1,4 +1,4 @@
-//Add detail Plan -> name , days
+//nestedform : Add detail Plan -> name , days
 import React from 'react';
 import { useFieldArray, useFormContext } from 'react-hook-form';
 import { AiOutlineClose } from 'react-icons/ai';
@@ -15,7 +15,6 @@ const DetailPlanFields = () => {
     control,
   });
 
-
   return (
     <div className='flex w-full flex-col gap-4 '>
       <MultiselectCheckboxTags
@@ -25,7 +24,7 @@ const DetailPlanFields = () => {
         options={DaysOfWeekOptions}
       />
 
-      {/* Mapping  detail fields */}
+      {/* Mapping detail fields */}
       {fields.map((field, index) => (
         <div key={field.id}>
           <div className='flex gap-3'>

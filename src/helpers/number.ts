@@ -4,10 +4,6 @@ import { IPlanData } from '@/types/plan';
 import { IUserData } from '@/types/user';
 
 //Add Index User
-// wait.ts????
-export const addIndex = (users: IUserData[] = []) =>
-  users.map((users, index) => ({ ...users, index: index + 1 }));
-
 export const addIndexUser = (users: IUserData[] = []) =>
   users.map((user, index) => ({ ...user, index: index + 1 }));
 

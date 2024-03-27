@@ -1,5 +1,5 @@
-// eslint-disable-next-line @next/next/no-img-element
-
+//eslint-disable-next-line @next/next/no-img-element
+//uploadImage
 import { storage } from 'firebase.config';
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
 import Image from 'next/image';
@@ -16,6 +16,7 @@ interface ImageUploadProps {
   setImage: Dispatch<SetStateAction<File | null>>;
   imageError: boolean;
   setDownloadURL: any;
+  currentPhoto?: string | null; // current photo
 }
 
 const ImageUpload = ({
@@ -23,14 +24,13 @@ const ImageUpload = ({
   setImage,
   imageError,
   setDownloadURL,
+  currentPhoto,
 }: ImageUploadProps) => {
+  const { enqueueSnackbar } = useSnackbar();
+
   const [preview, setPreview] = useState<string | null>(null);
   const [uploadProgress, setUploadProgress] = useState(0);
   const fileInputRef = useRef<HTMLInputElement>(null);
-  // eslint-disable-next-line unused-imports/no-unused-vars
-  const [currentDownloadURL, setCurrentDownloadURL] = useState<string | null>(
-    null
-  );
 
   // Function to clear the current image selection
   const clearImageSelection = () => {
@@ -38,20 +38,6 @@ const ImageUpload = ({
     setPreview(null);
   };
 
-  const { enqueueSnackbar } = useSnackbar();
-
-  // const handleSelectedFile = (files: FileList | null) => {
-  //   if (files && files[0].size < 10000000) {
-  //     setImage(files[0]);
-  //     const reader = new FileReader();
-  //     reader.onloadend = () => {
-  //       setPreview(reader.result as string);
-  //     };
-  //     reader.readAsDataURL(files[0]);
-  //   } else {
-  //     console.error('File size too large');
-  //   }
-  // };
   const handleSelectedFile = (files: FileList | null) => {
     if (files && files.length > 0 && files[0].size < 10000000) {
       setImage(files[0]);
@@ -61,22 +47,24 @@ const ImageUpload = ({
       };
       reader.readAsDataURL(files[0]);
     } else if (files && files.length > 0) {
-      // console.error('File size too large');
+      enqueueSnackbar('File size too large', { variant: 'error' });
+      console.error('File size too large');
     } else {
-      //console.error('No file selected');
+      enqueueSnackbar('No file selected', { variant: 'error' });
+      console.error('No file selected');
     }
   };
 
   useEffect(() => {
-    if (preview) {
-      // handle preview logic here if needed
+    if (currentPhoto) {
+      setPreview(currentPhoto); // Set preview to current photo URL
     }
-  }, [preview]);
+  }, [currentPhoto]);
 
   const handleUploadFile = async () => {
     if (image && preview) {
-      const name = image.name;
-      const storageRef = ref(storage, `image/${name}`);
+      const pathName = image.name;
+      const storageRef = ref(storage, `image/${pathName}`);
       const uploadTask = uploadBytesResumable(storageRef, image);
 
       uploadTask.on(
@@ -91,9 +79,7 @@ const ImageUpload = ({
         },
         () => {
           getDownloadURL(uploadTask.snapshot.ref).then((url) => {
-            setCurrentDownloadURL(url);
             setDownloadURL(url); // Set the download URL
-
             // console.log('Download URL:', url);
           });
         }
@@ -111,8 +97,8 @@ const ImageUpload = ({
             <Image
               src={preview}
               alt='preview'
-              width={250}
-              height={250}
+              width={350}
+              height={350}
               className='h-[220px] w-[250px] cursor-pointer object-contain'
               //  onClick={() => setImage(null)}
               onClick={clearImageSelection} // Clear image selection on click

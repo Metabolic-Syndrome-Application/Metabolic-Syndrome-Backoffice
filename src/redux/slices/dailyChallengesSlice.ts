@@ -1,3 +1,4 @@
+//Daily Challenge
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { axiosAuth } from '@/lib/axios';
@@ -38,9 +39,9 @@ export const fetchAllDailyChallenge = createAsyncThunk(
 
       console.log('daily redux', dailysWithIndex);
       return dailysWithIndex;
-    } catch (error) {
-      console.error('Error fetching dailys:', error);
-      throw error; // Ensure the error is propagated
+    } catch (error: any) {
+      // console.error('Error fetching All Dailys', error);
+      throw new Error(`Error fetching All Dailys ${error.message}`);
     }
   }
 );
@@ -56,9 +57,9 @@ export const fetchDailyChallengeById = createAsyncThunk(
       );
       console.log('Get 1 daily id', data.daily);
       return data.daily;
-    } catch (error) {
-      console.log('Error fetching daily data id:', error);
-      throw error;
+    } catch (error: any) {
+      // console.error('Error fetching Daily ID', error);
+      throw new Error(`Error fetching Daily ID ${error.message}`);
     }
   }
 );
@@ -72,7 +73,7 @@ const dailyChallengesSlice = createSlice({
       state.status = 'succeeded';
     },
     getIdDaily: (state, action: PayloadAction<IDailyChallengeData>) => {
-      state.daily = [action.payload]; // Store the single quiz as an array
+      state.daily = [action.payload];
       state.status = 'succeeded';
     },
   },
@@ -96,13 +97,13 @@ const dailyChallengesSlice = createSlice({
       })
       .addCase(fetchDailyChallengeById.fulfilled, (state, action) => {
         if (!action.payload?.id) {
-          console.log('Update could not complete');
+          console.log('Update Daily could not complete');
           console.log(action.payload);
           return;
         }
 
-        state.daily = [action.payload]; // Store the single quiz as an array
-        console.log('redux2 fetchDailyChallengeById', action.payload);
+        state.daily = [action.payload];
+        // console.log('redux2 fetchDailyChallengeById', action.payload);
         state.status = 'succeeded';
       })
 

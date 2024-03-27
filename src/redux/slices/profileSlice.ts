@@ -1,3 +1,4 @@
+//Profile Doctor/Staff
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { axiosAuth } from '@/lib/axios';
@@ -31,18 +32,16 @@ const initialState: UserState = {
 };
 
 export const fetchUser = createAsyncThunk('fetchUser', async () => {
-  // eslint-disable-next-line no-useless-catch
   try {
     const {
       data: { data },
     } = await axiosAuth.get<IGetProfileMeApi>(API_PATH.GET_PROFILE_ME);
-
     //console.log('get profile me', data);
 
     return data.user;
-  } catch (error) {
-    // console.error('Error fetching users:', error);
-    throw error;
+  } catch (error: any) {
+    // console.error('Error fetching Profile User', error);
+    throw new Error(`Error fetching Profile User ${error.message}`);
   }
 });
 
@@ -81,9 +80,7 @@ const profileSlice = createSlice({
       })
       .addCase(fetchUser.fulfilled, (state, action) => {
         state.status = 'succeeded';
-
         // console.log('API Response2:', action.payload);
-
         state.user = action.payload;
       })
       .addCase(fetchUser.rejected, (state) => {
@@ -106,12 +103,8 @@ const profileSlice = createSlice({
   },
 });
 
-// export const selectUser = (state: { user: UserState }) => state.user.user;
 export const selectUser = (state: { user: UserState }) => state.user?.user;
 
 export const { getUser } = profileSlice.actions;
-
-// export const selectUserById = (state: { user: { user: any[] } }, userId: any) =>
-//   state.user.user.find((user: { id: any }) => user.id === userId);
 
 export default profileSlice.reducer;

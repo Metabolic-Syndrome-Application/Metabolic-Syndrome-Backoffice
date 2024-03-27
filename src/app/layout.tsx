@@ -72,7 +72,6 @@ export default async function RootLayout({
         <div className='font-ibm'>
           <NextAuthProviders>
             <Suspense fallback={<Loading />}>
-              {/* <SignInButton /> */}
               <NavbarLayout>
                 <ReduxProvider>{children}</ReduxProvider>
               </NavbarLayout>

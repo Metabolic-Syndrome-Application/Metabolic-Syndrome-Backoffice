@@ -7,26 +7,16 @@ import { useDispatch, useSelector } from 'react-redux';
 import { BackButton } from '@/components/tabbed/BackButton';
 
 import { CardPlan } from '@/app/plan/components/cards/CardPlan';
-import EditPlan from '@/app/plan/components/manage-plan/EditPlan';
-import { fetchPlanById, selectPlanById } from '@/redux/slices/plansSlice';
+import EditPlan from '@/app/plan/components/create-plan/EditPlan';
+import {
+  fetchAllPlansDefault,
+  fetchPlanById,
+  selectPlanById,
+} from '@/redux/slices/plansSlice';
 
 const ViewPlanPage = ({ params }: { params: { id: string } }) => {
   const id = params.id;
   const { data: session } = useSession();
-
-  //not used redux
-  // const [userData, setUserData] = useState<IPlanData | null>(null);
-  // const fetchPlan = useCallback(async () => {
-  //   try {
-  //     const {
-  //       data: { data },
-  //     } = await axiosAuth.get(API_PATH.GET_PLAN(id as string));
-  //     console.log('Get 1 plan', data);
-  //     setUserData(data.plan);
-  //   } catch (error) {
-  //     console.log('Error fetching user data:', error);
-  //   }
-  // }, [axiosAuth, id]);
 
   const dispatch = useDispatch<any>();
   const plans = useSelector(selectPlanById);
@@ -34,15 +24,16 @@ const ViewPlanPage = ({ params }: { params: { id: string } }) => {
   const loadPlan = useCallback(async () => {
     try {
       dispatch(fetchPlanById(id));
-      //console.log('fetchPlanById', loadPlan)
+      dispatch(fetchAllPlansDefault);
     } catch (error) {
-      //console.log('error', error);
+      console.log('loadPlan error', error);
     }
   }, [id]);
 
   useEffect(() => {
     if (session) {
       dispatch(fetchPlanById(id));
+      dispatch(fetchAllPlansDefault);
     }
   }, []);
 
@@ -52,7 +43,7 @@ const ViewPlanPage = ({ params }: { params: { id: string } }) => {
 
       <div className='shadow-light-shadow container mx-auto rounded-xl bg-white'>
         <EditPlan params={{ id }} loadData={loadPlan} />
-        {/* wait refresh page */}
+
         {plans && (
           <CardPlan
             id={plans?.id}

@@ -1,4 +1,5 @@
 /* eslint-disable unused-imports/no-unused-vars */
+// eslint-disable-next-line unused-imports/no-unused-vars
 import { styled, TextField } from '@mui/material';
 import React from 'react';
 
@@ -17,7 +18,6 @@ export const TextFieldInfo: React.FC<TextFieldInfoProps> = ({
   ...props
 }) => {
   // Styled TextField
-  // eslint-disable-next-line unused-imports/no-unused-vars
   const StyledTextField = styled(
     ({ isSelected, ...props }: TextFieldInfoProps) => (
       <TextField {...props} fullWidth />
@@ -41,9 +41,6 @@ export const TextFieldInfo: React.FC<TextFieldInfoProps> = ({
       value={text}
       className={`${className}`}
       isSelected={isSelected} // Convert isSelected to a boolean value
-      // InputProps={{
-      //   readOnly: true,
-      // }}
     />
   );
 

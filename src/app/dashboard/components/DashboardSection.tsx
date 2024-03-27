@@ -1,10 +1,9 @@
 'use client';
 
-import HomeGallery from '@/components/home/HomeGallery';
+import { AvatarCanvas } from '@/app/dashboard/components/AvatarCanvas';
+import HomeGallery from '@/app/dashboard/components/HomeGallery';
 
-import { AvatarCanvas } from '@/app/threeD/components/AvatarCanvas';
-
-const Hero = () => {
+const DashboardSection = () => {
   return (
     <section className='relative mx-auto h-full w-full md:h-screen  '>
       <div className='absolute inset-0 top-[100px] mx-auto max-w-7xl gap-6 px-6 '>
@@ -32,4 +31,4 @@ const Hero = () => {
   );
 };
 
-export default Hero;
+export default DashboardSection;

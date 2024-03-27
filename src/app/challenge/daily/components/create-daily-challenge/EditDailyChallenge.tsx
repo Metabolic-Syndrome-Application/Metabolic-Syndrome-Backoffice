@@ -25,7 +25,7 @@ import TiptapTextField from '@/components/text-editor/TipTapTextField';
 import DetailDailyFields from '@/app/challenge/daily/components/create-daily-challenge/DetailDailyFields';
 import { API_PATH } from '@/config/api';
 import { dataOptions } from '@/constant/challenge';
-import { dayOfWeekThaiLabel } from '@/helpers/date';
+import { DaysOfWeekOptions } from '@/constant/plan';
 
 const EditDailyChallenge = ({
   params,
@@ -49,14 +49,20 @@ const EditDailyChallenge = ({
     mode: 'onChange',
     resolver: zodResolver(updateDailyChallengeSchema),
     defaultValues: async () => {
-      //GET_DAILY_CHALLENGE
+      //API_PATH.GET_DAILY_CHALLENGE
       const response = await axiosAuth.get(`/api/challenge/daily/${id}`);
       const data = await response.data.data.daily;
 
-      const thaiDays = data?.detail.day.map((dayItem: string) => ({
-        label: dayOfWeekThaiLabel(dayItem), // Convert English day name to Thai label
-        value: dayItem,
-      }));
+      // Convert English day name to Thai label
+      const thaiDays = data?.detail.day.map((dayItem: string) => {
+        const foundDay = DaysOfWeekOptions.find(
+          (option) => option.value === dayItem
+        );
+        return {
+          label: foundDay?.label || dayItem,
+          value: dayItem,
+        };
+      });
 
       return {
         name: data.name,
@@ -78,12 +84,7 @@ const EditDailyChallenge = ({
     },
   });
 
-  const {
-    control,
-    handleSubmit,
-    formState: { errors },
-    getValues,
-  } = methods;
+  const { control, handleSubmit, getValues } = methods;
 
   const onSubmit = async (data: z.infer<typeof updateDailyChallengeSchema>) => {
     try {
@@ -107,6 +108,8 @@ const EditDailyChallenge = ({
 
       enqueueSnackbar('Edit Daily Success', { variant: 'success' });
       loadData();
+
+      closeModal();
     } catch (error: any) {
       enqueueSnackbar(error.response?.data, { variant: 'error' });
       console.error(error);
@@ -148,7 +151,6 @@ const EditDailyChallenge = ({
                   unit='วัน'
                 />
 
-                {/* <SwitchToggle name="status" control={control} label="Toggle Status" status={getValues().status} /> */}
                 <SwitchToggle
                   name='status'
                   control={control}
@@ -165,6 +167,7 @@ const EditDailyChallenge = ({
                   setImage={setImage}
                   imageError={imageError}
                   setDownloadURL={setDownloadURL}
+                  currentPhoto={methods.watch('photo')} // Pass the current photo URL
                 />
               </div>
 

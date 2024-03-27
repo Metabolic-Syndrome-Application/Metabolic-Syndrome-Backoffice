@@ -1,3 +1,4 @@
+//Admin Manage Users
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { axiosAuth } from '@/lib/axios';
@@ -8,7 +9,7 @@ import { addIndexUser } from '@/helpers/number';
 import { IGetProfileAllApi, IUserData } from '@/types/user';
 
 interface UserState {
-  users: IUserData[]; // Explicitly define the type for users
+  users: IUserData[]; //Define the type for users
   status: string;
   error: boolean;
 }
@@ -28,13 +29,11 @@ export const fetchAllUsers = createAsyncThunk('fetchAllUsers', async () => {
     //console.log('Admin Create Register:', data);
 
     // Assuming response.data.users is an array of IUserData
-    //const usersWithIndex = addIndex(data.users);
     const usersWithIndex = data.users ? addIndexUser(data.users) : [];
-    //console.log('users redux', usersWithIndex);
     return usersWithIndex;
-  } catch (error) {
-    //console.error('Error fetching users:', error);
-    throw error;
+  } catch (error: any) {
+    // console.error('Error fetching All Users', error);
+    throw new Error(`Error fetching All Users ${error.message}`);
   }
 });
 
@@ -56,12 +55,8 @@ const usersSlice = createSlice({
       })
       .addCase(fetchAllUsers.fulfilled, (state, action) => {
         state.status = 'succeeded';
-
-        //  console.log('Admin Create Register2:', action.payload);
-
         state.users = action.payload || [];
-
-        // console.log('usersWithIndex', action.payload);
+        // console.log('Admin Create Register2:', action.payload);
       })
       .addCase(fetchAllUsers.rejected, (state) => {
         state.status = 'failed';

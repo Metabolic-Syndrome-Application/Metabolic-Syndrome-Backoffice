@@ -18,13 +18,8 @@ interface DeleteBtnProps {
 const DeleteButton = ({ loadData, api }: DeleteBtnProps) => {
   const { Modal, openModal, closeModal } = useModal();
   const { enqueueSnackbar } = useSnackbar();
-  // eslint-disable-next-line unused-imports/no-unused-vars
-  const [open, setOpen] = useState(false);
-  const [waiting, setWaiting] = useState(false);
 
-  const handleClick = (isOpen: boolean) => () => {
-    setOpen(isOpen);
-  };
+  const [waiting, setWaiting] = useState(false);
 
   const handleDelete = async () => {
     try {
@@ -33,18 +28,15 @@ const DeleteButton = ({ loadData, api }: DeleteBtnProps) => {
 
       enqueueSnackbar('Delete Success', { variant: 'success' });
       loadData();
-      // dispatch(fetchUsers());
     } catch (error) {
-      /* empty */
       enqueueSnackbar('Cannot Delete', { variant: 'error' });
     }
-    setOpen(false);
     setWaiting(false);
   };
 
   return (
     <>
-      <button type='button' onClick={handleClick(true)}>
+      <button type='button'>
         <MdDelete
           className='hover:text-primary hover:text-default-red focus:text-default-red active:text-default-red  group cursor-pointer  text-[#999999] focus:outline-none'
           onClick={openModal}
@@ -57,11 +49,7 @@ const DeleteButton = ({ loadData, api }: DeleteBtnProps) => {
             <>Loading</>
           ) : (
             <>
-              <FormHeaderText
-                // icon={FaUserDoctor}
-                title='การยืนยัน'
-                useBigestHeader={true}
-              />
+              <FormHeaderText title='การยืนยัน' useBigestHeader={true} />
               <h5 className='mb-8 indent-2 text-slate-600'>
                 คุณต้องการที่จะ ลบข้อมูล หรือ ไม่ ?
               </h5>

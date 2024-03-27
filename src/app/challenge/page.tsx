@@ -2,11 +2,10 @@
 
 import React from 'react';
 
-import HomeChallengeHero from '@/components/home/HomeChallengeHero';
-import HomeTypeChallenge from '@/components/home/HomeTypeChallenge';
+import HomeChallengeHero from '@/app/challenge/components/sections/HomeChallengeHero';
+import HomeTypeChallenge from '@/app/challenge/components/sections/HomeTypeChallenge';
 
 const ChallengePage = () => {
-
   return (
     <div className='w-full'>
       <HomeChallengeHero />

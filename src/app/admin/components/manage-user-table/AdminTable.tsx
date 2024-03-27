@@ -10,10 +10,10 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import useAxiosAuth from '@/hooks/useAxiosAuth';
 
-import DeleteButton from '@/components/buttons/delete-button';
+import DeleteButton from '@/components/buttons/DeleteButton';
 import BaseTable from '@/components/table/BaseTable';
 
-import AdminEditProfile from '@/app/admin/components/AdminEditProfile';
+import AdminEditProfile from '@/app/admin/components/create-user/AdminEditProfile';
 import { API_PATH } from '@/config/api';
 import { fetchAllUsers, selectAllUsers } from '@/redux/slices/usersSlice';
 
@@ -21,17 +21,12 @@ const ManageUserTable = () => {
   const { data: session } = useSession();
   const axiosAuth = useAxiosAuth();
 
-  //const [users, setUsers] = useState<IUserData[]>([]);
   const users = useSelector(selectAllUsers);
-
-  // console.log('Users:', users);
-
   const dispatch = useDispatch<any>();
 
   const loadUsers = async () => {
     try {
       dispatch(fetchAllUsers());
-      //setUsers(dataAddIndex);
     } catch (error) {
       console.log('error', error);
     }
