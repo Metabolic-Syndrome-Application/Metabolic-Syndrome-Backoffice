@@ -5,11 +5,3 @@ export enum GraphHealthType {
   bloodLipids = 'bloodLipids',
   bloodPressure = 'bloodPressure',
 }
-
-//Record Health
-// export interface IGetRecordHealthAll {
-//   data: {
-//     record: IRecordHealthData[];
-//   };
-//   status: string;
-// }

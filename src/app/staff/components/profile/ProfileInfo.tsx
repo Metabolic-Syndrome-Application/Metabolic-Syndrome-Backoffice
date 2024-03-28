@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import useAxiosAuth from '@/hooks/useAxiosAuth';
 
-import FormHeaderText from '@/components/form/FormHeaderText';
+import FormHeaderText from '@/components/form/components/FormHeaderText';
 import { TextFieldInfo } from '@/components/form/TextFieldInfo';
 import { stringAvatar } from '@/components/layout/navbar/Avatar';
 

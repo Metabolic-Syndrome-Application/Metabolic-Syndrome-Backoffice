@@ -10,7 +10,7 @@ import { useDoctorOptions } from '@/lib/dataOptions';
 import useAxiosAuth from '@/hooks/useAxiosAuth';
 
 import ActionButton from '@/components/buttons/ActionButton';
-import FormHeaderText from '@/components/form/FormHeaderText';
+import FormHeaderText from '@/components/form/components/FormHeaderText';
 import { InputDropdown } from '@/components/form/InputDropdown';
 import { InputText } from '@/components/form/InputText';
 import { RadioOption } from '@/components/form/RadioOption';
@@ -52,7 +52,8 @@ export function RegisterNewPatientForm() {
 
   const getDoctorOptions = useDoctorOptions();
 
-  const onHandleFormSubmit = async (data: TFormValues) => {
+  //wait: check hn?
+  const onSubmit = async (data: TFormValues) => {
     const {
       role,
       username,
@@ -106,7 +107,7 @@ export function RegisterNewPatientForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit(onHandleFormSubmit)}>
+    <form onSubmit={handleSubmit(onSubmit)}>
       <div className='grid w-full grid-cols-3 gap-4 md:flex-row'>
         {/* Section1 */}
         <div className='col-span-3 h-full w-full flex-col space-y-4 rounded-lg border p-4 md:col-span-1'>

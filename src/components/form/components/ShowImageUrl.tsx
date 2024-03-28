@@ -1,3 +1,4 @@
+//Display Image from firebase url
 'use client';
 import { storage } from 'firebase.config';
 import { getDownloadURL, ref } from 'firebase/storage';
@@ -5,10 +6,10 @@ import Image from 'next/image';
 import { useEffect, useState } from 'react';
 
 interface ShowImageUrlProps {
-  pathName: string; // Specify that 'path' prop is a string
+  pathName: string;
 }
 const ShowImageUrl = ({ pathName }: ShowImageUrlProps) => {
-  const [imageUrl, setImageUrl] = useState<string | null>(null); // Specify that 'imageUrl' state can be null or a string
+  const [imageUrl, setImageUrl] = useState<string | null>(null);
 
   useEffect(() => {
     const decodedPath = decodeURIComponent(pathName); // Decode the URL before passing it to Firebase storage

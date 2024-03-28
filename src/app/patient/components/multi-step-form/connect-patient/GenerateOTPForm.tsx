@@ -10,7 +10,7 @@ import useAxiosAuth from '@/hooks/useAxiosAuth';
 
 import ActionButton from '@/components/buttons/ActionButton';
 import OutlineButton from '@/components/buttons/OutlineButton';
-import FormHeaderText from '@/components/form/FormHeaderText';
+import FormHeaderText from '@/components/form/components/FormHeaderText';
 
 import OTPField from '@/app/patient/components/multi-step-form/connect-patient/OTPField';
 import { API_PATH } from '@/config/api';

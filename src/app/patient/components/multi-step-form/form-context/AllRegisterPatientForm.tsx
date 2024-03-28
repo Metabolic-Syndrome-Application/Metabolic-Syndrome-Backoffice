@@ -5,7 +5,7 @@ import { FaHospitalUser } from 'react-icons/fa';
 import { FaUser } from 'react-icons/fa6';
 import { FaHospital } from 'react-icons/fa6';
 
-import FormHeaderText from '@/components/form/FormHeaderText';
+import FormHeaderText from '@/components/form/components/FormHeaderText';
 
 import { ConnectPatientForm } from '@/app/patient/components/multi-step-form/connect-patient/ConnectPatientForm';
 import { GenerateOTPForm } from '@/app/patient/components/multi-step-form/connect-patient/GenerateOTPForm';

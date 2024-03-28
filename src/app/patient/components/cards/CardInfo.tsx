@@ -28,7 +28,7 @@ export const CardInfo = ({
       <div className='flex flex-col items-center justify-evenly space-x-6 p-4 md:flex-col lg:flex-row'>
         <div className='flex justify-center '>
           <Image
-            src='/assets/images/male.jpg'
+            src='/assets/images/female.jpg'
             alt='avatar'
             className='bg-light-yellow h-[250px] w-full min-w-[250px] rounded-3xl object-contain'
             width={400}

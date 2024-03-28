@@ -1,5 +1,5 @@
 //eslint-disable-next-line @next/next/no-img-element
-//uploadImage
+//uploadImage from firebase
 import { storage } from 'firebase.config';
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
 import Image from 'next/image';
@@ -100,7 +100,6 @@ const ImageUpload = ({
               width={350}
               height={350}
               className='h-[220px] w-[250px] cursor-pointer object-contain'
-              //  onClick={() => setImage(null)}
               onClick={clearImageSelection} // Clear image selection on click
             />
           </div>
@@ -132,7 +131,10 @@ const ImageUpload = ({
               'mb-4 text-4xl'
             )}
           />
-          กรุณาเลือกรูปภาพ
+          <p className='text-sm'>กรุณาเลือกรูปภาพ</p>
+          <p className='pt-1 text-[12px] opacity-40'>
+            JPG, PNG , WEBG หรือ SVG, file size ไม่เกิน 10MB
+          </p>
         </button>
       )}
 

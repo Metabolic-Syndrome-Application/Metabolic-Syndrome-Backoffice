@@ -1,22 +1,6 @@
 import { z } from 'zod';
 
-import { baseStringValidator } from '@/components/form/validation/ZodCheck';
-
-//not used
-export type FormCreatePlanProps = {
-  id: string;
-  name: string;
-  type: string;
-  description: string;
-  photo?: string | HTMLImageElement | File;
-  detail: {
-    name: string[];
-    day: {
-      label: string;
-      value: string;
-    }[];
-  };
-};
+//wait ? check img zod check
 // const MAX_FILE_SIZE = 1024 * 1024 * 5;
 // const ACCEPTED_IMAGE_MIME_TYPES = [
 //   'image/jpeg',
@@ -25,6 +9,7 @@ export type FormCreatePlanProps = {
 //   'image/webp',
 // ];
 // const ACCEPTED_IMAGE_TYPES = ['jpeg', 'jpg', 'png', 'webp'];
+
 // Create Plan Schema
 export const createPlanSchema = z.object({
   name: z
@@ -65,67 +50,3 @@ export const createPlanSchema = z.object({
 
 //Type Create Plan
 export type createPlanSchemaValues = z.infer<typeof createPlanSchema>;
-
-//test
-export const detailSchemaTest = z.object({
-  name: baseStringValidator,
-  type: baseStringValidator,
-  description: z.array(
-    z.object({
-      value: z.string({ required_error: 'Description is required' }),
-    })
-  ),
-  detail: z.array(
-    z.object({
-      name: z.string({ required_error: 'Name is required' }),
-      // day: z.string({ required_error: 'Day is required' }),
-    })
-  ),
-});
-
-export const multicheckbox = z.object({
-  day: baseStringValidator,
-});
-
-// detail: z
-//   .array(
-//     z.object({
-//       name: z
-//         .array(
-//           z.object({
-//             label: z.string(),
-//             value: z.string({ required_error: 'Name is required' }),
-//           })
-//         )
-//         .nonempty(),
-//       day: z
-//         .array(
-//           z.object({
-//             label: z.string(),
-//             value: z.string({ required_error: 'Day is required' }),
-//           })
-//         )
-//         .nonempty(),
-//     })
-//   )
-//   .nonempty(),
-
-//เพิ่มรายการ 1 รายการ
-// description: z.array(
-//   z.object({
-//     label: z.string(),
-//     value: z.string({ required_error: 'Description is required' }),
-//   })
-// ),
-
-//challenge
-export const challengeSchemaTest = z.object({
-  name: z.string({ required_error: 'name is required' }),
-  allPoints: z.string({ required_error: 'all points is required' }),
-  description: z.array(
-    z.object({
-      title: z.string({ required_error: 'title is required' }),
-      point: z.string({ required_error: 'point is required' }),
-    })
-  ),
-});

@@ -1,9 +1,6 @@
 import { z } from 'zod';
 
-import {
-  baseStringValidator,
-  validateMinMax,
-} from '@/components/form/validation/ZodCheck';
+import { validateMinMax } from '@/components/form/validation/ZodCheck';
 
 //Create Quiz challenge Schema
 export const createQuizChallengeSchema = z.object({
@@ -46,19 +43,19 @@ export const createQuizChallengeSchema = z.object({
 //Type Create Quiz Challenge
 export type createQuizSchemaValues = z.infer<typeof createQuizChallengeSchema>;
 
-//------------------------------------------------------------------
-// Create Daily Challenge Schema
+//--------------------------------------------------------------------------------------//
 
+// Create Daily Challenge Schema
 export const createDailyChallengeSchema = z.object({
   name: z
     .string({
-      required_error: 'กรุณากรอกชื่อโปรแกรมภารกิจ',
+      required_error: 'กรุณากรอกชื่อภารกิจทั่วไป',
     })
     .min(2, {
-      message: 'ชื่อโปรแกรมภารกิจต้องมีความยาวอย่างน้อย 2 ตัวอักษร',
+      message: 'ชื่อภารกิจต้องมีความยาวอย่างน้อย 2 ตัวอักษร',
     })
     .max(50, {
-      message: 'ชื่อโปรแกรมภารกิจต้องมีความยาวไม่เกิน 50 ตัวอักษร',
+      message: 'ชื่อภารกิจต้องมีความยาวไม่เกิน 50 ตัวอักษร',
     }),
   points: z.coerce
     .number({
@@ -71,13 +68,13 @@ export const createDailyChallengeSchema = z.object({
     .lte(500, 'กรุณากรอกคะแนนสะสมสูงสุดไม่เกิน 500 คะแนน'),
   numDays: z.coerce
     .number({
-      required_error: 'กรุณาเลือกระยะเวลาแผนสุขภาพ',
+      required_error: 'กรุณาเลือกระยะเวลาภารกิจทั้งหมด',
       invalid_type_error:
-        'ระยะเวลาแผนสุขภาพต้องเป็นตัวเลขเท่านั้น และอยู่ในช่วง 1 - 14 วัน',
+        'ระยะเวลาภารกิจต้องเป็นตัวเลขเท่านั้น และอยู่ในช่วง 1 - 14 วัน',
     })
     .positive()
-    .gte(1, 'กรุณากรอกระยะเวลาแผนสุขภาพขั้นต่ำ 1 วัน')
-    .lte(14, 'กรุณากรอกระยะเวลาแผนสุขภาพไม่เกิน 14 วัน'),
+    .gte(1, 'กรุณากรอกระยะเวลาภารกิจขั้นต่ำ 1 วัน')
+    .lte(14, 'กรุณากรอกระยะเวลาภารกิจไม่เกิน 14 วัน'),
   description: z.string(),
   photo: z.string({ required_error: 'กรุณาเลือกรูปที่ต้องการ' }),
   detail: z.object({
@@ -93,13 +90,13 @@ export const createDailyChallengeSchema = z.object({
       .nonempty({ message: 'กรุณาเลือกวันที่ต้องการให้มีภารกิจ' }),
   }),
 });
-//Type Create Plan
+//Type createDailyChallenge
 export type createDailyChallengeValues = z.infer<
   typeof createDailyChallengeSchema
 >;
 
-// Create Daily Challenge Schema
-export const updateDailyChallengeSchema = z.object({
+// Edit Daily Challenge Schema : Add switchToggle status
+export const editDailyChallengeSchema = z.object({
   name: z
     .string({
       required_error: 'กรุณากรอกชื่อโปรแกรมภารกิจ',
@@ -145,28 +142,5 @@ export const updateDailyChallengeSchema = z.object({
   status: z.string(),
 });
 
-//Type Create Plan
-export type updateDailyChallengeValues = z.infer<
-  typeof updateDailyChallengeSchema
->;
-
-//test
-export const detailSchemaTest = z.object({
-  name: baseStringValidator,
-  type: baseStringValidator,
-  description: z.array(
-    z.object({
-      value: z.string({ required_error: 'Description is required' }),
-    })
-  ),
-  detail: z.array(
-    z.object({
-      name: z.string({ required_error: 'Name is required' }),
-      // day: z.string({ required_error: 'Day is required' }),
-    })
-  ),
-});
-
-export const multicheckbox = z.object({
-  day: baseStringValidator,
-});
+//Type EditDailyChallengeSchema : Add switchToggle status
+export type editDailyChallengeValues = z.infer<typeof editDailyChallengeSchema>;

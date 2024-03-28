@@ -13,7 +13,7 @@ import useModal from '@/hooks/useModal';
 
 import ActionButton from '@/components/buttons/ActionButton';
 import { IconFlatButton } from '@/components/buttons/IconFlatButton';
-import FormHeaderText from '@/components/form/FormHeaderText';
+import FormHeaderText from '@/components/form/components/FormHeaderText';
 import { InputText } from '@/components/form/InputText';
 import { MultiselectCheckbox } from '@/components/form/MultiselectCheckbox';
 import {

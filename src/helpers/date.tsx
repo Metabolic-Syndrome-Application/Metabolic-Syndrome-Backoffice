@@ -45,20 +45,6 @@ export const calculateAgeThaiBuddhist = (birthYear: number) => {
   return currentYearThaiBuddhist - birthYear;
 };
 
-//Convert DaysOfweek to thai word
-// export const dayOfWeekThaiLabel = (day: string) => {
-//   const thaiDays: { [key: string]: string } = {
-//     sunday: 'อาทิตย์',
-//     monday: 'จันทร์',
-//     tuesday: 'อังคาร',
-//     wednesday: 'พุธ',
-//     thursday: 'พฤหัสบดี',
-//     friday: 'ศุกร์',
-//     saturday: 'เสาร์',
-//   };
-//   return thaiDays[day]; // If the day is not found, return the original day name
-// };
-
 // Convert DaysOfweek to Thai word with color
 export const dayOfWeekThaiLabel = (day: string) => {
   const thaiDays: { [key: string]: { name: string; color: string } } = {

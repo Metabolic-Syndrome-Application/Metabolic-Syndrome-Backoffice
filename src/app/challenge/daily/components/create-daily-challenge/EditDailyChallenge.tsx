@@ -13,12 +13,12 @@ import useModal from '@/hooks/useModal';
 
 import ActionButton from '@/components/buttons/ActionButton';
 import { SwitchToggle } from '@/components/buttons/SwitchToggle';
+import FormHeaderText from '@/components/form/components/FormHeaderText';
 import ImageUpload from '@/components/form/components/UploadImageDisplay';
-import FormHeaderText from '@/components/form/FormHeaderText';
 import { InputText } from '@/components/form/InputText';
 import {
-  updateDailyChallengeSchema,
-  updateDailyChallengeValues,
+  editDailyChallengeSchema,
+  editDailyChallengeValues,
 } from '@/components/form/validation/ChallengeValidator';
 import TiptapTextField from '@/components/text-editor/TipTapTextField';
 
@@ -45,9 +45,9 @@ const EditDailyChallenge = ({
   const [imageError, setImageError] = useState(false);
   const [downloadURL, setDownloadURL] = useState<string>('');
 
-  const methods = useForm<updateDailyChallengeValues>({
+  const methods = useForm<editDailyChallengeValues>({
     mode: 'onChange',
-    resolver: zodResolver(updateDailyChallengeSchema),
+    resolver: zodResolver(editDailyChallengeSchema),
     defaultValues: async () => {
       //API_PATH.GET_DAILY_CHALLENGE
       const response = await axiosAuth.get(`/api/challenge/daily/${id}`);
@@ -86,7 +86,7 @@ const EditDailyChallenge = ({
 
   const { control, handleSubmit, getValues } = methods;
 
-  const onSubmit = async (data: z.infer<typeof updateDailyChallengeSchema>) => {
+  const onSubmit = async (data: z.infer<typeof editDailyChallengeSchema>) => {
     try {
       const selectedDays = data.detail.day.map(
         (day: { value: string }) => day.value

@@ -12,8 +12,8 @@ import useAxiosAuth from '@/hooks/useAxiosAuth';
 import useModal from '@/hooks/useModal';
 
 import ActionButton from '@/components/buttons/ActionButton';
+import FormHeaderText from '@/components/form/components/FormHeaderText';
 import ImageUpload from '@/components/form/components/UploadImageDisplay';
-import FormHeaderText from '@/components/form/FormHeaderText';
 import { InputDropdown } from '@/components/form/InputDropdown';
 import { InputText } from '@/components/form/InputText';
 import {

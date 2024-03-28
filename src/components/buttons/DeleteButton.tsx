@@ -6,7 +6,7 @@ import { axiosAuth } from '@/lib/axios';
 import useModal from '@/hooks/useModal';
 
 import ActionButton from '@/components/buttons/ActionButton';
-import FormHeaderText from '@/components/form/FormHeaderText';
+import FormHeaderText from '@/components/form/components/FormHeaderText';
 
 interface DeleteBtnProps {
   loadData: () => void;

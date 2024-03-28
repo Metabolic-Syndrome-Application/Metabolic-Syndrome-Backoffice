@@ -36,7 +36,6 @@ export const useSideNavbar = () => {
           item.path === '/' ||
           item.path === '/dashboard' ||
           item.role === 'staff' ||
-          // item.role === 'doctor,staff' ||
           item.path.startsWith('/patient') ||
           item.path === '/plan' ||
           item.path === '/challenge' ||

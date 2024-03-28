@@ -12,14 +12,6 @@ type PageProps = {
   };
 };
 
-// export async function generateStaticParams() {
-//   const questions = questionsPool.family.question;
-
-//   return questions.map((question) => ({
-//     id: question.id,
-//   }));
-// }
-
 const HospitalRecordPage = ({ params }: PageProps) => {
   const dispatch = useDispatch<any>();
 

@@ -2,7 +2,6 @@
 
 import { IUserData } from '@/types/user';
 
-//http://localhost:8000/api/user/profile/patient/9c11398f-f3b9-4a8a-af76-b59a07cc59e1
 export interface IPatientData {
   id: string;
   hn: string;
