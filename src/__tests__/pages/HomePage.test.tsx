@@ -2,13 +2,13 @@
 
 import { render, screen } from '@testing-library/react';
 
-import HomePage from '@/app/page';
+import HomeGallery from '@/app/dashboard/components/HomeGallery';
 
-describe('Homepage', () => {
+describe('DashboardPage', () => {
   it('renders the Components', () => {
-    render(<HomePage />);
+    render(<HomeGallery />);
 
-    const heading = screen.getByText(/A starter for Next.js/i);
+    const heading = screen.getByText(/สร้างแผนสุขภาพเฉพาะบุคคล/i);
 
     expect(heading).toBeInTheDocument();
   });
