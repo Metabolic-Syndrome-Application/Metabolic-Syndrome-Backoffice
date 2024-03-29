@@ -1,24 +1,19 @@
-import { IBM_Plex_Sans_Thai } from '@next/font/google';
 import { Metadata } from 'next';
-import { getServerSession } from 'next-auth';
+import { IBM_Plex_Sans_Thai } from 'next/font/google';
 import * as React from 'react';
+import { Suspense } from 'react';
 
 import '@/styles/globals.css';
 import '@/styles/colors.css';
 
 import NextAuthProviders from '@/components/login/NextAuthProviders';
-import SignInButton from '@/components/login/SignInButton';
-import HeaderMobile from '@/components/navbar/HeaderMobile';
-import HeaderNav from '@/components/navbar/HeaderNav';
-import MarginWidthWrapper from '@/components/navbar/MarginWidthWrapper';
-import PageWrapper from '@/components/navbar/PageWrapper';
-import SideNav from '@/components/navbar/SideNav';
 
-import { authOptions } from '@/app/api/auth/[...nextauth]/authOptions';
+import NavbarLayout from '@/app/(nav)/layout';
+import Loading from '@/app/loading';
 import { siteConfig } from '@/constant/config';
+import ReduxProvider from '@/redux/Provider';
 
 //👇 Configure our local font object
-
 const IBMPlexSansThai = IBM_Plex_Sans_Thai({
   weight: ['100', '400', '500', '700'],
   subsets: ['thai'],
@@ -35,9 +30,11 @@ export const metadata: Metadata = {
   // !STARTERCONF this is the default favicon, you can generate your own from https://realfavicongenerator.net/
   // ! copy to /favicon folder
   icons: {
-    icon: '/assets/icons/logo.svg',
-    shortcut: '/assets/icons/logo.svg',
-    apple: '/assets/icons/logo.svg',
+    // icon: '/favicon/favicon.ico',
+    // shortcut: '/favicon/favicon-16x16.png',
+    icon: '/favicon/logo.svg',
+    shortcut: '/favicon/logo.svg',
+    apple: '/favicon/logo.svg',
   },
   manifest: `/favicon/site.webmanifest`,
   openGraph: {
@@ -45,7 +42,7 @@ export const metadata: Metadata = {
     title: siteConfig.title,
     description: siteConfig.description,
     siteName: siteConfig.title,
-    images: [`${siteConfig.url}/images/og.jpg`],
+    images: [`${siteConfig.url}/assets/icons/logo.svg`],
     type: 'website',
     locale: 'en_US',
   },
@@ -53,15 +50,8 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: siteConfig.title,
     description: siteConfig.description,
-    images: [`${siteConfig.url}/images/og.jpg`],
-    // creator: '@th_clarence',
+    images: [`${siteConfig.url}/assets/icons/logo.svg`],
   },
-  // authors: [
-  //   {
-  //     name: 'Theodorus Clarence',
-  //     url: 'https://theodorusclarence.com',
-  //   },
-  // ],
 };
 
 export default async function RootLayout({
@@ -69,35 +59,23 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const session = await getServerSession(authOptions);
-
   return (
     <html
       lang='en'
       className={`${IBMPlexSansThai.variable}`}
-      //suppressHydrationWarning={true}
+      suppressHydrationWarning={true}
     >
-      <body className='bg-[#FAFCFB]'>
-        <div className=''>
+      {/* <Head>
+        <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests" />
+      </Head> */}
+      <body>
+        <div className='font-ibm'>
           <NextAuthProviders>
-            <SideNav />
-            {/* <TestNav2 /> */}
-            <main className='flex-1'>
-              <MarginWidthWrapper>
-                <HeaderNav />
-                <HeaderMobile />
-                <PageWrapper>
-                  {/* <SignInButton /> */}
-                  {children}
-                </PageWrapper>
-              </MarginWidthWrapper>
-            </main>
-
-            {/* <TestNav /> */}
-            {/* <div>
-              <SignInButton />
-              {children}
-            </div> */}
+            <Suspense fallback={<Loading />}>
+              <NavbarLayout>
+                <ReduxProvider>{children}</ReduxProvider>
+              </NavbarLayout>
+            </Suspense>
           </NextAuthProviders>
         </div>
       </body>
