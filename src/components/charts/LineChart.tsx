@@ -155,7 +155,7 @@ const LineChart = ({ patientId, nameType, graphType }: Props) => {
               priority={false}
             />
             <p className='text-default-red'>
-              ตอนนี้ยังไม่มีผลกราฟสุขภาพของคนไข้
+              ยังไม่มีผลกราฟสุขภาพของคนไข้ในตอนนี้
             </p>
           </div>
         )}

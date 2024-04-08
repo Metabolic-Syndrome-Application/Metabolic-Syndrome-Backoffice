@@ -58,7 +58,7 @@ export const fetchPlanById = createAsyncThunk(
       const {
         data: { data },
       } = await axiosAuth.get<IGetPlanIdApi>(API_PATH.GET_PLAN(id));
-      console.log('Get 1 plan id', data.plan);
+      //console.log('Get 1 plan id', data.plan);
       return data.plan;
     } catch (error: any) {
       //console.error('Error fetching Plan ID:', error);

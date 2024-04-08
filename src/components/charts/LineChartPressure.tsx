@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 //Line Chart custom color
 import { subDays, subMonths, subWeeks } from 'date-fns';
+import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { Line } from 'react-chartjs-2';
 
@@ -125,13 +126,16 @@ const LineChartPressure = ({
           <Line data={transformData(graphData)} />
         ) : (
           <div className='flex flex-col items-center justify-center'>
-            <img
+            <Image
               src='/assets/images/noData.svg'
               alt='noData'
               className='h-56 w-56'
+              width={350}
+              height={350}
+              priority={false}
             />
             <p className='text-default-red'>
-              ตอนนี้ยังไม่มีผลกราฟสุขภาพของคนไข้
+              ยังไม่มีผลกราฟสุขภาพของคนไข้ในตอนนี้
             </p>
           </div>
         )}

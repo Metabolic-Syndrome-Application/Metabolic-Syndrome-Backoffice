@@ -55,7 +55,7 @@ const DoctorEditPatientForm = ({
   const [submittedData, setSubmittedData] =
     useState<doctorEditPatientSchemaValues | null>(null);
 
-  console.log('doctor edit plan', patient);
+  //console.log('doctor edit plan', patient);
 
   const {
     control,

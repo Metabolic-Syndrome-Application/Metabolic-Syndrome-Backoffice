@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client';
+import Image from 'next/image';
 import { useSession } from 'next-auth/react';
 import React, { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -98,7 +99,6 @@ const PersonalInfo: React.FC<PageProps> = ({ params }) => {
           {/* Section 2 */}
           {/* Render plan information */}
           <div className='flex flex-col md:w-[35%]'>
-            {/* Render plan information */}
             {patient && patient.Plan && patient.planID && (
               <div
                 key={`patient-plan-${patient.id}`}
@@ -107,6 +107,23 @@ const PersonalInfo: React.FC<PageProps> = ({ params }) => {
                 <CardInfoPlan
                   planData={{ planID: patient.planID, Plan: patient.Plan }}
                 />
+              </div>
+            )}
+            {/* Display "Not have plan" */}
+            {patient && patient.Plan && !patient.planID && (
+              <div className='h-full w-full rounded-2xl border border-gray-100 bg-white p-4 shadow-sm'>
+                <h4 className='text-balance p-2'>โปรแกรมสุขภาพ</h4>
+                <div className='flex flex-col items-center justify-center'>
+                  <Image
+                    src='/assets/images/noData.svg'
+                    alt='noData'
+                    className='h-56 w-56'
+                    width={350}
+                    height={350}
+                    priority={false}
+                  />
+                  <p className='text-default-red'>ยังไม่มีแผนสุขภาพในตอนนี้</p>
+                </div>
               </div>
             )}
           </div>

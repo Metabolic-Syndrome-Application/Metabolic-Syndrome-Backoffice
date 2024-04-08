@@ -42,7 +42,7 @@ const EditPlan = ({
   const [image, setImage] = useState<File | null>(null);
   const [imageError, setImageError] = useState(false);
   const [downloadURL, setDownloadURL] = useState<string>('');
-  console.log('edit downloadURL', downloadURL);
+  //console.log('edit downloadURL', downloadURL);
 
   const methods = useForm<createPlanSchemaValues>({
     mode: 'onChange',
@@ -51,7 +51,7 @@ const EditPlan = ({
       //API_PATH.GET_PLAN
       const response = await axiosAuth.get(`/api/plan/${id}`);
       const data = await response.data.data.plan;
-      console.log('plan photo', data.photo);
+      //console.log('plan photo', data.photo);
 
       // Convert English day name to Thai label
       const thaiDays = data?.detail.day.map((dayItem: string) => {

@@ -1,3 +1,4 @@
+import { useRouter } from 'next/navigation';
 import React from 'react';
 
 import OutlineButton from '@/components/buttons/OutlineButton';
@@ -18,6 +19,13 @@ interface CardInfoPlanProps {
 
 const CardInfoPlan: React.FC<CardInfoPlanProps> = ({ planData }) => {
   const { planID = [], Plan = [] } = planData || {};
+
+  const router = useRouter();
+
+  // Redirect to the plan details page
+  const handlePlanClick = (id: string) => {
+    router.push(`/plan/detail/${id}`);
+  };
 
   return (
     <div className='flex w-full flex-col items-start justify-center gap-3 p-4'>
@@ -40,6 +48,7 @@ const CardInfoPlan: React.FC<CardInfoPlanProps> = ({ planData }) => {
               key={plan.id}
               className='flex w-full items-center overflow-hidden rounded-lg p-4 hover:shadow-md'
               style={{ backgroundColor: bg }}
+              onClick={() => handlePlanClick(plan.id)}
             >
               <div className='w-14'>
                 <div
@@ -64,9 +73,7 @@ const CardInfoPlan: React.FC<CardInfoPlanProps> = ({ planData }) => {
         })
       ) : (
         <div className='w-full rounded-lg p-4  text-center'>
-          <p className='text-default-red text-xl'>
-            ยังไม่มีโปรแกรมสุขภาพในตอนนี้
-          </p>
+          <p className='text-default-red text-xl'>ไม่มีโปรแกรมสุขภาพในตอนนี้</p>
         </div>
       )}
     </div>
