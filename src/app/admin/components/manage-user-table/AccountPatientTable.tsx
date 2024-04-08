@@ -27,7 +27,7 @@ const AccountPatientTable = () => {
   const axiosAuth = useAxiosAuth();
 
   const patients = useSelector(selectAllPatients);
-  console.log('patients role account', patients);
+  //console.log('patients role account', patients);
   const dispatch = useDispatch<any>();
 
   const loadPatients = async () => {

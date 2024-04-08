@@ -38,7 +38,6 @@ const ManagePatientTable = () => {
   const loadPatients = async () => {
     try {
       dispatch(fetchAllPatients());
-      //setUsers(dataAddIndex);
     } catch (error) {
       console.log('error', error);
     }
@@ -171,7 +170,7 @@ const ManagePatientTable = () => {
       <BaseTable
         rows={patients.patients}
         columns={columns}
-        loading={undefined}
+        loading={!patients.patients}
       />
     </div>
   );

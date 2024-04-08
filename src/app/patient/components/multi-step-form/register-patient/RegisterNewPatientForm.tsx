@@ -1,8 +1,8 @@
 /* eslint-disable unused-imports/no-unused-vars */
 'use client';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useSession } from 'next-auth/react';
 import { useSnackbar } from 'notistack';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 
@@ -11,6 +11,7 @@ import useAxiosAuth from '@/hooks/useAxiosAuth';
 
 import ActionButton from '@/components/buttons/ActionButton';
 import FormHeaderText from '@/components/form/components/FormHeaderText';
+import { IDCardInputText } from '@/components/form/IDCardInputText';
 import { InputDropdown } from '@/components/form/InputDropdown';
 import { InputText } from '@/components/form/InputText';
 import { RadioOption } from '@/components/form/RadioOption';
@@ -39,70 +40,80 @@ type TFormValues = {
 
 //Register a new patient
 export function RegisterNewPatientForm() {
-  const { data: session } = useSession();
   const axiosAuth = useAxiosAuth();
+
   const { enqueueSnackbar } = useSnackbar();
+
   const dispatch = useDispatch<any>();
+  const getDoctorOptions = useDoctorOptions();
+
   const { formData } = useFormState();
-  const { control, handleSubmit } = useForm<TFormValues>({
+  const {
+    control,
+    handleSubmit,
+    formState: { errors, isDirty },
+  } = useForm<TFormValues>({
     defaultValues: formData,
     mode: 'onChange',
     resolver: zodResolver(registerNewPatientSchema),
   });
 
-  const getDoctorOptions = useDoctorOptions();
+  const [formSubmitted, setFormSubmitted] = useState(false);
 
-  //wait: check hn?
   const onSubmit = async (data: TFormValues) => {
-    const {
-      role,
-      username,
-      password,
-      passwordConfirm,
-      hn,
-      firstName,
-      lastName,
-      yearOfBirth,
-      gender,
-      mainDoctorID,
-      assistanceDoctorID,
-      disease,
-    } = data;
-    const userRole = session?.user?.role;
+    if (formSubmitted) return;
+
+    setFormSubmitted(true);
 
     try {
-      if (!userRole) {
-        console.log('User is not logged in.');
-        return;
-      }
-
-      const registerResponse = await axiosAuth.post(
-        API_PATH.POST_REGISTER_OTHER,
-        { role, username, password, passwordConfirm }
-      );
-      const { id: userId } = registerResponse.data.data.user;
-
-      const createProfileResponse = await axiosAuth.put(
-        API_PATH.PUT_PROFILE_PATIENT_OTHER(userId),
-        {
-          hn,
-          firstName,
-          lastName,
-          gender,
-          yearOfBirth,
-          mainDoctorID,
-          assistanceDoctorID,
-          disease,
-        }
-      );
-      enqueueSnackbar('Create a new account for the patient', {
-        variant: 'success',
+      const hnCheckResponse = await axiosAuth.post(API_PATH.POST_CHECK_HN, {
+        hn: data.hn,
       });
 
-      await dispatch(fetchAllPatients());
+      // Check HN : if hn already exists on the server?
+      if (hnCheckResponse.data.status === 'success') {
+        enqueueSnackbar('This HN can be used.', { variant: 'success' });
+
+        const registerResponse = await axiosAuth.post(
+          API_PATH.POST_REGISTER_OTHER,
+          {
+            role: data.role,
+            username: data.username,
+            password: data.password,
+            passwordConfirm: data.passwordConfirm,
+          }
+        );
+
+        const { id: userId } = registerResponse.data.data.user;
+
+        const createProfileResponse = await axiosAuth.put(
+          API_PATH.PUT_PROFILE_PATIENT_OTHER(userId),
+          {
+            hn: data.hn,
+            firstName: data.firstName,
+            lastName: data.lastName,
+            gender: data.gender,
+            yearOfBirth: data.yearOfBirth,
+            mainDoctorID: data.mainDoctorID,
+            assistanceDoctorID: data.assistanceDoctorID,
+            disease: data.disease,
+          }
+        );
+
+        enqueueSnackbar('New patient account created.', { variant: 'success' });
+        await dispatch(fetchAllPatients());
+      } else {
+        enqueueSnackbar(hnCheckResponse.data.message, { variant: 'error' });
+      }
     } catch (error: any) {
       console.error('Error:', error);
-      enqueueSnackbar(error.response?.data, { variant: 'error' });
+      enqueueSnackbar(
+        error.response?.data.message || 'Failed to submit form.',
+        { variant: 'error' }
+      );
+    } finally {
+      //formSubmitted state ensures that the form can be submitted again
+      setFormSubmitted(false);
     }
   };
 
@@ -120,11 +131,12 @@ export function RegisterNewPatientForm() {
             defaultValue={dataOptions.patientOption[0].value}
           />
 
-          <InputText
+          <IDCardInputText
             name='username'
-            label='เลขประตัวประชาชน'
             control={control}
+            label='เลขประตัวประชาชน'
           />
+
           <InputText
             name='password'
             label='รหัสผ่าน'
@@ -175,7 +187,11 @@ export function RegisterNewPatientForm() {
         </div>
       </div>
       <div className='mt-4 flex justify-end gap-4'>
-        <ActionButton type='submit' variant='submit'>
+        <ActionButton
+          type='submit'
+          variant='submit'
+          disabled={!isDirty || Object.keys(errors).length > 0}
+        >
           ยืนยันการสมัครบัญชีคนไข้
         </ActionButton>
       </div>

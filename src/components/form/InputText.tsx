@@ -35,7 +35,6 @@ export const InputText: React.FC<FormInputProps> = ({
             label={label}
             value={value || ''}
             onChange={onChange}
-            //type={type}
             type={inputType}
             disabled={disabled}
             error={!!error}

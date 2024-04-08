@@ -18,6 +18,14 @@ export const passwordValidator = baseStringValidator
     'รหัสผ่านควรมีตัวอักษระพิเศษอย่างน้อย 1 ตัว'
   );
 
-export const passwordPatientValidator = baseStringValidator
-  .min(4, 'รหัสผ่านควรมีความยาวอย่างน้อย 4 ตัวอักษร')
-  .max(8, 'รหัสผ่านควรมีความยาวไม่เกิน 8 ตัวอักษร');
+export const passwordPatientValidator = z
+  .string()
+  .refine((password) => /^\d{4}$/.test(password), {
+    message: 'รหัสผ่านต้องมีตัวเลข 4 หลัก (สามารถใช้ปีเกิดได้)',
+  });
+
+export const idCardFormatValidator = z
+  .string()
+  .refine((idCard) => /^\d{4} \d{4} \d{4} \d{1}$/.test(idCard), {
+    message: 'รหัสบัตรประชาชนต้องมี 13 หลักและเป็นตัวเลขเท่านั้น',
+  });
