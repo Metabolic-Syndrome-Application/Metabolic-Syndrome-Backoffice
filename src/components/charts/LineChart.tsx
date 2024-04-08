@@ -24,7 +24,7 @@ ChartJS.register(
   Legend
 );
 
-import { subDays, subMonths, subQuarters, subWeeks } from 'date-fns';
+import { subDays, subMonths, subWeeks } from 'date-fns';
 import { useEffect, useState } from 'react';
 import { Line } from 'react-chartjs-2';
 
@@ -56,53 +56,46 @@ const LineChart = ({ patientId, nameType, graphType }: Props) => {
 
     fetchData();
   }, [patientId, graphType]);
-
   const filterData = (data: any[]) => {
     const currentDate = new Date();
+    let filteredData = [];
+
     switch (filter) {
       case '1day':
-        return data.filter((record) =>
-          isWithinRange(
-            new Date(record.timestamp),
-            subDays(currentDate, 1),
-            currentDate
-          )
+        filteredData = data.filter(
+          (record) => new Date(record.timestamp) > subDays(currentDate, 1)
         );
+        break;
       case '1week':
-        return data.filter((record) =>
-          isWithinRange(
-            new Date(record.timestamp),
-            subWeeks(currentDate, 7),
-            currentDate
-          )
+        filteredData = data.filter(
+          (record) => new Date(record.timestamp) > subWeeks(currentDate, 1)
         );
+        break;
       case '1month':
-        return data.filter((record) =>
-          isWithinRange(
-            new Date(record.timestamp),
-            subMonths(currentDate, 1),
-            currentDate
-          )
+        filteredData = data.filter(
+          (record) => new Date(record.timestamp) > subMonths(currentDate, 1)
         );
+        break;
       case '3months':
-        return data.filter((record) =>
-          isWithinRange(
-            new Date(record.timestamp),
-            subQuarters(currentDate, 1),
-            currentDate
-          )
+        filteredData = data.filter(
+          (record) => new Date(record.timestamp) > subMonths(currentDate, 3)
         );
+        break;
+      case '6months':
+        filteredData = data.filter(
+          (record) => new Date(record.timestamp) > subMonths(currentDate, 6)
+        );
+        break;
       default:
-        return data;
+        filteredData = data;
     }
-  };
 
-  const isWithinRange = (
-    date: number | Date,
-    startDate: number | Date,
-    endDate: number | Date
-  ) => {
-    return startDate <= date && date <= endDate;
+    // If no records found for the selected time period, return the latest record
+    if (filteredData.length === 0 && data.length > 0) {
+      filteredData = [data[0]];
+    }
+
+    return filteredData;
   };
 
   const transformData = (data: any) => {

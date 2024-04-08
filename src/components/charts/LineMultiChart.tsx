@@ -42,30 +42,44 @@ const LineMultiChart = ({
 
   const filterData = (data: any[]) => {
     const currentDate = new Date();
+    let filteredData = [];
+
     switch (filter) {
       case '1day':
-        return data.filter(
+        filteredData = data.filter(
           (record) => new Date(record.timestamp) > subDays(currentDate, 1)
         );
+        break;
       case '1week':
-        return data.filter(
+        filteredData = data.filter(
           (record) => new Date(record.timestamp) > subWeeks(currentDate, 1)
         );
+        break;
       case '1month':
-        return data.filter(
+        filteredData = data.filter(
           (record) => new Date(record.timestamp) > subMonths(currentDate, 1)
         );
+        break;
       case '3months':
-        return data.filter(
+        filteredData = data.filter(
           (record) => new Date(record.timestamp) > subMonths(currentDate, 3)
         );
+        break;
       case '6months':
-        return data.filter(
+        filteredData = data.filter(
           (record) => new Date(record.timestamp) > subMonths(currentDate, 6)
         );
+        break;
       default:
-        return data;
+        filteredData = data;
     }
+
+    // If no records found for the selected time period, return the latest record
+    if (filteredData.length === 0 && data.length > 0) {
+      filteredData = [data[0]];
+    }
+
+    return filteredData;
   };
 
   const transformData = (data: any[]) => {

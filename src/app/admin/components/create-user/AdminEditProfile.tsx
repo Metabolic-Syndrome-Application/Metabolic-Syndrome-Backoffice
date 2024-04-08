@@ -42,7 +42,7 @@ const AdminEditProfile = ({ loadData, api, id }: IEditMemberFormProps) => {
   const users = useSelector(selectAllUsers);
   const dispatch = useDispatch<any>();
 
-  //filter id ใน users เเล้วดูว่า id ตรงกันมั้ย ตอนนี้เแน array => [0]
+  //filter id ใน users เเล้วดูว่า id ตรงกันมั้ย ตอนนี้เปน array => [0]
   // const user = users.filter((u) => u.id === id)[0];
   const currentUser = users.find((user) => user.id === id);
   //console.log('currentUser index', currentUser);
