@@ -17,7 +17,7 @@ import AdminEditProfile from '@/app/admin/components/create-user/AdminEditProfil
 import { API_PATH } from '@/config/api';
 import { fetchAllUsers, selectAllUsers } from '@/redux/slices/usersSlice';
 
-const ManageUserTable = () => {
+const AccountUserTable = () => {
   const { data: session } = useSession();
   const axiosAuth = useAxiosAuth();
 
@@ -46,6 +46,15 @@ const ManageUserTable = () => {
       field: 'index',
       width: 100,
       renderHeader: () => <h5 className='font-medium'>ลำดับที่</h5>,
+    },
+    {
+      field: 'id',
+      width: 110,
+      renderHeader: () => <h5 className='font-medium'>id</h5>,
+      renderCell: (params: GridCellParams) => (
+        <span style={{ fontSize: '11px' }}>{params.row.id || ''}</span>
+      ),
+      valueGetter: (params: GridValueGetterParams) => `${params.row.id || ''}`,
     },
     {
       field: 'name',
@@ -96,7 +105,11 @@ const ManageUserTable = () => {
       width: 100,
       renderHeader: () => <h5 className='font-medium'>เพศ</h5>,
       valueGetter: (params: GridValueGetterParams) =>
-        params.row.gender === 'male' ? 'ชาย' : 'หญิง',
+        params.row.gender === 'male'
+          ? 'ชาย'
+          : params.row.gender === 'female'
+          ? 'หญิง'
+          : '-',
     },
     {
       field: 'Action',
@@ -127,4 +140,4 @@ const ManageUserTable = () => {
   );
 };
 
-export default ManageUserTable;
+export default AccountUserTable;

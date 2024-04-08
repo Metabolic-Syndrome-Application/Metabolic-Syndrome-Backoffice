@@ -111,7 +111,7 @@ const AdminCreateRegister = () => {
   return (
     <div className='w-full'>
       <article className='flex w-full items-center justify-between px-4 py-2'>
-        <h1 className='text-balance'>จัดการข้อมูลผู้ใช้ระบบ</h1>
+        <h1 className='text-balance'>จัดการบัญชีผู้ใช้ระบบ (หมอ/พยาบาล)</h1>
         <IconFlatButton title='เพิ่มข้อมูลผู้ใช้' onClick={openModal} />
       </article>
 

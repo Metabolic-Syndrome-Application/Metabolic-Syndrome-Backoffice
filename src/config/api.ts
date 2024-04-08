@@ -1,19 +1,20 @@
-//export const BACKEND_URL = 'http://localhost:8000';
-export const BACKEND_URL = 'http://34.87.86.35:8000';
+export const BACKEND_URL = 'http://localhost:8000';
+//export const BACKEND_URL = 'http://34.87.86.35:8000';
 
 export const API_PATH = {
-  //Auth : wait add admin form
+  //Auth
   POST_REGISTER: '/api/auth/register',
-  POST_REGISTER_OTHER: '/api/auth/register/other',
-  POST_LOGIN: '/api/auth/login',
+  POST_REGISTER_OTHER: '/api/auth/register/other', //admin create account doctor/stafff
+  POST_LOGIN: '/api/auth/login', //user login
   POST_REFRESH: '/api/auth/refresh',
   GET_LOGOUT: '/api/auth/logout',
 
   //Doctor & Staff
-  GET_PROFILE_ALL: '/api/user/profile/all', //patient too
+  GET_PROFILE_ALL: '/api/user/profile/all', //get Profile Doctor/Staff/Patient
   PUT_PROFILE_OTHER: (role: string, id: string) =>
     `/api/user/profile/${role}/${id}`,
-  DELETE_USER: (role: string, id: string) => `/api/user/profile/${role}/${id}`,
+  GET_PATIENT: '/api/user/profile/all/patient-account',
+  DELETE_USER: (role: string, id: string) => `/api/user/profile/${role}/${id}`, // doctor/staff => delete HN BUT admin => delete account
 
   GET_PROFILE_ME: '/api/user/profile',
   PUT_PROFILE_ME: '/api/user/profile',

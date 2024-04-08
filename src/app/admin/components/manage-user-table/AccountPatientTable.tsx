@@ -12,52 +12,38 @@ import useAxiosAuth from '@/hooks/useAxiosAuth';
 
 import ColorButton from '@/components/buttons/ColorButton';
 import DeleteButton from '@/components/buttons/DeleteButton';
-import ViewButton from '@/components/buttons/ViewButton';
 import BaseTable from '@/components/table/BaseTable';
 
+import { API_PATH } from '@/config/api';
 import { calculateAgeThaiBuddhist } from '@/helpers/date';
 import { getStatusPatientColor } from '@/helpers/status';
-import { fetchAllDoctors, selectAllDoctors } from '@/redux/slices/doctorSlice';
 import {
-  fetchAllPatients,
+  fetchRolePatients,
   selectAllPatients,
 } from '@/redux/slices/patientsSlice';
 
-const ManagePatientTable = () => {
+const AccountPatientTable = () => {
   const { data: session } = useSession();
   const axiosAuth = useAxiosAuth();
 
-  const dispatch = useDispatch<any>();
-
   const patients = useSelector(selectAllPatients);
-  // console.log('Patient Tables:', patients);
-
-  const doctors = useSelector(selectAllDoctors);
-  //console.log('Doctors:', doctors);
+  console.log('patients role account', patients);
+  const dispatch = useDispatch<any>();
 
   const loadPatients = async () => {
     try {
-      dispatch(fetchAllPatients());
-      //setUsers(dataAddIndex);
+      dispatch(fetchRolePatients());
     } catch (error) {
       console.log('error', error);
     }
   };
-
   useEffect(() => {
-    if (session && session.user) {
-      // Dispatch actions to fetch patients and doctors
-      dispatch(fetchAllPatients());
-      dispatch(fetchAllDoctors());
+    if (session) {
+      // If session exists, load role patient
+      dispatch(fetchRolePatients());
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, session]);
-
-  const getDoctorById = (doctorId: string) => {
-    const doctor = doctors.find(
-      (doctor: { id: string }) => doctor.id === doctorId
-    );
-    return doctor;
-  };
 
   const columns: GridColDef[] = [
     {
@@ -66,37 +52,42 @@ const ManagePatientTable = () => {
       renderHeader: () => <h5 className='font-medium'>ลำดับที่</h5>,
     },
     {
+      field: 'id',
+      width: 150,
+      renderHeader: () => <h5 className='font-medium'>id</h5>,
+      renderCell: (params: GridCellParams) => (
+        <span style={{ fontSize: '11px' }}>{params.row.id || ''}</span>
+      ),
+      valueGetter: (params: GridValueGetterParams) => `${params.row.id || '-'}`,
+    },
+    {
       field: 'hn',
       width: 150,
       renderHeader: () => <h5 className='font-medium'>รหัส HN คนไข้</h5>,
-      valueGetter: (params: GridValueGetterParams) => `${params.row.hn || ''}`,
+      valueGetter: (params: GridValueGetterParams) => `${params.row.hn || '-'}`,
     },
     {
       field: 'name',
-      width: 225,
+      width: 250,
       renderHeader: () => <h5 className='font-medium'>ชื่อ - นามสกุล</h5>,
       renderCell: (params: GridCellParams) => (
-        <div>
-          <span className='flex'>
-            {`${params.row.prefix || ''}${params.row.firstName || ''} ${
-              params.row.lastName || ''
-            }`}
-          </span>
-          <span className='text-default-blue '>
-            {params.row.username || ''}
-          </span>
-        </div>
+        <span>
+          {params.row.firstName || params.row.lastName
+            ? `${params.row.firstName || ''} ${params.row.lastName || ''}`
+            : '-'}
+        </span>
       ),
       valueGetter: (params: GridValueGetterParams) => {
-        const prefix = params.row.prefix || '';
-        const firstName = params.row.firstName || '';
-        const lastName = params.row.lastName || '';
-        return `${prefix}${firstName} ${lastName}`.toLowerCase();
+        const fullName = `${params.row.firstName || ''} ${
+          params.row.lastName || ''
+        }`.toLowerCase();
+        return fullName;
       },
     },
+
     {
       field: 'gender',
-      // width: 120,
+      width: 120,
       renderHeader: () => <h5 className='font-medium'>เพศ</h5>,
       valueGetter: (params: GridValueGetterParams) =>
         params.row.gender === 'male'
@@ -107,7 +98,7 @@ const ManagePatientTable = () => {
     },
     {
       field: 'yearOfBirth',
-      // width: 120,
+      width: 120,
       renderHeader: () => <h5 className='font-medium'>อายุ</h5>,
       valueGetter: (params: GridValueGetterParams) => {
         const yearOfBirth = params.row.yearOfBirth;
@@ -135,30 +126,15 @@ const ManagePatientTable = () => {
       },
     },
     {
-      field: 'mainDoctorID',
-      width: 225,
-      renderHeader: () => (
-        <h5 className='font-medium'>แพทย์ผู้รับผิดชอบหลัก</h5>
-      ),
-      valueGetter: (params: GridValueGetterParams) => {
-        const mainDoctorId = params.row.mainDoctorID;
-        const mainDoctor = getDoctorById(mainDoctorId);
-        return mainDoctor
-          ? `${mainDoctor.prefix}${mainDoctor.firstName} ${mainDoctor.lastName}`
-          : '-';
-      },
-    },
-    {
       field: 'Action',
       // width: 150,
       renderHeader: () => <h5 className='font-medium'>จัดการ</h5>,
       renderCell: (params) => {
         return (
           <div className='flex flex-row items-center space-x-4'>
-            <ViewButton href={`/patient/record/${params.row.id}`} />
             <DeleteButton
               loadData={loadPatients}
-              api={`/api/user/profile/patient/${params.row.id}`}
+              api={API_PATH.DELETE_USER('patient', params.row.id)}
             />
           </div>
         );
@@ -171,10 +147,10 @@ const ManagePatientTable = () => {
       <BaseTable
         rows={patients.patients}
         columns={columns}
-        loading={undefined}
+        loading={!patients.patients.length}
       />
     </div>
   );
 };
 
-export default ManagePatientTable;
+export default AccountPatientTable;

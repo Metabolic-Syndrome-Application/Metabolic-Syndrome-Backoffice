@@ -10,11 +10,17 @@ export const SIDENAV_ITEMS: SideNavItem[] = [
     //role: 'allRole',
   },
   {
-    title: 'จัดการข้อมูลผู้ใช้',
+    title: 'จัดการบัญชีผู้ใช้',
     path: '/admin',
     icon: (
       <Icon icon='material-symbols:manage-accounts' width='26' height='26' />
     ),
+    role: 'admin',
+  },
+  {
+    title: 'จัดการบัญชีคนไข้',
+    path: '/admin/account-patient',
+    icon: <Icon icon='material-symbols:outpatient' width='26' height='26' />,
     role: 'admin',
   },
   {

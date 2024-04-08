@@ -23,6 +23,27 @@ const initialState: PatientState = {
   error: false,
 };
 
+//Admin manange role patient (มีทั้งมีและไม่มี hn)
+export const fetchRolePatients = createAsyncThunk(
+  'fetchRolePatients',
+  async () => {
+    try {
+      const {
+        data: { data },
+      } = await axiosAuth.get<IGetProfilePatientAllApi>(API_PATH.GET_PATIENT);
+
+      const usersWithIndex = data.users ? addIndexPatient(data.users) : [];
+      console.log('role patient redux', usersWithIndex);
+      return usersWithIndex;
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error('Error fetching users:', error);
+      throw error;
+    }
+  }
+);
+
+//All Patient (have hn)
 export const fetchAllPatients = createAsyncThunk(
   'fetchAllPatients',
   async () => {
@@ -44,6 +65,7 @@ export const fetchAllPatients = createAsyncThunk(
   }
 );
 
+//Only Patient ID
 export const fetchPatientById = createAsyncThunk(
   'fetchPatientById',
   async (id: string) => {
@@ -77,19 +99,31 @@ const patientsSlice = createSlice({
   },
   extraReducers(builder) {
     builder
+      //Admin manage role patient
+      .addCase(fetchRolePatients.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(fetchRolePatients.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        state.patients = action.payload || [];
+      })
+      .addCase(fetchRolePatients.rejected, (state) => {
+        state.status = 'failed';
+        state.error = true;
+      })
+      //All Patients (hn)
       .addCase(fetchAllPatients.pending, (state) => {
         state.status = 'loading';
       })
       .addCase(fetchAllPatients.fulfilled, (state, action) => {
         state.status = 'succeeded';
         state.patients = action.payload || [];
-
-        console.log('Patient y:', action);
       })
       .addCase(fetchAllPatients.rejected, (state) => {
         state.status = 'failed';
         state.error = true;
       })
+      //Only Patient ID
       .addCase(fetchPatientById.pending, (state) => {
         state.status = 'loading';
       })
@@ -97,7 +131,7 @@ const patientsSlice = createSlice({
         state.status = 'succeeded';
         state.patients = [action.payload]; // Wrap the payload in an array
 
-        console.log('Patient id2:', action);
+        //console.log('Patient id2:', action);
       })
 
       .addCase(fetchPatientById.rejected, (state) => {
