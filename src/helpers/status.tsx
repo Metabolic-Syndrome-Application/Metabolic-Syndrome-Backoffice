@@ -8,7 +8,7 @@ export const getStatusPatientColor = (
     case 'rejected':
       return { color: 'red', text: 'ยกเลิกการรักษา' };
     case 'success':
-      return { color: 'green', text: 'รักษาแล้ว' };
+      return { color: 'green', text: 'รักษาสำเร็จแล้ว' };
     default:
       return { color: 'blue', text: status };
   }

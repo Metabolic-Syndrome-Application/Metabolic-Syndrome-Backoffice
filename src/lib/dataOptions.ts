@@ -22,9 +22,9 @@ export const useDoctorOptions = () => {
 export const useStatusOptions = () => {
   // Define status options array
   const statusOptions = [
-    { label: 'กำลังรักษา', value: 'in process' },
-    { label: 'ยกเลิกการรักษา', value: 'rejected' },
-    { label: 'รักษาแล้ว', value: 'success' },
+    { label: '🟡 กำลังรักษา', value: 'in process' },
+    { label: '🔴 ยกเลิกการรักษา', value: 'rejected' },
+    { label: '🟢 รักษาแล้ว', value: 'success' },
   ];
 
   return statusOptions;
