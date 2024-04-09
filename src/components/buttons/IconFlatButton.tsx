@@ -15,8 +15,8 @@ export const IconFlatButton: React.FC<IconFlatButtonProps> = ({
     <button
       type='button'
       className={cn(
-        'flex min-w-[90px] max-w-full items-center justify-center gap-1.5 whitespace-nowrap rounded-xl',
-        'px-3 py-2 text-sm font-medium  md:text-base',
+        'flex min-w-[90px] max-w-full items-center justify-center gap-1.5 whitespace-normal rounded-xl',
+        'px-3 py-2 text-sm font-medium md:text-base',
         'bg-default-blue text-white',
         'hover:bg-dark-blue',
         'active:ring-light-blue active:bg-dark-blue cursor-pointer focus:outline-none active:ring-2',

@@ -26,7 +26,7 @@ export const CardInfo = ({
   return (
     <div key={id} className='w-full'>
       <div className='flex flex-col items-center justify-center space-x-0 p-4 md:flex-col lg:flex-row lg:space-x-4'>
-        <div className='flex w-[350px] justify-center py-4'>
+        <div className='flex w-full justify-center py-4 md:w-[350px]'>
           <Image
             src='/assets/images/male.jpg'
             alt='avatar'

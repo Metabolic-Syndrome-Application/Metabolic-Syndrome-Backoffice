@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 //Line Chart custom color
-import { subDays, subMonths, subWeeks } from 'date-fns';
+import { format, subDays, subMonths, subWeeks } from 'date-fns';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { Line } from 'react-chartjs-2';
@@ -88,7 +88,9 @@ const LineChartPressure = ({
     const colors = ['rgb(251, 98, 98)', 'rgb(5, 2, 241)', 'rgb(66, 132, 75)'];
 
     return {
-      labels: filteredData.map((record) => record.timestamp),
+      labels: filteredData.map((record) =>
+        format(new Date(record.timestamp), 'dd MMM yyyy, HH:mm:ss')
+      ),
       datasets: labels.map((label, index) => ({
         label: label,
         data: filteredData.map((record) => record[dataKeys[index]]),
@@ -100,7 +102,7 @@ const LineChartPressure = ({
   };
 
   return (
-    <div className='shadow-light-shadow border-light-gray flex h-full w-full flex-col items-center justify-center rounded-lg border p-4 lg:max-h-[400px]'>
+    <div className='shadow-light-shadow border-light-gray h-full w-full flex-col items-center justify-center rounded-lg border p-4 md:max-h-[400px]'>
       {graphData && (
         <div className='flex w-full items-center justify-between px-4'>
           <h5 className='w-full text-start font-medium md:text-lg'>
@@ -121,9 +123,23 @@ const LineChartPressure = ({
           </div>
         </div>
       )}
-      <div className='flex h-full w-full items-center justify-center lg:max-w-[500px]'>
+      <div className='flex h-full min-h-[300px] w-full items-center justify-center md:h-[300px]'>
         {graphData && graphData.length > 0 ? (
-          <Line data={transformData(graphData)} />
+          <Line
+            data={transformData(graphData)}
+            options={{
+              responsive: true,
+              maintainAspectRatio: false, // To make the chart responsive
+              scales: {
+                y: {
+                  beginAtZero: false,
+                  ticks: {
+                    maxTicksLimit: 8, // Adjust the number of ticks displayed on the y-axis
+                  },
+                },
+              },
+            }}
+          />
         ) : (
           <div className='flex flex-col items-center justify-center'>
             <Image

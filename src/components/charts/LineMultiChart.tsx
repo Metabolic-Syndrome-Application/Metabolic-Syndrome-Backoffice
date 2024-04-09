@@ -106,7 +106,7 @@ const LineMultiChart = ({
   };
 
   return (
-    <div className='shadow-light-shadow border-light-gray flex h-full  max-h-[400px] w-full flex-col items-center justify-center rounded-lg border p-4'>
+    <div className='shadow-light-shadow border-light-gray h-full w-full flex-col items-center justify-center rounded-lg border p-4 md:max-h-[400px]'>
       {graphData && (
         <div className='flex w-full items-center justify-between px-4'>
           <h5 className='w-full text-start font-medium md:text-lg'>
@@ -127,9 +127,23 @@ const LineMultiChart = ({
           </div>
         </div>
       )}
-      <div className='flex h-full w-full max-w-[500px] items-center justify-center'>
+      <div className='flex h-full min-h-[300px] w-full items-center justify-center md:h-[300px]'>
         {graphData && graphData.length > 0 ? (
-          <Line data={transformData(graphData)} />
+          <Line
+            data={transformData(graphData)}
+            options={{
+              responsive: true,
+              maintainAspectRatio: false, // To make the chart responsive
+              scales: {
+                y: {
+                  beginAtZero: false,
+                  ticks: {
+                    maxTicksLimit: 8, // Adjust the number of ticks displayed on the y-axis
+                  },
+                },
+              },
+            }}
+          />
         ) : (
           <div className='flex flex-col items-center justify-center'>
             <Image

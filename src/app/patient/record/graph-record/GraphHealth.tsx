@@ -31,17 +31,21 @@ const GraphHealth = ({ params }: { params: { id: string } }) => {
       case GraphHealthType.bmi:
         return (
           <>
-            <div className='flex h-full w-[90%] flex-col items-center justify-evenly gap-4 lg:flex-row'>
-              <LineChart
-                patientId={id}
-                graphType={GraphHealthType.bmi}
-                nameType='ดัชนีมวลกาย'
-              />
-              <LineChart
-                patientId={id}
-                graphType={GraphHealthType.waistline}
-                nameType='รอบเอว'
-              />
+            <div className='my-2 flex h-full w-full flex-col items-center justify-evenly gap-4 px-4 lg:flex-row'>
+              <div className='w-full md:max-h-[400px] lg:w-[60%]'>
+                <LineChart
+                  patientId={id}
+                  graphType={GraphHealthType.bmi}
+                  nameType='ดัชนีมวลกาย'
+                />
+              </div>
+              <div className='w-full md:max-h-[400px] lg:w-[40%]'>
+                <LineChart
+                  patientId={id}
+                  graphType={GraphHealthType.waistline}
+                  nameType='รอบเอว'
+                />
+              </div>
             </div>
           </>
         );
@@ -49,7 +53,7 @@ const GraphHealth = ({ params }: { params: { id: string } }) => {
       case GraphHealthType.bloodGlucose:
         return (
           <>
-            <div className='flex h-full w-[90%] flex-col items-center justify-evenly gap-4 lg:flex-row'>
+            <div className='my-2 flex h-full w-full flex-col items-center justify-evenly gap-4 px-4 lg:flex-row'>
               <LineChart
                 patientId={id}
                 graphType={GraphHealthType.bloodGlucose}
@@ -61,13 +65,13 @@ const GraphHealth = ({ params }: { params: { id: string } }) => {
       case GraphHealthType.bloodLipids:
         return (
           <>
-            <div className='flex h-full w-[90%] flex-col items-center justify-evenly gap-4 lg:flex-row'>
+            <div className='my-2 flex h-full w-full flex-col items-center justify-evenly gap-4 px-4 lg:flex-row'>
               <LineMultiChart
                 patientId={id}
                 graphType={GraphHealthType.bloodLipids}
                 labels={['cholesterol', 'hdl', 'ldl', 'triglyceride']}
                 dataKeys={['cholesterol', 'hdl', 'ldl', 'triglyceride']}
-                nameType='กราฟไขมันในเลือด'
+                nameType='ไขมันในเลือด'
               />
             </div>
           </>
@@ -75,7 +79,7 @@ const GraphHealth = ({ params }: { params: { id: string } }) => {
       case GraphHealthType.bloodPressure:
         return (
           <>
-            <div className='flex h-full w-[90%] flex-col items-center justify-evenly gap-4 lg:flex-row'>
+            <div className='my-2 flex h-full w-full flex-col items-center justify-evenly gap-4 px-4 lg:flex-row'>
               <LineChartPressure
                 patientId={id}
                 graphType={GraphHealthType.bloodPressure}
@@ -89,7 +93,7 @@ const GraphHealth = ({ params }: { params: { id: string } }) => {
                   'diastolicBloodPressure',
                   'pulseRate',
                 ]}
-                nameType='กราฟความดันโลหิต'
+                nameType='ความดันโลหิต'
               />
             </div>
           </>
@@ -103,16 +107,16 @@ const GraphHealth = ({ params }: { params: { id: string } }) => {
     <div className='w-full p-2'>
       <div className='flex w-full flex-col md:flex-row'>
         {/* Render buttons for each health type */}
-        <div className='flex flex-wrap items-center justify-stretch p-4 md:flex-col md:p-0'>
+        <div className='flex flex-wrap items-stretch gap-1.5 p-4 md:flex-col'>
           {Object.values(GraphHealthType).map((type) => {
             const { icon, variant, label, bg } = getChartInfo(type);
             return (
-              <div className='w-full' key={type}>
+              <div key={type} className='flex md:w-full'>
                 {type !== GraphHealthType.waistline && ( // Render the button only if it's not waistline
                   <IconTypeButton
                     icon={icon}
                     variant={variant}
-                    className='my-1'
+                    className='mb-2'
                     classNames={{ icon: `bg-${bg}` }}
                     onClick={() => handleButtonClick(type)}
                   >

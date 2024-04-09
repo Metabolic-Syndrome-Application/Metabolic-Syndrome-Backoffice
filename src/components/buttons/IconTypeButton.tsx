@@ -51,9 +51,11 @@ const IconTypeButton = React.forwardRef<HTMLButtonElement, ButtonProps>(
         type='button'
         disabled={disabled}
         className={cn(
-          'font-sm inline-flex items-center overflow-hidden rounded-lg',
-          'focus:outline-none focus-visible:ring',
-          'min-h-fit w-fit shadow-sm md:min-h-[80px] md:w-full md:min-w-[180px]',
+          'inline-flex items-center overflow-hidden rounded-lg',
+          'text-sm md:text-base',
+          'px-1.5 py-2 md:px-3',
+          'w-fit shadow-sm md:min-h-[80px] md:w-full md:min-w-[180px]',
+          'focus:outline-none focus-visible:ring active:ring',
           'transition-colors duration-75',
           //#region  //*=========== Size ===========
           [
@@ -128,13 +130,13 @@ const IconTypeButton = React.forwardRef<HTMLButtonElement, ButtonProps>(
           <Icon
             size='1em'
             className={cn(
-              'object-contain] flex h-10 w-10 rounded-full p-1.5 text-center',
+              'object-contain] flex h-6 w-6 rounded-full p-1.5 text-center md:h-10 md:w-10',
               classNames?.icon
             )}
           />
         )}
         <div className='ml-3 flex'>
-          <span className='text-wrap pl-1 text-start text-base font-medium'>
+          <span className='text-wrap pl-1 text-start text-sm font-medium md:text-base'>
             {children}
           </span>
         </div>
