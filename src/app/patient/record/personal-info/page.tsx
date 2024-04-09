@@ -62,7 +62,7 @@ const PersonalInfo: React.FC<PageProps> = ({ params }) => {
               {patient && (
                 <div
                   key={`patient-info-${patient.id}`}
-                  className='mb-6 w-full rounded-2xl border border-gray-100 bg-white shadow-sm md:mb-0'
+                  className='w-full rounded-2xl border border-gray-100 bg-white shadow-sm md:mb-0'
                 >
                   <CardInfo
                     id={patient?.id}
