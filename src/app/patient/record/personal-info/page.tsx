@@ -74,7 +74,7 @@ const PersonalInfo: React.FC<PageProps> = ({ params }) => {
                     status={patient?.status}
                     mainDoctorID={patient?.mainDoctorID}
                     mainDoctor={patient?.mainDoctor}
-                    assistanceDoctorID={patient?.mainDoctorID}
+                    assistanceDoctorID={patient?.assistanceDoctorID}
                     assistanceDoctor={patient?.assistanceDoctor}
                     disease={patient?.disease}
                   />
