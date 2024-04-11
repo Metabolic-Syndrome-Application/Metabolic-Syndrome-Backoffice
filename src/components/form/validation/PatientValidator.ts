@@ -7,38 +7,6 @@ import {
   validateMinMax,
 } from '@/components/form/validation/ZodCheck';
 
-import { IPlan } from '@/types/patient';
-
-export interface ICreatePatientForm {
-  id: string;
-  role: string;
-  username: string;
-  password: string;
-  passwordConfirm: string;
-  hn: string;
-  firstName: string;
-  lastName: string;
-  yearOfBirth: number;
-  gender: string;
-  mainDoctorID: string;
-  mainDoctor: {
-    id: string;
-    prefix: string;
-    firstName: string;
-    lastName: string;
-  };
-  assistanceDoctorID?: string;
-  assistanceDoctor?: {
-    id: string;
-    prefix: string;
-    firstName: string;
-    lastName: string;
-  };
-  disease?: string;
-  planID?: string[];
-  Plan?: IPlan[];
-  status: string;
-}
 //-----------------------------------------
 //Doctor Edit & Assign Patient
 export const doctorEditPatientSchema = z

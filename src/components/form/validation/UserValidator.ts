@@ -6,35 +6,6 @@ import {
   validateMinMax,
 } from '@/components/form/validation/ZodCheck';
 
-export type FormLoginProps = {
-  username: string;
-  password: string;
-};
-
-export type FormRegisterDoctorProps = {
-  role: string;
-  username: string;
-  password: string;
-  passwordConfirm: string;
-  prefix: string;
-  firstName: string;
-  lastName: string;
-  gender: string;
-  department: string;
-  specialist: string;
-  //doctor?: string | null;
-};
-
-export type FormCreateProfileDoctorProps = {
-  id: string;
-  prefix: string;
-  firstName: string;
-  lastName: string;
-  gender: string;
-  department: string;
-  specialist: string;
-};
-
 //Login Page
 export const loginSchema = z.object({
   username: baseStringValidator.email('กรุณากรอกอีเมลให้ถูกต้อง').trim(),
@@ -97,3 +68,15 @@ export const createProfileDoctorSchema = z.object({
   department: baseStringValidator,
   specialist: baseStringValidator,
 });
+
+//doctor/staff change Password
+export const changePasswordSchema = z
+  .object({
+    currentPassword: passwordValidator,
+    newPassword: passwordValidator,
+    confirmPassword: passwordValidator,
+  })
+  .refine((data) => data.newPassword === data.confirmPassword, {
+    message: 'รหัสผ่านของคุณไม่ตรงกัน',
+    path: ['confirmPassword'],
+  });

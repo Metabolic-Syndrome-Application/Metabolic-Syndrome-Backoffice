@@ -26,8 +26,9 @@ export const ProfileTabs = () => {
   return (
     <TabbedList
       tabs={tabConfig}
-      listClassName='shadow-light-shadow flex w-full h-fit md:flex-col rounded-xl bg-white md:max-w-[350px]'
+      listClassName='shadow-light-shadow flex w-full h-full md:flex-col justify-start rounded-lg bg-white md:max-w-[350px]'
       allPanelClassName='flex flex-col gap-2 md:gap-10 md:flex-row'
+      btnClassName='flex w-full h-full items-center justify-center md:justify-start'
     />
   );
 };

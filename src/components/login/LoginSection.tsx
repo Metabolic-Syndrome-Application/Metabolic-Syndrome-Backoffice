@@ -10,10 +10,9 @@ import { useForm } from 'react-hook-form';
 
 import ActionButton from '@/components/buttons/ActionButton';
 import { InputText } from '@/components/form/InputText';
-import {
-  FormLoginProps,
-  loginSchema,
-} from '@/components/form/validation/UserValidator';
+import { loginSchema } from '@/components/form/validation/UserValidator';
+
+import { FormLoginProps } from '@/types/auth';
 
 type LoginProps = {
   callbackUrl?: string;

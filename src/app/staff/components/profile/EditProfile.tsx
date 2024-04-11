@@ -16,10 +16,7 @@ import FormHeaderText from '@/components/form/components/FormHeaderText';
 import { InputDropdown } from '@/components/form/InputDropdown';
 import { InputText } from '@/components/form/InputText';
 import { RadioOption } from '@/components/form/RadioOption';
-import {
-  createProfileDoctorSchema,
-  FormCreateProfileDoctorProps,
-} from '@/components/form/validation/UserValidator';
+import { createProfileDoctorSchema } from '@/components/form/validation/UserValidator';
 
 import {
   dataOptions,
@@ -27,6 +24,8 @@ import {
   medicalSpecialist,
 } from '@/constant/user';
 import { fetchUser, selectUser, updateUser } from '@/redux/slices/profileSlice';
+
+import { FormCreateProfileDoctorProps } from '@/types/admin';
 
 const EditProfile = () => {
   const { enqueueSnackbar } = useSnackbar();
@@ -51,10 +50,9 @@ const EditProfile = () => {
 
   const onSubmit = async (data: FormCreateProfileDoctorProps) => {
     try {
-      // Dispatch the updateUser action
       await dispatch(updateUser(data));
-      //console.log('Edit Profile successful', data);
 
+      //console.log('Edit Profile successful', data);
       enqueueSnackbar('Edit Profile Success', { variant: 'success' });
       // Load the updated user
       await dispatch(fetchUser());

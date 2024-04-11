@@ -1,14 +1,14 @@
 'use client';
 import React from 'react';
 
+import HeaderArticle from '@/components/common/HeaderArticle';
+
 import Profile from '@/app/staff/components/profile/Profile';
 
 const StaffPage = () => {
   return (
     <div className='w-full'>
-      <article className='flex w-full items-center justify-between px-4 py-2'>
-        <h1 className='text-balance'>ประวัติส่วนตัว</h1>
-      </article>
+      <HeaderArticle title='โปรไฟล์' variant='h1' />
       <Profile />
     </div>
   );

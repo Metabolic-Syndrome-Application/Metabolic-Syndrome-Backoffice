@@ -3,10 +3,9 @@ import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { axiosAuth } from '@/lib/axios';
 
-import { FormCreateProfileDoctorProps } from '@/components/form/validation/UserValidator';
-
 import { API_PATH } from '@/config/api';
 
+import { FormCreateProfileDoctorProps } from '@/types/admin';
 import { IGetProfileMeApi, IUserData } from '@/types/user';
 
 interface UserState {

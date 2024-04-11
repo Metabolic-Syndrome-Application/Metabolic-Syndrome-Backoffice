@@ -1,5 +1,4 @@
 /* eslint-disable unused-imports/no-unused-vars */
-//import { NextAuthOptions } from 'next-auth';
 import { parse } from 'cookie';
 import { cookies } from 'next/headers';
 import type { NextAuthOptions } from 'next-auth/index';
@@ -53,16 +52,13 @@ export const authOptions: NextAuthOptions = {
                 }
               });
             }
-
             //console.log('Set-Cookie header:', apiCookies);
-
             return user;
           } else {
             return null; // Or handle the error in another way
           }
         } catch (error: any) {
-          //console.log(error);
-
+          console.error('Authorization error:', error);
           return null; // Handle Axios error
         }
       },

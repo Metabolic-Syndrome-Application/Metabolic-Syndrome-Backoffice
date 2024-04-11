@@ -8,6 +8,7 @@ export const API_PATH = {
   POST_LOGIN: '/api/auth/login', //user login
   POST_REFRESH: '/api/auth/refresh',
   GET_LOGOUT: '/api/auth/logout',
+  POST_CHANGE_PASSWORD: '/api/auth/change-password',
 
   //Doctor & Staff
   GET_PROFILE_ALL: '/api/user/profile/all', //get Profile Doctor/Staff/Patient

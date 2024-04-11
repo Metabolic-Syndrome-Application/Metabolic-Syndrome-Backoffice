@@ -16,29 +16,27 @@ import { fetchUser, selectUser } from '@/redux/slices/profileSlice';
 
 const ProfileInfo = () => {
   const { data: session } = useSession();
-
   const axiosAuth = useAxiosAuth();
-  const user = useSelector(selectUser);
 
+  const user = useSelector(selectUser);
   //console.log('Staff Profile:', user);
 
   const dispatch = useDispatch<any>();
+
   const getGenderText = (gender: string) => {
     return gender === 'male' ? 'ชาย' : 'หญิง';
   };
 
   useEffect(() => {
     if (session && session.user) {
-      // If session exists, load users
-      //loadUsers();
       dispatch(fetchUser());
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [dispatch, session]);
 
   return (
     <div className='w-full'>
-      <div className='shadow-light-shadow flex h-full w-full flex-col gap-4 rounded-xl bg-white p-4 md:min-w-[450px] md:px-6  md:pb-10 lg:w-[600px]'>
+      <div className='shadow-light-shadow flex h-full w-full flex-col gap-4 rounded-lg bg-white p-4 md:min-w-[450px] md:px-6  md:pb-10 lg:w-[600px]'>
         <FormHeaderText title='ประวัติส่วนตัว' useBigestHeader />
         <div className='flex flex-col items-center justify-center gap-3'>
           <Avatar
