@@ -32,10 +32,15 @@ const RecordPage = ({ params }: { params: { id: string } }) => {
   }, []);
 
   return (
-    <div>
-      <div className='flex'>
-        <BackButton />
-        <h3 className='text-balance'>สมุดบันทึกคนไข้ของ{profile}</h3>
+    <div className='w-full'>
+      <div className='flex flex-col p-4'>
+        <div className='flex'>
+          <BackButton />
+          <h3 className='text-balance text-black'>
+            สมุดบันทึกคนไข้ของ{profile}
+          </h3>
+        </div>
+        <div className='text-light-gray flex w-full border-b-[1.5px] pb-2 pt-1'></div>
       </div>
 
       <MainPatientTabs params={params} />

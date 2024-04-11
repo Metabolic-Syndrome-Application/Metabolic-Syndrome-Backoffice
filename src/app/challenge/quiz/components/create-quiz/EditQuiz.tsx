@@ -12,6 +12,7 @@ import useAxiosAuth from '@/hooks/useAxiosAuth';
 import useModal from '@/hooks/useModal';
 
 import ActionButton from '@/components/buttons/ActionButton';
+import HeaderArticle from '@/components/common/HeaderArticle';
 import FormHeaderText from '@/components/form/components/FormHeaderText';
 import { InputMultiline } from '@/components/form/InputMultiline';
 import { InputText } from '@/components/form/InputText';
@@ -98,36 +99,37 @@ const EditQuiz = ({
 
   const onSubmit = async (data: z.infer<typeof createQuizChallengeSchema>) => {
     try {
-      // eslint-disable-next-line unused-imports/no-unused-vars
-      const response = await axiosAuth.put(API_PATH.PUT_QUIZ(id), {
+      await axiosAuth.put(API_PATH.PUT_QUIZ(id), {
         question: data.question,
         points: data.points,
         limitTime: data.limitTime,
         choices: data.choices,
       });
+
       enqueueSnackbar('Edit Quiz Success', { variant: 'success' });
 
-      dispatch(fetchQuizById(id));
-      loadData();
-
-      closeModal();
+      // Fetch data and close modal in parallel (optional)
+      Promise.all([dispatch(fetchQuizById(id)), loadData()]).then(() =>
+        closeModal()
+      );
     } catch (error: any) {
-      enqueueSnackbar(error.response?.data, { variant: 'error' });
       console.error(error);
+      enqueueSnackbar(error.response?.data, { variant: 'error' });
     }
   };
 
   return (
     <div className='w-full'>
-      <article className='flex w-full items-center justify-end px-4 py-2'>
-        <div
-          className='flex cursor-pointer items-center gap-1'
-          onClick={openModal}
-        >
+      <HeaderArticle
+        title='รายละเอียดภารตอบคำถามประจำวัน'
+        variant='h4'
+        className='mb-3 rounded-b-none rounded-t-lg bg-gray-50 px-6 py-4'
+      >
+        <div className='flex items-center gap-1' onClick={openModal}>
           <FiEdit className='hover:bg-light-gray text-default-blue group h-5 w-5 cursor-pointer rounded-md transition-all duration-300 ease-in-out' />
           <p className='text-default-blue'>แก้ไข</p>
         </div>
-      </article>
+      </HeaderArticle>
 
       <Modal>
         <FormProvider {...methods}>

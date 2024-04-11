@@ -147,7 +147,7 @@ const AccountPatientTable = () => {
       <BaseTable
         rows={patients.patients}
         columns={columns}
-        loading={!patients.patients.length}
+        loading={!!patients.patients.length}
       />
     </div>
   );

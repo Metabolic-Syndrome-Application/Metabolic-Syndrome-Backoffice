@@ -8,7 +8,7 @@ type Props = {
 
 const SignInPage: React.FC<Props> = (props) => {
   return (
-    <div className=''>
+    <div className='w-full'>
       <LoginSection
         error={props.searchParams?.error}
         callbackUrl={props.searchParams?.callbackUrl}

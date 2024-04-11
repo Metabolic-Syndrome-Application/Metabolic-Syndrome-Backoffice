@@ -13,6 +13,7 @@ import useModal from '@/hooks/useModal';
 
 import ActionButton from '@/components/buttons/ActionButton';
 import { IconFlatButton } from '@/components/buttons/IconFlatButton';
+import HeaderArticle from '@/components/common/HeaderArticle';
 import FormHeaderText from '@/components/form/components/FormHeaderText';
 import ImageUpload from '@/components/form/components/UploadImageDisplay';
 import { InputText } from '@/components/form/InputText';
@@ -61,7 +62,7 @@ const CreateDailyChallenge = () => {
       const selectedDays = data.detail.day.map(
         (day: { value: string }) => day.value
       );
-      const response = await axiosAuth.post(API_PATH.CREATE_DAILY_CHALLENGE, {
+      const dailyData = {
         name: data.name,
         points: data.points,
         numDays: data.numDays,
@@ -71,10 +72,12 @@ const CreateDailyChallenge = () => {
           name: data.detail.name.map((item: any) => item.name),
           day: selectedDays,
         },
-      });
+      };
+      await axiosAuth.post(API_PATH.CREATE_DAILY_CHALLENGE, dailyData);
+
       enqueueSnackbar('Create Daily Success', { variant: 'success' });
       //console.log('Create Daily', response);
-      await dispatch(fetchAllDailyChallenge());
+      await Promise.all([dispatch(fetchAllDailyChallenge())]);
       closeModal();
       reset();
     } catch (error: any) {
@@ -85,10 +88,9 @@ const CreateDailyChallenge = () => {
 
   return (
     <div className='w-full'>
-      <article className='flex w-full items-center justify-between px-4 py-2'>
-        <h1 className='text-balance'>ภารกิจทั่วไป</h1>
+      <HeaderArticle title='ภารกิจทั่วไป' variant='h1'>
         <IconFlatButton title='สร้างภารกิจ' onClick={openModal} />
-      </article>
+      </HeaderArticle>
 
       <Modal>
         <FormProvider {...methods}>
@@ -118,15 +120,7 @@ const CreateDailyChallenge = () => {
                 />
               </div>
 
-              {/* section2 : wait picture */}
-              {/* <div className='w-full min-w-[350px] min-h-[250px] order-first col-span-1 space-y-4 rounded-lg md:order-none md:col-span-3'>
-                <ImageUpload
-                  image={image}
-                  setImage={setImage}
-                  imageError={imageError}
-                  setDownloadURL={setDownloadURL}
-                />
-              </div> */}
+              {/* section2 : picture */}
               <div className='order-first col-span-1 w-full space-y-4 md:order-none md:col-span-3 lg:h-[260px] lg:w-[340px] '>
                 <ImageUpload
                   image={image}

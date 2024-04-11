@@ -13,6 +13,7 @@ import useModal from '@/hooks/useModal';
 
 import ActionButton from '@/components/buttons/ActionButton';
 import { SwitchToggle } from '@/components/buttons/SwitchToggle';
+import HeaderArticle from '@/components/common/HeaderArticle';
 import FormHeaderText from '@/components/form/components/FormHeaderText';
 import ImageUpload from '@/components/form/components/UploadImageDisplay';
 import { InputText } from '@/components/form/InputText';
@@ -118,15 +119,16 @@ const EditDailyChallenge = ({
 
   return (
     <div className='w-full'>
-      <article className='flex w-full items-center justify-end p-4'>
-        <div
-          className='flex cursor-pointer items-center gap-1'
-          onClick={openModal}
-        >
+      <HeaderArticle
+        title='รายละเอียดภารกิจ'
+        variant='h4'
+        className='mb-3 rounded-b-none rounded-t-lg bg-gray-50 px-6 py-4'
+      >
+        <div className='flex items-center gap-1' onClick={openModal}>
           <FiEdit className='hover:bg-light-gray text-default-blue group h-5 w-5 cursor-pointer rounded-md transition-all duration-300 ease-in-out' />
           <p className='text-default-blue'>แก้ไข</p>
         </div>
-      </article>
+      </HeaderArticle>
 
       <Modal>
         <FormProvider {...methods}>

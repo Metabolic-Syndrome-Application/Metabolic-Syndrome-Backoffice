@@ -15,10 +15,7 @@ import FormHeaderText from '@/components/form/components/FormHeaderText';
 import { InputDropdown } from '@/components/form/InputDropdown';
 import { InputText } from '@/components/form/InputText';
 import { RadioOption } from '@/components/form/RadioOption';
-import {
-  createProfileDoctorSchema,
-  FormCreateProfileDoctorProps,
-} from '@/components/form/validation/UserValidator';
+import { createProfileDoctorSchema } from '@/components/form/validation/UserValidator';
 
 import {
   dataOptions,
@@ -26,6 +23,8 @@ import {
   medicalSpecialist,
 } from '@/constant/user';
 import { fetchAllUsers, selectAllUsers } from '@/redux/slices/usersSlice';
+
+import { FormCreateProfileDoctorProps } from '@/types/admin';
 
 interface IEditMemberFormProps {
   loadData: () => void;

@@ -11,6 +11,7 @@ import useModal from '@/hooks/useModal';
 
 import ActionButton from '@/components/buttons/ActionButton';
 import { IconFlatButton } from '@/components/buttons/IconFlatButton';
+import HeaderArticle from '@/components/common/HeaderArticle';
 import FormHeaderText from '@/components/form/components/FormHeaderText';
 import { InputMultiline } from '@/components/form/InputMultiline';
 import { InputText } from '@/components/form/InputText';
@@ -67,10 +68,13 @@ const CreateQuiz = () => {
 
   return (
     <div className='w-full'>
-      <article className='flex w-full items-center justify-between px-4 py-2'>
-        <h1 className='text-balance'>ภารกิจตอบคำถามประจำวัน</h1>
-        <IconFlatButton title='สร้างภารกิจประจำวัน' onClick={openModal} />
-      </article>
+      <HeaderArticle title='ภารกิจตอบคำถามประจำวัน' variant='h1'>
+        <IconFlatButton
+          title='สร้างภารกิจตอบคำถามประจำวัน'
+          onClick={openModal}
+        />
+      </HeaderArticle>
+
       <Modal>
         <FormProvider {...methods}>
           <form onSubmit={handleSubmit(onSubmit)}>

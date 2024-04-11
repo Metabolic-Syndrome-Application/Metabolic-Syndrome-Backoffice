@@ -39,10 +39,10 @@ export const MainPatientTabs = ({ params }: PageProps) => {
   return (
     <TabbedList
       tabs={tabConfig}
-      listClassName='bg-white rounded-t-lg '
-      panelClassName=' p-2 bg-white   w-full md:min-w-screen-lg rounded-b-lg rounded-r-lg'
-      allPanelClassName='flex flex-col '
-      btnClassName='flex items-center justify-center'
+      listClassName='flex w-full h-full justify-start rounded-t-lg bg-white '
+      panelClassName='p-2 bg-white w-full md:min-w-screen-xl rounded-b-lg rounded-r-lg'
+      allPanelClassName='flex flex-col'
+      btnClassName='flex w-full h-full items-center justify-center md:justify-start'
     />
   );
 };

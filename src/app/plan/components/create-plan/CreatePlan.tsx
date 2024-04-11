@@ -1,5 +1,6 @@
 'use client';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { AxiosError } from 'axios';
 import { useSnackbar } from 'notistack';
 import { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
@@ -12,6 +13,7 @@ import useModal from '@/hooks/useModal';
 
 import ActionButton from '@/components/buttons/ActionButton';
 import { IconFlatButton } from '@/components/buttons/IconFlatButton';
+import HeaderArticle from '@/components/common/HeaderArticle';
 import FormHeaderText from '@/components/form/components/FormHeaderText';
 import ImageUpload from '@/components/form/components/UploadImageDisplay';
 import { InputDropdown } from '@/components/form/InputDropdown';
@@ -65,41 +67,43 @@ const CreatePlan = () => {
 
   const onSubmit = async (data: z.infer<typeof createPlanSchema>) => {
     try {
-      const selectedDays = data.detail.day.map(
-        (day: { value: string }) => day.value
-      );
-      // eslint-disable-next-line unused-imports/no-unused-vars
-      const response = await axiosAuth.post(API_PATH.CREATE_PLAN, {
+      const selectedDays = data.detail.day.map((day) => day.value);
+
+      const planData = {
         name: data.name,
         description: data.description,
         type: data.type,
         photo: downloadURL,
         detail: {
-          name: data.detail.name.map((item: any) => item.name),
+          name: data.detail.name.map((item) => item.name),
           day: selectedDays,
         },
-      });
+      };
+
+      // Directly send POST request within await for conciseness
+      await axiosAuth.post(API_PATH.CREATE_PLAN, planData);
 
       enqueueSnackbar('Create Plan Success', { variant: 'success' });
-      //console.log('Create Plan', response);
 
-      //Update plan after create plan success
-      await dispatch(fetchAllPlans());
-      await dispatch(fetchAllPlansDefault());
+      // Fetch plans and close modal
+      await Promise.all([
+        dispatch(fetchAllPlans()),
+        dispatch(fetchAllPlansDefault()),
+      ]);
       closeModal();
       reset();
-    } catch (error: any) {
-      enqueueSnackbar(error.response?.data, { variant: 'error' });
-      // console.error(error);
+    } catch (error: unknown) {
+      if (error instanceof AxiosError && error.response?.data) {
+        enqueueSnackbar(error.response.data, { variant: 'error' });
+      }
     }
   };
 
   return (
     <div className='w-full'>
-      <article className='flex w-full items-center justify-between px-4 py-2'>
-        <h1 className='text-balance'>แผนสุขภาพ</h1>
+      <HeaderArticle title='แผนสุขภาพ' variant='h1'>
         <IconFlatButton title='สร้างแผนสุขภาพ' onClick={openModal} />
-      </article>
+      </HeaderArticle>
 
       <Modal>
         <FormProvider {...methods}>

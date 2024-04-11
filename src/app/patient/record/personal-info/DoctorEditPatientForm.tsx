@@ -20,6 +20,7 @@ import useAxiosAuth from '@/hooks/useAxiosAuth';
 import useModal from '@/hooks/useModal';
 
 import ActionButton from '@/components/buttons/ActionButton';
+import HeaderArticle from '@/components/common/HeaderArticle';
 import FormHeaderText from '@/components/form/components/FormHeaderText';
 import { InputDropdown } from '@/components/form/InputDropdown';
 import { InputText } from '@/components/form/InputText';
@@ -85,8 +86,6 @@ const DoctorEditPatientForm = ({
 
   const onSubmit = async (data: z.infer<typeof doctorEditPatientSchema>) => {
     try {
-      // Make the API call and handle success
-
       // eslint-disable-next-line unused-imports/no-unused-vars
       const response = await axiosAuth.put(
         API_PATH.PUT_PROFILE_PATIENT_OTHER(id),
@@ -118,15 +117,17 @@ const DoctorEditPatientForm = ({
 
   return (
     <div className='w-full'>
-      <article className='flex w-full items-center justify-end gap-2 px-4 py-2'>
-        <div
-          className='flex cursor-pointer items-center gap-1'
-          onClick={openModal}
-        >
+      <HeaderArticle
+        title='ข้อมูลส่วนตัวและแผนปรับพฤติกรรม'
+        variant='h4'
+        className='mb-3 bg-gray-50 px-6 py-4'
+      >
+        <div className='flex items-center gap-1' onClick={openModal}>
           <FiEdit className='hover:bg-light-gray text-default-blue group h-5 w-5 cursor-pointer rounded-md transition-all duration-300 ease-in-out' />
           <p className='text-default-blue'>แก้ไข</p>
         </div>
-      </article>
+      </HeaderArticle>
+
       <Modal>
         <form
           className='flex w-full flex-col'

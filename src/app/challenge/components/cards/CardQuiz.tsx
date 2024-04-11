@@ -18,7 +18,7 @@ export const CardQuiz = ({ question, choices }: IQuizChallengeData) => {
           </div>
         </div>
 
-        <div className='flex h-full min-h-[200px] w-full min-w-[350px] flex-col items-center justify-center rounded-xl bg-blue-50 p-4 pt-8 md:max-w-[650px]'>
+        <div className='flex h-full min-h-[200px] w-full flex-col items-center justify-center rounded-xl bg-blue-50 p-4 pt-8 md:min-w-[350px] md:max-w-[650px]'>
           <h4 className='whitespace-pre-line text-wrap break-all text-center font-semibold leading-normal tracking-wide'>
             {question}
           </h4>
@@ -42,7 +42,7 @@ export const CardQuiz = ({ question, choices }: IQuizChallengeData) => {
         <Image
           src='/assets/images/quiz.svg'
           alt='quiz-image'
-          className='lg:[300px] w-[250px]'
+          className='md:[300px] w-[200px] object-contain'
           width={400}
           height={400}
           priority={false}

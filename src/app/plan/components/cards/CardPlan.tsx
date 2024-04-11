@@ -43,8 +43,6 @@ export const CardPlan = ({
               alt='The uploaded image'
               // src={photo.startsWith('/') ? photo : `${photo}`}
               src={photo.startsWith('/') || photo.startsWith('http://') || photo.startsWith('https://') ? photo : `/${photo}`}
-              // src={photo}
-
               width={350}
               height={350}
               className='h-64 w-64 object-contain'

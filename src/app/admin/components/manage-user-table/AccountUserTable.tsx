@@ -135,7 +135,7 @@ const AccountUserTable = () => {
 
   return (
     <div>
-      <BaseTable rows={users} columns={columns} loading={!users.length} />
+      <BaseTable rows={users} columns={columns} loading={!!users.length} />
     </div>
   );
 };

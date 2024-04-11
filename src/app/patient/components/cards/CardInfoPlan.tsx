@@ -59,7 +59,9 @@ const CardInfoPlan: React.FC<CardInfoPlanProps> = ({ planData }) => {
                 </div>
               </div>
               <div className='ml-3 flex flex-col items-start'>
-                <h5 className='pl-1 text-base font-medium'>{plan.name}</h5>
+                <h5 className='bg-blue-400 pl-1 text-base font-medium'>
+                  {plan.name}
+                </h5>
                 <OutlineButton
                   variant={variant}
                   size='sm'

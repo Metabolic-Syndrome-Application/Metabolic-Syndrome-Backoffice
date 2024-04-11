@@ -19,17 +19,14 @@ export const TabbedList = ({
     <div className={cn('w-full p-1 md:p-2', allPanelClassName)}>
       <Tab.Group selectedIndex={tab} onChange={handleChange}>
         <Tab.List
-          className={cn(
-            'flex w-full max-w-xl gap-2 bg-white p-1',
-            listClassName
-          )}
+          className={cn('flex w-full  gap-2 bg-white p-1', listClassName)}
         >
           {tabs.map((data, _index) => (
             <Tab
               key={data.id}
               className={({ selected }) =>
                 cn(
-                  'text-md w-full rounded-lg py-2.5 font-medium leading-5',
+                  'text-md rounded-lg px-2 py-2.5 font-medium leading-5 md:px-4 lg:min-w-[200px]',
                   'border-indigo-500 ring-white/60 focus:border-b-2 focus:outline-none',
                   selected
                     ? 'text-default-blue bg-light-blue shadow'
@@ -39,7 +36,7 @@ export const TabbedList = ({
             >
               <div
                 className={cn(
-                  'flex w-full items-center space-x-2 text-center md:space-x-1',
+                  'flex w-full items-center space-x-1 text-center',
                   btnClassName
                 )}
               >

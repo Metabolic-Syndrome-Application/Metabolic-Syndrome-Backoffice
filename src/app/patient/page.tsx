@@ -8,7 +8,7 @@ import MultiformPatient from '@/app/patient/components/multi-step-form/page';
 //All Patent Page ข้อมุลคนไข้ทั้งหมด
 const PatientPage = () => {
   return (
-    <div className='p-4'>
+    <div className='w-full'>
       <MultiformPatient />
       <PatientTable />
     </div>

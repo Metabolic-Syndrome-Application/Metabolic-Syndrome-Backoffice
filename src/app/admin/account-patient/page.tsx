@@ -2,14 +2,13 @@
 'use client';
 import React from 'react';
 
+import InfoAccountPatient from '@/app/admin/account-patient/InfoAccountlPatient';
 import AccountPatientTable from '@/app/admin/components/manage-user-table/AccountPatientTable';
 
 function AccountPatientPage() {
   return (
     <div className='w-full'>
-      <article className='flex w-full items-center justify-between px-4 py-2'>
-        <h1 className='text-balance'>จัดการบัญชีคนไข้</h1>
-      </article>
+      <InfoAccountPatient />
       <AccountPatientTable />
     </div>
   );

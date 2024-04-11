@@ -13,6 +13,7 @@ import useModal from '@/hooks/useModal';
 
 import ActionButton from '@/components/buttons/ActionButton';
 import { IconFlatButton } from '@/components/buttons/IconFlatButton';
+import HeaderArticle from '@/components/common/HeaderArticle';
 import FormHeaderText from '@/components/form/components/FormHeaderText';
 import { InputText } from '@/components/form/InputText';
 import { MultiselectCheckbox } from '@/components/form/MultiselectCheckbox';
@@ -73,7 +74,7 @@ const CreateRecordHealth = ({ params }: { params: { id: string } }) => {
     defaultValues: submittedData || {},
   });
 
-  // watch current field -> not used
+  // watch current field -> not used now
   // const watchedFields = watch(["height", "weight", "waistline", "hdl"]);
   // const [height, weight, waistline, hdl] = watchedFields;
   // console.log('hdl', hdl)
@@ -224,10 +225,13 @@ const CreateRecordHealth = ({ params }: { params: { id: string } }) => {
 
   return (
     <div className='w-full'>
-      <article className='flex w-full items-center justify-end px-4 py-2'>
-        {/* <h3 className='text-balance'>ข้อมูลสุขภาพที่หมอบันทึก</h3> */}
+      <HeaderArticle
+        title='ข้อมูลสุขภาพที่หมอบันทึก'
+        variant='h4'
+        className='bg-gray-50 px-6 py-4'
+      >
         <IconFlatButton title='จดบันทึกค่าสุขภาพ' onClick={openModal} />
-      </article>
+      </HeaderArticle>
 
       <Modal>
         <form onSubmit={handleSubmit(onSubmit)}>

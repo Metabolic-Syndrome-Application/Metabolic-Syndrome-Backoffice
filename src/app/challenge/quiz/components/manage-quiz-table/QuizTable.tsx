@@ -195,7 +195,7 @@ const QuizTable = () => {
 
   return (
     <div className='w-full'>
-      <BaseTable rows={quiz} columns={columns} loading={!quizData.length} />
+      <BaseTable rows={quiz} columns={columns} loading={!!quizData.length} />
     </div>
   );
 };

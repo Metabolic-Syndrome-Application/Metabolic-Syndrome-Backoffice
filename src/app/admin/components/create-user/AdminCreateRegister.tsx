@@ -12,14 +12,12 @@ import useModal from '@/hooks/useModal';
 
 import ActionButton from '@/components/buttons/ActionButton';
 import { IconFlatButton } from '@/components/buttons/IconFlatButton';
+import HeaderArticle from '@/components/common/HeaderArticle';
 import FormHeaderText from '@/components/form/components/FormHeaderText';
 import { InputDropdown } from '@/components/form/InputDropdown';
 import { InputText } from '@/components/form/InputText';
 import { RadioOption } from '@/components/form/RadioOption';
-import {
-  FormRegisterDoctorProps,
-  registerDoctorSchema,
-} from '@/components/form/validation/UserValidator';
+import { registerDoctorSchema } from '@/components/form/validation/UserValidator';
 
 import { API_PATH } from '@/config/api';
 import {
@@ -28,6 +26,8 @@ import {
   medicalSpecialist,
 } from '@/constant/user';
 import { fetchAllUsers } from '@/redux/slices/usersSlice';
+
+import { FormRegisterDoctorProps } from '@/types/admin';
 
 const AdminCreateRegister = () => {
   const { data: session } = useSession();
@@ -78,7 +78,6 @@ const AdminCreateRegister = () => {
       const { id: userId, role: otherRole } = registerResponse.data.data.user;
       //console.log('Register API Response:', registerResponse.data.data.user);
 
-      // Only an admin can create a profile
       // API call 2: Create profile
       if (userRole === 'admin') {
         // eslint-disable-next-line unused-imports/no-unused-vars
@@ -110,14 +109,13 @@ const AdminCreateRegister = () => {
 
   return (
     <div className='w-full'>
-      <article className='flex w-full items-center justify-between px-4 py-2'>
-        <h1 className='text-balance'>จัดการบัญชีผู้ใช้ระบบ (หมอ/พยาบาล)</h1>
-        <IconFlatButton title='เพิ่มข้อมูลผู้ใช้' onClick={openModal} />
-      </article>
+      <HeaderArticle title='จัดการบัญชีผู้ใช้ระบบ (หมอ/พยาบาล)' variant='h1'>
+        <IconFlatButton title='สร้างบัญชีผู้ใช้' onClick={openModal} />
+      </HeaderArticle>
 
       <Modal>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <div className=''>
+          <div className='w-full'>
             <FormHeaderText
               icon={FaUserDoctor}
               title='จัดการข้อมูลผู้ใช้ระบบ'
