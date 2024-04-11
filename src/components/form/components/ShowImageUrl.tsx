@@ -36,15 +36,11 @@ const ShowImageUrl = ({ pathName }: ShowImageUrlProps) => {
     </div>
   ) : (
     //wait Loading image firebase url
-    <div className='flex h-20 w-20'>
-      <Image
-        src='/assets/images/loading.png'
-        className='object-contain'
-        alt='Loading Firebase Image'
-        width={350}
-        height={350}
-        priority={false}
-      />
+    <div className='flex h-[300px] w-[300px] animate-pulse flex-col items-center justify-center'>
+      <div className='bg-light-gray flex min-h-[140px] w-full rounded-xl md:min-w-[250px]'></div>
+      <div className='flex gap-2 py-2'>
+        <div className='text-light-gray rounded-full'>กำลังโหลด...</div>
+      </div>
     </div>
   );
 };
