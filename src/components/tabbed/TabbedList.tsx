@@ -19,7 +19,7 @@ export const TabbedList = ({
     <div className={cn('w-full p-1 md:p-2', allPanelClassName)}>
       <Tab.Group selectedIndex={tab} onChange={handleChange}>
         <Tab.List
-          className={cn('flex w-full  gap-2 bg-white p-1', listClassName)}
+          className={cn('flex w-full gap-2 bg-white p-1', listClassName)}
         >
           {tabs.map((data, _index) => (
             <Tab
