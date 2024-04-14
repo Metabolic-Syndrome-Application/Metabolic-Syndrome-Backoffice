@@ -10,9 +10,7 @@ const nextConfig = {
   },
   reactStrictMode: true,
   swcMinify: true,
-  experimental: {
-    outputStandalone: true,
-  },
+  output: 'standalone',
 
   webpack(config) {
     // Grab the existing rule that handles SVG imports

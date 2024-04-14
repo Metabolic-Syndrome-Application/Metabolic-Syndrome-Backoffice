@@ -36,3 +36,5 @@ EXPOSE 3000
 
 # Run the Next.js application in production mode
 CMD ["npm", "run", "dev"]
+
+
