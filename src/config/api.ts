@@ -1,6 +1,6 @@
 //export const BACKEND_URL = 'http://localhost:8000';
-export const BACKEND_URL = 'http://34.87.86.35:8000';
-//export const BACKEND_URL = 'https://metaplan-api.zantaclaus.dev';
+//export const BACKEND_URL = 'http://34.87.86.35:8000';
+export const BACKEND_URL = 'https://metaplan-api.zantaclaus.dev';
 
 export const API_PATH = {
   //Auth
