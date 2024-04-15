@@ -26,6 +26,7 @@ import TiptapTextField from '@/components/text-editor/TipTapTextField';
 import DetailPlanFields from '@/app/plan/components/create-plan/DetailPlanFields';
 import { API_PATH } from '@/config/api';
 import { DaysOfWeekOptions, typePlanOptions } from '@/constant/plan';
+import { fetchAllPlans, fetchAllPlansDefault } from '@/redux/slices/plansSlice';
 
 const EditPlan = ({
   params,
@@ -104,6 +105,9 @@ const EditPlan = ({
       loadData();
 
       closeModal();
+
+      // Fetch all plans in parallel (optional, optimize based on usage)
+      await Promise.all([fetchAllPlans(), fetchAllPlansDefault()]);
     } catch (error: any) {
       enqueueSnackbar(error.response?.data, { variant: 'error' });
       console.error(error);

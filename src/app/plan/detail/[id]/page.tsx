@@ -35,7 +35,7 @@ const ViewPlanPage = ({ params }: { params: { id: string } }) => {
       dispatch(fetchPlanById(id));
       dispatch(fetchAllPlansDefault);
     }
-  }, []);
+  }, [session, dispatch]);
 
   return (
     <div>

@@ -163,7 +163,7 @@ const EditDailyChallenge = ({
               </div>
 
               {/* section2 : wait picture */}
-              <div className='order-first col-span-1 w-full min-w-[350px] space-y-4 rounded-lg md:order-none md:col-span-3'>
+              <div className='order-first col-span-1 w-full space-y-4 rounded-lg md:order-none md:col-span-3 md:min-w-[350px]'>
                 <ImageUpload
                   image={image}
                   setImage={setImage}
