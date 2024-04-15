@@ -91,7 +91,7 @@ export function RegisterNewPatientForm() {
         );
 
         const { id: userId } = registerResponse.data.data.user;
-        console.log('registerResponse', registerResponse);
+        //console.log('registerResponse', registerResponse);
 
         const createProfileResponse = await axiosAuth.put(
           API_PATH.PUT_PROFILE_PATIENT_OTHER(userId),
