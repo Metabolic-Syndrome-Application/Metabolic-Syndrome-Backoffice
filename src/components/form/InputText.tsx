@@ -68,7 +68,6 @@ export const InputText: React.FC<FormInputProps> = ({
                 borderRadius: '0.575rem',
                 backgroundColor: disabled ? '#F6F6F6' : 'transparent',
               },
-              //mb: 2,
             }}
           />
         );

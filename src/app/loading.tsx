@@ -12,11 +12,11 @@ export default function Loading() {
       <div className='layout flex min-h-screen flex-col items-center justify-center text-center'>
         <Image
           src='/assets/images/loading.gif'
-          alt='My GIF'
+          alt='MyGIF'
           className='md:[250px] lg:[350px] w-[250px]'
           width={400}
           height={400}
-          priority={false}
+          priority={true}
         />
         <div className='repeat-infinite animate-text text-default-blue animate-pulse py-2 text-center text-3xl font-semibold tracking-wide'>
           กรุณารอสักครู่ ...
