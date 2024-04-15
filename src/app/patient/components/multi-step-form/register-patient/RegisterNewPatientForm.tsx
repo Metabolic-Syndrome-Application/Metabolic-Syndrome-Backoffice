@@ -66,6 +66,12 @@ export function RegisterNewPatientForm() {
     setFormSubmitted(true);
 
     try {
+      // Remove spaces from ID card number
+      const formattedData = {
+        ...data,
+        username: data.username.replace(/\s/g, ''),
+      };
+
       const hnCheckResponse = await axiosAuth.post(API_PATH.POST_CHECK_HN, {
         hn: data.hn,
       });
@@ -78,13 +84,14 @@ export function RegisterNewPatientForm() {
           API_PATH.POST_REGISTER_OTHER,
           {
             role: data.role,
-            username: data.username,
+            username: formattedData.username,
             password: data.password,
             passwordConfirm: data.passwordConfirm,
           }
         );
 
         const { id: userId } = registerResponse.data.data.user;
+        console.log('registerResponse', registerResponse);
 
         const createProfileResponse = await axiosAuth.put(
           API_PATH.PUT_PROFILE_PATIENT_OTHER(userId),
