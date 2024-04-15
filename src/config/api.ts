@@ -3,7 +3,7 @@
 export const BACKEND_URL = 'https://metaplan-api.zantaclaus.dev';
 
 export const API_PATH = {
-  //Auth
+  //Authentication
   POST_REGISTER: '/api/auth/register',
   POST_REGISTER_OTHER: '/api/auth/register/other', //admin create account doctor/stafff
   POST_LOGIN: '/api/auth/login', //user login
