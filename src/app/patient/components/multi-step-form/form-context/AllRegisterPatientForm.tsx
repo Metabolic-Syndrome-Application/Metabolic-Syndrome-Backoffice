@@ -49,10 +49,10 @@ export default function AllRegisterPatientForm() {
       <FormHeaderText icon={FaUser} title='จัดการข้อมูลคนไข้' useBigestHeader />
       <div className='flex w-full flex-col space-y-2 rounded-lg'>
         <h4 className='px-2'>เลือกรูปแบบ</h4>
-        <div className='grid grid-cols-2 space-x-4 pb-4 lg:w-2/5'>
+        <div className='grid grid-cols-2 justify-stretch space-x-4 pb-4 lg:w-2/5'>
           {/* ยังไม่เคยมีบัญชี */}
           <div className='flex items-center'>
-            <label className='inline-flex w-full'>
+            <label className='inline-flex h-full w-full'>
               <input
                 type='radio'
                 className='peer hidden'
@@ -69,7 +69,7 @@ export default function AllRegisterPatientForm() {
 
           {/* มีบัญชีแล้ว */}
           <div className='flex items-center'>
-            <label className='inline-flex w-full md:min-w-[150px]'>
+            <label className='inline-flex h-full w-full md:min-w-[150px]'>
               <input
                 type='radio'
                 className='peer hidden'
