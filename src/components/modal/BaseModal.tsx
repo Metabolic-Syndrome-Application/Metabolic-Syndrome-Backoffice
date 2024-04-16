@@ -12,7 +12,6 @@ const BaseModal = ({ children, isOpen, closeModal }: BaseModalProps) => {
           <Dialog.Panel
             as='div'
             //style={{ maxHeight: '100vh' }}
-            //  w-[calc(100%_-_10rem)]
             className='shadow-default-shadow max-h-full overflow-y-auto rounded-xl bg-white p-4 md:px-6'
           >
             <Dialog.Title
