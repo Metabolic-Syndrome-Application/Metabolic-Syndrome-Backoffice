@@ -125,85 +125,87 @@ export function RegisterNewPatientForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <div className='grid w-full grid-cols-3 gap-4 md:flex-row'>
-        {/* Section1 */}
-        <div className='col-span-3 h-full w-full flex-col space-y-4 rounded-lg border p-4 md:col-span-1'>
-          <FormHeaderText title='สร้างบัญชีผู้ใช้' />
-          <RadioOption
-            name='role'
-            label='บทบาท'
-            control={control}
-            options={dataOptions.patientOption}
-            defaultValue={dataOptions.patientOption[0].value}
-          />
+    <div className='w-full'>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <div className='grid w-full grid-cols-3 gap-4 md:flex-row'>
+          {/* Section1 */}
+          <div className='col-span-3 h-full w-full flex-col space-y-4 rounded-lg border p-4 md:col-span-1'>
+            <FormHeaderText title='สร้างบัญชีผู้ใช้' />
+            <RadioOption
+              name='role'
+              label='บทบาท'
+              control={control}
+              options={dataOptions.patientOption}
+              defaultValue={dataOptions.patientOption[0].value}
+            />
 
-          <IDCardInputText
-            name='username'
-            control={control}
-            label='เลขประตัวประชาชน'
-          />
+            <IDCardInputText
+              name='username'
+              control={control}
+              label='เลขประตัวประชาชน'
+            />
 
-          <InputText
-            name='password'
-            label='รหัสผ่าน'
-            control={control}
-            showPasswordToggle
-            type='password'
-          />
-          <InputText
-            name='passwordConfirm'
-            label='ยืนยันรหัสผ่าน'
-            control={control}
-            showPasswordToggle
-            type='password'
-          />
-        </div>
-
-        {/* Section2 */}
-        <div className='col-span-3 h-full w-full flex-col space-y-4 rounded-lg border p-4 md:col-span-2 '>
-          <FormHeaderText title='ข้อมูลส่วนตัว' />
-          <InputText name='hn' label='รหัสคนไข้' control={control} />
-          <div className='flex space-x-4'>
-            <InputText name='firstName' label='ชื่อจริง' control={control} />
-            <InputText name='lastName' label='นามสกุล' control={control} />
+            <InputText
+              name='password'
+              label='รหัสผ่าน'
+              control={control}
+              showPasswordToggle
+              type='password'
+            />
+            <InputText
+              name='passwordConfirm'
+              label='ยืนยันรหัสผ่าน'
+              control={control}
+              showPasswordToggle
+              type='password'
+            />
           </div>
-          <RadioOption
-            name='gender'
-            label='เพศ'
-            control={control}
-            options={dataOptions.genderOptions}
-          />
-          <InputDropdown
-            name='yearOfBirth'
-            control={control}
-            label='ปีเกิด (พ.ศ.)'
-            options={yearOptions}
-          />
-          <InputDropdown
-            name='mainDoctorID'
-            control={control}
-            label='แพทย์ผู้รับผิดชอบหลัก'
-            options={getDoctorOptions}
-          />
-          <InputDropdown
-            name='assistanceDoctorID'
-            control={control}
-            label='แพทย์ผู้รับผิดชอบรอง'
-            options={getDoctorOptions}
-          />
-          <InputText name='disease' label='โรคที่พบ' control={control} />
+
+          {/* Section2 */}
+          <div className='col-span-3 h-full w-full flex-col space-y-4 rounded-lg border p-4 md:col-span-2 '>
+            <FormHeaderText title='ข้อมูลส่วนตัว' />
+            <InputText name='hn' label='รหัสคนไข้' control={control} />
+            <div className='flex space-x-4'>
+              <InputText name='firstName' label='ชื่อจริง' control={control} />
+              <InputText name='lastName' label='นามสกุล' control={control} />
+            </div>
+            <RadioOption
+              name='gender'
+              label='เพศ'
+              control={control}
+              options={dataOptions.genderOptions}
+            />
+            <InputDropdown
+              name='yearOfBirth'
+              control={control}
+              label='ปีเกิด (พ.ศ.)'
+              options={yearOptions}
+            />
+            <InputDropdown
+              name='mainDoctorID'
+              control={control}
+              label='แพทย์ผู้รับผิดชอบหลัก'
+              options={getDoctorOptions}
+            />
+            <InputDropdown
+              name='assistanceDoctorID'
+              control={control}
+              label='แพทย์ผู้รับผิดชอบรอง'
+              options={getDoctorOptions}
+            />
+            <InputText name='disease' label='โรคที่พบ' control={control} />
+          </div>
         </div>
-      </div>
-      <div className='mt-4 flex justify-end gap-4'>
-        <ActionButton
-          type='submit'
-          variant='submit'
-          disabled={!isDirty || Object.keys(errors).length > 0}
-        >
-          ยืนยันการสมัครบัญชีคนไข้
-        </ActionButton>
-      </div>
-    </form>
+        <div className='mb-20 mt-4 flex justify-end gap-4 md:mb-4'>
+          <ActionButton
+            type='submit'
+            variant='submit'
+            disabled={!isDirty || Object.keys(errors).length > 0}
+          >
+            ยืนยันการสมัครบัญชีคนไข้
+          </ActionButton>
+        </div>
+      </form>
+    </div>
   );
 }

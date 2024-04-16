@@ -75,7 +75,7 @@ export function ConnectPatientForm({ selectedOption }: Props) {
   };
 
   return (
-    <div className='w-[900px]'>
+    <div className='w-full md:w-[900px] '>
       <form onSubmit={handleSubmit(onHandleFormSubmit)}>
         <div className='grid w-full grid-cols-1 space-y-4 rounded-lg border p-4'>
           <FormHeaderText title='ข้อมูลส่วนตัว' />
@@ -111,7 +111,7 @@ export function ConnectPatientForm({ selectedOption }: Props) {
           />
           <InputText name='disease' label='โรคที่พบ' control={control} />
         </div>
-        <div className='mt-4 flex justify-end'>
+        <div className='mb-20 flex justify-end md:mb-4'>
           {selectedOption === AccountOption.haveAccount && (
             <ActionButton type='submit' variant='submit'>
               ยืนยันการเชื่อมต่อข้อมูลคนไข้

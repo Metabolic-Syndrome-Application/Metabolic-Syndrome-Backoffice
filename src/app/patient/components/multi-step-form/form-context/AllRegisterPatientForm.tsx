@@ -49,7 +49,7 @@ export default function AllRegisterPatientForm() {
       <FormHeaderText icon={FaUser} title='จัดการข้อมูลคนไข้' useBigestHeader />
       <div className='flex w-full flex-col space-y-2 rounded-lg'>
         <h4 className='px-2'>เลือกรูปแบบ</h4>
-        <div className='grid w-full grid-flow-col justify-stretch space-x-4 pb-4 lg:w-2/5'>
+        <div className='grid grid-cols-2 space-x-4 pb-4 lg:w-2/5'>
           {/* ยังไม่เคยมีบัญชี */}
           <div className='flex items-center'>
             <label className='inline-flex w-full'>
@@ -62,14 +62,14 @@ export default function AllRegisterPatientForm() {
               />
               <div className='border-light-gray text-default-gray peer-checked:bg-light-blue peer-checked:text-default-blue peer-checked:border-light-blue flex w-full items-center justify-center gap-3 rounded-lg border px-3 py-2 peer-checked:border'>
                 <FaHospital className='h-6 w-6 md:h-9 md:w-9' />
-                <p className='whitespace-nowrap'>ยังไม่เคยมีบัญชี</p>
+                <p className='whitespace-normal'>ยังไม่เคยมีบัญชี</p>
               </div>
             </label>
           </div>
 
           {/* มีบัญชีแล้ว */}
           <div className='flex items-center'>
-            <label className='inline-flex w-full'>
+            <label className='inline-flex w-full md:min-w-[150px]'>
               <input
                 type='radio'
                 className='peer hidden'
@@ -79,7 +79,7 @@ export default function AllRegisterPatientForm() {
               />
               <div className='border-light-gray text-default-gray peer-checked:bg-light-blue peer-checked:text-default-blue peer-checked:border-light-blue flex w-full items-center justify-center gap-2 rounded-lg border px-3 py-2 peer-checked:border'>
                 <FaHospitalUser className='h-6 w-6 md:h-9 md:w-9' />
-                <p className='whitespace-nowrap'>มีบัญชีแล้ว</p>
+                <p className='whitespace-normal'>มีบัญชีแล้ว</p>
               </div>
             </label>
           </div>
