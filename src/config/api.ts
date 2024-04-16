@@ -1,5 +1,7 @@
 //export const BACKEND_URL = 'http://localhost:8000';
-export const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || '';
+//export const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || '';
+const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+export const BACKEND_URL = `${backendUrl}`;
 
 export const API_PATH = {
   //Authentication

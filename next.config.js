@@ -11,6 +11,7 @@ const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
   output: 'standalone',
+  backendUrl: process.env.NEXT_PUBLIC_BACKEND_URL,
 
   webpack(config) {
     // Grab the existing rule that handles SVG imports
