@@ -62,14 +62,12 @@ const ProfilePrivacy = () => {
             control={control}
             label='รหัสผ่านใหม่'
             showPasswordToggle
-            type='password'
           />
           <InputText
             name='confirmPassword'
             control={control}
             label='ยืนยันรหัสผ่านใหม่'
             showPasswordToggle
-            type='password'
           />
         </div>
         <div className='flex w-full justify-end space-x-3 py-4'>

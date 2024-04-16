@@ -150,14 +150,12 @@ export function RegisterNewPatientForm() {
               label='รหัสผ่าน'
               control={control}
               showPasswordToggle
-              type='password'
             />
             <InputText
               name='passwordConfirm'
               label='ยืนยันรหัสผ่าน'
               control={control}
               showPasswordToggle
-              type='password'
             />
           </div>
 

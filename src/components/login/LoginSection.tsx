@@ -103,7 +103,6 @@ const LoginSection = (props: LoginProps) => {
               label='รหัสผ่าน'
               control={control}
               showPasswordToggle
-              type='password'
             />
             <ActionButton type='submit' variant='submit' className='w-full'>
               เข้าสู่ระบบ
