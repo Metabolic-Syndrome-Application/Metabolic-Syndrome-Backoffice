@@ -23,8 +23,8 @@ const ViewPlanPage = ({ params }: { params: { id: string } }) => {
 
   const loadPlan = useCallback(async () => {
     try {
-      dispatch(fetchPlanById(id));
-      dispatch(fetchAllPlansDefault);
+      await dispatch(fetchPlanById(id));
+      await dispatch(fetchAllPlansDefault);
     } catch (error) {
       console.log('loadPlan error', error);
     }

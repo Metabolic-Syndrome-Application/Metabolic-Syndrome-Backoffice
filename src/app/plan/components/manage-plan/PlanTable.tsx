@@ -46,8 +46,8 @@ const PlanTable = () => {
 
   const loadPlans = async () => {
     try {
-      dispatch(fetchAllPlans());
-      dispatch(fetchAllPlansDefault());
+      await dispatch(fetchAllPlans());
+      await dispatch(fetchAllPlansDefault());
       //setUsers(dataAddIndex);
     } catch (error) {
       console.log('error', error);

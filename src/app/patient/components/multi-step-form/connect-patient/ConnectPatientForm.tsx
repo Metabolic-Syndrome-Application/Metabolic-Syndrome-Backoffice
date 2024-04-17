@@ -111,7 +111,7 @@ export function ConnectPatientForm({ selectedOption }: Props) {
           />
           <InputText name='disease' label='โรคที่พบ' control={control} />
         </div>
-        <div className='mb-20 flex justify-end md:mb-4'>
+        <div className='mb-20 mt-4 flex justify-end gap-4 md:mb-4'>
           {selectedOption === AccountOption.haveAccount && (
             <ActionButton type='submit' variant='submit'>
               ยืนยันการเชื่อมต่อข้อมูลคนไข้

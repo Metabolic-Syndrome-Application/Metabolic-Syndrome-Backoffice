@@ -169,7 +169,7 @@ const EditPlan = ({
               </div>
             </div>
 
-            <div className='flex h-full justify-end space-x-3 p-4'>
+            <div className='mb-20 flex w-full justify-end space-x-3 py-4 md:mb-4'>
               <ActionButton type='reset' variant='cancel' onClick={closeModal}>
                 ยกเลิก
               </ActionButton>

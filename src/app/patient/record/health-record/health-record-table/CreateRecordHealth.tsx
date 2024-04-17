@@ -176,7 +176,7 @@ const CreateRecordHealth = ({ params }: { params: { id: string } }) => {
                 label='ระดับน้ำตาล'
                 control={control}
                 type='number'
-                unit='ซม.'
+                unit='mg/dL'
               />
             </CardInputRecord>
           );
