@@ -196,7 +196,7 @@ const DoctorEditPatientForm = ({
               />
             </div>
           </div>
-          <div className='mt-4 flex justify-end gap-4'>
+          <div className='mb-20 flex w-full justify-end space-x-3 py-4 md:mb-4'>
             <ActionButton type='submit' variant='submit'>
               แก้ไข
             </ActionButton>

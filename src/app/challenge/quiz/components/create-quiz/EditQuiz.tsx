@@ -174,12 +174,12 @@ const EditQuiz = ({
               </div>
             </div>
 
-            <div className='mt-4 flex w-full justify-end space-x-3 py-4'>
+            <div className='mb-20 mt-6 flex justify-end gap-4 md:mb-4'>
               <ActionButton type='reset' variant='cancel' onClick={closeModal}>
                 ยกเลิก
               </ActionButton>
               <ActionButton type='submit' variant='submit'>
-                ยืนยันการสร้างคำถาม
+                แก้ไข
               </ActionButton>
             </div>
           </form>
